@@ -1,19 +1,6 @@
 {
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
-  "generators": {
-    "@nx-dotnet/core:app": {
-      "language": "C#",
-      "tags": "type:api",
-      "template": "webapi",
-      "testTemplate": "xunit"
-    },
-    "@nx-dotnet/core:lib": {
-      "language": "C#",
-      "template": "classlib",
-      "testTemplate": "xunit"
-    }
-  },
   "projects": {
     "Tatuaz.Gateway.Api": {
       "root": "apps/Tatuaz.Gateway.Api",
@@ -66,8 +53,7 @@
         },
         "test": {
           "executor": "@nx-dotnet/core:test",
-          "options": {
-          }
+          "options": {}
         }
       }
     },
