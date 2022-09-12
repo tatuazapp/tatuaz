@@ -67,7 +67,6 @@
         "test": {
           "executor": "@nx-dotnet/core:test",
           "options": {
-            "verbosity": "normal"
           }
         }
       }
