@@ -1,9 +1,75 @@
 {
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
+  "generators": {
+    "@nx-dotnet/core:app": {
+      "language": "C#",
+      "tags": "type:api",
+      "template": "webapi",
+      "testTemplate": "xunit"
+    },
+    "@nx-dotnet/core:lib": {
+      "language": "C#",
+      "template": "classlib",
+      "testTemplate": "xunit"
+    }
+  },
   "projects": {
-    "Tatuaz.Gateway.Api": "apps/Tatuaz.Gateway.Api",
-    "Tatuaz.Gateway.Api.Test": "apps/Tatuaz.Gateway.Api.Test",
+    "Tatuaz.Gateway.Api": {
+      "root": "apps/Tatuaz.Gateway.Api",
+      "projectType": "application",
+      "sourceRoot": "apps/Tatuaz.Gateway.Api",
+      "targets": {
+        "build": {
+          "executor": "@nx-dotnet/core:build",
+          "outputs": ["{options.output}"],
+          "options": {
+            "output": "dist/apps/Tatuaz.Gateway.Api",
+            "configuration": "Debug"
+          },
+          "configurations": {
+            "production": {
+              "configuration": "Release"
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nx-dotnet/core:serve",
+          "options": {
+            "configuration": "Debug"
+          },
+          "configurations": {
+            "production": {
+              "configuration": "Release"
+            }
+          }
+        }
+      }
+    },
+    "Tatuaz.Gateway.Api.Test": {
+      "root": "apps/Tatuaz.Gateway.Api.Test",
+      "projectType": "application",
+      "sourceRoot": "apps/Tatuaz.Gateway.Api.Test",
+      "targets": {
+        "build": {
+          "executor": "@nx-dotnet/core:build",
+          "outputs": ["{options.output}"],
+          "options": {
+            "output": "dist/apps/Tatuaz.Gateway.Api.Test",
+            "configuration": "Debug"
+          },
+          "configurations": {
+            "production": {
+              "configuration": "Release"
+            }
+          }
+        },
+        "test": {
+          "executor": "@nx-dotnet/core:test",
+          "options": {}
+        }
+      }
+    },
     "web": "apps/web",
     "web-e2e": "apps/web-e2e"
   }
