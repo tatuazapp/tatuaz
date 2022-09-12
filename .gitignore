@@ -496,3 +496,7 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+apps/*/bin
+apps/*/obj
+libs/*/bin
+libs/*/obj
