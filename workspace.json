@@ -67,7 +67,7 @@
         "test": {
           "executor": "@nx-dotnet/core:test",
           "options": {
-            "logger": "console"
+            "logger": "console;verbosity=detailed"
           }
         }
       }
