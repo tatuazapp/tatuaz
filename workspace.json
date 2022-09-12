@@ -2,9 +2,9 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "web": "apps/web",
-    "web-e2e": "apps/web-e2e",
     "Tatuaz.Gateway.Api": "apps/Tatuaz.Gateway.Api",
-    "Tatuaz.Gateway.Api.Test": "apps/Tatuaz.Gateway.Api.Test"
+    "Tatuaz.Gateway.Api.Test": "apps/Tatuaz.Gateway.Api.Test",
+    "web": "apps/web",
+    "web-e2e": "apps/web-e2e"
   }
 }
