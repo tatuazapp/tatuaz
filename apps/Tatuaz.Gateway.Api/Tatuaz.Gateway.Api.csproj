@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>../../dist/apps/Tatuaz.Gateway.Api</OutputPath>
   </PropertyGroup>
   
   <ItemGroup>
