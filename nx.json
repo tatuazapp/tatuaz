@@ -52,5 +52,6 @@
       }
     }
   },
-  "defaultProject": "web"
+  "defaultProject": "web",
+  "plugins": ["@nx-dotnet/core"]
 }
