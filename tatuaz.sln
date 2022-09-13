@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apps", "apps", "{25311259-92CF-4AA0-85FD-E7FE3579BBDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.TatuazGatewayApi", "apps\Tatuaz.Gateway.Api\Tatuaz.TatuazGatewayApi.csproj", "{37CC9BB0-DEB1-4DAE-AA33-9B20C716D50E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Gateway.Api", "apps\Tatuaz.Gateway.Api\Tatuaz.Gateway.Api.csproj", "{37CC9BB0-DEB1-4DAE-AA33-9B20C716D50E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.TatuazGatewayApi.Test", "apps\Tatuaz.Gateway.Api.Test\Tatuaz.TatuazGatewayApi.Test.csproj", "{CF70446A-D1A1-49B8-A207-51A53EB6FECD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Gateway.Api.Test", "apps\Tatuaz.Gateway.Api.Test\Tatuaz.Gateway.Api.Test.csproj", "{CF70446A-D1A1-49B8-A207-51A53EB6FECD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
