@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "tatuazdevtest1-49c1"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "tatuazdevtest1-49c1"
+  template:
+    metadata:
+      labels:
+        app: "tatuazdevtest1-49c1"
+    spec:
+      containers:
+        - name: "tatuazdevtest1-49c1"
+          image: "dupadupa123.azurecr.io/tatuazdevtest1"
+          ports:
+          - containerPort: 3333
