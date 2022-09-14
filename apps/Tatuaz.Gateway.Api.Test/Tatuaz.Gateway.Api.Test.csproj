@@ -38,7 +38,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Tatuaz.Gateway.Api\Tatuaz.TatuazGatewayApi.csproj" />
+    <ProjectReference Include="..\Tatuaz.Gateway.Api\Tatuaz.Gateway.Api.csproj" />
   </ItemGroup>
   
   <Target Name="CheckNxModuleBoundaries" BeforeTargets="Build">
