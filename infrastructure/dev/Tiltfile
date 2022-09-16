@@ -10,17 +10,27 @@ docker_build_with_restart(
     ],
 )
 
-# docker_build_with_restart(
-#     'tatuaz/web',
-#     '../../',
-#     build_args={'node_env': 'development'},
-#     entrypoint=['npm', 'run start'],
-#     dockerfile='../../apps/web/Dockerfile',
-#     live_update=[
-#         sync('../../apps/web/out', '/app/out'),
-#     ],
-# )
+docker_build_with_restart(
+    'tatuaz/web',
+    '../../',
+    entrypoint=['npm', 'start'],
+    dockerfile='../../apps/web/Dockerfile',
+    live_update=[
+        sync('../../apps/web/out', '/app/out'),
+    ],
+)
 
-k8s_yaml('kubernetes.yaml')
+k8s_yaml([
+    'kubernetes/gateway.yaml',
+    'kubernetes/web.yaml',
+    'kubernetes/rabbitmq.yaml',
+    'kubernetes/postgresql.yaml',
+    'kubernetes/postgresql-volume.yaml',
+    'kubernetes/postgresql-volume-claim.yaml',
+    'kubernetes/postgresql-config-map.yaml',
+])
+
 k8s_resource('gateway', port_forwards='8080:80')
-# k8s_resource('web', port_forwards='3333:3333')
+k8s_resource('web', port_forwards='3333:3333')
+k8s_resource('rabbitmq', port_forwards=['5672:5672', '15672:15672'])
+k8s_resource('postgresql', port_forwards='5432:5432')
