@@ -1,0 +1,26 @@
+load('ext://restart_process', 'docker_build_with_restart')
+
+docker_build_with_restart(
+    'tatuaz/gateway',
+    '../../',
+    entrypoint=['dotnet', 'Tatuaz.Gateway.Api.dll'],
+    dockerfile='../../apps/Tatuaz.Gateway.Api/Dockerfile',
+    live_update=[
+        sync('../../apps/Tatuaz.Gateway.Api/out', '/app/out'),
+    ],
+)
+
+# docker_build_with_restart(
+#     'tatuaz/web',
+#     '../../',
+#     build_args={'node_env': 'development'},
+#     entrypoint=['npm', 'run start'],
+#     dockerfile='../../apps/web/Dockerfile',
+#     live_update=[
+#         sync('../../apps/web/out', '/app/out'),
+#     ],
+# )
+
+k8s_yaml('kubernetes.yaml')
+k8s_resource('gateway', port_forwards='8080:80')
+# k8s_resource('web', port_forwards='3333:3333')
