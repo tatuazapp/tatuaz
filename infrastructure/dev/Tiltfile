@@ -1,6 +1,6 @@
 load('ext://restart_process', 'docker_build_with_restart')
 
-docker_build_with_restart(
+docker_build(
     'tatuaz/gateway',
     '../../',
     entrypoint=['dotnet', 'Tatuaz.Gateway.Api.dll'],
@@ -10,7 +10,7 @@ docker_build_with_restart(
     ],
 )
 
-docker_build_with_restart(
+docker_build(
     'tatuaz/web',
     '../../',
     entrypoint=['npm', 'start'],
