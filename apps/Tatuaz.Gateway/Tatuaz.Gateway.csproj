@@ -8,6 +8,8 @@
 
         <ImplicitUsings>enable</ImplicitUsings>
 
+        <OutputPath>../../../dist/apps/Tatuaz.Gateway</OutputPath>
+
     </PropertyGroup>
 
     <ItemGroup>
