@@ -9,25 +9,15 @@ else:
     gateway_dockerfile = '../../apps/Tatuaz.Gateway.Api/Dockerfile'
 
 docker_build(
-    'tatuaz/gateway',
-    '../../',
-    entrypoint=['dotnet', 'Tatuaz.Gateway.Api.dll'],
-    dockerfile=gateway_dockerfile,
-    only='apps/Tatuaz.Gateway.Api',
+    'tatuaz-main',
+    context='../../',
+    dockerfile='docker/Dockerfile.main',
+    ignore=['node_modules', 'dist', 'infrastructure'],
     live_update=[
-        sync('../../apps/Tatuaz.Gateway.Api/out', '/app/out'),
-    ],
-)
+        sync('../../', '/app'),
 
-docker_build(
-    'tatuaz/web',
-    '../../',
-    entrypoint=['npm', 'start'],
-    dockerfile='../../apps/web/Dockerfile',
-    only=['apps/web', 'dist/apps/web'],
-    live_update=[
-        sync('../../apps/web/out', '/app/out'),
-    ],
+        run('npm i', trigger=['../../package-lock.json']),
+    ]
 )
 
 k8s_yaml([
@@ -41,6 +31,6 @@ k8s_yaml([
 ])
 
 k8s_resource('gateway', port_forwards='8080:80', labels='backend')
-k8s_resource('web', port_forwards='3333:3333', labels='frontend')
+k8s_resource('web', port_forwards='4200:4200', labels='frontend')
 k8s_resource('rabbitmq', port_forwards=['5672:5672', '15672:15672'], labels='backend')
 k8s_resource('postgresql', port_forwards='5432:5432', labels='backend')

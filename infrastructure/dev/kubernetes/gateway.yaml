@@ -13,7 +13,8 @@ spec:
         app: gateway
     spec:
       containers:
-      - name: gateway
-        image: tatuaz/gateway
-        ports:
-        - containerPort: 80
+        - name: gateway
+          image: tatuaz-main
+          command: ['npx', 'nx', 'run', 'Tatuaz.Gateway.Api:serve']
+          ports:
+            - containerPort: 80

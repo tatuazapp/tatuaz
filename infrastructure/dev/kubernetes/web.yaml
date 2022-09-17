@@ -13,7 +13,8 @@ spec:
         app: web
     spec:
       containers:
-      - name: web
-        image: tatuaz/web
-        ports:
-        - containerPort: 3333
+        - name: web
+          image: tatuaz-main
+          command: ['npx', 'nx', 'run', 'web:serve']
+          ports:
+            - containerPort: 4200

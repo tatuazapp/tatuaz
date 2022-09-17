@@ -13,8 +13,8 @@ spec:
         app: rabbitmq
     spec:
       containers:
-      - name: rabbitmq
-        image: rabbitmq:3-management
+        - name: rabbitmq
+          image: rabbitmq:3-management
       ports:
-      - containerPort: 5672
-      - containerPort: 15672
+        - containerPort: 5672
+        - containerPort: 15672
