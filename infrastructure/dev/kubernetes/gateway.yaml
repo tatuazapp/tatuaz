@@ -18,3 +18,6 @@ spec:
           command: ['npx', 'nx', 'run', 'Tatuaz.Gateway.Api:serve']
           ports:
             - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: gateway-config-map
