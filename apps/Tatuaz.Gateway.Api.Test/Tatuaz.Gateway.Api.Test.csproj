@@ -10,7 +10,6 @@
     
     <IsPackable>false</IsPackable>
     
-    <OutputPath>../../dist/apps/Tatuaz.Gateway.Api.Test</OutputPath>
   </PropertyGroup>
   
   <ItemGroup>
@@ -40,10 +39,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Tatuaz.Gateway.Api\Tatuaz.Gateway.Api.csproj" />
   </ItemGroup>
-  
-  <Target Name="CheckNxModuleBoundaries" BeforeTargets="Build">
-    
-    <Exec Command="node ../../node_modules/@nx-dotnet/core/src/tasks/check-module-boundaries.js -p Tatuaz.Gateway.Api.Test" />
-    
-  </Target>
 </Project>

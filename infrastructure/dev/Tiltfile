@@ -1,8 +1,18 @@
+# use tilt up -- --mode 
+config.define_bool('debug')
+cfg = config.parse()
+debug = cfg.get('debug', False)
+
+if debug == True:
+    gateway_dockerfile = '../../apps/Tatuaz.Gateway.Api/Dockerfile.Debug'
+else:
+    gateway_dockerfile = '../../apps/Tatuaz.Gateway.Api/Dockerfile'
+
 docker_build(
     'tatuaz/gateway',
     '../../',
     entrypoint=['dotnet', 'Tatuaz.Gateway.Api.dll'],
-    dockerfile='../../apps/Tatuaz.Gateway.Api/Dockerfile',
+    dockerfile=gateway_dockerfile,
     only='apps/Tatuaz.Gateway.Api',
     live_update=[
         sync('../../apps/Tatuaz.Gateway.Api/out', '/app/out'),
@@ -30,7 +40,7 @@ k8s_yaml([
     'kubernetes/postgresql-config-map.yaml',
 ])
 
-k8s_resource('gateway', port_forwards='8080:80')
-k8s_resource('web', port_forwards='3333:3333')
-k8s_resource('rabbitmq', port_forwards=['5672:5672', '15672:15672'])
-k8s_resource('postgresql', port_forwards='5432:5432')
+k8s_resource('gateway', port_forwards='8080:80', labels='backend')
+k8s_resource('web', port_forwards='3333:3333', labels='frontend')
+k8s_resource('rabbitmq', port_forwards=['5672:5672', '15672:15672'], labels='backend')
+k8s_resource('postgresql', port_forwards='5432:5432', labels='backend')
