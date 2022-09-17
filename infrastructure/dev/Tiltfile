@@ -1,3 +1,13 @@
+# use tilt up -- --mode 
+config.define_bool('debug')
+cfg = config.parse()
+debug = cfg.get('debug', False)
+
+if debug == True:
+    gateway_dockerfile = '../../apps/Tatuaz.Gateway.Api/Dockerfile.Debug'
+else:
+    gateway_dockerfile = '../../apps/Tatuaz.Gateway.Api/Dockerfile'
+
 docker_build(
     'tatuaz-main',
     context='../../',
