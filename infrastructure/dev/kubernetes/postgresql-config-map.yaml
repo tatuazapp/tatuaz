@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgresql-config-map
+  namespace: tatuaz-dev
+  labels:
+    app: postgresql
+data:
+  POSTGRES_DB: tatuaz
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres

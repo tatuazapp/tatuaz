@@ -1,0 +1,28 @@
+docker_build(
+    'tatuaz-main',
+    context='../../',
+    dockerfile='docker/Dockerfile.main',
+    ignore=['node_modules', 'dist', 'infrastructure'],
+    live_update=[
+        sync('../../', '/app'),
+
+        run('npm i', trigger=['../../package-lock.json']),
+    ]
+)
+
+k8s_yaml([
+    'kubernetes/tatuaz-dev-namespace.yaml',
+    'kubernetes/web.yaml',
+    'kubernetes/gateway.yaml',
+    'kubernetes/gateway-config-map.yaml',
+    'kubernetes/rabbitmq.yaml',
+    'kubernetes/postgresql.yaml',
+    'kubernetes/postgresql-volume.yaml',
+    'kubernetes/postgresql-volume-claim.yaml',
+    'kubernetes/postgresql-config-map.yaml',
+])
+
+k8s_resource('gateway', port_forwards='8080:80', labels='backend')
+k8s_resource('web', port_forwards='4200:4200', labels='frontend')
+k8s_resource('rabbitmq', port_forwards=['5672:5672', '15672:15672'], labels='backend')
+k8s_resource('postgresql', port_forwards='5432:5432', labels='backend')

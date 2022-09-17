@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: tatuaz-dev
+spec:
+  selector:
+    matchLabels:
+      app: web
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: tatuaz-main
+          command: ['npx', 'nx', 'run', 'web:serve']
+          ports:
+            - containerPort: 4200
