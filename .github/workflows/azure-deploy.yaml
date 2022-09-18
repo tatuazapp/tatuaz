@@ -60,20 +60,18 @@ jobs:
     steps:
         - name: Install and configure kubectl
           run: |
-          VERSION=$(curl --silent https://storage.googleapis.com/kubernetes-release/release/stable.txt)
-          curl https://storage.googleapis.com/kubernetes-release/release/$VERSION/bin/linux/amd64/kubectl \
-              --progress-bar \
-              --location \
-              --remote-name
-          chmod +x kubectl
-          sudo mv kubectl /usr/local/bin/
+            VERSION=$(curl --silent https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+            curl https://storage.googleapis.com/kubernetes-release/release/$VERSION/bin/linux/amd64/kubectl \
+                --progress-bar \
+                --location \
+                --remote-name
+            chmod +x kubectl
+            sudo mv kubectl /usr/local/bin/
         - name: Login to azure
         - uses: azure/login@v1
           with:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
         - name: Initialize kube config
-          run: |
-          az aks get-credentials --resource-group tatuaz-test --name tatuaz-test-k8s
+          run: az aks get-credentials --resource-group tatuaz-test --name tatuaz-test-k8s
         - name: Destroy old pods
-          run: |
-          kubectl delete --all pods --namespace=tatuaz-test
+          run: kubectl delete --all pods --namespace=tatuaz-test
