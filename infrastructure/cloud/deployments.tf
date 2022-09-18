@@ -4,10 +4,11 @@ resource "kubernetes_deployment" "tatuaz-test-gateway" {
     labels = {
       app = "gateway"
     }
+    namespace = kubernetes_namespace.tatuaz-test.metadata[0].name
   }
 
   spec {
-    replicas = 1
+    replicas = 2
 
     selector {
       match_labels = {
@@ -23,9 +24,12 @@ resource "kubernetes_deployment" "tatuaz-test-gateway" {
       }
 
       spec {
+        termination_grace_period_seconds = 30
+
         container {
-          image = "tatuazapptestacr.azurecr.io/tatuaz/gateway:latest"
-          name  = "gateway-prod"
+          name              = "gateway-prod"
+          image             = "tatuazmainacr.azurecr.io/gateway:latest"
+          image_pull_policy = "Always"
 
           resources {
             limits = {
@@ -44,8 +48,8 @@ resource "kubernetes_deployment" "tatuaz-test-gateway" {
               port = 80
             }
 
-            initial_delay_seconds = 3
-            period_seconds        = 3
+            initial_delay_seconds = 15
+            period_seconds        = 15
           }
         }
       }
@@ -59,10 +63,11 @@ resource "kubernetes_deployment" "tatuaz-test-web" {
     labels = {
       app = "web"
     }
+    namespace = kubernetes_namespace.tatuaz-test.metadata[0].name
   }
 
   spec {
-    replicas = 1
+    replicas = 2
 
     selector {
       match_labels = {
@@ -78,9 +83,12 @@ resource "kubernetes_deployment" "tatuaz-test-web" {
       }
 
       spec {
+        termination_grace_period_seconds = 30
+
         container {
-          image = "tatuazapptestacr.azurecr.io/tatuaz/web:latest"
-          name  = "web-prod"
+          name              = "web-prod"
+          image             = "tatuazmainacr.azurecr.io/web:latest"
+          image_pull_policy = "Always"
 
           resources {
             limits = {
@@ -99,8 +107,8 @@ resource "kubernetes_deployment" "tatuaz-test-web" {
               port = 3333
             }
 
-            initial_delay_seconds = 3
-            period_seconds        = 3
+            initial_delay_seconds = 15
+            period_seconds        = 15
           }
         }
       }

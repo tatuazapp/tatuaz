@@ -6,15 +6,15 @@ resource "azurerm_kubernetes_cluster" "tatuaz-test" {
   tags                = var.tags
 
   default_node_pool {
-    name            = var.cluster_configuration.name
-    node_count      = var.cluster_configuration.node_count
-    vm_size         = var.cluster_configuration.vm_size
-    os_disk_size_gb = var.cluster_configuration.os_disk_size_gb
+    name            = "pool1"
+    node_count      = 1
+    vm_size         = "Standard_B2s"
+    os_disk_size_gb = 32
   }
 
   service_principal {
-    client_id     = var.aks_service_principal_app_id
-    client_secret = var.aks_service_principal_client_secret
+    client_id     = var.az_principal.app_id
+    client_secret = var.az_principal.client_secret
   }
 }
 
