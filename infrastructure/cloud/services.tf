@@ -11,6 +11,7 @@ resource "kubernetes_service" "tatuaz-test-gateway" {
       port        = 80
       target_port = 80
     }
+    type = "LoadBalancer"
   }
 }
 
@@ -28,5 +29,6 @@ resource "kubernetes_service" "tatuaz-test-web" {
       port        = 3333
       target_port = 3333
     }
+    type = "LoadBalancer"
   }
 }

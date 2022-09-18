@@ -67,7 +67,13 @@ jobs:
               --remote-name
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/
-          echo ${{ secrets.AZ_KUBE_CONFIG }} | base64 --decode > kubeconfig.yaml
+        - name: Login to azure
+        - uses: azure/login@v1
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+        - name: Initialize kube config
+          run: |
+          az aks get-credentials --resource-group tatuaz-test --name tatuaz-test-k8s
         - name: Destroy old pods
           run: |
           kubectl delete --all pods --namespace=tatuaz-test
