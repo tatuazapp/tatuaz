@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - task/TA-90-azure-deploy
 
 jobs:
   # build-push-web:
