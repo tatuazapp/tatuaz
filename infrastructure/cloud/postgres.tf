@@ -1,4 +1,4 @@
-resource "azurerm_postgresql_server" "tatuaz-test" {
+resource "azurerm_postgresql_server" "backend" {
   name                = "${var.prefix}-postgres"
   location            = var.zone
   resource_group_name = azurerm_resource_group.tatuaz-test.name
@@ -15,7 +15,7 @@ resource "azurerm_postgresql_server" "tatuaz-test" {
   geo_redundant_backup_enabled = false
   auto_grow_enabled            = false
 
-  public_network_access_enabled = true
-  ssl_enforcement_enabled       = true
+  public_network_access_enabled    = true
+  ssl_enforcement_enabled          = true
   ssl_minimal_tls_version_enforced = "TLS1_2"
 }

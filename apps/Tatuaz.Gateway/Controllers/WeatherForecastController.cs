@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Tatuaz.Gateway.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api")]
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries =

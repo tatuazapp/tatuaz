@@ -57,20 +57,20 @@ jobs:
     needs: [build-push-gateway] #, build-push-web]
     runs-on: ubuntu-latest
     steps:
-        - name: Install and configure kubectl
-          run: |
-            VERSION=$(curl --silent https://storage.googleapis.com/kubernetes-release/release/stable.txt)
-            curl https://storage.googleapis.com/kubernetes-release/release/$VERSION/bin/linux/amd64/kubectl \
-                --progress-bar \
-                --location \
-                --remote-name
-            chmod +x kubectl
-            sudo mv kubectl /usr/local/bin/
-        - name: Log in with Azure
-          uses: azure/login@v1
-          with:
-            creds: '{"clientId":"${{ secrets.AZ_MAIN_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_MAIN_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZ_MAIN_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZ_MAIN_TENANT_ID }}"}'
-        - name: Initialize kube config
-          run: az aks get-credentials --resource-group tatuaz-test --name tatuaz-test-k8s
-        - name: Destroy old pods
-          run: kubectl delete --all pods --namespace=tatuaz-test
+      - name: Install and configure kubectl
+        run: |
+          VERSION=$(curl --silent https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+          curl https://storage.googleapis.com/kubernetes-release/release/$VERSION/bin/linux/amd64/kubectl \
+              --progress-bar \
+              --location \
+              --remote-name
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+      - name: Log in with Azure
+        uses: azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.AZ_MAIN_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_MAIN_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZ_MAIN_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZ_MAIN_TENANT_ID }}"}'
+      - name: Initialize kube config
+        run: az aks get-credentials --resource-group tatuaz-test --name tatuaz-test-k8s
+      - name: Destroy old pods
+        # run: kubectl delete --all pods --namespace=tatuaz-test

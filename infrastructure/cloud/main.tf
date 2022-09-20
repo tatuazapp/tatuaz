@@ -1,4 +1,3 @@
-# Configure the Azure provider
 terraform {
   required_providers {
     azurerm = {
@@ -8,6 +7,10 @@ terraform {
     kubernetes = {
       source  = "hashicorp/kubernetes"
       version = ">= 2.0.0"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "2.6.0"
     }
   }
 
