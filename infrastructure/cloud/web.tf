@@ -8,7 +8,7 @@ resource "kubernetes_deployment" "web" {
   }
 
   spec {
-    replicas = 1
+    replicas = 2
 
     selector {
       match_labels = {
@@ -32,7 +32,7 @@ resource "kubernetes_deployment" "web" {
           image             = "tatuazmainacr.azurecr.io/web:latest"
           image_pull_policy = "Always"
           port {
-            container_port = 430
+            container_port = 443
           }
 
           resources {
@@ -49,7 +49,7 @@ resource "kubernetes_deployment" "web" {
           liveness_probe {
             http_get {
               path = "/"
-              port = 430
+              port = 443
             }
 
             initial_delay_seconds = 15
@@ -71,8 +71,8 @@ resource "kubernetes_service" "web" {
       app = "web"
     }
     port {
-      port        = 430
-      target_port = 430
+      port        = 443
+      target_port = 443
     }
   }
 }

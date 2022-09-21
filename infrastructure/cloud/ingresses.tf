@@ -24,7 +24,7 @@ resource "kubernetes_ingress_v1" "tatuaz-test" {
             service {
               name = kubernetes_service.web.metadata[0].name
               port {
-                number = 430
+                number = 443
               }
             }
           }
@@ -37,7 +37,7 @@ resource "kubernetes_ingress_v1" "tatuaz-test" {
             service {
               name = kubernetes_service.gateway.metadata[0].name
               port {
-                number = 430
+                number = 443
               }
             }
           }

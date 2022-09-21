@@ -8,7 +8,7 @@ resource "kubernetes_deployment" "gateway" {
   }
 
   spec {
-    replicas = 1
+    replicas = 2
 
     selector {
       match_labels = {
@@ -37,8 +37,8 @@ resource "kubernetes_deployment" "gateway" {
 
           resources {
             limits = {
-              cpu    = "1"
-              memory = "1024Mi"
+              cpu    = "500m"
+              memory = "512Mi"
             }
             requests = {
               cpu    = "250m"
@@ -71,7 +71,7 @@ resource "kubernetes_service" "gateway" {
       app = "gateway"
     }
     port {
-      port        = 430
+      port        = 443
       target_port = 80
     }
   }

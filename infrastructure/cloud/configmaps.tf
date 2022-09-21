@@ -1,4 +1,4 @@
-resource "kubernetes_config_map" "network" {
+resource "kubernetes_config_map" "main" {
   metadata {
     name      = "general-configmap"
     namespace = kubernetes_namespace.tatuaz-test.metadata[0].name
