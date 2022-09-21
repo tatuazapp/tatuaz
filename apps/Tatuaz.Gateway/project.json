@@ -1,11 +1,11 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "apps/Tatuaz.Gateway.Api.Test",
+  "sourceRoot": "apps/Tatuaz.Gateway",
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["dist/apps/Tatuaz.Gateway.Api.Test"],
+      "outputs": ["dist/apps/Tatuaz.Gateway"],
       "options": {
         "configuration": "Debug",
         "noDependencies": true
@@ -16,9 +16,16 @@
         }
       }
     },
-    "test": {
-      "executor": "@nx-dotnet/core:test",
-      "options": {}
+    "serve": {
+      "executor": "@nx-dotnet/core:serve",
+      "options": {
+        "configuration": "Debug"
+      },
+      "configurations": {
+        "production": {
+          "configuration": "Release"
+        }
+      }
     },
     "lint": {
       "executor": "@nx-dotnet/core:format"

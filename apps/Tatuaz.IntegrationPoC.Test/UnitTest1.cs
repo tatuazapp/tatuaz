@@ -1,4 +1,4 @@
-namespace Tatuaz.TatuazGatewayApi.Test;
+namespace Tatuaz.IntegrationPoC.Test;
 
 public class UnitTest1
 {
