@@ -73,4 +73,6 @@ jobs:
       - name: Initialize kube config
         run: az aks get-credentials --resource-group tatuaz-test --name tatuaz-test-k8s
       - name: Destroy old pods
-        # run: kubectl delete --all pods --namespace=tatuaz-test
+        run: |
+          kubectl delete pods  --namespace=tatuaz-test -l name=web-pod
+          kubectl delete pods  --namespace=tatuaz-test -l name=gateway-pod
