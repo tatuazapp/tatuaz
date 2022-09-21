@@ -1,5 +1,5 @@
 resource "helm_release" "nginx" {
-  name       = "main-ingress-controller"
+  name       = "nginx-controller"
   repository = "https://kubernetes.github.io/ingress-nginx"
   chart      = "ingress-nginx"
   namespace  = kubernetes_namespace.tatuaz-test.metadata[0].name
@@ -16,7 +16,7 @@ resource "helm_release" "nginx" {
 
   set {
     name  = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/azure-dns-label-name\""
-    value = "tatuaz.app"
+    value = "tatuaz-test-dns-label"
   }
 }
 

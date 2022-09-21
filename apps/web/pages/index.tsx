@@ -18,7 +18,7 @@ const Index: NextPage = () => (
         <div id="welcome">
           <h1>
             <span> Hello there, </span>
-            Welcome web 👋
+            Welcome to tatuaz.app 👋
           </h1>
         </div>
 
