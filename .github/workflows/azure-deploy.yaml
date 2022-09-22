@@ -1,0 +1,78 @@
+name: Azure deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-push-web:
+    name: Build and push web image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Log into registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.ACR_ENDPOINT }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build & Push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: apps/web/Dockerfile
+          push: true
+          tags: ${{ secrets.ACR_ENDPOINT }}/web:latest
+          cache-from: type=registry,ref=${{ secrets.ACR_ENDPOINT }}/web:buildcache
+          cache-to: type=registry,ref=${{ secrets.ACR_ENDPOINT }}/web:buildcache,mode=max
+  build-push-gateway:
+    name: Build and push gateway image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Log into registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.ACR_ENDPOINT }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build & Push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: apps/Tatuaz.Gateway/Dockerfile
+          push: true
+          tags: ${{ secrets.ACR_ENDPOINT }}/gateway:latest
+          cache-from: type=registry,ref=${{ secrets.ACR_ENDPOINT }}/gateway:buildcache
+          cache-to: type=registry,ref=${{ secrets.ACR_ENDPOINT }}/gateway:buildcache,mode=max
+  destroy-all-pods:
+    name: Destroy all pods with old images
+    needs: [build-push-gateway, build-push-web]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install and configure kubectl
+        run: |
+          VERSION=$(curl --silent https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+          curl https://storage.googleapis.com/kubernetes-release/release/$VERSION/bin/linux/amd64/kubectl \
+              --progress-bar \
+              --location \
+              --remote-name
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+      - name: Log in with Azure
+        uses: azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.AZ_MAIN_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_MAIN_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZ_MAIN_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZ_MAIN_TENANT_ID }}"}'
+      - name: Initialize kube config
+        run: az aks get-credentials --resource-group tatuaz-test --name tatuaz-test-k8s
+      - name: Destroy old pods
+        run: |
+          kubectl delete pods  --namespace=tatuaz-test -l name=web-pod
+          kubectl delete pods  --namespace=tatuaz-test -l name=gateway-pod
