@@ -1,5 +1,5 @@
-resource "azurerm_postgresql_server" "backend" {
-  name                = "${var.prefix}-postgres"
+resource "azurerm_postgresql_server" "main" {
+  name                = "${var.prefix}-db-server"
   location            = var.zone
   resource_group_name = azurerm_resource_group.tatuaz-test.name
   tags                = var.tags

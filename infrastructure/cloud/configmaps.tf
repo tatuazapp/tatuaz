@@ -5,6 +5,6 @@ resource "kubernetes_config_map" "main" {
   }
 
   data = {
-    db_host = "idk:5432"
+    db_host = azurerm_postgresql_server.main.fqdn
   }
 }
