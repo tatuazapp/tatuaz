@@ -6,6 +6,7 @@
     "gateway-test": "apps/Tatuaz.Gateway.Test",
     "integration-poc": "apps/Tatuaz.IntegrationPoC",
     "integration-poc-test": "apps/Tatuaz.IntegrationPoC.Test",
+    "ui": "libs/ui",
     "web": "apps/web",
     "web-e2e": "apps/web-e2e"
   }
