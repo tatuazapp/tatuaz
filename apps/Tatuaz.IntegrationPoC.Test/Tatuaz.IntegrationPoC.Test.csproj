@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        
+
         <TargetFramework>net6.0</TargetFramework>
 
         <ImplicitUsings>enable</ImplicitUsings>
@@ -10,7 +10,7 @@
 
         <IsPackable>false</IsPackable>
 
-        <OutputPath>../../../dist/apps/Tatuaz.IntegrationPoC</OutputPath>
+        <OutputPath>../../dist/apps/Tatuaz.IntegrationPoC</OutputPath>
 
     </PropertyGroup>
 

@@ -8,14 +8,16 @@
 
         <ImplicitUsings>enable</ImplicitUsings>
 
-        <OutputPath>../../../dist/apps/Tatuaz.Gateway</OutputPath>
+        <OutputPath>../../dist/apps/Tatuaz.Gateway</OutputPath>
+
+        <DocumentationFile>Tatuaz.Gateway.xml</DocumentationFile>
 
     </PropertyGroup>
 
     <ItemGroup>
 
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3"/>
 
     </ItemGroup>
-    
+
 </Project>
