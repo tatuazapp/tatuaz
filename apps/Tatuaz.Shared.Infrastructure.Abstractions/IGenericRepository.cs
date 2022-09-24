@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-
 using Tatuaz.Shared.Domain.Models.Common;
 using Tatuaz.Shared.Domain.Models.Hist.Common;
 

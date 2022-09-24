@@ -33,7 +33,6 @@ public abstract class GenericToHistEntityTest<TEntity, THistEntity, TId>
             Assert.True(present, $"{entityProperty.Name} is not present in {typeof(THistEntity).Name}");
         }
     }
-
     [Fact]
     public void ShouldCorrectlyConvertEntityToHistEntity()
     {
@@ -53,7 +52,6 @@ public abstract class GenericToHistEntityTest<TEntity, THistEntity, TId>
             }
         }
     }
-
     [Fact]
     public void ShouldCorrectlySetHistEntityHistFrom()
     {

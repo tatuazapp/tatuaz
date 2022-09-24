@@ -16,14 +16,12 @@ public class ConventionTest
                 .GetTypes()
                 .Where(x => typeof(Entity<,>).IsAssignableFrom(x))
                 .ToList();
-
             _histEntityTypes = typeof(HistEntity<>)
                 .Assembly
                 .GetTypes()
                 .Where(x => typeof(HistEntity<>).IsAssignableFrom(x))
                 .ToList();
         }
-
         [Fact]
         public void ShouldHistCounterpartsExistWithCorrectName()
         {
