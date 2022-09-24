@@ -7,8 +7,7 @@
       "executor": "@nx-dotnet/core:build",
       "outputs": ["dist/apps/Tatuaz.Gateway.Test"],
       "options": {
-        "configuration": "Debug",
-        "noDependencies": true
+        "configuration": "Debug"
       },
       "configurations": {
         "production": {

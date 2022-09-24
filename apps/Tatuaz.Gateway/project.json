@@ -8,8 +8,7 @@
       "outputs": ["dist/apps/Tatuaz.Gateway"],
       "defaultConfiguration": "production",
       "options": {
-        "configuration": "Debug",
-        "noDependencies": true
+        "configuration": "Debug"
       },
       "configurations": {
         "development": {
