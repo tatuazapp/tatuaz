@@ -10,7 +10,7 @@
 
         <IsPackable>false</IsPackable>
 
-        <OutputPath>../../../dist/apps/Tatuaz.IntegrationPoC</OutputPath>
+        <OutputPath>../../dist/apps/Tatuaz.IntegrationPoC</OutputPath>
 
     </PropertyGroup>
 

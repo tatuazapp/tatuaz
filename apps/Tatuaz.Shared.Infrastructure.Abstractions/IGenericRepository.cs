@@ -21,23 +21,22 @@ public interface IGenericRepository<TEntity, THistEntity, in TId>
     Task<bool> ExistsByIdAsync(TId id, DateTime asOf,
         CancellationToken cancellationToken = default);
 
-    // Change for custom expressions supporting optimized includes
-    Task<IEnumerable<TEntity>> GetByPredicateAsync(Expression<Func<TEntity, bool>> predicate, bool track = false,
+    Task<IEnumerable<TEntity>> GetBySpecificationAsync(ISpecification<TEntity> specification,
         CancellationToken cancellationToken = default);
 
-    Task<IEnumerable<TEntity>> GetByPredicateAsync(Expression<Func<TEntity, bool>> predicate, DateTime asOf,
+    Task<IEnumerable<TEntity>> GetByPredicateAsync(ISpecification<TEntity> specification, DateTime asOf,
         CancellationToken cancellationToken = default);
 
-    Task<bool> ExistsByPredicateAsync(Expression<Func<TEntity, bool>> predicate,
+    Task<bool> ExistsByPredicateAsync(ISpecification<TEntity> specification,
         CancellationToken cancellationToken = default);
 
-    Task<bool> ExistsByPredicateAsync(Expression<Func<TEntity, bool>> predicate, DateTime asOf,
+    Task<bool> ExistsByPredicateAsync(ISpecification<TEntity> specification, DateTime asOf,
         CancellationToken cancellationToken = default);
 
-    Task<long> CountByPredicateAsync(Expression<Func<TEntity, bool>> predicate,
+    Task<long> CountByPredicateAsync(ISpecification<TEntity> specification,
         CancellationToken cancellationToken = default);
 
-    Task<long> CountByPredicateAsync(Expression<Func<TEntity, bool>> predicate, DateTime asOf,
+    Task<long> CountByPredicateAsync(ISpecification<TEntity> specification, DateTime asOf,
         CancellationToken cancellationToken = default);
 
     Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
