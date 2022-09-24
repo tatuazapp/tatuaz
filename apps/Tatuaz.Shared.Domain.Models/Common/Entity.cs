@@ -10,8 +10,7 @@ public abstract class Entity<THistEntity, TId>
 
     public virtual HistEntity<TId> ToHistEntity()
     {
-        var histEntity = new THistEntity
-        {
+        var histEntity = new THistEntity {
             Id = Id,
             HistFrom = DateTime.UtcNow,
             HistTo = null
