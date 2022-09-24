@@ -10,7 +10,7 @@
 
         <IsPackable>false</IsPackable>
 
-        <OutputPath>../../../dist/apps/Tatuaz.Gateway.Test</OutputPath>
+        <OutputPath>../../dist/apps/Tatuaz.Gateway.Test</OutputPath>
 
     </PropertyGroup>
 
@@ -41,5 +41,5 @@
     <ItemGroup>
         <ProjectReference Include="..\Tatuaz.Gateway\Tatuaz.Gateway.csproj"/>
     </ItemGroup>
-    
+
 </Project>
