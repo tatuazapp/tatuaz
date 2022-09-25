@@ -7,8 +7,9 @@ public class ConventionTest
 {
     public class HistIntegration
     {
-        private List<Type> _entityTypes;
-        private List<Type> _histEntityTypes;
+        private readonly List<Type> _entityTypes;
+        private readonly List<Type> _histEntityTypes;
+
         public HistIntegration()
         {
             _entityTypes = typeof(Entity<,>)
@@ -22,6 +23,7 @@ public class ConventionTest
                 .Where(x => typeof(HistEntity<>).IsAssignableFrom(x))
                 .ToList();
         }
+
         [Fact]
         public void ShouldHistCounterpartsExistWithCorrectName()
         {

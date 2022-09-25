@@ -7,10 +7,12 @@ public class HistEntity<TId>
 {
     // TODO: add index
     public TId Id { get; set; } = default!;
-    // TODO: set as primary key
-    public Guid HistId { get; set; }
+
+    [Key] public Guid HistId { get; set; }
+
     // TODO: add index
     public DateTime HistFrom { get; set; }
+
     // TODO: add index
     public DateTime? HistTo { get; set; }
 }

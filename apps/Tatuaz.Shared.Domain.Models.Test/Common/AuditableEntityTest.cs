@@ -1,5 +1,6 @@
 ﻿using Tatuaz.Shared.Domain.Models.Common;
 using Tatuaz.Shared.Domain.Models.Hist.Common;
+using Tatuaz.Shared.Domain.Models.Test.Generic;
 
 namespace Tatuaz.Shared.Domain.Models.Test.Common;
 
@@ -31,10 +32,6 @@ public class AuditableEntityTest
 
     public class GuidToHistEntity : GenericToHistEntityTest<BareGuidAuditableEntity, BareGuidHistAuditableEntity, Guid>
     {
-        public GuidToHistEntity() : base(EntityTestData)
-        {
-        }
-
         private static readonly BareGuidAuditableEntity[] EntityTestData =
         {
             new()
@@ -43,17 +40,17 @@ public class AuditableEntityTest
                 CreatedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30881"),
                 CreatedOn = new DateTime(2021, 1, 1),
                 ModifiedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30882"),
-                ModifiedOn = new DateTime(2021, 1, 2),
+                ModifiedOn = new DateTime(2021, 1, 2)
             }
         };
+
+        public GuidToHistEntity() : base(EntityTestData)
+        {
+        }
     }
 
     public class IntToHistEntity : GenericToHistEntityTest<BareIntAuditableEntity, BareIntAuditableHistEntity, int>
     {
-        public IntToHistEntity() : base(EntityTestData)
-        {
-        }
-
         private static readonly BareIntAuditableEntity[] EntityTestData =
         {
             new()
@@ -62,18 +59,18 @@ public class AuditableEntityTest
                 CreatedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30881"),
                 CreatedOn = new DateTime(2021, 1, 1),
                 ModifiedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30882"),
-                ModifiedOn = new DateTime(2021, 1, 2),
+                ModifiedOn = new DateTime(2021, 1, 2)
             }
         };
+
+        public IntToHistEntity() : base(EntityTestData)
+        {
+        }
     }
 
     public class
         StringToHistEntity : GenericToHistEntityTest<BareStringAuditableEntity, BareStringAuditableHistEntity, string>
     {
-        public StringToHistEntity() : base(EntityTestData)
-        {
-        }
-
         private static readonly BareStringAuditableEntity[] EntityTestData =
         {
             new()
@@ -82,8 +79,12 @@ public class AuditableEntityTest
                 CreatedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30881"),
                 CreatedOn = new DateTime(2021, 1, 1),
                 ModifiedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30882"),
-                ModifiedOn = new DateTime(2021, 1, 2),
+                ModifiedOn = new DateTime(2021, 1, 2)
             }
         };
+
+        public StringToHistEntity() : base(EntityTestData)
+        {
+        }
     }
 }

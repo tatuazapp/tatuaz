@@ -1,15 +1,15 @@
 ﻿using Tatuaz.Shared.Domain.Models.Common;
 using Tatuaz.Shared.Domain.Models.Hist.Common;
 
-namespace Tatuaz.Shared.Domain.Models.Test.Common;
+namespace Tatuaz.Shared.Domain.Models.Test.Generic;
 
 public abstract class GenericToHistEntityTest<TEntity, THistEntity, TId>
     where TEntity : Entity<THistEntity, TId>
     where THistEntity : HistEntity<TId>, new()
     where TId : notnull
 {
-    private IEnumerable<TEntity> _testEntities;
-    private TimeSpan _testPrecision = TimeSpan.FromMilliseconds(10);
+    private readonly IEnumerable<TEntity> _testEntities;
+    private readonly TimeSpan _testPrecision = TimeSpan.FromMilliseconds(10);
 
     protected GenericToHistEntityTest(params TEntity[] testEntities)
     {
@@ -33,6 +33,7 @@ public abstract class GenericToHistEntityTest<TEntity, THistEntity, TId>
             Assert.True(present, $"{entityProperty.Name} is not present in {typeof(THistEntity).Name}");
         }
     }
+
     [Fact]
     public void ShouldCorrectlyConvertEntityToHistEntity()
     {
@@ -46,12 +47,14 @@ public abstract class GenericToHistEntityTest<TEntity, THistEntity, TId>
             foreach (var entityProperty in entityProperties)
             {
                 var expected = entityProperty.GetValue(entity);
-                var actual = histEntityProperties.FirstOrDefault(x => x.Name == entityProperty.Name)?.GetValue(histGuidEntity);
+                var actual = histEntityProperties.FirstOrDefault(x => x.Name == entityProperty.Name)
+                    ?.GetValue(histGuidEntity);
 
                 Assert.Equal(expected, actual);
             }
         }
     }
+
     [Fact]
     public void ShouldCorrectlySetHistEntityHistFrom()
     {

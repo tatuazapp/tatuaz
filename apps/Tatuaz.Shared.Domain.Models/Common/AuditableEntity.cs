@@ -2,7 +2,7 @@
 
 namespace Tatuaz.Shared.Domain.Models.Common;
 
-public abstract class AuditableEntity<THistEntity, TId> : Entity<THistEntity, TId>
+public abstract class AuditableEntity<THistEntity, TId> : Entity<THistEntity, TId>, IAuditableEntity
     where THistEntity : HistEntity<TId>, new()
     where TId : notnull
 {
@@ -11,18 +11,27 @@ public abstract class AuditableEntity<THistEntity, TId> : Entity<THistEntity, TI
     public Guid CreatedBy { get; set; }
     public DateTime CreatedOn { get; set; }
 
+    public void UpdateCreationData(Guid userId)
+    {
+        CreatedOn = ModifiedOn = DateTime.UtcNow;
+        CreatedBy = ModifiedBy = userId;
+    }
+
+    public void UpdateModificationData(Guid userId)
+    {
+        ModifiedOn = DateTime.UtcNow;
+        ModifiedBy = userId;
+    }
+
     public override HistEntity<TId> ToHistEntity()
     {
         var histEntity = base.ToHistEntity();
-        if (histEntity is AuditableHistEntity<TId> auditableHistEntity)
-        {
-            auditableHistEntity.ModifiedBy = ModifiedBy;
-            auditableHistEntity.ModifiedOn = ModifiedOn;
-            auditableHistEntity.CreatedBy = CreatedBy;
-            auditableHistEntity.CreatedOn = CreatedOn;
-            return auditableHistEntity;
-        }
+        if (histEntity is not AuditableHistEntity<TId> auditableHistEntity) return histEntity;
+        auditableHistEntity.ModifiedBy = ModifiedBy;
+        auditableHistEntity.ModifiedOn = ModifiedOn;
+        auditableHistEntity.CreatedBy = CreatedBy;
+        auditableHistEntity.CreatedOn = CreatedOn;
+        return auditableHistEntity;
 
-        return histEntity;
     }
 }

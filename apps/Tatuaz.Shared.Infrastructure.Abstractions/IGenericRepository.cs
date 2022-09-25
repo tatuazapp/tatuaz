@@ -2,6 +2,8 @@
 
 using Tatuaz.Shared.Domain.Models.Common;
 using Tatuaz.Shared.Domain.Models.Hist.Common;
+using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
+using Tatuaz.Shared.Infrastructure.Abstractions.Specification;
 
 namespace Tatuaz.Shared.Infrastructure.Abstractions;
 
@@ -25,19 +27,27 @@ public interface IGenericRepository<TEntity, THistEntity, in TId>
     Task<IEnumerable<TEntity>> GetBySpecificationAsync(ISpecification<TEntity> specification,
         CancellationToken cancellationToken = default);
 
-    Task<IEnumerable<TEntity>> GetByPredicateAsync(ISpecification<TEntity> specification, DateTime asOf,
+    Task<IEnumerable<TEntity>> GetBySpecificationAsync(ISpecification<TEntity> specification, DateTime asOf,
         CancellationToken cancellationToken = default);
 
-    Task<bool> ExistsByPredicateAsync(ISpecification<TEntity> specification,
+    Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(ISpecification<TEntity> specification,
+        PagedParams pagedParams,
         CancellationToken cancellationToken = default);
 
-    Task<bool> ExistsByPredicateAsync(ISpecification<TEntity> specification, DateTime asOf,
+    Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(ISpecification<TEntity> specification,
+        PagedParams pagedParams, DateTime asOf,
         CancellationToken cancellationToken = default);
 
-    Task<long> CountByPredicateAsync(ISpecification<TEntity> specification,
+    Task<bool> ExistsByPredicateAsync(Expression<Func<TEntity, bool>> predicate,
         CancellationToken cancellationToken = default);
 
-    Task<long> CountByPredicateAsync(ISpecification<TEntity> specification, DateTime asOf,
+    Task<bool> ExistsByPredicateAsync(Expression<Func<TEntity, bool>> predicate, DateTime asOf,
+        CancellationToken cancellationToken = default);
+
+    Task<long> CountByPredicateAsync(Expression<Func<TEntity, bool>> predicate,
+        CancellationToken cancellationToken = default);
+
+    Task<long> CountByPredicateAsync(Expression<Func<TEntity, bool>> predicate, DateTime asOf,
         CancellationToken cancellationToken = default);
 
     Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
