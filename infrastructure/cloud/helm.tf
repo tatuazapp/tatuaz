@@ -6,17 +6,12 @@ resource "helm_release" "nginx" {
 
   set {
     name  = "controller.replicaCount"
-    value = "2"
+    value = "1"
   }
 
   set {
     name  = "controller.service.externalTrafficPolicy"
     value = "Local"
-  }
-
-  set {
-    name  = "controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/azure-dns-label-name\""
-    value = "tatuaz-test-dns-label"
   }
 }
 
