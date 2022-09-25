@@ -1,19 +1,15 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "apps/Tatuaz.Gateway",
+  "sourceRoot": "apps/Tatuaz.Shared.Infrastructure.Abstractions",
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["dist/apps/Tatuaz.Gateway"],
-      "defaultConfiguration": "production",
+      "outputs": ["dist/apps/Tatuaz.Shared.Infrastructure.Abstractions"],
       "options": {
         "configuration": "Debug"
       },
       "configurations": {
-        "development": {
-          "configuration": "Debug"
-        },
         "production": {
           "configuration": "Release"
         }
@@ -21,20 +17,12 @@
     },
     "serve": {
       "executor": "@nx-dotnet/core:serve",
-      "defaultConfiguration": "production",
       "options": {
-        "configuration": "Debug",
-        "launch-profile": "Production",
-        "noDependencies": true
+        "configuration": "Debug"
       },
       "configurations": {
-        "development": {
-          "configuration": "Debug",
-          "launch-profile": "Development"
-        },
         "production": {
-          "configuration": "Release",
-          "launch-profile": "Production"
+          "configuration": "Release"
         }
       }
     },
