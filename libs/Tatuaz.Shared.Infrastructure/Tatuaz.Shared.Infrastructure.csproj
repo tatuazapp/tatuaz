@@ -8,7 +8,7 @@
 
         <Nullable>enable</Nullable>
 
-        <OutputPath>../../dist/apps/Tatuaz.Shared.Infrastructure</OutputPath>
+        <OutputPath>../../dist/libs/Tatuaz.Shared.Infrastructure</OutputPath>
 
     </PropertyGroup>
 

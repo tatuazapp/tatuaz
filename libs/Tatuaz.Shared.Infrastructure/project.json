@@ -1,11 +1,11 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "application",
-  "sourceRoot": "apps/Tatuaz.Shared.Domain.Models.Test",
+  "projectType": "library",
+  "sourceRoot": "libs/Tatuaz.Shared.Infrastructure",
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["dist/apps/Tatuaz.Shared.Domain.Models.Test"],
+      "outputs": ["dist/libs/Tatuaz.Shared.Infrastructure"],
       "options": {
         "configuration": "Debug"
       },
@@ -14,10 +14,6 @@
           "configuration": "Release"
         }
       }
-    },
-    "test": {
-      "executor": "@nx-dotnet/core:test",
-      "options": {}
     },
     "lint": {
       "executor": "@nx-dotnet/core:format"

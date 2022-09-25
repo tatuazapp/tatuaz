@@ -10,15 +10,14 @@
 
         <IsPackable>false</IsPackable>
 
-        <OutputPath>../../dist/apps/Tatuaz.Shared.Infrastructure.Test</OutputPath>
-
+        <OutputPath>../../dist/libs/Tatuaz.Shared.Domain.Models.Test</OutputPath>
     </PropertyGroup>
 
     <ItemGroup>
 
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0"/>
 
-        <PackageReference Include="xunit" Version="2.4.1"/>
+        <PackageReference Include="xunit" Version="2.4.2"/>
 
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
 
@@ -39,9 +38,7 @@
     </ItemGroup>
 
     <ItemGroup>
-
-        <ProjectReference Include="..\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj"/>
-
+        <ProjectReference Include="..\Tatuaz.Shared.Domain.Models\Tatuaz.Shared.Domain.Models.csproj"/>
     </ItemGroup>
 
 </Project>

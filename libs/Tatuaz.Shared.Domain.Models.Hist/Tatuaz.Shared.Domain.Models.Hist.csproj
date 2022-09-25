@@ -8,12 +8,8 @@
 
         <Nullable>enable</Nullable>
 
-        <OutputPath>../../dist/apps/Tatuaz.Shared.Domain.Models</OutputPath>
+        <OutputPath>../../dist/libs/Tatuaz.Shared.Domain.Models.Hist</OutputPath>
 
     </PropertyGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Tatuaz.Shared.Domain.Models.Hist\Tatuaz.Shared.Domain.Models.Hist.csproj"/>
-    </ItemGroup>
 
 </Project>
