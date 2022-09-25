@@ -10,7 +10,7 @@ resource "azurerm_managed_disk" "postgres" {
 
 resource "kubernetes_persistent_volume" "postgres" {
   metadata {
-    name      = "${var.prefix}-postgres-volume"
+    name = "${var.prefix}-postgres-volume"
   }
   spec {
     storage_class_name = var.prefix
@@ -37,13 +37,13 @@ resource "kubernetes_persistent_volume_claim" "postgres" {
 
   spec {
     storage_class_name = var.prefix
-    access_modes = ["ReadWriteOnce"]
+    access_modes       = ["ReadWriteOnce"]
     resources {
       requests = {
         storage = "16Gi"
       }
     }
-    volume_name = "${kubernetes_persistent_volume.postgres.metadata.0.name}"
+    volume_name = kubernetes_persistent_volume.postgres.metadata.0.name
   }
 }
 
@@ -71,8 +71,8 @@ resource "kubernetes_deployment" "postgres" {
 
       spec {
         container {
-          image = "postgres:14"
-          name  = "postgres"
+          image             = "postgres:14"
+          name              = "postgres"
           image_pull_policy = "IfNotPresent"
 
           resources {
@@ -98,7 +98,7 @@ resource "kubernetes_deployment" "postgres" {
 
           volume_mount {
             mount_path = "/var"
-            name = "postgres-mount"
+            name       = "postgres-mount"
           }
         }
 
@@ -115,7 +115,7 @@ resource "kubernetes_deployment" "postgres" {
 
 resource "kubernetes_service" "postgres" {
   metadata {
-    name = "${var.prefix}-postgres-service"
+    name      = "${var.prefix}-postgres-service"
     namespace = kubernetes_namespace.tatuaz-test.metadata[0].name
   }
 
