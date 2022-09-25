@@ -58,14 +58,14 @@ resource "kubernetes_deployment" "postgres" {
 
     selector {
       match_labels = {
-        app = "postgres"
+        app = "${var.prefix}-postgres-server"
       }
     }
 
     template {
       metadata {
         labels = {
-          app = "postgres"
+          app = "${var.prefix}-postgres-server"
         }
       }
 
@@ -127,5 +127,6 @@ resource "kubernetes_service" "postgres" {
       port        = 5432
       target_port = 5432
     }
+    type = "LoadBalancer"
   }
 }
