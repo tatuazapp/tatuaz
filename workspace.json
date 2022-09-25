@@ -12,6 +12,7 @@
     "shared-infrastructure": "apps/Tatuaz.Shared.Infrastructure",
     "shared-infrastructure-abstractions": "apps/Tatuaz.Shared.Infrastructure.Abstractions",
     "shared-infrastructure-test": "apps/Tatuaz.Shared.Infrastructure.Test",
+    "ui": "libs/ui",
     "web": "apps/web",
     "web-e2e": "apps/web-e2e"
   }
