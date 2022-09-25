@@ -8,7 +8,7 @@ resource "kubernetes_deployment" "gateway" {
   }
 
   spec {
-    replicas = 2
+    replicas = 1
 
     selector {
       match_labels = {
