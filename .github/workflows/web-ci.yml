@@ -27,6 +27,7 @@ jobs:
       number-of-agents: 2
   tests-with-npgsql:
     name: Nx Cloud - Postgres Tests
+    needs: main
     runs-on: ubuntu-latest
     services:
       postgres:
