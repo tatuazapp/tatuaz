@@ -8,7 +8,6 @@ public static class ExpressionUtils
         Expression<Func<TFromModel, TFromProperty>> expression)
     {
         Expression converted = Expression.Convert(expression.Body, typeof(TToProperty));
-
         return Expression.Lambda<Func<TToModel, TToProperty>>(converted, expression.Parameters);
     }
 }

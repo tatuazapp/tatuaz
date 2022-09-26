@@ -1,34 +1,32 @@
 ﻿using System.Linq.Expressions;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 using Tatuaz.Shared.Infrastructure.Abstractions.Specification;
-using Tatuaz.Shared.Infrastructure.Exceptions;
-using Tatuaz.Shared.Infrastructure.Utils;
-
-using Z.EntityFramework.Plus;
 
 namespace Tatuaz.Shared.Infrastructure.Specification;
 
 public class FullSpecification<TEntity> : ISpecification<TEntity>
     where TEntity : class
 {
-    protected bool BlockInefficientQueries;
-    protected Expression<Func<TEntity, bool>> FilteringPredicate;
-    protected List<(Expression<Func<object, object>> navigationPropertyPath, bool parent)> Includes;
-    protected Expression<Func<TEntity, object>>[] OrderingPredicates;
-    protected bool ReverseOrdering;
-    protected bool Tracking;
+    private readonly List<Func<IQueryable<TEntity>, IQueryable<TEntity>>> _customs;
+    private readonly List<Expression<Func<TEntity, bool>>> _filteringPredicates;
+    private readonly List<Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>> _includes;
+    private readonly List<Expression<Func<TEntity, object>>> _orderingPredicates;
 
     public FullSpecification()
     {
-        Tracking = false;
-        FilteringPredicate = x => true;
-        OrderingPredicates = Array.Empty<Expression<Func<TEntity, object>>>();
-        ReverseOrdering = false;
-        Includes = new List<(Expression<Func<object, object>> navigationPropertyPath, bool parent)>();
-        BlockInefficientQueries = true;
+        TrackingStrategy = TrackingStrategy.NoTracking;
+        OrderDirection = OrderDirection.Ascending;
+        _filteringPredicates = new List<Expression<Func<TEntity, bool>>>();
+        _orderingPredicates = new List<Expression<Func<TEntity, object>>>();
+        _includes = new List<Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>>();
+        _customs = new List<Func<IQueryable<TEntity>, IQueryable<TEntity>>>();
     }
+
+    public TrackingStrategy TrackingStrategy { get; set; }
+    public OrderDirection OrderDirection { get; set; }
 
     public IQueryable<TEntity> Apply(IQueryable<TEntity> query)
     {
@@ -36,105 +34,79 @@ public class FullSpecification<TEntity> : ISpecification<TEntity>
         query = ApplyFiltering(query);
         query = ApplyOrdering(query);
         query = ApplyIncludes(query);
+        query = ApplyCustoms(query);
         return query;
     }
 
-    public FullSpecification<TEntity> UseTracking(bool value = true)
+    public FullSpecification<TEntity> AddFilter(Expression<Func<TEntity, bool>> predicate)
     {
-        Tracking = value;
+        _filteringPredicates.Add(predicate);
         return this;
     }
 
-    public FullSpecification<TEntity> UseFiltering(Expression<Func<TEntity, bool>> predicate)
+    public FullSpecification<TEntity> AddOrder(Expression<Func<TEntity, object>> predicate)
     {
-        FilteringPredicate = predicate;
+        _orderingPredicates.Add(predicate);
         return this;
     }
 
-    public FullSpecification<TEntity> UseOrdering(params Expression<Func<TEntity, object>>[] predicates)
+    public FullSpecification<TEntity> UseInclude(
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> predicate)
     {
-        OrderingPredicates = predicates;
-        ReverseOrdering = false;
+        _includes.Add(predicate);
         return this;
     }
 
-    public FullSpecification<TEntity> UseReverseOrdering(params Expression<Func<TEntity, object>>[] predicates)
+    public FullSpecification<TEntity> UseCustom(
+        Func<IQueryable<TEntity>, IQueryable<TEntity>> predicate)
     {
-        OrderingPredicates = predicates;
-        ReverseOrdering = true;
+        _customs.Add(predicate);
         return this;
-    }
-
-    public IncludableFullSpecification<TEntity, TProperty> Include<TProperty>(
-        Expression<Func<TEntity, TProperty>> navigationPropertyPath)
-    {
-        Includes.Add((ExpressionUtils.Cast<TEntity, object, TProperty, object>(navigationPropertyPath), false));
-        return AsIncludeable<TProperty>();
-    }
-
-    public FullSpecification<TEntity> AllowInefficientQueries()
-    {
-        BlockInefficientQueries = false;
-        return this;
-    }
-
-    protected IncludableFullSpecification<TEntity, TProperty> AsIncludeable<TProperty>()
-    {
-        var includable = new IncludableFullSpecification<TEntity, TProperty>();
-        includable.Tracking = Tracking;
-        includable.FilteringPredicate = FilteringPredicate;
-        includable.OrderingPredicates = OrderingPredicates;
-        includable.ReverseOrdering = ReverseOrdering;
-        includable.Includes = Includes;
-        return includable;
     }
 
     private IQueryable<TEntity> ApplyTracking(IQueryable<TEntity> query)
     {
-        if (!Tracking) query = query.AsNoTracking();
-
+        if (TrackingStrategy == TrackingStrategy.NoTracking)
+            query = query.AsNoTracking();
         return query;
     }
 
     private IQueryable<TEntity> ApplyFiltering(IQueryable<TEntity> query)
     {
-        query = query.Where(FilteringPredicate);
-
+        if (_filteringPredicates.Any())
+            query = _filteringPredicates
+                .Aggregate(query,
+                    (current, predicate)
+                        => current.Where(predicate));
         return query;
     }
 
     private IQueryable<TEntity> ApplyOrdering(IQueryable<TEntity> query)
     {
-        if (OrderingPredicates.Length > 0)
-            query = ReverseOrdering
-                ? query.OrderByDescending(OrderingPredicates[0])
-                : query.OrderBy(OrderingPredicates[0]);
-
-        for (var i = 1; i < OrderingPredicates.Length; i++)
-            query = ReverseOrdering
-                ? ((IOrderedQueryable<TEntity>)query).ThenByDescending(OrderingPredicates[i])
-                : ((IOrderedQueryable<TEntity>)query).ThenBy(OrderingPredicates[i]);
+        if (_orderingPredicates.Any())
+        {
+            query = OrderDirection == OrderDirection.Ascending
+                ? query.OrderBy(_orderingPredicates[0])
+                : query.OrderByDescending(_orderingPredicates[0]);
+            for (var i = 1; i < _orderingPredicates.Count; i++)
+                query = OrderDirection == OrderDirection.Ascending
+                    ? ((IOrderedQueryable<TEntity>)query).ThenBy(_orderingPredicates[i])
+                    : ((IOrderedQueryable<TEntity>)query).ThenByDescending(_orderingPredicates[i]);
+        }
 
         return query;
     }
 
     private IQueryable<TEntity> ApplyIncludes(IQueryable<TEntity> query)
     {
-        var canPerformOptimizedInclude = Includes.All(x => x.parent);
-        if (Tracking && canPerformOptimizedInclude)
-            for (var i = 0; i < Includes.Count; i++)
-                query.IncludeOptimized(Includes[i].navigationPropertyPath);
-        else if (canPerformOptimizedInclude && BlockInefficientQueries)
-            throw new InefficientQueryException(
-                "Query can use IncludeOptimized considering " +
-                "requested includes, but requires tracking for it. " +
-                "If you are sure about using inefficient query call " +
-                "AllowInefficientQueries on this specification.");
-        else
-            for (var i = 0; i < Includes.Count; i++)
-                if (Includes[i].parent)
-                    query.Include(Includes[i].navigationPropertyPath);
-                else ((dynamic)query).ThenInclude(Includes[i].navigationPropertyPath);
+        if (_includes.Any()) query = _includes.Aggregate(query, (_, include) => include(query));
+
+        return query;
+    }
+
+    private IQueryable<TEntity> ApplyCustoms(IQueryable<TEntity> query)
+    {
+        if (_customs.Any()) query = _customs.Aggregate(query, (_, custom) => custom(query));
 
         return query;
     }

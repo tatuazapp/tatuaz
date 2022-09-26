@@ -18,7 +18,7 @@ public interface IGenericRepository<TEntity, THistEntity, in TId>
     Task<TEntity?> GetByIdAsync(TId id, DateTime asOf,
         CancellationToken cancellationToken = default);
 
-    Task<bool> ExistsByIdAsync(TId id, bool track = false,
+    Task<bool> ExistsByIdAsync(TId id,
         CancellationToken cancellationToken = default);
 
     Task<bool> ExistsByIdAsync(TId id, DateTime asOf,
@@ -51,6 +51,6 @@ public interface IGenericRepository<TEntity, THistEntity, in TId>
         CancellationToken cancellationToken = default);
 
     Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
-    Task DeleteAsync(TId id, CancellationToken cancellationToken = default);
     Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);
+    Task DeleteAsync(TId id, CancellationToken cancellationToken = default);
 }

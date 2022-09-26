@@ -8,8 +8,6 @@ using Tatuaz.Shared.Infrastructure.Abstractions;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 using Tatuaz.Shared.Infrastructure.Abstractions.Specification;
 
-using Z.EntityFramework.Plus;
-
 namespace Tatuaz.Shared.Infrastructure;
 
 public class GenericRepository<TEntity, THistEntity, TId> : IGenericRepository<TEntity, THistEntity, TId>
@@ -40,11 +38,9 @@ public class GenericRepository<TEntity, THistEntity, TId> : IGenericRepository<T
         throw new NotImplementedException();
     }
 
-    public async Task<bool> ExistsByIdAsync(TId id, bool track = false, CancellationToken cancellationToken = default)
+    public async Task<bool> ExistsByIdAsync(TId id, CancellationToken cancellationToken = default)
     {
         var baseQuery = _dbContext.Set<TEntity>().AsQueryable();
-        if (!track)
-            baseQuery = baseQuery.AsNoTracking();
         return await baseQuery
             .AnyAsync(x => x.Id.Equals(id), cancellationToken)
             .ConfigureAwait(false);
@@ -81,25 +77,17 @@ public class GenericRepository<TEntity, THistEntity, TId> : IGenericRepository<T
             .Apply(_dbContext.Set<TEntity>());
         var toSkip = (pagedParams.PageNumber - 1) * pagedParams.PageSize;
 
-        var futureData = baseQuery
+        var data = await baseQuery
             .Skip(toSkip)
             .Take(pagedParams.PageSize)
-            .Future();
-
-        var futureCount = baseQuery
-            .DeferredCount()
-            .FutureValue();
-
-        var data = await futureData
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
 
-        var count = await futureCount
-            .ValueAsync(cancellationToken)
+        var count = await baseQuery
+            .CountAsync(cancellationToken)
             .ConfigureAwait(false);
 
         var totalPages = (int)Math.Ceiling(count / (float)pagedParams.PageSize);
-
 
         return new PagedData<TEntity>(data,
             pagedParams.PageSize,
@@ -151,10 +139,13 @@ public class GenericRepository<TEntity, THistEntity, TId> : IGenericRepository<T
         return Task.CompletedTask;
     }
 
-    public Task DeleteAsync(TId id, CancellationToken cancellationToken = default)
+    public async Task DeleteAsync(TId id, CancellationToken cancellationToken = default)
     {
-        _dbContext.Set<TEntity>().DeleteByKey(id);
-        return Task.CompletedTask;
+        var toDelete = await _dbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken)
+            .ConfigureAwait(false);
+        if (toDelete == null)
+            return;
+        _dbContext.Set<TEntity>().Remove(toDelete);
     }
 
     public Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)

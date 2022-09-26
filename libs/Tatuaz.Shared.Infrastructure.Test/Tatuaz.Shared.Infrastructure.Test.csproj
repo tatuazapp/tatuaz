@@ -16,9 +16,17 @@
 
     <ItemGroup>
 
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1"/>
+
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0"/>
+
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0"/>
 
+        <PackageReference Include="Moq" Version="4.18.2"/>
+
         <PackageReference Include="xunit" Version="2.4.1"/>
+
+        <PackageReference Include="Xunit.DependencyInjection" Version="8.5.0"/>
 
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
 
@@ -42,6 +50,14 @@
 
         <ProjectReference Include="..\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj"/>
 
+        <ProjectReference Include="..\Tatuaz.Testing.Fakes\Tatuaz.Testing.Fakes.csproj"/>
+
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="appsettings.InfrastructureTest.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>

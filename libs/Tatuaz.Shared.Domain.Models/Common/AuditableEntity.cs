@@ -3,7 +3,7 @@
 namespace Tatuaz.Shared.Domain.Models.Common;
 
 public abstract class AuditableEntity<THistEntity, TId> : Entity<THistEntity, TId>, IAuditableEntity
-    where THistEntity : HistEntity<TId>, new()
+    where THistEntity : AuditableHistEntity<TId>, new()
     where TId : notnull
 {
     public Guid ModifiedBy { get; set; }
@@ -23,15 +23,13 @@ public abstract class AuditableEntity<THistEntity, TId> : Entity<THistEntity, TI
         ModifiedBy = userId;
     }
 
-    public override HistEntity<TId> ToHistEntity()
+    public override THistEntity ToHistEntity()
     {
         var histEntity = base.ToHistEntity();
-        if (histEntity is not AuditableHistEntity<TId> auditableHistEntity) return histEntity;
-        auditableHistEntity.ModifiedBy = ModifiedBy;
-        auditableHistEntity.ModifiedOn = ModifiedOn;
-        auditableHistEntity.CreatedBy = CreatedBy;
-        auditableHistEntity.CreatedOn = CreatedOn;
-        return auditableHistEntity;
-
+        histEntity.ModifiedBy = ModifiedBy;
+        histEntity.ModifiedOn = ModifiedOn;
+        histEntity.CreatedBy = CreatedBy;
+        histEntity.CreatedOn = CreatedOn;
+        return histEntity;
     }
 }

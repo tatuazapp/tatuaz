@@ -8,7 +8,7 @@ public abstract class Entity<THistEntity, TId>
 {
     public TId Id { get; set; } = default!;
 
-    public virtual HistEntity<TId> ToHistEntity()
+    public virtual THistEntity ToHistEntity()
     {
         var histEntity = new THistEntity {
             Id = Id,
