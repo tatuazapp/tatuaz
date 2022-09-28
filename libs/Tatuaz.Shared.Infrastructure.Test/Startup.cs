@@ -31,9 +31,8 @@ public class Startup
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IGenericRepository<,,>), typeof(GenericRepository<,,>));
         services.AddDbContext<BooksDbContext>(opt => {
-            opt.UseNpgsql(config.GetConnectionString("InfrastructureTest"), npgsqlOpt => {
-                npgsqlOpt.UseNodaTime();
-            });
+            opt.UseNpgsql(config.GetConnectionString("InfrastructureTest"), npgsqlOpt => { npgsqlOpt.UseNodaTime(); });
+            opt.UseSnakeCaseNamingConvention();
         });
         services.AddScoped<DbContext, BooksDbContext>();
         services.AddScoped<IClock>(_ => new FakeClock(Instant.FromUtc(2021, 1, 1, 0, 0)));

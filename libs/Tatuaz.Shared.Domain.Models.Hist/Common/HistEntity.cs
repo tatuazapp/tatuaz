@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-using NodaTime;
+﻿using NodaTime;
 
 namespace Tatuaz.Shared.Domain.Models.Hist.Common;
 

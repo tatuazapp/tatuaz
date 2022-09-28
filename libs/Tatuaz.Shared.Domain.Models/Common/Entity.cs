@@ -9,7 +9,6 @@ public abstract class Entity<THistEntity, TId>
     where TId : notnull
 {
     public TId Id { get; set; } = default!;
-    public Instant Timestamp { get; set; }
 
     public virtual THistEntity ToHistEntity(IClock clock)
     {

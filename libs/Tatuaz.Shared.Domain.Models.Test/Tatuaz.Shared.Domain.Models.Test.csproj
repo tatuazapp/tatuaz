@@ -15,13 +15,13 @@
 
     <ItemGroup>
 
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0"/>
 
-        <PackageReference Include="NodaTime.Testing" Version="3.1.3" />
+        <PackageReference Include="NodaTime.Testing" Version="3.1.3"/>
 
-        <PackageReference Include="xunit" Version="2.4.2" />
+        <PackageReference Include="xunit" Version="2.4.2"/>
 
-        <PackageReference Include="Xunit.DependencyInjection" Version="8.5.0" />
+        <PackageReference Include="Xunit.DependencyInjection" Version="8.5.0"/>
 
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
 
@@ -42,7 +42,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Tatuaz.Shared.Domain.Models\Tatuaz.Shared.Domain.Models.csproj" />
+        <ProjectReference Include="..\Tatuaz.Shared.Domain.Models\Tatuaz.Shared.Domain.Models.csproj"/>
     </ItemGroup>
 
 </Project>

@@ -12,6 +12,8 @@ namespace Tatuaz.Shared.Infrastructure.Test.DataAccess;
 
 public class UnitOfWorkTest
 {
+    protected readonly TimeSpan TestPrecision = TimeSpan.FromMilliseconds(10);
+
     public UnitOfWorkTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
         IUserAccessor userAccessor, DbContext dbContext, IClock clock)
     {
@@ -27,12 +29,12 @@ public class UnitOfWorkTest
     protected IUserAccessor UserAccessor { get; }
     protected DbContext DbContext { get; }
     protected IClock Clock { get; }
-    protected readonly TimeSpan TestPrecision = TimeSpan.FromMilliseconds(10);
 
     public class SaveChangesAsyncTest : UnitOfWorkTest
     {
         public SaveChangesAsyncTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
-            IUserAccessor userAccessor, DbContext dbContext, IClock clock) : base(unitOfWork, primitiveValuesGenerator, userAccessor,
+            IUserAccessor userAccessor, DbContext dbContext, IClock clock) : base(unitOfWork, primitiveValuesGenerator,
+            userAccessor,
             dbContext, clock)
         {
         }
@@ -158,7 +160,8 @@ public class UnitOfWorkTest
 
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.CreatedBy);
             Assert.Equal(PrimitiveValuesGenerator.Guids(1), actual.ModifiedBy);
-            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc().AddMilliseconds(-200), actual.CreatedOn.ToDateTimeUtc(), TestPrecision);
+            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc().AddMilliseconds(-200),
+                actual.CreatedOn.ToDateTimeUtc(), TestPrecision);
             Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), TestPrecision);
             Assert.Equal(1, changes1);
             Assert.Equal(1, changes2);
@@ -168,7 +171,8 @@ public class UnitOfWorkTest
     public class RunInTransactionAsyncTest : UnitOfWorkTest
     {
         public RunInTransactionAsyncTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
-            IUserAccessor userAccessor, DbContext dbContext, IClock clock) : base(unitOfWork, primitiveValuesGenerator, userAccessor,
+            IUserAccessor userAccessor, DbContext dbContext, IClock clock) : base(unitOfWork, primitiveValuesGenerator,
+            userAccessor,
             dbContext, clock)
         {
         }
@@ -387,7 +391,8 @@ public class UnitOfWorkTest
 
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.CreatedBy);
             Assert.Equal(PrimitiveValuesGenerator.Guids(1), actual.ModifiedBy);
-            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc().AddMilliseconds(-200), actual.CreatedOn.ToDateTimeUtc(), TestPrecision);
+            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc().AddMilliseconds(-200),
+                actual.CreatedOn.ToDateTimeUtc(), TestPrecision);
             Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), TestPrecision);
             Assert.Equal(1, changes1);
             Assert.Equal(1, changes2);

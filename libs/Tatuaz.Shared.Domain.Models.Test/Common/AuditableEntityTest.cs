@@ -42,7 +42,7 @@ public class AuditableEntityTest
                 CreatedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30881"),
                 CreatedOn = Instant.FromUtc(2021, 1, 1, 1, 1, 1),
                 ModifiedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30882"),
-                ModifiedOn = Instant.FromUtc(2021, 1, 1, 1, 1, 2),
+                ModifiedOn = Instant.FromUtc(2021, 1, 1, 1, 1, 2)
             }
         };
 
@@ -61,7 +61,7 @@ public class AuditableEntityTest
                 CreatedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30881"),
                 CreatedOn = Instant.FromUtc(2021, 1, 1, 1, 1, 1),
                 ModifiedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30882"),
-                ModifiedOn = Instant.FromUtc(2021, 1, 1, 1, 1, 2),
+                ModifiedOn = Instant.FromUtc(2021, 1, 1, 1, 1, 2)
             }
         };
 

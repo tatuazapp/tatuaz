@@ -9,9 +9,9 @@ namespace Tatuaz.Shared.Infrastructure;
 
 public class UnitOfWork : IUnitOfWork
 {
+    private readonly IClock _clock;
     private readonly DbContext _context;
     private readonly IUserAccessor _userAccessor;
-    private readonly IClock _clock;
 
     public UnitOfWork(DbContext context, IUserAccessor userAccessor, IClock clock)
     {
