@@ -1,4 +1,6 @@
-﻿using Tatuaz.Shared.Domain.Models.Common;
+﻿using NodaTime;
+
+using Tatuaz.Shared.Domain.Models.Common;
 using Tatuaz.Shared.Domain.Models.Hist.Common;
 using Tatuaz.Shared.Domain.Models.Test.Generic;
 
@@ -40,7 +42,7 @@ public class EntityTest
             }
         };
 
-        public GuidToHistEntity() : base(EntityTestData)
+        public GuidToHistEntity(IClock clock) : base(clock, EntityTestData)
         {
         }
     }
@@ -55,7 +57,7 @@ public class EntityTest
             }
         };
 
-        public IntToHistEntity() : base(EntityTestData)
+        public IntToHistEntity(IClock clock) : base(clock, EntityTestData)
         {
         }
     }
@@ -70,7 +72,7 @@ public class EntityTest
             }
         };
 
-        public StringToHistEntity() : base(EntityTestData)
+        public StringToHistEntity(IClock clock) : base(clock, EntityTestData)
         {
         }
     }

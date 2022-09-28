@@ -3,6 +3,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using NodaTime;
+using NodaTime.Testing;
+
 using Tatuaz.Shared.Infrastructure.Abstractions;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple;
 using Tatuaz.Testing.Fakes.Common;
@@ -28,9 +31,12 @@ public class Startup
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IGenericRepository<,,>), typeof(GenericRepository<,,>));
         services.AddDbContext<BooksDbContext>(opt => {
-            opt.UseNpgsql(config.GetConnectionString("InfrastructureTest"));
+            opt.UseNpgsql(config.GetConnectionString("InfrastructureTest"), npgsqlOpt => {
+                npgsqlOpt.UseNodaTime();
+            });
         });
         services.AddScoped<DbContext, BooksDbContext>();
+        services.AddScoped<IClock>(_ => new FakeClock(Instant.FromUtc(2021, 1, 1, 0, 0)));
     }
 
     public void Configure(IServiceProvider applicationServices)

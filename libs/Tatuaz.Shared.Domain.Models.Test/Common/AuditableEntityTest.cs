@@ -1,4 +1,6 @@
-﻿using Tatuaz.Shared.Domain.Models.Common;
+﻿using NodaTime;
+
+using Tatuaz.Shared.Domain.Models.Common;
 using Tatuaz.Shared.Domain.Models.Hist.Common;
 using Tatuaz.Shared.Domain.Models.Test.Generic;
 
@@ -38,13 +40,13 @@ public class AuditableEntityTest
             {
                 Id = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30880"),
                 CreatedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30881"),
-                CreatedOn = new DateTime(2021, 1, 1),
+                CreatedOn = Instant.FromUtc(2021, 1, 1, 1, 1, 1),
                 ModifiedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30882"),
-                ModifiedOn = new DateTime(2021, 1, 2)
+                ModifiedOn = Instant.FromUtc(2021, 1, 1, 1, 1, 2),
             }
         };
 
-        public GuidToHistEntity() : base(EntityTestData)
+        public GuidToHistEntity(IClock clock) : base(clock, EntityTestData)
         {
         }
     }
@@ -57,13 +59,13 @@ public class AuditableEntityTest
             {
                 Id = 1337,
                 CreatedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30881"),
-                CreatedOn = new DateTime(2021, 1, 1),
+                CreatedOn = Instant.FromUtc(2021, 1, 1, 1, 1, 1),
                 ModifiedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30882"),
-                ModifiedOn = new DateTime(2021, 1, 2)
+                ModifiedOn = Instant.FromUtc(2021, 1, 1, 1, 1, 2),
             }
         };
 
-        public IntToHistEntity() : base(EntityTestData)
+        public IntToHistEntity(IClock clock) : base(clock, EntityTestData)
         {
         }
     }
@@ -77,13 +79,13 @@ public class AuditableEntityTest
             {
                 Id = "This is lit",
                 CreatedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30881"),
-                CreatedOn = new DateTime(2021, 1, 1),
+                CreatedOn = Instant.FromUtc(2021, 1, 1, 1, 1, 1),
                 ModifiedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30882"),
-                ModifiedOn = new DateTime(2021, 1, 2)
+                ModifiedOn = Instant.FromUtc(2021, 1, 1, 1, 1, 2)
             }
         };
 
-        public StringToHistEntity() : base(EntityTestData)
+        public StringToHistEntity(IClock clock) : base(clock, EntityTestData)
         {
         }
     }

@@ -1,9 +1,11 @@
-﻿namespace Tatuaz.Testing.Fakes.Common;
+﻿using NodaTime;
+
+namespace Tatuaz.Testing.Fakes.Common;
 
 public interface IPrimitiveValuesGenerator
 {
     Guid Guids(int index);
-    DateTime DateTimes(int index);
+    Instant Instants(int index);
     string Strings(int index);
     int Ints(int index);
     float Floats(int index);
