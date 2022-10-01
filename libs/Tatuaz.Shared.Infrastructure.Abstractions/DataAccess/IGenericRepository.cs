@@ -1,5 +1,7 @@
 ﻿using System.Linq.Expressions;
 
+using NodaTime;
+
 using Tatuaz.Shared.Domain.Models.Common;
 using Tatuaz.Shared.Domain.Models.Hist.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
@@ -15,19 +17,19 @@ public interface IGenericRepository<TEntity, THistEntity, in TId>
     Task<TEntity?> GetByIdAsync(TId id, bool track = false,
         CancellationToken cancellationToken = default);
 
-    Task<TEntity?> GetByIdAsync(TId id, DateTime asOf,
+    Task<TEntity?> GetByIdAsync(TId id, Instant asOf,
         CancellationToken cancellationToken = default);
 
     Task<bool> ExistsByIdAsync(TId id,
         CancellationToken cancellationToken = default);
 
-    Task<bool> ExistsByIdAsync(TId id, DateTime asOf,
+    Task<bool> ExistsByIdAsync(TId id, Instant asOf,
         CancellationToken cancellationToken = default);
 
     Task<IEnumerable<TEntity>> GetBySpecificationAsync(ISpecification<TEntity> specification,
         CancellationToken cancellationToken = default);
 
-    Task<IEnumerable<TEntity>> GetBySpecificationAsync(ISpecification<TEntity> specification, DateTime asOf,
+    Task<IEnumerable<TEntity>> GetBySpecificationAsync(ISpecification<TEntity> specification, Instant asOf,
         CancellationToken cancellationToken = default);
 
     Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(ISpecification<TEntity> specification,
@@ -35,19 +37,19 @@ public interface IGenericRepository<TEntity, THistEntity, in TId>
         CancellationToken cancellationToken = default);
 
     Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(ISpecification<TEntity> specification,
-        PagedParams pagedParams, DateTime asOf,
+        PagedParams pagedParams, Instant asOf,
         CancellationToken cancellationToken = default);
 
     Task<bool> ExistsByPredicateAsync(Expression<Func<TEntity, bool>> predicate,
         CancellationToken cancellationToken = default);
 
-    Task<bool> ExistsByPredicateAsync(Expression<Func<TEntity, bool>> predicate, DateTime asOf,
+    Task<bool> ExistsByPredicateAsync(Expression<Func<TEntity, bool>> predicate, Instant asOf,
         CancellationToken cancellationToken = default);
 
     Task<long> CountByPredicateAsync(Expression<Func<TEntity, bool>> predicate,
         CancellationToken cancellationToken = default);
 
-    Task<long> CountByPredicateAsync(Expression<Func<TEntity, bool>> predicate, DateTime asOf,
+    Task<long> CountByPredicateAsync(Expression<Func<TEntity, bool>> predicate, Instant asOf,
         CancellationToken cancellationToken = default);
 
     Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default);

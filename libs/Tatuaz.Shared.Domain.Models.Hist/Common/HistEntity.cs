@@ -1,18 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NodaTime;
 
 namespace Tatuaz.Shared.Domain.Models.Hist.Common;
 
 public class HistEntity<TId>
     where TId : notnull
 {
-    // TODO: add index
     public TId Id { get; set; } = default!;
 
-    [Key] public Guid HistId { get; set; }
+    public Guid HistId { get; set; }
 
-    // TODO: add index
-    public DateTime HistFrom { get; set; }
+    public Instant HistFrom { get; set; }
 
-    // TODO: add index
-    public DateTime? HistTo { get; set; }
+    public Instant? HistTo { get; set; }
+    public Instant Timestamp { get; set; }
 }

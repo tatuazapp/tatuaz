@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+using NodaTime;
+using NodaTime.Testing;
+
 using Tatuaz.Shared.Infrastructure.Abstractions;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Models;
 using Tatuaz.Testing.Fakes.Common;
@@ -9,35 +12,37 @@ namespace Tatuaz.Shared.Infrastructure.Test.DataAccess;
 
 public class UnitOfWorkTest
 {
+    protected readonly TimeSpan TestPrecision = TimeSpan.FromMilliseconds(10);
+
     public UnitOfWorkTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
-        IUserAccessor userAccessor, DbContext dbContext)
+        IUserAccessor userAccessor, DbContext dbContext, IClock clock)
     {
         UnitOfWork = unitOfWork;
         PrimitiveValuesGenerator = primitiveValuesGenerator;
         UserAccessor = userAccessor;
         DbContext = dbContext;
+        Clock = clock;
     }
 
     protected IUnitOfWork UnitOfWork { get; }
     protected IPrimitiveValuesGenerator PrimitiveValuesGenerator { get; }
     protected IUserAccessor UserAccessor { get; }
     protected DbContext DbContext { get; }
+    protected IClock Clock { get; }
 
     public class SaveChangesAsyncTest : UnitOfWorkTest
     {
         public SaveChangesAsyncTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
-            IUserAccessor userAccessor, DbContext dbContext) : base(unitOfWork, primitiveValuesGenerator, userAccessor,
-            dbContext)
+            IUserAccessor userAccessor, DbContext dbContext, IClock clock) : base(unitOfWork, primitiveValuesGenerator,
+            userAccessor,
+            dbContext, clock)
         {
         }
 
         [Fact]
         public async Task Should_SaveInsertedElement()
         {
-            var expected = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var expected = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(expected);
             var changes = await UnitOfWork.SaveChangesAsync();
@@ -50,10 +55,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_SaveItemChangesWithTrackingElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
             await UnitOfWork.SaveChangesAsync();
@@ -70,10 +72,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DiscardItemChangesWithNoTrackingElement()
         {
-            var expected = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var expected = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(expected);
             await UnitOfWork.SaveChangesAsync();
@@ -90,10 +89,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DeleteItemOnRemoveElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
             await UnitOfWork.SaveChangesAsync();
@@ -112,10 +108,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_AddUserContextToInsertedElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
             var changes = await UnitOfWork.SaveChangesAsync();
@@ -123,18 +116,15 @@ public class UnitOfWorkTest
 
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.CreatedBy);
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.ModifiedBy);
-            Assert.Equal(DateTime.UtcNow, actual.CreatedOn, TimeSpan.FromSeconds(1));
-            Assert.Equal(DateTime.UtcNow, actual.ModifiedOn, TimeSpan.FromSeconds(1));
+            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.CreatedOn.ToDateTimeUtc(), TestPrecision);
+            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), TestPrecision);
             Assert.Equal(1, changes);
         }
 
         [Fact]
         public async Task Should_AddUserContextToModifiedElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             ((UserAccessorFake)UserAccessor).SetCurrentIndex(0);
 
@@ -142,7 +132,7 @@ public class UnitOfWorkTest
             var changes1 = await UnitOfWork.SaveChangesAsync();
             var toChange = await DbContext.Set<Author>().FirstAsync(x => x.Id == author.Id);
 
-            Thread.Sleep(TimeSpan.FromMilliseconds(200));
+            ((FakeClock)Clock).Advance(Duration.FromMilliseconds(200));
 
             ((UserAccessorFake)UserAccessor).SetCurrentIndex(1);
 
@@ -152,8 +142,9 @@ public class UnitOfWorkTest
 
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.CreatedBy);
             Assert.Equal(PrimitiveValuesGenerator.Guids(1), actual.ModifiedBy);
-            Assert.Equal(DateTime.UtcNow.AddMilliseconds(-200), actual.CreatedOn, TimeSpan.FromMilliseconds(70));
-            Assert.Equal(DateTime.UtcNow, actual.ModifiedOn, TimeSpan.FromMilliseconds(70));
+            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc().AddMilliseconds(-200),
+                actual.CreatedOn.ToDateTimeUtc(), TestPrecision);
+            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), TestPrecision);
             Assert.Equal(1, changes1);
             Assert.Equal(1, changes2);
         }
@@ -162,18 +153,16 @@ public class UnitOfWorkTest
     public class RunInTransactionAsyncTest : UnitOfWorkTest
     {
         public RunInTransactionAsyncTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
-            IUserAccessor userAccessor, DbContext dbContext) : base(unitOfWork, primitiveValuesGenerator, userAccessor,
-            dbContext)
+            IUserAccessor userAccessor, DbContext dbContext, IClock clock) : base(unitOfWork, primitiveValuesGenerator,
+            userAccessor,
+            dbContext, clock)
         {
         }
 
         [Fact]
         public async Task Should_SaveInsertedElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             var changes = 0;
             await UnitOfWork.RunInTransactionAsync(
@@ -192,10 +181,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_SaveItemChangesWithTrackingElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
             await UnitOfWork.SaveChangesAsync();
@@ -218,10 +204,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DiscardItemChangesWithNoTrackingElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
             await UnitOfWork.SaveChangesAsync();
@@ -243,10 +226,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DeleteItemOnRemoveElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
             await UnitOfWork.SaveChangesAsync();
@@ -270,10 +250,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_RollbackOnFailure()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             var changes1 = 0;
             var changes2 = 0;
@@ -297,10 +274,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_ExecuteOnFailureOnFailure()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             var changes1 = 0;
             var changes2 = 0;
@@ -324,10 +298,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_AddUserContextToInsertedElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             ((UserAccessorFake)UserAccessor).SetCurrentIndex(0);
 
@@ -342,18 +313,15 @@ public class UnitOfWorkTest
 
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.CreatedBy);
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.ModifiedBy);
-            Assert.Equal(DateTime.UtcNow, actual.CreatedOn, TimeSpan.FromMilliseconds(70));
-            Assert.Equal(DateTime.UtcNow, actual.ModifiedOn, TimeSpan.FromMilliseconds(70));
+            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.CreatedOn.ToDateTimeUtc(), TestPrecision);
+            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), TestPrecision);
             Assert.Equal(1, changes);
         }
 
         [Fact]
         public async Task Should_AddUserContextToModifiedElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             ((UserAccessorFake)UserAccessor).SetCurrentIndex(0);
 
@@ -366,7 +334,7 @@ public class UnitOfWorkTest
             );
             var toChange = await DbContext.Set<Author>().FirstAsync(x => x.Id == author.Id);
 
-            Thread.Sleep(TimeSpan.FromMilliseconds(200));
+            ((FakeClock)Clock).Advance(Duration.FromMilliseconds(200));
 
             ((UserAccessorFake)UserAccessor).SetCurrentIndex(1);
 
@@ -381,8 +349,9 @@ public class UnitOfWorkTest
 
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.CreatedBy);
             Assert.Equal(PrimitiveValuesGenerator.Guids(1), actual.ModifiedBy);
-            Assert.Equal(DateTime.UtcNow.AddMilliseconds(-200), actual.CreatedOn, TimeSpan.FromMilliseconds(70));
-            Assert.Equal(DateTime.UtcNow, actual.ModifiedOn, TimeSpan.FromSeconds(1));
+            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc().AddMilliseconds(-200),
+                actual.CreatedOn.ToDateTimeUtc(), TestPrecision);
+            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), TestPrecision);
             Assert.Equal(1, changes1);
             Assert.Equal(1, changes2);
         }

@@ -24,11 +24,8 @@ public static class ServiceExtensions
             });
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(opt => {
-            opt.SwaggerDoc("v1", new OpenApiInfo {
-                Version = "v1",
-                Title = "tatuaz.app API",
-                Description = "API for tatuaz.app"
-            });
+            opt.SwaggerDoc("v1",
+                new OpenApiInfo { Version = "v1", Title = "tatuaz.app API", Description = "API for tatuaz.app" });
             opt.IncludeXmlComments($"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
             opt.SupportNonNullableReferenceTypes();
             // TODO: Uncomment when EF Core is added to lower projects

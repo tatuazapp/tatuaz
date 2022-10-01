@@ -1,4 +1,4 @@
-/apps/api-gateway @sobczal2
 /apps/Tatuaz.* @sobczal2
+/libs/Tatuaz.* @sobczal2
 /apps/web @iruszpel
 /apps/web-e2e @iruszpel

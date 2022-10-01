@@ -1,7 +1,9 @@
-﻿namespace Tatuaz.Shared.Domain.Models.Common;
+﻿using NodaTime;
+
+namespace Tatuaz.Shared.Domain.Models.Common;
 
 public interface IAuditableEntity
 {
-    void UpdateCreationData(Guid userId);
-    void UpdateModificationData(Guid userId);
+    void UpdateCreationData(Guid userId, IClock clock);
+    void UpdateModificationData(Guid userId, IClock clock);
 }

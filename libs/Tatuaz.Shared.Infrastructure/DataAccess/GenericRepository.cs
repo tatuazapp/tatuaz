@@ -2,6 +2,8 @@
 
 using Microsoft.EntityFrameworkCore;
 
+using NodaTime;
+
 using Tatuaz.Shared.Domain.Models.Common;
 using Tatuaz.Shared.Domain.Models.Hist.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions;
@@ -32,7 +34,7 @@ public class GenericRepository<TEntity, THistEntity, TId> : IGenericRepository<T
             .ConfigureAwait(false);
     }
 
-    public async Task<TEntity?> GetByIdAsync(TId id, DateTime asOf, CancellationToken cancellationToken = default)
+    public async Task<TEntity?> GetByIdAsync(TId id, Instant asOf, CancellationToken cancellationToken = default)
     {
         // TODO: change when historical microservice is up
         throw new NotImplementedException();
@@ -46,7 +48,7 @@ public class GenericRepository<TEntity, THistEntity, TId> : IGenericRepository<T
             .ConfigureAwait(false);
     }
 
-    public async Task<bool> ExistsByIdAsync(TId id, DateTime asOf, CancellationToken cancellationToken = default)
+    public async Task<bool> ExistsByIdAsync(TId id, Instant asOf, CancellationToken cancellationToken = default)
     {
         // TODO: change when historical microservice is up
         throw new NotImplementedException();
@@ -62,7 +64,7 @@ public class GenericRepository<TEntity, THistEntity, TId> : IGenericRepository<T
     }
 
     public async Task<IEnumerable<TEntity>> GetBySpecificationAsync(ISpecification<TEntity> specification,
-        DateTime asOf,
+        Instant asOf,
         CancellationToken cancellationToken = default)
     {
         // TODO: change when historical microservice is up
@@ -97,7 +99,7 @@ public class GenericRepository<TEntity, THistEntity, TId> : IGenericRepository<T
     }
 
     public async Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(ISpecification<TEntity> specification,
-        PagedParams pagedParams, DateTime asOf,
+        PagedParams pagedParams, Instant asOf,
         CancellationToken cancellationToken = default)
     {
         // TODO: change when historical microservice is up
@@ -113,7 +115,7 @@ public class GenericRepository<TEntity, THistEntity, TId> : IGenericRepository<T
             .ConfigureAwait(false);
     }
 
-    public async Task<bool> ExistsByPredicateAsync(Expression<Func<TEntity, bool>> predicate, DateTime asOf,
+    public async Task<bool> ExistsByPredicateAsync(Expression<Func<TEntity, bool>> predicate, Instant asOf,
         CancellationToken cancellationToken = default)
     {
         // TODO: change when historical microservice is up
@@ -126,7 +128,7 @@ public class GenericRepository<TEntity, THistEntity, TId> : IGenericRepository<T
         return await _dbContext.Set<TEntity>().CountAsync(predicate, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<long> CountByPredicateAsync(Expression<Func<TEntity, bool>> predicate, DateTime asOf,
+    public async Task<long> CountByPredicateAsync(Expression<Func<TEntity, bool>> predicate, Instant asOf,
         CancellationToken cancellationToken = default)
     {
         // TODO: change when historical microservice is up

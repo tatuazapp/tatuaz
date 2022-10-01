@@ -1,19 +1,21 @@
-﻿namespace Tatuaz.Testing.Fakes.Common;
+﻿using NodaTime;
+
+namespace Tatuaz.Testing.Fakes.Common;
 
 public class PrimitiveValuesGenerator : IPrimitiveValuesGenerator
 {
-    private readonly DateTime[] _dateTimes;
     private readonly decimal[] _decimals;
     private readonly double[] _doubles;
     private readonly float[] _floats;
     private readonly Guid[] _guids;
+    private readonly Instant[] _instants;
     private readonly int[] _ints;
     private readonly string[] _strings;
 
     public PrimitiveValuesGenerator()
     {
         _guids = new Guid[10];
-        _dateTimes = new DateTime[10];
+        _instants = new Instant[10];
         _strings = new string[10];
         _ints = new int[10];
         _floats = new float[10];
@@ -23,7 +25,7 @@ public class PrimitiveValuesGenerator : IPrimitiveValuesGenerator
         for (var i = 0; i < 10; i++)
         {
             _guids[i] = Guid.NewGuid();
-            _dateTimes[i] = DateTime.Now.AddMilliseconds(Random.Shared.Next());
+            _instants[i] = Instant.FromUtc(2020, 1, 1, 0, 0).Plus(Duration.FromMilliseconds(Random.Shared.Next()));
             _strings[i] = Guid.NewGuid().ToString();
             _ints[i] = Random.Shared.Next();
             _floats[i] = Random.Shared.NextSingle() * 2048f - 1024f;
@@ -38,10 +40,10 @@ public class PrimitiveValuesGenerator : IPrimitiveValuesGenerator
         return _guids[index];
     }
 
-    public DateTime DateTimes(int index)
+    public Instant Instants(int index)
     {
         if (index < 0 || index >= 10) throw new ArgumentException(nameof(index));
-        return _dateTimes[index];
+        return _instants[index];
     }
 
     public string Strings(int index)

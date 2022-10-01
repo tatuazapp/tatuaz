@@ -1,4 +1,6 @@
-﻿using Tatuaz.Shared.Domain.Models.Common;
+﻿using NodaTime;
+
+using Tatuaz.Shared.Domain.Models.Common;
 using Tatuaz.Shared.Domain.Models.Hist.Common;
 
 namespace Tatuaz.Shared.Domain.Models.Test.Generic;
@@ -8,11 +10,13 @@ public abstract class GenericToHistEntityTest<TEntity, THistEntity, TId>
     where THistEntity : HistEntity<TId>, new()
     where TId : notnull
 {
+    private readonly IClock _clock;
     private readonly IEnumerable<TEntity> _testEntities;
     private readonly TimeSpan _testPrecision = TimeSpan.FromMilliseconds(10);
 
-    protected GenericToHistEntityTest(params TEntity[] testEntities)
+    protected GenericToHistEntityTest(IClock clock, params TEntity[] testEntities)
     {
+        _clock = clock;
         _testEntities = testEntities;
     }
 
@@ -39,7 +43,7 @@ public abstract class GenericToHistEntityTest<TEntity, THistEntity, TId>
     {
         foreach (var entity in _testEntities)
         {
-            var histGuidEntity = entity.ToHistEntity();
+            var histGuidEntity = entity.ToHistEntity(_clock);
 
             var entityProperties = entity.GetType().GetProperties();
             var histEntityProperties = histGuidEntity.GetType().GetProperties();
@@ -60,12 +64,12 @@ public abstract class GenericToHistEntityTest<TEntity, THistEntity, TId>
     {
         foreach (var entity in _testEntities)
         {
-            var histGuidEntity = entity.ToHistEntity();
+            var histGuidEntity = entity.ToHistEntity(_clock);
 
-            var expected = DateTime.UtcNow;
+            var expected = _clock.GetCurrentInstant();
             var actual = histGuidEntity.HistFrom;
 
-            Assert.Equal(expected, actual, _testPrecision);
+            Assert.Equal(expected.ToDateTimeUtc(), actual.ToDateTimeUtc(), _testPrecision);
         }
     }
 }

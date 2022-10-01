@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+using NodaTime;
+
 using Tatuaz.Shared.Domain.Models.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions;
 
@@ -7,15 +9,15 @@ namespace Tatuaz.Shared.Infrastructure;
 
 public class UnitOfWork : IUnitOfWork
 {
+    private readonly IClock _clock;
     private readonly DbContext _context;
-    private readonly IServiceProvider _services;
     private readonly IUserAccessor _userAccessor;
 
-    public UnitOfWork(DbContext context, IServiceProvider services, IUserAccessor userAccessor)
+    public UnitOfWork(DbContext context, IUserAccessor userAccessor, IClock clock)
     {
         _context = context;
-        _services = services;
         _userAccessor = userAccessor;
+        _clock = clock;
     }
 
     public void Dispose()
@@ -74,8 +76,8 @@ public class UnitOfWork : IUnitOfWork
     {
         var auditableEntities = _context.ChangeTracker.Entries<IAuditableEntity>().ToList();
         foreach (var entity in auditableEntities.Where(x => x.State == EntityState.Added))
-            entity.Entity.UpdateCreationData(_userAccessor.CurrentUserId);
+            entity.Entity.UpdateCreationData(_userAccessor.CurrentUserId, _clock);
         foreach (var entity in auditableEntities.Where(x => x.State is EntityState.Modified))
-            entity.Entity.UpdateModificationData(_userAccessor.CurrentUserId);
+            entity.Entity.UpdateModificationData(_userAccessor.CurrentUserId, _clock);
     }
 }
