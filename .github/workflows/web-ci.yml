@@ -11,19 +11,44 @@ jobs:
     name: Nx Cloud - Main Job
     uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.6
     with:
-      number-of-agents: 3
+      number-of-agents: 2
       init-commands: |
-        npx nx-cloud start-ci-run --stop-agents-after="test" --agent-count=3
+        npx nx-cloud start-ci-run --stop-agents-after="build" --agent-count=2
       parallel-commands: |
         npx nx-cloud record -- npx nx workspace-lint
         npx nx-cloud record -- npx nx format:check
       parallel-commands-on-agents: |
         npx nx affected --target=lint --parallel=3
         npx nx affected --target=build --parallel=3
-        npx nx affected --target=test --parallel=3
-
   agents:
     name: Nx Cloud - Agents
     uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.6
     with:
-      number-of-agents: 3
+      number-of-agents: 2
+  tests-with-npgsql:
+    name: Nx Cloud - Postgres Tests
+    needs: main
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v3
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run Tests
+        run: npx nx affected --target=test --parallel=3
+        env:
+          ConnectionStrings:InfrastructureTest: Server=postgres;Port=5432;Database=infrastructure-test-db;User Id=postgres;Password=password;
