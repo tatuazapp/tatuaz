@@ -17,4 +17,9 @@ resource "azurerm_kubernetes_cluster" "main" {
     client_id     = var.az_principal.app_id
     client_secret = var.az_principal.client_secret
   }
+
+  network_profile {
+    network_plugin = "kubenet"
+    load_balancer_sku = "basic"
+  }
 }
