@@ -4,11 +4,11 @@ namespace Tatuaz.Testing.Fakes.Common;
 
 public class PrimitiveValuesGenerator : IPrimitiveValuesGenerator
 {
-    private readonly Instant[] _instants;
     private readonly decimal[] _decimals;
     private readonly double[] _doubles;
     private readonly float[] _floats;
     private readonly Guid[] _guids;
+    private readonly Instant[] _instants;
     private readonly int[] _ints;
     private readonly string[] _strings;
 

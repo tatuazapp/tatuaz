@@ -42,10 +42,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_SaveInsertedElement()
         {
-            var expected = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var expected = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(expected);
             var changes = await UnitOfWork.SaveChangesAsync();
@@ -58,10 +55,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_SaveItemChangesWithTrackingElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
             await UnitOfWork.SaveChangesAsync();
@@ -78,10 +72,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DiscardItemChangesWithNoTrackingElement()
         {
-            var expected = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var expected = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(expected);
             await UnitOfWork.SaveChangesAsync();
@@ -98,10 +89,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DeleteItemOnRemoveElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
             await UnitOfWork.SaveChangesAsync();
@@ -120,10 +108,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_AddUserContextToInsertedElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
             var changes = await UnitOfWork.SaveChangesAsync();
@@ -139,10 +124,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_AddUserContextToModifiedElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             ((UserAccessorFake)UserAccessor).SetCurrentIndex(0);
 
@@ -180,10 +162,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_SaveInsertedElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             var changes = 0;
             await UnitOfWork.RunInTransactionAsync(
@@ -202,10 +181,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_SaveItemChangesWithTrackingElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
             await UnitOfWork.SaveChangesAsync();
@@ -228,10 +204,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DiscardItemChangesWithNoTrackingElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
             await UnitOfWork.SaveChangesAsync();
@@ -253,10 +226,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DeleteItemOnRemoveElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
             await UnitOfWork.SaveChangesAsync();
@@ -280,10 +250,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_RollbackOnFailure()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             var changes1 = 0;
             var changes2 = 0;
@@ -307,10 +274,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_ExecuteOnFailureOnFailure()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             var changes1 = 0;
             var changes2 = 0;
@@ -334,10 +298,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_AddUserContextToInsertedElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             ((UserAccessorFake)UserAccessor).SetCurrentIndex(0);
 
@@ -360,10 +321,7 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_AddUserContextToModifiedElement()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             ((UserAccessorFake)UserAccessor).SetCurrentIndex(0);
 

@@ -31,10 +31,7 @@ public class GenericRepositoryTest
         [Fact]
         public async Task Should_ReturnSavedEntity()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
             await DbContext.AddAsync(author);
             await DbContext.SaveChangesAsync();
 
@@ -56,10 +53,7 @@ public class GenericRepositoryTest
         [Fact]
         public async Task Should_UpdateTrackedEntity()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
             await DbContext.AddAsync(author);
             await DbContext.SaveChangesAsync();
 
@@ -84,10 +78,7 @@ public class GenericRepositoryTest
         [Fact]
         public async Task Should_NotUpdateNotTrackedEntity()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
             await DbContext.AddAsync(author);
             await DbContext.SaveChangesAsync();
 
@@ -118,10 +109,7 @@ public class GenericRepositoryTest
         [Fact]
         public async Task Should_ReturnTrueOnExistingEntity()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
             await DbContext.AddAsync(author);
             await DbContext.SaveChangesAsync();
 
@@ -149,14 +137,8 @@ public class GenericRepositoryTest
         [Fact]
         public async Task Should_ReturnEntity()
         {
-            var author1 = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
-            var author2 = new Author {
-                FirstName = "Adam",
-                LastName = "Nowak"
-            };
+            var author1 = new Author { FirstName = "Jan", LastName = "Kowalski" };
+            var author2 = new Author { FirstName = "Adam", LastName = "Nowak" };
             await DbContext.AddRangeAsync(author1, author2);
             await DbContext.SaveChangesAsync();
             var specMock = new Mock<ISpecification<Author>>();
@@ -182,14 +164,8 @@ public class GenericRepositoryTest
         [Fact]
         public async Task Should_ReturnEntityWithPaging()
         {
-            var author1 = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
-            var author2 = new Author {
-                FirstName = "Adam",
-                LastName = "Nowak"
-            };
+            var author1 = new Author { FirstName = "Jan", LastName = "Kowalski" };
+            var author2 = new Author { FirstName = "Adam", LastName = "Nowak" };
             await DbContext.AddRangeAsync(author1, author2);
             await DbContext.SaveChangesAsync();
             var specMock = new Mock<ISpecification<Author>>();
@@ -220,10 +196,7 @@ public class GenericRepositoryTest
         [Fact]
         public async Task Should_ReturnTrueOnExistingEntity()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
             await DbContext.AddAsync(author);
             await DbContext.SaveChangesAsync();
 
@@ -252,14 +225,8 @@ public class GenericRepositoryTest
         [Fact]
         public async Task Should_ReturnCount()
         {
-            var author1 = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
-            var author2 = new Author {
-                FirstName = "Adam",
-                LastName = "Nowak"
-            };
+            var author1 = new Author { FirstName = "Jan", LastName = "Kowalski" };
+            var author2 = new Author { FirstName = "Adam", LastName = "Nowak" };
             await DbContext.AddRangeAsync(author1, author2);
             await DbContext.SaveChangesAsync();
 
@@ -288,10 +255,7 @@ public class GenericRepositoryTest
         [Fact]
         public async Task Should_CreateEntity()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             await AuthorRepository.CreateAsync(author);
 
@@ -310,10 +274,7 @@ public class GenericRepositoryTest
         [Fact]
         public async Task Should_DeleteEntity()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
             await DbContext.AddAsync(author);
             await DbContext.SaveChangesAsync();
 
@@ -325,10 +286,7 @@ public class GenericRepositoryTest
         [Fact]
         public async Task Should_DeleteEntityById()
         {
-            var author = new Author {
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            };
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
             await DbContext.AddAsync(author);
             await DbContext.SaveChangesAsync();
 

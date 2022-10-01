@@ -32,10 +32,7 @@ public class FullSpecificationTest
         [Fact]
         public async Task Should_ReturnEntityWithTracking()
         {
-            var expected = new Author {
-                FirstName = "John",
-                LastName = "Doe"
-            };
+            var expected = new Author { FirstName = "John", LastName = "Doe" };
 
             DbContext.Add(expected);
             await DbContext.SaveChangesAsync();
@@ -51,10 +48,7 @@ public class FullSpecificationTest
         [Fact]
         public async Task Should_ReturnEntityWithNoTracking()
         {
-            var expected = new Author {
-                FirstName = "John",
-                LastName = "Doe"
-            };
+            var expected = new Author { FirstName = "John", LastName = "Doe" };
 
             DbContext.Add(expected);
             await DbContext.SaveChangesAsync();
@@ -70,17 +64,12 @@ public class FullSpecificationTest
         [Fact]
         public async Task Should_UpdateEntityWithTracking()
         {
-            var expected = new Author {
-                FirstName = "John",
-                LastName = "Doe"
-            };
+            var expected = new Author { FirstName = "John", LastName = "Doe" };
 
             DbContext.Add(expected);
             await DbContext.SaveChangesAsync();
 
-            var spec = new FullSpecification<Author> {
-                TrackingStrategy = TrackingStrategy.Tracking
-            };
+            var spec = new FullSpecification<Author> { TrackingStrategy = TrackingStrategy.Tracking };
             spec.AddFilter(x => x.Id == expected.Id);
 
             var actual = await AuthorRepository.GetBySpecificationAsync(spec);
@@ -94,17 +83,12 @@ public class FullSpecificationTest
         [Fact]
         public async Task Should_NotUpdateEntityWithNoTracking()
         {
-            var expected = new Author {
-                FirstName = "John",
-                LastName = "Doe"
-            };
+            var expected = new Author { FirstName = "John", LastName = "Doe" };
 
             DbContext.Add(expected);
             await DbContext.SaveChangesAsync();
 
-            var spec = new FullSpecification<Author> {
-                TrackingStrategy = TrackingStrategy.NoTracking
-            };
+            var spec = new FullSpecification<Author> { TrackingStrategy = TrackingStrategy.NoTracking };
             spec.AddFilter(x => x.Id == expected.Id);
 
             var actual = await AuthorRepository.GetBySpecificationAsync(spec);
@@ -127,10 +111,7 @@ public class FullSpecificationTest
         [Fact]
         public async Task Should_ReturnEntityWithFilter()
         {
-            var expected = new Author {
-                FirstName = "John",
-                LastName = "Doe"
-            };
+            var expected = new Author { FirstName = "John", LastName = "Doe" };
 
             DbContext.Add(expected);
             await DbContext.SaveChangesAsync();
@@ -154,15 +135,9 @@ public class FullSpecificationTest
         [Fact]
         public async Task Should_ReturnEntityWithAscendingOrder()
         {
-            var author1 = new Author {
-                FirstName = "John",
-                LastName = "Doe"
-            };
+            var author1 = new Author { FirstName = "John", LastName = "Doe" };
 
-            var author2 = new Author {
-                FirstName = "Anna",
-                LastName = "Doe"
-            };
+            var author2 = new Author { FirstName = "Anna", LastName = "Doe" };
 
             DbContext.AddRange(author1, author2);
             await DbContext.SaveChangesAsync();
@@ -183,15 +158,9 @@ public class FullSpecificationTest
         [Fact]
         public async Task Should_ReturnEntityWithDescendingOrder()
         {
-            var author1 = new Author {
-                FirstName = "John",
-                LastName = "Doe"
-            };
+            var author1 = new Author { FirstName = "John", LastName = "Doe" };
 
-            var author2 = new Author {
-                FirstName = "Anna",
-                LastName = "Doe"
-            };
+            var author2 = new Author { FirstName = "Anna", LastName = "Doe" };
 
             DbContext.AddRange(author1, author2);
             await DbContext.SaveChangesAsync();
@@ -221,14 +190,8 @@ public class FullSpecificationTest
         [Fact]
         public async Task Should_ReturnEntityWithInclude()
         {
-            var author = new Author {
-                FirstName = "John",
-                LastName = "Doe"
-            };
-            var book = new Book {
-                Title = "Book",
-                Author = author
-            };
+            var author = new Author { FirstName = "John", LastName = "Doe" };
+            var book = new Book { Title = "Book", Author = author };
 
             DbContext.AddRange(author, book);
             await DbContext.SaveChangesAsync();
@@ -249,18 +212,9 @@ public class FullSpecificationTest
         [Fact]
         public async Task Should_ReturnEntityWithIncludeAndThenInclude()
         {
-            var author = new Author {
-                FirstName = "John",
-                LastName = "Doe"
-            };
-            var book = new Book {
-                Title = "Book",
-                Author = author
-            };
-            var award = new Award {
-                Name = "Guinness",
-                Book = book
-            };
+            var author = new Author { FirstName = "John", LastName = "Doe" };
+            var book = new Book { Title = "Book", Author = author };
+            var award = new Award { Name = "Guinness", Book = book };
 
             DbContext.AddRange(author, book, award);
             await DbContext.SaveChangesAsync();

@@ -12,11 +12,7 @@ public abstract class Entity<THistEntity, TId>
 
     public virtual THistEntity ToHistEntity(IClock clock)
     {
-        var histEntity = new THistEntity {
-            Id = Id,
-            HistFrom = clock.GetCurrentInstant(),
-            HistTo = null
-        };
+        var histEntity = new THistEntity { Id = Id, HistFrom = clock.GetCurrentInstant(), HistTo = null };
         return histEntity;
     }
 }
