@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 nx format:write
 dotnet format
 nx run-many --target=build
