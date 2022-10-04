@@ -12,5 +12,4 @@ public class HistEntity<TId>
     public Instant HistFrom { get; set; }
 
     public Instant? HistTo { get; set; }
-    public Instant Timestamp { get; set; }
 }

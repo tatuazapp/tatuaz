@@ -4,6 +4,10 @@
   "projects": {
     "gateway": "apps/Tatuaz.Gateway",
     "gateway-test": "apps/Tatuaz.Gateway.Test",
+    "history": "apps/Tatuaz.History",
+    "history-queue": "libs/Tatuaz.History.Queue",
+    "history-queue-test": "libs/Tatuaz.History.Queue.Test",
+    "history-test": "apps/Tatuaz.History.Test",
     "integration-poc": "apps/Tatuaz.IntegrationPoC",
     "integration-poc-test": "apps/Tatuaz.IntegrationPoC.Test",
     "shared-domain-models": "libs/Tatuaz.Shared.Domain.Models",

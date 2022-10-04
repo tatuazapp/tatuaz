@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+    
+    <TargetFramework>net6.0</TargetFramework>
+    
+    <ImplicitUsings>enable</ImplicitUsings>
+    
+    <Nullable>enable</Nullable>
+    
+    <OutputPath>../../dist/libs/Tatuaz.History.Queue</OutputPath>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Folder Include="Consumers" />
+  </ItemGroup>
+  
+</Project>
