@@ -21,8 +21,11 @@ variable "prefix" {
 
 variable "az_principal" {
   type = object({
-    app_id        = string
-    client_secret = string
+    app_id          = string
+    display_name    = string
+    client_secret   = string
+    tenant_id       = string
+    subscription_id = string
   })
 }
 
