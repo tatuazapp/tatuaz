@@ -1,3 +1,3 @@
-﻿namespace Tatuaz.History.Queue.Contracts;
+namespace Tatuaz.History.Queue.Contracts;
 
 public record DumpHistoryOrder(string ObjectType, string Data);

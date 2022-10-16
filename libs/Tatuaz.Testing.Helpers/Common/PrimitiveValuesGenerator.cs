@@ -1,4 +1,4 @@
-﻿using NodaTime;
+using NodaTime;
 
 namespace Tatuaz.Testing.Fakes.Common;
 
@@ -36,43 +36,71 @@ public class PrimitiveValuesGenerator : IPrimitiveValuesGenerator
 
     public Guid Guids(int index)
     {
-        if (index < 0 || index >= 10) throw new ArgumentException(nameof(index));
+        if (index < 0 || index >= 10)
+        {
+            throw new ArgumentException(null, nameof(index));
+        }
+
         return _guids[index];
     }
 
     public Instant Instants(int index)
     {
-        if (index < 0 || index >= 10) throw new ArgumentException(nameof(index));
+        if (index < 0 || index >= 10)
+        {
+            throw new ArgumentException(null, nameof(index));
+        }
+
         return _instants[index];
     }
 
     public string Strings(int index)
     {
-        if (index < 0 || index >= 10) throw new ArgumentException(nameof(index));
+        if (index < 0 || index >= 10)
+        {
+            throw new ArgumentException(null, nameof(index));
+        }
+
         return _strings[index];
     }
 
     public int Ints(int index)
     {
-        if (index < 0 || index >= 10) throw new ArgumentException(nameof(index));
+        if (index < 0 || index >= 10)
+        {
+            throw new ArgumentException(null, nameof(index));
+        }
+
         return _ints[index];
     }
 
     public float Floats(int index)
     {
-        if (index < 0 || index >= 10) throw new ArgumentException(nameof(index));
+        if (index < 0 || index >= 10)
+        {
+            throw new ArgumentException(null, nameof(index));
+        }
+
         return _floats[index];
     }
 
     public double Doubles(int index)
     {
-        if (index < 0 || index >= 10) throw new ArgumentException(nameof(index));
+        if (index < 0 || index >= 10)
+        {
+            throw new ArgumentException(null, nameof(index));
+        }
+
         return _doubles[index];
     }
 
     public decimal Decimals(int index)
     {
-        if (index < 0 || index >= 10) throw new ArgumentException(nameof(index));
+        if (index < 0 || index >= 10)
+        {
+            throw new ArgumentException(null, nameof(index));
+        }
+
         return _decimals[index];
     }
 }

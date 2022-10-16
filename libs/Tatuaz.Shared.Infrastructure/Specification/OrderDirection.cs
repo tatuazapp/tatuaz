@@ -1,4 +1,4 @@
-﻿namespace Tatuaz.Shared.Infrastructure.Specification;
+namespace Tatuaz.Shared.Infrastructure.Specification;
 
 public enum OrderDirection
 {

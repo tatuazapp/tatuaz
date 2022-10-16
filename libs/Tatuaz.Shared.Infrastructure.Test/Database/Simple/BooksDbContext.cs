@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
+using Microsoft.EntityFrameworkCore;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Models;
 
 namespace Tatuaz.Shared.Infrastructure.Test.Database.Simple;

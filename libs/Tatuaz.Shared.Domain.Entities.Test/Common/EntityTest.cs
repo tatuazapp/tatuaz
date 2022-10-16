@@ -1,5 +1,4 @@
-﻿using NodaTime;
-
+using NodaTime;
 using Tatuaz.Shared.Domain.Entities.Common;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
 using Tatuaz.Shared.Domain.Entities.Test.Generic;
@@ -34,7 +33,8 @@ public class EntityTest
 
     public class GuidToHistEntity : GenericToHistEntityTest<BareGuidEntity, BareGuidHistEntity, Guid>
     {
-        private static readonly BareGuidEntity[] EntityTestData = {
+        private static readonly BareGuidEntity[] EntityTestData =
+        {
             new() { Id = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30880") }
         };
 

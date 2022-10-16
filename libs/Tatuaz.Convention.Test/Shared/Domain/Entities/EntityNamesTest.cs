@@ -1,4 +1,4 @@
-﻿using Tatuaz.Shared.Domain.Entities.Common;
+using Tatuaz.Shared.Domain.Entities.Common;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
 
 namespace Tatuaz.Convention.Test.Shared.Domain.Entities;

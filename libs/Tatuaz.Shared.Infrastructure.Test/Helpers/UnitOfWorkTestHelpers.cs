@@ -1,16 +1,16 @@
-﻿using System.Reflection;
-
+using System.Reflection;
 using MassTransit;
-
-using Tatuaz.Shared.Infrastructure.Abstractions;
+using Tatuaz.Shared.Infrastructure.DataAccess;
 
 namespace Tatuaz.Shared.Infrastructure.Test.Helpers;
 
 public static class UnitOfWorkTestHelpers
 {
-    public static void ReplaceSendEndpointProvider(this UnitOfWork unitOfWork, ISendEndpointProvider sendEndpointProvider)
+    public static void ReplaceSendEndpointProvider(this UnitOfWork unitOfWork,
+        ISendEndpointProvider sendEndpointProvider)
     {
-        var field = typeof(UnitOfWork).GetField("_sendEndpointProvider", BindingFlags.NonPublic | BindingFlags.Instance);
+        var field = typeof(UnitOfWork).GetField("_sendEndpointProvider",
+            BindingFlags.NonPublic | BindingFlags.Instance);
         field.SetValue(unitOfWork, sendEndpointProvider);
     }
 }

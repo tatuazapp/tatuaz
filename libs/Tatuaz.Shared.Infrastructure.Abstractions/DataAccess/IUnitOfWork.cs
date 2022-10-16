@@ -1,4 +1,4 @@
-﻿namespace Tatuaz.Shared.Infrastructure.Abstractions;
+namespace Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 
 public interface IUnitOfWork : IDisposable
 {

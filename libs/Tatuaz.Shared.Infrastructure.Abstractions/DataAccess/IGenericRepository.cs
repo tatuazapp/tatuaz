@@ -1,13 +1,11 @@
-﻿using System.Linq.Expressions;
-
+using System.Linq.Expressions;
 using NodaTime;
-
 using Tatuaz.Shared.Domain.Entities.Common;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 using Tatuaz.Shared.Infrastructure.Abstractions.Specification;
 
-namespace Tatuaz.Shared.Infrastructure.Abstractions;
+namespace Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 
 public interface IGenericRepository<TEntity, THistEntity, in TId>
     where TEntity : Entity<THistEntity, TId>, new()

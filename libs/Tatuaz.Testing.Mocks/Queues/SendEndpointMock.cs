@@ -1,5 +1,4 @@
-﻿using MassTransit;
-
+using MassTransit;
 using Moq;
 
 namespace Tatuaz.Testing.Mocks.Queues;

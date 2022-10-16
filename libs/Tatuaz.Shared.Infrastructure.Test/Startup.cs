@@ -1,18 +1,11 @@
-﻿using MassTransit;
-using MassTransit.Transports;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
-using Moq;
-
 using NodaTime;
 using NodaTime.Testing;
-
-using Tatuaz.History.Queue.Consumers;
-using Tatuaz.Shared.Infrastructure.Abstractions;
+using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using Tatuaz.Shared.Infrastructure.DataAccess;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple;
 using Tatuaz.Testing.Fakes.Common;
 using Tatuaz.Testing.Fakes.Infrastructure;
@@ -37,7 +30,8 @@ public class Startup
         services.AddScoped<IUserAccessor, UserAccessorFake>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IGenericRepository<,,>), typeof(GenericRepository<,,>));
-        services.AddDbContext<BooksDbContext>(opt => {
+        services.AddDbContext<BooksDbContext>(opt =>
+        {
             opt.UseNpgsql(config.GetConnectionString("InfrastructureTest"), npgsqlOpt => { npgsqlOpt.UseNodaTime(); });
             opt.UseSnakeCaseNamingConvention();
         });

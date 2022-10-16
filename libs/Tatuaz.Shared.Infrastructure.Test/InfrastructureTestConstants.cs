@@ -1,4 +1,4 @@
-﻿namespace Tatuaz.Shared.Infrastructure.Test;
+namespace Tatuaz.Shared.Infrastructure.Test;
 
 public class InfrastructureTestConstants
 {

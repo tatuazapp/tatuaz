@@ -1,4 +1,4 @@
-﻿namespace Tatuaz.Shared.Infrastructure.Abstractions.Paging;
+namespace Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 
 public class PagedData<T>
 {

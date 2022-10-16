@@ -1,16 +1,13 @@
-﻿using System.Linq.Expressions;
-
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-
 using NodaTime;
-
 using Tatuaz.Shared.Domain.Entities.Common;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
-using Tatuaz.Shared.Infrastructure.Abstractions;
+using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 using Tatuaz.Shared.Infrastructure.Abstractions.Specification;
 
-namespace Tatuaz.Shared.Infrastructure;
+namespace Tatuaz.Shared.Infrastructure.DataAccess;
 
 public class GenericRepository<TEntity, THistEntity, TId> : IGenericRepository<TEntity, THistEntity, TId>
     where TEntity : Entity<THistEntity, TId>, new()
@@ -28,7 +25,10 @@ public class GenericRepository<TEntity, THistEntity, TId> : IGenericRepository<T
     {
         var baseQuery = _dbContext.Set<TEntity>().AsQueryable();
         if (!track)
+        {
             baseQuery = baseQuery.AsNoTracking();
+        }
+
         return await baseQuery
             .FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken)
             .ConfigureAwait(false);
@@ -146,7 +146,10 @@ public class GenericRepository<TEntity, THistEntity, TId> : IGenericRepository<T
         var toDelete = await _dbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken)
             .ConfigureAwait(false);
         if (toDelete == null)
+        {
             return;
+        }
+
         _dbContext.Set<TEntity>().Remove(toDelete);
     }
 

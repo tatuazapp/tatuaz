@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
-namespace Tatuaz.Shared.Infrastructure;
+namespace Tatuaz.Shared.Infrastructure.DataAccess;
 
 public class MainDbContext : DbContext
 {

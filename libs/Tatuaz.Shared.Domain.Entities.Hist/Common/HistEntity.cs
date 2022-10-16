@@ -1,4 +1,4 @@
-﻿using NodaTime;
+using NodaTime;
 
 namespace Tatuaz.Shared.Domain.Entities.Hist.Common;
 

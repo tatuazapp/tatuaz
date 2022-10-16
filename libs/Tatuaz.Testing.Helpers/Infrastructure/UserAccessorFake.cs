@@ -1,4 +1,4 @@
-﻿using Tatuaz.Shared.Infrastructure.Abstractions;
+using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Testing.Fakes.Common;
 
 namespace Tatuaz.Testing.Fakes.Infrastructure;

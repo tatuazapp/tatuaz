@@ -1,8 +1,6 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Text.Json;
-
 using Microsoft.OpenApi.Models;
-
 using Tatuaz.Gateway.Configuration.Options;
 
 namespace Tatuaz.Gateway.Configuration;
@@ -18,12 +16,14 @@ public static class ServiceExtensions
     public static IServiceCollection AddGatewayServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddControllers()
-            .AddJsonOptions(options => {
+            .AddJsonOptions(options =>
+            {
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                 options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
             });
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen(opt => {
+        services.AddSwaggerGen(opt =>
+        {
             opt.SwaggerDoc("v1",
                 new OpenApiInfo { Version = "v1", Title = "tatuaz.app API", Description = "API for tatuaz.app" });
             opt.IncludeXmlComments($"{Assembly.GetExecutingAssembly().GetName().Name}.xml");

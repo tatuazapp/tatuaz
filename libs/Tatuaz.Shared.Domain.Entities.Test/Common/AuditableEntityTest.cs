@@ -1,5 +1,4 @@
-﻿using NodaTime;
-
+using NodaTime;
 using Tatuaz.Shared.Domain.Entities.Common;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
 using Tatuaz.Shared.Domain.Entities.Test.Generic;
@@ -34,8 +33,10 @@ public class AuditableEntityTest
 
     public class GuidToHistEntity : GenericToHistEntityTest<BareGuidAuditableEntity, BareGuidHistAuditableEntity, Guid>
     {
-        private static readonly BareGuidAuditableEntity[] EntityTestData = {
-            new() {
+        private static readonly BareGuidAuditableEntity[] EntityTestData =
+        {
+            new()
+            {
                 Id = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30880"),
                 CreatedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30881"),
                 CreatedOn = Instant.FromUtc(2021, 1, 1, 1, 1, 1),
@@ -51,8 +52,10 @@ public class AuditableEntityTest
 
     public class IntToHistEntity : GenericToHistEntityTest<BareIntAuditableEntity, BareIntAuditableHistEntity, int>
     {
-        private static readonly BareIntAuditableEntity[] EntityTestData = {
-            new() {
+        private static readonly BareIntAuditableEntity[] EntityTestData =
+        {
+            new()
+            {
                 Id = 1337,
                 CreatedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30881"),
                 CreatedOn = Instant.FromUtc(2021, 1, 1, 1, 1, 1),
@@ -69,8 +72,10 @@ public class AuditableEntityTest
     public class
         StringToHistEntity : GenericToHistEntityTest<BareStringAuditableEntity, BareStringAuditableHistEntity, string>
     {
-        private static readonly BareStringAuditableEntity[] EntityTestData = {
-            new() {
+        private static readonly BareStringAuditableEntity[] EntityTestData =
+        {
+            new()
+            {
                 Id = "This is lit",
                 CreatedBy = Guid.Parse("8D5EC509-380C-4118-B3F8-C71EB2A30881"),
                 CreatedOn = Instant.FromUtc(2021, 1, 1, 1, 1, 1),

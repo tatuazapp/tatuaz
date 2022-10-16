@@ -1,5 +1,4 @@
-﻿using NodaTime;
-
+using NodaTime;
 using Tatuaz.Shared.Domain.Entities.Common;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
 

@@ -1,6 +1,5 @@
-﻿namespace Tatuaz.Shared.Domain.Entities.Hist.Messages;
+namespace Tatuaz.Shared.Domain.Entities.Hist.Messages;
 
 public interface HistDumpCommand
 {
-
 }

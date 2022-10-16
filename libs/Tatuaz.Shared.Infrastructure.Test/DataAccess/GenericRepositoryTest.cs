@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-
+using Microsoft.EntityFrameworkCore;
 using Moq;
-
-using Tatuaz.Shared.Infrastructure.Abstractions;
+using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 using Tatuaz.Shared.Infrastructure.Abstractions.Specification;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.HistModels;
@@ -17,6 +15,7 @@ public class GenericRepositoryTest
         DbContext = dbContext;
         AuthorRepository = authorRepository;
     }
+
     private DbContext DbContext { get; }
     private IGenericRepository<Author, HistAuthor, Guid> AuthorRepository { get; }
 
@@ -31,10 +30,10 @@ public class GenericRepositoryTest
         public async Task Should_ReturnSavedEntity()
         {
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
-            await DbContext.AddAsync(author);
-            await DbContext.SaveChangesAsync();
+            await DbContext.AddAsync(author).ConfigureAwait(false);
+            await DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var result = await AuthorRepository.GetByIdAsync(author.Id);
+            var result = await AuthorRepository.GetByIdAsync(author.Id).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.Equal(author.FirstName, result?.FirstName);
@@ -44,7 +43,7 @@ public class GenericRepositoryTest
         [Fact]
         public async Task Should_ReturnNullOnNotExistingEntity()
         {
-            var result = await AuthorRepository.GetByIdAsync(Guid.NewGuid());
+            var result = await AuthorRepository.GetByIdAsync(Guid.NewGuid()).ConfigureAwait(false);
 
             Assert.Null(result);
         }
@@ -53,10 +52,10 @@ public class GenericRepositoryTest
         public async Task Should_UpdateTrackedEntity()
         {
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
-            await DbContext.AddAsync(author);
-            await DbContext.SaveChangesAsync();
+            await DbContext.AddAsync(author).ConfigureAwait(false);
+            await DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var result = await AuthorRepository.GetByIdAsync(author.Id, true);
+            var result = await AuthorRepository.GetByIdAsync(author.Id, true).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.Equal(author.FirstName, result?.FirstName);
@@ -64,9 +63,9 @@ public class GenericRepositoryTest
 
             result!.FirstName = "Adam";
             result!.LastName = "Nowak";
-            var changes = await DbContext.SaveChangesAsync();
+            var changes = await DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var updatedAuthor = await AuthorRepository.GetByIdAsync(author.Id);
+            var updatedAuthor = await AuthorRepository.GetByIdAsync(author.Id).ConfigureAwait(false);
 
             Assert.NotNull(updatedAuthor);
             Assert.Equal(result.FirstName, updatedAuthor?.FirstName);
@@ -78,18 +77,18 @@ public class GenericRepositoryTest
         public async Task Should_NotUpdateNotTrackedEntity()
         {
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
-            await DbContext.AddAsync(author);
-            await DbContext.SaveChangesAsync();
+            await DbContext.AddAsync(author).ConfigureAwait(false);
+            await DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var result = await AuthorRepository.GetByIdAsync(author.Id);
+            var result = await AuthorRepository.GetByIdAsync(author.Id).ConfigureAwait(false);
 
             Assert.NotNull(result);
 
             result!.FirstName = "Adam";
             result!.LastName = "Nowak";
-            var changes = await DbContext.SaveChangesAsync();
+            var changes = await DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var updatedAuthor = await AuthorRepository.GetByIdAsync(author.Id);
+            var updatedAuthor = await AuthorRepository.GetByIdAsync(author.Id).ConfigureAwait(false);
 
             Assert.NotNull(updatedAuthor);
             Assert.Equal(author.FirstName, updatedAuthor?.FirstName);
@@ -109,10 +108,10 @@ public class GenericRepositoryTest
         public async Task Should_ReturnTrueOnExistingEntity()
         {
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
-            await DbContext.AddAsync(author);
-            await DbContext.SaveChangesAsync();
+            await DbContext.AddAsync(author).ConfigureAwait(false);
+            await DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var result = await AuthorRepository.ExistsByIdAsync(author.Id);
+            var result = await AuthorRepository.ExistsByIdAsync(author.Id).ConfigureAwait(false);
 
             Assert.True(result);
         }
@@ -120,7 +119,7 @@ public class GenericRepositoryTest
         [Fact]
         public async Task Should_ReturnFalseOnNotExistingEntity()
         {
-            var result = await AuthorRepository.ExistsByIdAsync(Guid.NewGuid());
+            var result = await AuthorRepository.ExistsByIdAsync(Guid.NewGuid()).ConfigureAwait(false);
 
             Assert.False(result);
         }
@@ -138,14 +137,14 @@ public class GenericRepositoryTest
         {
             var author1 = new Author { FirstName = "Jan", LastName = "Kowalski" };
             var author2 = new Author { FirstName = "Adam", LastName = "Nowak" };
-            await DbContext.AddRangeAsync(author1, author2);
-            await DbContext.SaveChangesAsync();
+            await DbContext.AddRangeAsync(author1, author2).ConfigureAwait(false);
+            await DbContext.SaveChangesAsync().ConfigureAwait(false);
             var specMock = new Mock<ISpecification<Author>>();
             specMock.Setup(x => x.Apply(It.IsAny<IQueryable<Author>>()))
                 .Returns<IQueryable<Author>>(q
                     => q.Where(x => x.Id == author1.Id).AsQueryable());
 
-            var result = await AuthorRepository.GetBySpecificationAsync(specMock.Object);
+            var result = await AuthorRepository.GetBySpecificationAsync(specMock.Object).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.Single(result);
@@ -165,15 +164,16 @@ public class GenericRepositoryTest
         {
             var author1 = new Author { FirstName = "Jan", LastName = "Kowalski" };
             var author2 = new Author { FirstName = "Adam", LastName = "Nowak" };
-            await DbContext.AddRangeAsync(author1, author2);
-            await DbContext.SaveChangesAsync();
+            await DbContext.AddRangeAsync(author1, author2).ConfigureAwait(false);
+            await DbContext.SaveChangesAsync().ConfigureAwait(false);
             var specMock = new Mock<ISpecification<Author>>();
             specMock.Setup(x => x.Apply(It.IsAny<IQueryable<Author>>()))
                 .Returns<IQueryable<Author>>(q
                     => q.Where(x => x.Id == author1.Id).AsQueryable());
 
             var result =
-                await AuthorRepository.GetBySpecificationWithPagingAsync(specMock.Object, new PagedParams(1, 1));
+                await AuthorRepository.GetBySpecificationWithPagingAsync(specMock.Object, new PagedParams(1, 1))
+                    .ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.Single(result.Data);
@@ -196,10 +196,10 @@ public class GenericRepositoryTest
         public async Task Should_ReturnTrueOnExistingEntity()
         {
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
-            await DbContext.AddAsync(author);
-            await DbContext.SaveChangesAsync();
+            await DbContext.AddAsync(author).ConfigureAwait(false);
+            await DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var result = await AuthorRepository.ExistsByPredicateAsync(x => x.Id == author.Id);
+            var result = await AuthorRepository.ExistsByPredicateAsync(x => x.Id == author.Id).ConfigureAwait(false);
 
             Assert.True(result);
         }
@@ -208,7 +208,7 @@ public class GenericRepositoryTest
         public async Task Should_ReturnFalseOnNotExistingEntity()
         {
             var randomGuid = Guid.NewGuid();
-            var result = await AuthorRepository.ExistsByPredicateAsync(x => x.Id == randomGuid);
+            var result = await AuthorRepository.ExistsByPredicateAsync(x => x.Id == randomGuid).ConfigureAwait(false);
 
             Assert.False(result);
         }
@@ -226,10 +226,10 @@ public class GenericRepositoryTest
         {
             var author1 = new Author { FirstName = "Jan", LastName = "Kowalski" };
             var author2 = new Author { FirstName = "Adam", LastName = "Nowak" };
-            await DbContext.AddRangeAsync(author1, author2);
-            await DbContext.SaveChangesAsync();
+            await DbContext.AddRangeAsync(author1, author2).ConfigureAwait(false);
+            await DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var result = await AuthorRepository.CountByPredicateAsync(x => x.Id == author1.Id);
+            var result = await AuthorRepository.CountByPredicateAsync(x => x.Id == author1.Id).ConfigureAwait(false);
 
             Assert.Equal(1, result);
         }
@@ -238,7 +238,7 @@ public class GenericRepositoryTest
         public async Task Should_ReturnZero()
         {
             var randomGuid = Guid.NewGuid();
-            var result = await AuthorRepository.CountByPredicateAsync(x => x.Id == randomGuid);
+            var result = await AuthorRepository.CountByPredicateAsync(x => x.Id == randomGuid).ConfigureAwait(false);
 
             Assert.Equal(0, result);
         }
@@ -256,7 +256,7 @@ public class GenericRepositoryTest
         {
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
-            await AuthorRepository.CreateAsync(author);
+            await AuthorRepository.CreateAsync(author).ConfigureAwait(false);
 
             Assert.NotEqual(Guid.Empty, author.Id);
             Assert.Equal(EntityState.Added, DbContext.Entry(author).State);
@@ -274,10 +274,10 @@ public class GenericRepositoryTest
         public async Task Should_DeleteEntity()
         {
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
-            await DbContext.AddAsync(author);
-            await DbContext.SaveChangesAsync();
+            await DbContext.AddAsync(author).ConfigureAwait(false);
+            await DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            await AuthorRepository.DeleteAsync(author);
+            await AuthorRepository.DeleteAsync(author).ConfigureAwait(false);
 
             Assert.Equal(EntityState.Deleted, DbContext.Entry(author).State);
         }
@@ -286,10 +286,10 @@ public class GenericRepositoryTest
         public async Task Should_DeleteEntityById()
         {
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
-            await DbContext.AddAsync(author);
-            await DbContext.SaveChangesAsync();
+            await DbContext.AddAsync(author).ConfigureAwait(false);
+            await DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            await AuthorRepository.DeleteAsync(author.Id);
+            await AuthorRepository.DeleteAsync(author.Id).ConfigureAwait(false);
 
             Assert.Equal(EntityState.Deleted, DbContext.Entry(author).State);
         }
