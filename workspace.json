@@ -17,6 +17,7 @@
     "shared-infrastructure-abstractions": "libs/Tatuaz.Shared.Infrastructure.Abstractions",
     "shared-infrastructure-test": "libs/Tatuaz.Shared.Infrastructure.Test",
     "testing-helpers": "libs/Tatuaz.Testing.Helpers",
+    "testing-mocks": "libs/Tatuaz.Testing.Mocks",
     "ui": "libs/ui",
     "web": "apps/web",
     "web-e2e": "apps/web-e2e",

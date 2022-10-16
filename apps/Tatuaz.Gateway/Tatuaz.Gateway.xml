@@ -4,11 +4,5 @@
         <name>Tatuaz.Gateway</name>
     </assembly>
     <members>
-        <member name="M:Tatuaz.Gateway.Controllers.WeatherForecastController.Get">
-            <summary>
-                Test xml comment
-            </summary>
-            <returns>test</returns>
-        </member>
     </members>
 </doc>

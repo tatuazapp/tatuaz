@@ -1,12 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+using Moq;
+
 using NodaTime;
 using NodaTime.Testing;
 
+using Tatuaz.History.Queue.Contracts;
 using Tatuaz.Shared.Infrastructure.Abstractions;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Models;
+using Tatuaz.Shared.Infrastructure.Test.Helpers;
 using Tatuaz.Testing.Fakes.Common;
 using Tatuaz.Testing.Fakes.Infrastructure;
+using Tatuaz.Testing.Mocks.Queues;
 
 namespace Tatuaz.Shared.Infrastructure.Test.DataAccess;
 
@@ -14,7 +19,7 @@ public class UnitOfWorkTest
 {
     private readonly TimeSpan _testPrecision = TimeSpan.FromMilliseconds(10);
 
-    private UnitOfWorkTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
+    public UnitOfWorkTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
         IUserAccessor userAccessor, DbContext dbContext, IClock clock)
     {
         UnitOfWork = unitOfWork;
@@ -32,13 +37,6 @@ public class UnitOfWorkTest
 
     public class SaveChangesAsyncTest : UnitOfWorkTest
     {
-        public SaveChangesAsyncTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
-            IUserAccessor userAccessor, DbContext dbContext, IClock clock) : base(unitOfWork, primitiveValuesGenerator,
-            userAccessor,
-            dbContext, clock)
-        {
-        }
-
         [Fact]
         public async Task Should_SaveInsertedElement()
         {
@@ -148,17 +146,132 @@ public class UnitOfWorkTest
             Assert.Equal(1, changes1);
             Assert.Equal(1, changes2);
         }
+
+        [Fact]
+        public async Task Should_DumpHistoryChangesOnCreate()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+
+            DbContext.Add(author);
+            await UnitOfWork.SaveChangesAsync();
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Once);
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task Should_DumpMultipleHistoryChangesOnCreate()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+            var book = new Book { Title = "Test", Author = author };
+
+            DbContext.Add(author);
+            DbContext.Add(book);
+            await UnitOfWork.SaveChangesAsync();
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Once);
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
+        }
+
+        [Fact]
+        public async Task Should_DumpHistoryChangesOnUpdate()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+
+            DbContext.Add(author);
+            await UnitOfWork.SaveChangesAsync();
+
+            author.FirstName = "Adam";
+            await UnitOfWork.SaveChangesAsync();
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Exactly(2));
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
+        }
+
+        [Fact]
+        public async Task Should_DumpMultipleHistoryChangesOnUpdate()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+            var book = new Book { Title = "Test", Author = author };
+
+            DbContext.Add(author);
+            DbContext.Add(book);
+            await UnitOfWork.SaveChangesAsync();
+
+            author.FirstName = "Adam";
+            book.Title = "Test2";
+            await UnitOfWork.SaveChangesAsync();
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Exactly(2));
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()), Times.Exactly(4));
+        }
+
+        [Fact]
+        public async Task Should_DumpHistoryChangesOnDelete()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+
+            DbContext.Add(author);
+            await UnitOfWork.SaveChangesAsync();
+
+            DbContext.Remove(author);
+            await UnitOfWork.SaveChangesAsync();
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Exactly(2));
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
+        }
+
+        [Fact]
+        public async Task Should_DumpMultipleHistoryChangesOnDelete()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+            var book = new Book { Title = "Test", Author = author };
+
+            DbContext.Add(author);
+            DbContext.Add(book);
+            await UnitOfWork.SaveChangesAsync();
+
+            DbContext.Remove(author);
+            DbContext.Remove(book);
+            await UnitOfWork.SaveChangesAsync();
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Exactly(2));
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()), Times.Exactly(4));
+        }
+
+        public SaveChangesAsyncTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
+            IUserAccessor userAccessor, DbContext dbContext, IClock clock) : base(unitOfWork, primitiveValuesGenerator,
+            userAccessor, dbContext, clock)
+        {
+        }
     }
 
     public class RunInTransactionAsyncTest : UnitOfWorkTest
     {
-        public RunInTransactionAsyncTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
-            IUserAccessor userAccessor, DbContext dbContext, IClock clock) : base(unitOfWork, primitiveValuesGenerator,
-            userAccessor,
-            dbContext, clock)
-        {
-        }
-
         [Fact]
         public async Task Should_SaveInsertedElement()
         {
@@ -354,6 +467,175 @@ public class UnitOfWorkTest
             Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), _testPrecision);
             Assert.Equal(1, changes1);
             Assert.Equal(1, changes2);
+        }
+
+        [Fact]
+        public async Task Should_DumpHistoryChangesOnCreate()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+
+            await UnitOfWork.RunInTransactionAsync(
+                async ct => {
+                    DbContext.Add(author);
+                    await UnitOfWork.SaveChangesAsync(ct);
+                }
+            );
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Once);
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task Should_DumpMultipleHistoryChangesOnCreate()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+            var book = new Book { Title = "Test", Author = author };
+
+            await UnitOfWork.RunInTransactionAsync(
+                async ct => {
+                    DbContext.Add(author);
+                    DbContext.Add(book);
+                    await UnitOfWork.SaveChangesAsync(ct);
+                }
+            );
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Once);
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
+        }
+
+        [Fact]
+        public async Task Should_DumpHistoryChangesOnUpdate()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+
+            DbContext.Add(author);
+            await UnitOfWork.SaveChangesAsync();
+
+            await UnitOfWork.RunInTransactionAsync(
+                async ct => {
+                    author.FirstName = "Janusz";
+                    await UnitOfWork.SaveChangesAsync(ct);
+                }
+            );
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Exactly(2));
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
+        }
+
+        [Fact]
+        public async Task Should_DumpMultipleHistoryChangesOnUpdate()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+            var book = new Book { Title = "Test", Author = author };
+
+            DbContext.Add(author);
+            DbContext.Add(book);
+            await UnitOfWork.SaveChangesAsync();
+
+            await UnitOfWork.RunInTransactionAsync(
+                async ct => {
+                    author.FirstName = "Janusz";
+                    book.Title = "Test2";
+                    await UnitOfWork.SaveChangesAsync(ct);
+                }
+            );
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Exactly(2));
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()), Times.Exactly(4));
+        }
+
+        [Fact]
+        public async Task Should_DumpHistoryChangesOnDelete()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+
+            DbContext.Add(author);
+            await UnitOfWork.SaveChangesAsync();
+
+            await UnitOfWork.RunInTransactionAsync(
+                async ct => {
+                    DbContext.Remove(author);
+                    await UnitOfWork.SaveChangesAsync(ct);
+                }
+            );
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Exactly(2));
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
+        }
+
+        [Fact]
+        public async Task Should_DumpMultipleHistoryChangesOnDelete()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+            var book = new Book { Title = "Test", Author = author };
+
+            DbContext.Add(author);
+            DbContext.Add(book);
+            await UnitOfWork.SaveChangesAsync();
+
+            await UnitOfWork.RunInTransactionAsync(
+                async ct => {
+                    DbContext.Remove(author);
+                    DbContext.Remove(book);
+                    await UnitOfWork.SaveChangesAsync(ct);
+                }
+            );
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Exactly(2));
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()), Times.Exactly(4));
+        }
+        
+        [Fact]
+        public async Task ShouldNot_DumpHistoryChangesDirectlyAfterSaveChangesAsync()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+
+            await UnitOfWork.RunInTransactionAsync(
+                async ct => {
+                    DbContext.Add(author);
+                    await UnitOfWork.SaveChangesAsync(ct);
+                    sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Never);
+                    sendEndpointProviderMock.SendEndpointMock.Verify(
+                        x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()), Times.Never);
+                }
+            );
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Once);
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        public RunInTransactionAsyncTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
+            IUserAccessor userAccessor, DbContext dbContext, IClock clock) : base(unitOfWork, primitiveValuesGenerator,
+            userAccessor, dbContext, clock)
+        {
         }
     }
 }

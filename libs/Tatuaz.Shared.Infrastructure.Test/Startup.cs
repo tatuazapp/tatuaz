@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using MassTransit.Transports;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,7 @@ using Tatuaz.Shared.Infrastructure.Abstractions;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple;
 using Tatuaz.Testing.Fakes.Common;
 using Tatuaz.Testing.Fakes.Infrastructure;
+using Tatuaz.Testing.Mocks.Queues;
 
 namespace Tatuaz.Shared.Infrastructure.Test;
 
@@ -42,21 +44,7 @@ public class Startup
         services.AddScoped<DbContext, BooksDbContext>();
         services.AddScoped<IClock>(_ => new FakeClock(Instant.FromUtc(2021, 1, 1, 0, 0)));
 
-        // var endpointMock = new Mock<ISendEndpoint>();
-        // endpointMock
-        //     .Setup(x => x.Send(It.IsAny<IEnumerable<object>>(), CancellationToken.None))
-        //     .Returns(Task.CompletedTask);
-        // var endpointSetupMock = new Mock<ISendEndpointProvider>();
-        // endpointSetupMock
-        //     .Setup(x => x.GetSendEndpoint(It.IsAny<Uri>()))
-        //     .Returns(Task.FromResult(endpointMock.Object));
-        // services.AddScoped<ISendEndpointProvider>(_ => endpointSetupMock.Object);
-        //
-        services.AddMassTransit(x => {
-            x.SetKebabCaseEndpointNameFormatter();
-
-            x.UsingInMemory();
-        });
+        services.RegisterQueuesMocks();
     }
 
     public void Configure(IServiceProvider applicationServices)

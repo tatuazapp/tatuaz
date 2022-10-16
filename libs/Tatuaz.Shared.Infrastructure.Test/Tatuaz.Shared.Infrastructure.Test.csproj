@@ -60,6 +60,8 @@
 
         <ProjectReference Include="..\Tatuaz.Testing.Helpers\Tatuaz.Testing.Helpers.csproj" />
 
+        <ProjectReference Include="..\Tatuaz.Testing.Mocks\Tatuaz.Testing.Mocks.csproj" />
+
     </ItemGroup>
 
     <ItemGroup>
