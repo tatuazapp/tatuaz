@@ -12,9 +12,9 @@ namespace Tatuaz.Shared.Infrastructure.Test.DataAccess;
 
 public class UnitOfWorkTest
 {
-    protected readonly TimeSpan TestPrecision = TimeSpan.FromMilliseconds(10);
+    private readonly TimeSpan _testPrecision = TimeSpan.FromMilliseconds(10);
 
-    public UnitOfWorkTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
+    private UnitOfWorkTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
         IUserAccessor userAccessor, DbContext dbContext, IClock clock)
     {
         UnitOfWork = unitOfWork;
@@ -24,11 +24,11 @@ public class UnitOfWorkTest
         Clock = clock;
     }
 
-    protected IUnitOfWork UnitOfWork { get; }
-    protected IPrimitiveValuesGenerator PrimitiveValuesGenerator { get; }
-    protected IUserAccessor UserAccessor { get; }
-    protected DbContext DbContext { get; }
-    protected IClock Clock { get; }
+    private IUnitOfWork UnitOfWork { get; }
+    private IPrimitiveValuesGenerator PrimitiveValuesGenerator { get; }
+    private IUserAccessor UserAccessor { get; }
+    private DbContext DbContext { get; }
+    private IClock Clock { get; }
 
     public class SaveChangesAsyncTest : UnitOfWorkTest
     {
@@ -116,8 +116,8 @@ public class UnitOfWorkTest
 
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.CreatedBy);
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.ModifiedBy);
-            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.CreatedOn.ToDateTimeUtc(), TestPrecision);
-            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), TestPrecision);
+            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.CreatedOn.ToDateTimeUtc(), _testPrecision);
+            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), _testPrecision);
             Assert.Equal(1, changes);
         }
 
@@ -143,8 +143,8 @@ public class UnitOfWorkTest
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.CreatedBy);
             Assert.Equal(PrimitiveValuesGenerator.Guids(1), actual.ModifiedBy);
             Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc().AddMilliseconds(-200),
-                actual.CreatedOn.ToDateTimeUtc(), TestPrecision);
-            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), TestPrecision);
+                actual.CreatedOn.ToDateTimeUtc(), _testPrecision);
+            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), _testPrecision);
             Assert.Equal(1, changes1);
             Assert.Equal(1, changes2);
         }
@@ -313,8 +313,8 @@ public class UnitOfWorkTest
 
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.CreatedBy);
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.ModifiedBy);
-            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.CreatedOn.ToDateTimeUtc(), TestPrecision);
-            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), TestPrecision);
+            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.CreatedOn.ToDateTimeUtc(), _testPrecision);
+            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), _testPrecision);
             Assert.Equal(1, changes);
         }
 
@@ -350,8 +350,8 @@ public class UnitOfWorkTest
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.CreatedBy);
             Assert.Equal(PrimitiveValuesGenerator.Guids(1), actual.ModifiedBy);
             Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc().AddMilliseconds(-200),
-                actual.CreatedOn.ToDateTimeUtc(), TestPrecision);
-            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), TestPrecision);
+                actual.CreatedOn.ToDateTimeUtc(), _testPrecision);
+            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), _testPrecision);
             Assert.Equal(1, changes1);
             Assert.Equal(1, changes2);
         }

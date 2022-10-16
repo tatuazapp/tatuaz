@@ -14,8 +14,8 @@ public class DumpHistoryConsumer : IConsumer<DumpHistoryOrder>
 {
     private readonly ILogger<DumpHistoryConsumer> _logger;
 
-    public static string QueueName = "dump-history";
-    public static Uri Uri = new Uri($"queue:{QueueName}");
+    public const string QueueName = "dump-history";
+    public static readonly Uri Uri = new ($"queue:{QueueName}");
 
     public DumpHistoryConsumer(ILogger<DumpHistoryConsumer> logger)
     {

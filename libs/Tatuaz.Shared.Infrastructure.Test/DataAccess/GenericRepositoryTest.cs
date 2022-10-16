@@ -12,14 +12,13 @@ namespace Tatuaz.Shared.Infrastructure.Test.DataAccess;
 
 public class GenericRepositoryTest
 {
-    public GenericRepositoryTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository)
+    private GenericRepositoryTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository)
     {
         DbContext = dbContext;
         AuthorRepository = authorRepository;
     }
-
-    protected DbContext DbContext { get; }
-    protected IGenericRepository<Author, HistAuthor, Guid> AuthorRepository { get; }
+    private DbContext DbContext { get; }
+    private IGenericRepository<Author, HistAuthor, Guid> AuthorRepository { get; }
 
     public class GetByIdAsyncTest : GenericRepositoryTest
     {

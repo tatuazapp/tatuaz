@@ -16,9 +16,10 @@
     "shared-infrastructure": "libs/Tatuaz.Shared.Infrastructure",
     "shared-infrastructure-abstractions": "libs/Tatuaz.Shared.Infrastructure.Abstractions",
     "shared-infrastructure-test": "libs/Tatuaz.Shared.Infrastructure.Test",
-    "testing-fakes": "libs/Tatuaz.Testing.Fakes",
+    "testing-helpers": "libs/Tatuaz.Testing.Helpers",
     "ui": "libs/ui",
     "web": "apps/web",
-    "web-e2e": "apps/web-e2e"
+    "web-e2e": "apps/web-e2e",
+    "convention-test": "libs/Tatuaz.Convention.Test"
   }
 }

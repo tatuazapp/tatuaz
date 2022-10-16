@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Domain.Entiti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Domain.Entities.Hist", "libs\Tatuaz.Shared.Domain.Entities.Hist\Tatuaz.Shared.Domain.Entities.Hist.csproj", "{5E9D7D78-CC90-45F2-B77D-61EBF75E4EF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Testing.Fakes", "libs\Tatuaz.Testing.Fakes\Tatuaz.Testing.Fakes.csproj", "{2517F937-F5ED-471B-A53A-5EC3B2A7DE03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Testing.Helpers", "libs\Tatuaz.Testing.Helpers\Tatuaz.Testing.Helpers.csproj", "{2517F937-F5ED-471B-A53A-5EC3B2A7DE03}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.History", "apps\Tatuaz.History\Tatuaz.History.csproj", "{58CB192A-6531-4BAD-8F5D-40E144812299}"
 EndProject
@@ -36,6 +36,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.History.Queue", "libs\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj", "{36AB9363-BD44-41E9-856E-0813A4CFED46}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.History.Queue.Test", "libs\Tatuaz.History.Queue.Test\Tatuaz.History.Queue.Test.csproj", "{82A9D33E-22D0-4694-BFD8-C79B9C3F4145}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Convention.Test", "libs\Tatuaz.Convention.Test\Tatuaz.Convention.Test.csproj", "{65B6F123-4D12-4731-9926-C728686886BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -106,6 +108,10 @@ Global
 		{82A9D33E-22D0-4694-BFD8-C79B9C3F4145}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82A9D33E-22D0-4694-BFD8-C79B9C3F4145}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82A9D33E-22D0-4694-BFD8-C79B9C3F4145}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65B6F123-4D12-4731-9926-C728686886BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65B6F123-4D12-4731-9926-C728686886BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65B6F123-4D12-4731-9926-C728686886BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65B6F123-4D12-4731-9926-C728686886BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{37CC9BB0-DEB1-4DAE-AA33-9B20C716D50E} = {25311259-92CF-4AA0-85FD-E7FE3579BBDA}
@@ -123,5 +129,6 @@ Global
 		{9FA65BE1-83C8-4D4A-8E5E-560246951BBB} = {25311259-92CF-4AA0-85FD-E7FE3579BBDA}
 		{36AB9363-BD44-41E9-856E-0813A4CFED46} = {AD862DF1-C558-4DEA-88FB-6AA571991180}
 		{82A9D33E-22D0-4694-BFD8-C79B9C3F4145} = {AD862DF1-C558-4DEA-88FB-6AA571991180}
+		{65B6F123-4D12-4731-9926-C728686886BD} = {AD862DF1-C558-4DEA-88FB-6AA571991180}
 	EndGlobalSection
 EndGlobal
