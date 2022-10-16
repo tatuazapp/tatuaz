@@ -1,23 +1,39 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Text.Json;
+
+using MassTransit;
+using MassTransit.Internals;
+
+using Microsoft.EntityFrameworkCore;
+
+using Newtonsoft.Json;
 
 using NodaTime;
+using NodaTime.Serialization.JsonNet;
 
-using Tatuaz.Shared.Domain.Models.Common;
+using Tatuaz.History.Queue.Consumers;
+using Tatuaz.History.Queue.Contracts;
+using Tatuaz.Shared.Domain.Entities.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions;
+
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace Tatuaz.Shared.Infrastructure;
 
 public class UnitOfWork : IUnitOfWork
 {
     private readonly IClock _clock;
+    private readonly ISendEndpointProvider _endpointProvider;
+    private readonly IRequestClient<DumpHistoryOrder> _mtClient;
     private readonly DbContext _context;
     private readonly IUserAccessor _userAccessor;
 
-    public UnitOfWork(DbContext context, IUserAccessor userAccessor, IClock clock)
+    public UnitOfWork(DbContext context, IUserAccessor userAccessor, IClock clock,
+        ISendEndpointProvider endpointProvider)
     {
         _context = context;
         _userAccessor = userAccessor;
         _clock = clock;
+        _endpointProvider = endpointProvider;
     }
 
     public void Dispose()
@@ -29,9 +45,8 @@ public class UnitOfWork : IUnitOfWork
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         UpdateUserContext();
-        SaveHistChanges();
         var changes = await _context.SaveChangesAsync(cancellationToken);
-        await CommitHistChanges();
+        await DumpHistoryChanges(cancellationToken);
         return changes;
     }
 
@@ -42,42 +57,44 @@ public class UnitOfWork : IUnitOfWork
         try
         {
             UpdateUserContext();
-            SaveHistChanges();
             await action(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
-            await CommitHistChanges();
+            await DumpHistoryChanges(cancellationToken);
         }
         catch (Exception e)
         {
             await transaction.RollbackAsync(cancellationToken);
-            await RollbackHistChanges();
             onFailure?.Invoke(e);
         }
     }
 
-    private void SaveHistChanges()
+    private async Task DumpHistoryChanges(CancellationToken cancellationToken = default)
     {
-        // TODO: change when historical microservice is up
-    }
+        var jsonSerializer = new JsonSerializer();
+        jsonSerializer.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
 
-    private Task CommitHistChanges()
-    {
-        // TODO: change when historical microservice is up
-        return Task.CompletedTask;
-    }
+        var entriesToDump = _context
+            .ChangeTracker
+            .Entries<IHistDumpableEntity>()
+            .Select(x => x.Entity.ToHistEntity(_clock))
+            .Select(x => new DumpHistoryOrder(x.GetType().ToString(),
+                JsonConvert.SerializeObject(x, jsonSerializer.Formatting)))
+            .ToList();
 
-    private Task RollbackHistChanges()
-    {
-        // TODO: change when historical microservice is up
-        return Task.CompletedTask;
+        if (entriesToDump.Any())
+        {
+            var endpoint = await _endpointProvider.GetSendEndpoint(DumpHistoryConsumer.Uri);
+
+            await endpoint.SendBatch(entriesToDump, cancellationToken);
+        }
     }
 
     private void UpdateUserContext()
     {
-        var auditableEntities = _context.ChangeTracker.Entries<IAuditableEntity>().ToList();
-        foreach (var entity in auditableEntities.Where(x => x.State == EntityState.Added))
-            entity.Entity.UpdateCreationData(_userAccessor.CurrentUserId, _clock);
-        foreach (var entity in auditableEntities.Where(x => x.State is EntityState.Modified))
-            entity.Entity.UpdateModificationData(_userAccessor.CurrentUserId, _clock);
+        var auditableEntries = _context.ChangeTracker.Entries<IAuditableEntity>().ToList();
+        foreach (var entry in auditableEntries.Where(x => x.State == EntityState.Added))
+            entry.Entity.UpdateCreationData(_userAccessor.CurrentUserId, _clock);
+        foreach (var entry in auditableEntries.Where(x => x.State is EntityState.Modified))
+            entry.Entity.UpdateModificationData(_userAccessor.CurrentUserId, _clock);
     }
 }

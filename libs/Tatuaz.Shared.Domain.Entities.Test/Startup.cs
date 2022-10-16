@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using NodaTime;
 using NodaTime.Testing;
 
-namespace Tatuaz.Shared.Domain.Models.Test;
+namespace Tatuaz.Shared.Domain.Entities.Test;
 
 public class Startup
 {

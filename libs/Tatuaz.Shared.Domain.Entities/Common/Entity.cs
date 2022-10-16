@@ -1,16 +1,16 @@
 ﻿using NodaTime;
 
-using Tatuaz.Shared.Domain.Models.Hist.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Common;
 
-namespace Tatuaz.Shared.Domain.Models.Common;
+namespace Tatuaz.Shared.Domain.Entities.Common;
 
-public abstract class Entity<THistEntity, TId>
+public abstract class Entity<THistEntity, TId> : IHistDumpableEntity
     where THistEntity : HistEntity<TId>, new()
     where TId : notnull
 {
     public TId Id { get; set; } = default!;
 
-    public virtual THistEntity ToHistEntity(IClock clock)
+    public virtual HistEntity ToHistEntity(IClock clock)
     {
         var histEntity = new THistEntity { Id = Id, HistFrom = clock.GetCurrentInstant(), HistTo = null };
         return histEntity;

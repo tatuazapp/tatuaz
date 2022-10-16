@@ -1,11 +1,11 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "libs/Tatuaz.Shared.Domain.Models.Hist",
+  "sourceRoot": "libs/Tatuaz.Shared.Domain.Entities.Hist",
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["dist/libs/Tatuaz.Shared.Domain.Models.Hist"],
+      "outputs": ["dist/libs/Tatuaz.Shared.Domain.Entities.Hist"],
       "options": {
         "configuration": "Debug"
       },

@@ -8,12 +8,12 @@
 
         <Nullable>enable</Nullable>
 
-        <OutputPath>../../dist/libs/Tatuaz.Shared.Domain.Models.Hist</OutputPath>
+        <OutputPath>../../dist/libs/Tatuaz.Shared.Domain.Entities</OutputPath>
 
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime" Version="6.0.4" />
+        <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities.Hist\Tatuaz.Shared.Domain.Entities.Hist.csproj" />
     </ItemGroup>
 
 </Project>

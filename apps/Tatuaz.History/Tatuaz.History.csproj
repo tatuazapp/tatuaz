@@ -4,17 +4,21 @@
 
     <TargetFramework>net6.0</TargetFramework>
 
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>latest</LangVersion>
 
     <OutputPath>../../dist/apps/Tatuaz.History</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
 
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.7" />
 
-    <PackageReference Include="MassTransit" Version="[8.0.0,9.0)" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\libs\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj" />
   </ItemGroup>
 
 </Project>

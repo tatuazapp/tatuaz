@@ -1,8 +1,8 @@
 ﻿using NodaTime;
 
-using Tatuaz.Shared.Domain.Models.Hist.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Common;
 
-namespace Tatuaz.Shared.Domain.Models.Common;
+namespace Tatuaz.Shared.Domain.Entities.Common;
 
 public abstract class AuditableEntity<THistEntity, TId> : Entity<THistEntity, TId>, IAuditableEntity
     where THistEntity : AuditableHistEntity<TId>, new()
@@ -25,9 +25,9 @@ public abstract class AuditableEntity<THistEntity, TId> : Entity<THistEntity, TI
         ModifiedBy = userId;
     }
 
-    public override THistEntity ToHistEntity(IClock clock)
+    public override HistEntity<TId> ToHistEntity(IClock clock)
     {
-        var histEntity = base.ToHistEntity(clock);
+        var histEntity = (AuditableHistEntity<TId>)base.ToHistEntity(clock);
         histEntity.ModifiedBy = ModifiedBy;
         histEntity.ModifiedOn = ModifiedOn;
         histEntity.CreatedBy = CreatedBy;

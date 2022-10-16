@@ -1,6 +1,6 @@
 ﻿using NodaTime;
 
-namespace Tatuaz.Shared.Domain.Models.Hist.Common;
+namespace Tatuaz.Shared.Domain.Entities.Hist.Common;
 
 public class AuditableHistEntity<TId> : HistEntity<TId>
     where TId : notnull

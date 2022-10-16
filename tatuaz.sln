@@ -21,11 +21,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Infrastructur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Infrastructure.Abstractions", "libs\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj", "{C7E0142D-6C12-48A0-A82A-710022CB2750}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Domain.Models", "libs\Tatuaz.Shared.Domain.Models\Tatuaz.Shared.Domain.Models.csproj", "{DDC60FB3-5B6E-4E2D-AF36-D3D8A5C6E9C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Domain.Entities", "libs\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj", "{DDC60FB3-5B6E-4E2D-AF36-D3D8A5C6E9C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Domain.Models.Test", "libs\Tatuaz.Shared.Domain.Models.Test\Tatuaz.Shared.Domain.Models.Test.csproj", "{98EC992E-9541-4049-B83E-4F20B8A10632}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Domain.Entities.Test", "libs\Tatuaz.Shared.Domain.Entities.Test\Tatuaz.Shared.Domain.Entities.Test.csproj", "{98EC992E-9541-4049-B83E-4F20B8A10632}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Domain.Models.Hist", "libs\Tatuaz.Shared.Domain.Models.Hist\Tatuaz.Shared.Domain.Models.Hist.csproj", "{5E9D7D78-CC90-45F2-B77D-61EBF75E4EF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Domain.Entities.Hist", "libs\Tatuaz.Shared.Domain.Entities.Hist\Tatuaz.Shared.Domain.Entities.Hist.csproj", "{5E9D7D78-CC90-45F2-B77D-61EBF75E4EF9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Testing.Fakes", "libs\Tatuaz.Testing.Fakes\Tatuaz.Testing.Fakes.csproj", "{2517F937-F5ED-471B-A53A-5EC3B2A7DE03}"
 EndProject

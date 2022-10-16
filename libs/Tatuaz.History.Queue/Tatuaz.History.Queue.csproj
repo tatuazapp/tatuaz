@@ -12,7 +12,12 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <Folder Include="Consumers" />
+    <PackageReference Include="MassTransit.Abstractions" Version="8.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj" />
   </ItemGroup>
   
 </Project>

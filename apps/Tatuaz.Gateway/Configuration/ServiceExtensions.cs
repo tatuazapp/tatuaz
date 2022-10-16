@@ -31,6 +31,7 @@ public static class ServiceExtensions
             // TODO: Uncomment when EF Core is added to lower projects
             // opt.CustomSchemaIds(type => type.ShortDisplayName().Replace('<', '_').Replace(">", ""));
         });
+
         return services;
     }
 }

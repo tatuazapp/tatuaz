@@ -1,11 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MassTransit;
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using Moq;
+
 using NodaTime;
 using NodaTime.Testing;
 
+using Tatuaz.History.Queue.Consumers;
 using Tatuaz.Shared.Infrastructure.Abstractions;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple;
 using Tatuaz.Testing.Fakes.Common;
@@ -36,6 +41,22 @@ public class Startup
         });
         services.AddScoped<DbContext, BooksDbContext>();
         services.AddScoped<IClock>(_ => new FakeClock(Instant.FromUtc(2021, 1, 1, 0, 0)));
+
+        // var endpointMock = new Mock<ISendEndpoint>();
+        // endpointMock
+        //     .Setup(x => x.Send(It.IsAny<IEnumerable<object>>(), CancellationToken.None))
+        //     .Returns(Task.CompletedTask);
+        // var endpointSetupMock = new Mock<ISendEndpointProvider>();
+        // endpointSetupMock
+        //     .Setup(x => x.GetSendEndpoint(It.IsAny<Uri>()))
+        //     .Returns(Task.FromResult(endpointMock.Object));
+        // services.AddScoped<ISendEndpointProvider>(_ => endpointSetupMock.Object);
+        //
+        services.AddMassTransit(x => {
+            x.SetKebabCaseEndpointNameFormatter();
+
+            x.UsingInMemory();
+        });
     }
 
     public void Configure(IServiceProvider applicationServices)
