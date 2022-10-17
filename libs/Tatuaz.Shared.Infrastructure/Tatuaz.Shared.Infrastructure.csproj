@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+    <PropertyGroup>
 
-    <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
 
-    <ImplicitUsings>enable</ImplicitUsings>
+        <ImplicitUsings>enable</ImplicitUsings>
 
-    <Nullable>enable</Nullable>
+        <Nullable>enable</Nullable>
 
-    <OutputPath>../../dist/libs/Tatuaz.Shared.Infrastructure</OutputPath>
+        <OutputPath>../../dist/libs/Tatuaz.Shared.Infrastructure</OutputPath>
 
-  </PropertyGroup>
+    </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj"/>

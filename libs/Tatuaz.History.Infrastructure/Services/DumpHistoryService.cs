@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
+using Microsoft.EntityFrameworkCore;
 using Tatuaz.History.DataAccess.Exceptions;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
 
@@ -21,17 +20,17 @@ public class DumpHistoryService<THistEntity, TId> : IDumpHistoryService<THistEnt
         switch (entity.HistState)
         {
             case HistState.Added:
-                await ValidateNotYetDumpedAsync(entity);
+                await ValidateNotYetDumpedAsync(entity).ConfigureAwait(false);
                 break;
             case HistState.Modified or HistState.Deleted:
-                await ValidateAlreadyDumpedAsync(entity);
+                await ValidateAlreadyDumpedAsync(entity).ConfigureAwait(false);
                 break;
             default:
                 throw new HistException("Invalid HistState");
         }
 
         _histDbContext.Add(entity);
-        await _histDbContext.SaveChangesAsync();
+        await _histDbContext.SaveChangesAsync().ConfigureAwait(false);
 
         return entity.HistId;
     }
@@ -39,14 +38,18 @@ public class DumpHistoryService<THistEntity, TId> : IDumpHistoryService<THistEnt
     private async Task ValidateAlreadyDumpedAsync(THistEntity entity)
     {
         if (!await _histDbContext.Set<THistEntity>()
-                .AnyAsync(x => x.HistState == HistState.Added && entity.Id.Equals(x.Id)))
+                .AnyAsync(x => x.HistState == HistState.Added && entity.Id.Equals(x.Id)).ConfigureAwait(false))
+        {
             throw new HistException("Entity does not exist in history yet.");
+        }
     }
 
     private async Task ValidateNotYetDumpedAsync(THistEntity entity)
     {
         if (await _histDbContext.Set<THistEntity>()
-                .AnyAsync(x => x.HistState == HistState.Added && entity.Id.Equals(x.Id)))
+                .AnyAsync(x => x.HistState == HistState.Added && entity.Id.Equals(x.Id)).ConfigureAwait(false))
+        {
             throw new HistException("Entity already exists in history");
+        }
     }
 }

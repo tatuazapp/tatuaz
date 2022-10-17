@@ -18,7 +18,6 @@ public class UnitOfWork : IUnitOfWork
     private readonly DbContext _context;
     private readonly List<IHistDumpableEntity> _histEntitiesToDump;
     private readonly ISendEndpointProvider _sendEndpointProvider;
-    private readonly IRequestClient<DumpHistoryOrder> _mtClient;
     private readonly IUserAccessor _userAccessor;
     private IDbContextTransaction? _currentTransaction;
 

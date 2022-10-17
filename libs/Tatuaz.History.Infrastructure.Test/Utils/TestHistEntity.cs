@@ -1,4 +1,4 @@
-﻿using Tatuaz.Shared.Domain.Entities.Hist.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Common;
 
 namespace Tatuaz.History.DataAccess.Test.Utils;
 

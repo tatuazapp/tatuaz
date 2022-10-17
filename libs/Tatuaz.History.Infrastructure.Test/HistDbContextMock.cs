@@ -1,6 +1,5 @@
-﻿using Moq;
+using Moq;
 using Moq.EntityFrameworkCore;
-
 using Tatuaz.History.DataAccess.Test.Utils;
 
 namespace Tatuaz.History.DataAccess.Test;

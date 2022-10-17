@@ -1,44 +1,44 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+    <PropertyGroup>
 
-    <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
 
-    <ImplicitUsings>enable</ImplicitUsings>
+        <ImplicitUsings>enable</ImplicitUsings>
 
-    <Nullable>enable</Nullable>
+        <Nullable>enable</Nullable>
 
-    <IsPackable>false</IsPackable>
+        <IsPackable>false</IsPackable>
 
-    <OutputPath>../../dist/libs/Tatuaz.History.Queue.Test</OutputPath>
-  </PropertyGroup>
+        <OutputPath>../../dist/libs/Tatuaz.History.Queue.Test</OutputPath>
+    </PropertyGroup>
 
-  <ItemGroup>
+    <ItemGroup>
 
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2"/>
 
-    <PackageReference Include="xunit" Version="2.4.2"/>
+        <PackageReference Include="xunit" Version="2.4.2"/>
 
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
 
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 
-      <PrivateAssets>all</PrivateAssets>
+            <PrivateAssets>all</PrivateAssets>
 
-    </PackageReference>
+        </PackageReference>
 
-    <PackageReference Include="coverlet.collector" Version="3.1.2">
+        <PackageReference Include="coverlet.collector" Version="3.1.2">
 
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 
-      <PrivateAssets>all</PrivateAssets>
+            <PrivateAssets>all</PrivateAssets>
 
-    </PackageReference>
+        </PackageReference>
 
-  </ItemGroup>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj"/>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj"/>
+    </ItemGroup>
 
 </Project>

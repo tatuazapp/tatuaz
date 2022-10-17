@@ -1,4 +1,4 @@
-﻿namespace Tatuaz.History.DataAccess.Exceptions;
+namespace Tatuaz.History.DataAccess.Exceptions;
 
 public class HistException : Exception
 {
