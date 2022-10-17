@@ -12,14 +12,14 @@
 
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj"/>
-    <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj"/>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj"/>
+        <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="MassTransit" Version="8.0.7"/>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime" Version="6.0.4"/>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="MassTransit" Version="8.0.7"/>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime" Version="6.0.4"/>
+    </ItemGroup>
 
 </Project>

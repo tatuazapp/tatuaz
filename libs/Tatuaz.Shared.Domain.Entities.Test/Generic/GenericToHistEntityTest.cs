@@ -66,7 +66,7 @@ public abstract class GenericToHistEntityTest<TEntity, THistEntity, TId>
             var histGuidEntity = entity.ToHistEntity(_clock);
 
             var expected = _clock.GetCurrentInstant();
-            var actual = histGuidEntity.HistFrom;
+            var actual = histGuidEntity.HistDumpedAt;
 
             Assert.Equal(expected.ToDateTimeUtc(), actual.ToDateTimeUtc(), _testPrecision);
         }

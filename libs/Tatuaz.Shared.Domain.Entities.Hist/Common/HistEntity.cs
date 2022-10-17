@@ -11,8 +11,13 @@ public class HistEntity<TId> : HistEntity
 public class HistEntity
 {
     public Guid HistId { get; set; }
+    public HistState HistState { get; set; }
+    public Instant HistDumpedAt { get; set; }
+}
 
-    public Instant HistFrom { get; set; }
-
-    public Instant? HistTo { get; set; }
+public enum HistState
+{
+    Added,
+    Modified,
+    Deleted
 }

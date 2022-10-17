@@ -12,9 +12,9 @@
 
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="NodaTime.Serialization.JsonNet" Version="3.0.0"/>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime" Version="6.0.4"/>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="NodaTime.Serialization.JsonNet" Version="3.0.0"/>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime" Version="6.0.4"/>
+    </ItemGroup>
 
 </Project>
