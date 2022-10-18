@@ -1,8 +1,8 @@
 using Moq;
 using NodaTime;
-using Tatuaz.History.DataAccess.Exceptions;
 using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.DataAccess.Test.Utils;
+using Tatuaz.History.Infrastructure.Abstractions.Exceptions;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
 
 namespace Tatuaz.History.DataAccess.Test.Services;

@@ -1,7 +1,7 @@
 using Tatuaz.Shared.Domain.Entities.Common;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
 
-namespace Tatuaz.Convention.Test.Shared.Domain.Entities;
+namespace Tatuaz.Shared.Domain.Entities.Test;
 
 public class ConventionTest
 {
