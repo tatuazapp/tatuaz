@@ -150,7 +150,9 @@ public class DumpHistoryServiceTest
 
             histDbContextMock.TestHistEntities.Add(existing);
 
-            await Assert.ThrowsAsync<HistException>(async () => await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false)).ConfigureAwait(false);
+            await Assert
+                .ThrowsAsync<HistException>(
+                    async () => await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false)).ConfigureAwait(false);
         }
 
         [Fact]
@@ -168,7 +170,9 @@ public class DumpHistoryServiceTest
                 Name = "Test"
             };
 
-            await Assert.ThrowsAsync<HistException>(async () => await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false)).ConfigureAwait(false);
+            await Assert
+                .ThrowsAsync<HistException>(
+                    async () => await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false)).ConfigureAwait(false);
         }
 
         [Fact]
@@ -186,7 +190,9 @@ public class DumpHistoryServiceTest
                 Name = "Test"
             };
 
-            await Assert.ThrowsAsync<HistException>(async () => await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false)).ConfigureAwait(false);
+            await Assert
+                .ThrowsAsync<HistException>(
+                    async () => await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false)).ConfigureAwait(false);
         }
     }
 }

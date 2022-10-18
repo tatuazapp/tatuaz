@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.OpenApi.Models;
 using Tatuaz.Gateway.Configuration.Options;
 
@@ -28,8 +29,7 @@ public static class ServiceExtensions
                 new OpenApiInfo { Version = "v1", Title = "tatuaz.app API", Description = "API for tatuaz.app" });
             opt.IncludeXmlComments($"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
             opt.SupportNonNullableReferenceTypes();
-            // TODO: Uncomment when EF Core is added to lower projects
-            // opt.CustomSchemaIds(type => type.ShortDisplayName().Replace('<', '_').Replace(">", ""));
+            opt.CustomSchemaIds(type => type.ShortDisplayName().Replace('<', '_').Replace(">", ""));
         });
 
         return services;

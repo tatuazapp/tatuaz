@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using NodaTime;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
@@ -10,14 +11,35 @@ public class HistorySearcherService<TEntity, TId> : IHistorySearcherService<TEnt
     where TEntity : HistEntity<TId>
     where TId : notnull
 {
-    public Task<TEntity?> GetByIdAsync(TId id, Instant asOf, CancellationToken cancellationToken = default)
+    private readonly HistDbContext _histDbContext;
+
+    public HistorySearcherService(HistDbContext histDbContext)
     {
-        throw new NotImplementedException();
+        _histDbContext = histDbContext;
     }
 
-    public Task<bool> ExistsByIdAsync(TId id, Instant asOf, CancellationToken cancellationToken = default)
+    public async Task<TEntity?> GetByIdAsync(TId id, Instant asOf, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var entity = await _histDbContext.Set<TEntity>()
+            .AsNoTracking()
+            .Where(x => x.Id.Equals(id) && x.HistDumpedAt < asOf)
+            .OrderByDescending(x => x.HistDumpedAt)
+            .FirstOrDefaultAsync(cancellationToken)
+            .ConfigureAwait(false);
+
+        return entity?.HistState == HistState.Deleted ? null : entity;
+    }
+
+    public async Task<bool> ExistsByIdAsync(TId id, Instant asOf, CancellationToken cancellationToken = default)
+    {
+        var entity = await _histDbContext.Set<TEntity>()
+            .AsNoTracking()
+            .Where(x => x.Id.Equals(id) && x.HistDumpedAt < asOf)
+            .OrderByDescending(x => x.HistDumpedAt)
+            .FirstOrDefaultAsync(cancellationToken)
+            .ConfigureAwait(false);
+
+        return entity?.HistState != HistState.Deleted && entity != null;
     }
 
     public Task<IEnumerable<TEntity>> GetBySpecificationAsync(ISpecification<TEntity> specification, Instant asOf,
@@ -33,15 +55,39 @@ public class HistorySearcherService<TEntity, TId> : IHistorySearcherService<TEnt
         throw new NotImplementedException();
     }
 
-    public Task<bool> ExistsByPredicateAsync(Expression<Func<TEntity, bool>> predicate, Instant asOf,
+    public async Task<bool> ExistsByPredicateAsync(Expression<Func<TEntity, bool>> predicate, Instant asOf,
         CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return (await _histDbContext.Set<TEntity>()
+                .AsNoTracking()
+                .Where(x => x.HistDumpedAt < asOf)
+                .Where(predicate)
+                .OrderByDescending(x => x.HistDumpedAt)
+                .ToListAsync(cancellationToken)
+                .ConfigureAwait(false))
+            .Aggregate(new List<TEntity>(),
+                (collection, entity)
+                    => collection.Any(x => x.Id.Equals(entity.Id))
+                        ? collection
+                        : collection.Append(entity).ToList())
+            .Any(x => x.HistState != HistState.Deleted);
     }
 
-    public Task<long> CountByPredicateAsync(Expression<Func<TEntity, bool>> predicate, Instant asOf,
+    public async Task<long> CountByPredicateAsync(Expression<Func<TEntity, bool>> predicate, Instant asOf,
         CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return (await _histDbContext.Set<TEntity>()
+                .AsNoTracking()
+                .Where(x => x.HistDumpedAt < asOf)
+                .Where(predicate)
+                .OrderByDescending(x => x.HistDumpedAt)
+                .ToListAsync(cancellationToken)
+                .ConfigureAwait(false))
+            .Aggregate(new List<TEntity>(),
+                (collection, entity)
+                    => collection.Any(x => x.Id.Equals(entity.Id))
+                        ? collection
+                        : collection.Append(entity).ToList())
+            .Count(x => x.HistState != HistState.Deleted);
     }
 }
