@@ -19,7 +19,7 @@ resource "helm_release" "cert-manager" {
   name       = "cert-manager"
   repository = "https://charts.jetstack.io"
   chart      = "cert-manager"
-  version    = "1.8.0"
+  version    = "1.9.1"
   namespace  = kubernetes_namespace.tatuaz-test.metadata[0].name
 
   set {
@@ -34,7 +34,7 @@ resource "helm_release" "cert-manager" {
 
   set {
     name  = "image.tag"
-    value = "v1.8.0"
+    value = "v1.9.1"
   }
 
   set {
@@ -44,7 +44,7 @@ resource "helm_release" "cert-manager" {
 
   set {
     name  = "webhook.image.tag"
-    value = "v1.8.0"
+    value = "v1.9.1"
   }
 
   set {
@@ -54,6 +54,6 @@ resource "helm_release" "cert-manager" {
 
   set {
     name  = "cainjector.image.tag"
-    value = "v1.8.0"
+    value = "v1.9.1"
   }
 }
