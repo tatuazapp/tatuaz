@@ -16,12 +16,12 @@ public class HistorySearcherServiceTest
         _historySearcherService = new HistorySearcherService<TestHistEntity, Guid>(_dbContextMock.Object);
     }
 
-    private Instant DateBeforeAdded => Instant.FromUtc(2019, 12, 31, 23, 59, 59);
-    private Instant DateAfterAddedAndBeforeModified => Instant.FromUtc(2020, 1, 1, 23, 59, 59);
-    private Instant DateAfterModifiedAndBeforeDeleted => Instant.FromUtc(2020, 1, 2, 23, 59, 59);
-    private Instant DateAfterDeleted => Instant.FromUtc(2020, 1, 3, 23, 59, 59);
+    private static Instant DateBeforeAdded => Instant.FromUtc(2019, 12, 31, 23, 59, 59);
+    private static Instant DateAfterAddedAndBeforeModified => Instant.FromUtc(2020, 1, 1, 23, 59, 59);
+    private static Instant DateAfterModifiedAndBeforeDeleted => Instant.FromUtc(2020, 1, 2, 23, 59, 59);
+    private static Instant DateAfterDeleted => Instant.FromUtc(2020, 1, 3, 23, 59, 59);
 
-    private IEnumerable<TestHistEntity> SampleDataWithAddedModifiedDeleted()
+    private static IEnumerable<TestHistEntity> SampleDataWithAddedModifiedDeleted()
     {
         return new List<TestHistEntity>
         {
@@ -89,11 +89,13 @@ public class HistorySearcherServiceTest
                 .GetByIdAsync(sampleData.First().Id, DateAfterAddedAndBeforeModified).ConfigureAwait(false);
 
             // Assert
+#pragma warning disable CS8602
             Assert.NotNull(result);
             Assert.Equal(sampleData.First().Id, result.Id);
             Assert.Equal(sampleData.First().Name, result.Name);
             Assert.Equal(sampleData.First().HistState, result.HistState);
             Assert.Equal(sampleData.First().HistDumpedAt, result.HistDumpedAt);
+#pragma warning restore CS8602
         }
 
         [Fact]
@@ -108,11 +110,13 @@ public class HistorySearcherServiceTest
                 .ConfigureAwait(false);
 
             // Assert
+#pragma warning disable CS8602
             Assert.NotNull(result);
             Assert.Equal(sampleData[1].Id, result.Id);
             Assert.Equal(sampleData[1].Name, result.Name);
             Assert.Equal(sampleData[1].HistState, result.HistState);
             Assert.Equal(sampleData[1].HistDumpedAt, result.HistDumpedAt);
+#pragma warning restore CS8602
         }
 
         [Fact]

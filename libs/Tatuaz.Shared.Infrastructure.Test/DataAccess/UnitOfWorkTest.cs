@@ -157,7 +157,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpHistoryChangesOnCreate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider = sendEndpointProviderMock.Object;
 
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
@@ -173,7 +173,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpMultipleHistoryChangesOnCreate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider = sendEndpointProviderMock.Object;
 
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
             var book = new Book { Title = "Test", Author = author };
@@ -191,7 +191,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpHistoryChangesOnUpdate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider = sendEndpointProviderMock.Object;
 
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
@@ -210,7 +210,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpMultipleHistoryChangesOnUpdate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider = sendEndpointProviderMock.Object;
 
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
             var book = new Book { Title = "Test", Author = author };
@@ -232,7 +232,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpHistoryChangesOnDelete()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider = sendEndpointProviderMock.Object;
 
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
@@ -251,7 +251,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpMultipleHistoryChangesOnDelete()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider = sendEndpointProviderMock.Object;
 
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
             var book = new Book { Title = "Test", Author = author };
@@ -491,7 +491,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpHistoryChangesOnCreate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider = sendEndpointProviderMock.Object;
 
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
@@ -512,7 +512,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpMultipleHistoryChangesOnCreate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider = sendEndpointProviderMock.Object;
 
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
             var book = new Book { Title = "Test", Author = author };
@@ -535,7 +535,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpHistoryChangesOnUpdate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider = sendEndpointProviderMock.Object;
 
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
@@ -559,7 +559,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpMultipleHistoryChangesOnUpdate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider = sendEndpointProviderMock.Object;
 
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
             var book = new Book { Title = "Test", Author = author };
@@ -586,7 +586,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpHistoryChangesOnDelete()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider = sendEndpointProviderMock.Object;
 
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
@@ -610,7 +610,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpMultipleHistoryChangesOnDelete()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider = sendEndpointProviderMock.Object;
 
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
             var book = new Book { Title = "Test", Author = author };
@@ -637,7 +637,7 @@ public class UnitOfWorkTest
         public async Task ShouldNot_DumpHistoryChangesDirectlyAfterSaveChangesAsync()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            ((UnitOfWork)UnitOfWork).ReplaceSendEndpointProvider(sendEndpointProviderMock.Object);
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider = sendEndpointProviderMock.Object;
 
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 

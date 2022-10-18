@@ -8,7 +8,7 @@ public class Author : AuditableEntity<HistAuthor, Guid>
 {
     public string FirstName { get; set; } = default!;
     public string LastName { get; set; } = default!;
-    public virtual IEnumerable<Book> Books { get; set; }
+    public virtual IEnumerable<Book> Books { get; set; } = default!;
 
     public override HistAuthor ToHistEntity(IClock clock)
     {
