@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Tatuaz.History.DataAccess.Exceptions;
+using Tatuaz.History.Infrastructure.Abstractions.Services;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
 
 namespace Tatuaz.History.DataAccess.Services;

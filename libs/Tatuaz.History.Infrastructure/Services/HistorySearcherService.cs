@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
+using Tatuaz.History.Infrastructure.Abstractions.Services;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 using Tatuaz.Shared.Infrastructure.Abstractions.Specification;

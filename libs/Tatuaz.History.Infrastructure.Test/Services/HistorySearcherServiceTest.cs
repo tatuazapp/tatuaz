@@ -1,4 +1,4 @@
-﻿using NodaTime;
+using NodaTime;
 using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.DataAccess.Test.Utils;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;

@@ -4,7 +4,7 @@ using Tatuaz.Shared.Domain.Entities.Hist.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 using Tatuaz.Shared.Infrastructure.Abstractions.Specification;
 
-namespace Tatuaz.History.DataAccess.Services;
+namespace Tatuaz.History.Infrastructure.Abstractions.Services;
 
 public interface IHistorySearcherService<TEntity, in TId>
     where TEntity : HistEntity<TId>
