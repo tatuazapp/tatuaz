@@ -5,12 +5,9 @@
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": [
-        "dist/libs/Tatuaz.Convention.Test"
-      ],
+      "outputs": ["dist/libs/Tatuaz.Convention.Test"],
       "options": {
-        "configuration": "Debug",
-        "noDependencies": true
+        "configuration": "Debug"
       },
       "configurations": {
         "production": {

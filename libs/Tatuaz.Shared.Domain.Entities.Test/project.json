@@ -5,9 +5,7 @@
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": [
-        "dist/libs/Tatuaz.Shared.Domain.Entities.Test"
-      ],
+      "outputs": ["dist/libs/Tatuaz.Shared.Domain.Entities.Test"],
       "options": {
         "configuration": "Debug"
       },
