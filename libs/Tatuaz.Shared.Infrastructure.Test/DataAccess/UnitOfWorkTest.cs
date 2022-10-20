@@ -1,21 +1,29 @@
-﻿using Microsoft.EntityFrameworkCore;
-
+using Microsoft.EntityFrameworkCore;
+using Moq;
 using NodaTime;
 using NodaTime.Testing;
-
-using Tatuaz.Shared.Infrastructure.Abstractions;
+using Tatuaz.History.Queue.Contracts;
+using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using Tatuaz.Shared.Infrastructure.DataAccess;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Models;
+using Tatuaz.Shared.Infrastructure.Test.Helpers;
 using Tatuaz.Testing.Fakes.Common;
 using Tatuaz.Testing.Fakes.Infrastructure;
+using Tatuaz.Testing.Mocks.Queues;
 
 namespace Tatuaz.Shared.Infrastructure.Test.DataAccess;
 
 public class UnitOfWorkTest
 {
-    protected readonly TimeSpan TestPrecision = TimeSpan.FromMilliseconds(10);
+    private readonly TimeSpan _testPrecision = TimeSpan.FromMilliseconds(10);
 
-    public UnitOfWorkTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
-        IUserAccessor userAccessor, DbContext dbContext, IClock clock)
+    public UnitOfWorkTest(
+        IUnitOfWork unitOfWork,
+        IPrimitiveValuesGenerator primitiveValuesGenerator,
+        IUserAccessor userAccessor,
+        DbContext dbContext,
+        IClock clock
+    )
     {
         UnitOfWork = unitOfWork;
         PrimitiveValuesGenerator = primitiveValuesGenerator;
@@ -24,20 +32,21 @@ public class UnitOfWorkTest
         Clock = clock;
     }
 
-    protected IUnitOfWork UnitOfWork { get; }
-    protected IPrimitiveValuesGenerator PrimitiveValuesGenerator { get; }
-    protected IUserAccessor UserAccessor { get; }
-    protected DbContext DbContext { get; }
-    protected IClock Clock { get; }
+    private IUnitOfWork UnitOfWork { get; }
+    private IPrimitiveValuesGenerator PrimitiveValuesGenerator { get; }
+    private IUserAccessor UserAccessor { get; }
+    private DbContext DbContext { get; }
+    private IClock Clock { get; }
 
     public class SaveChangesAsyncTest : UnitOfWorkTest
     {
-        public SaveChangesAsyncTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
-            IUserAccessor userAccessor, DbContext dbContext, IClock clock) : base(unitOfWork, primitiveValuesGenerator,
-            userAccessor,
-            dbContext, clock)
-        {
-        }
+        public SaveChangesAsyncTest(
+            IUnitOfWork unitOfWork,
+            IPrimitiveValuesGenerator primitiveValuesGenerator,
+            IUserAccessor userAccessor,
+            DbContext dbContext,
+            IClock clock
+        ) : base(unitOfWork, primitiveValuesGenerator, userAccessor, dbContext, clock) { }
 
         [Fact]
         public async Task Should_SaveInsertedElement()
@@ -45,8 +54,11 @@ public class UnitOfWorkTest
             var expected = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(expected);
-            var changes = await UnitOfWork.SaveChangesAsync();
-            var actual = await DbContext.Set<Author>().FirstAsync(x => x.Id == expected.Id);
+            var changes = await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            var actual = await DbContext
+                .Set<Author>()
+                .FirstAsync(x => x.Id == expected.Id)
+                .ConfigureAwait(false);
 
             Assert.Equal(expected, actual);
             Assert.Equal(1, changes);
@@ -58,12 +70,18 @@ public class UnitOfWorkTest
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
-            await UnitOfWork.SaveChangesAsync();
-            var expected = await DbContext.Set<Author>().FirstAsync(x => x.Id == author.Id);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            var expected = await DbContext
+                .Set<Author>()
+                .FirstAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             expected.FirstName = "Adam";
-            var changes = await UnitOfWork.SaveChangesAsync();
-            var actual = await DbContext.Set<Author>().FirstAsync(x => x.Id == author.Id);
+            var changes = await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            var actual = await DbContext
+                .Set<Author>()
+                .FirstAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             Assert.Equal(expected, actual);
             Assert.Equal(1, changes);
@@ -75,12 +93,19 @@ public class UnitOfWorkTest
             var expected = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(expected);
-            await UnitOfWork.SaveChangesAsync();
-            var toChange = await DbContext.Set<Author>().AsNoTracking().FirstAsync(x => x.Id == expected.Id);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            var toChange = await DbContext
+                .Set<Author>()
+                .AsNoTracking()
+                .FirstAsync(x => x.Id == expected.Id)
+                .ConfigureAwait(false);
 
             toChange.FirstName = "Adam";
-            var changes = await UnitOfWork.SaveChangesAsync();
-            var actual = await DbContext.Set<Author>().FirstAsync(x => x.Id == expected.Id);
+            var changes = await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            var actual = await DbContext
+                .Set<Author>()
+                .FirstAsync(x => x.Id == expected.Id)
+                .ConfigureAwait(false);
 
             Assert.Equal(expected, actual);
             Assert.Equal(0, changes);
@@ -92,14 +117,20 @@ public class UnitOfWorkTest
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
-            await UnitOfWork.SaveChangesAsync();
-            var added = await DbContext.Set<Author>().FirstAsync(x => x.Id == author.Id);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            var added = await DbContext
+                .Set<Author>()
+                .FirstAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             Assert.Equal(author, added);
 
             DbContext.Remove(author);
-            var changes = await UnitOfWork.SaveChangesAsync();
-            var deleted = await DbContext.Set<Author>().FirstOrDefaultAsync(x => x.Id == author.Id);
+            var changes = await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            var deleted = await DbContext
+                .Set<Author>()
+                .FirstOrDefaultAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             Assert.Null(deleted);
             Assert.Equal(1, changes);
@@ -111,13 +142,24 @@ public class UnitOfWorkTest
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
-            var changes = await UnitOfWork.SaveChangesAsync();
-            var actual = await DbContext.Set<Author>().FirstAsync(x => x.Id == author.Id);
+            var changes = await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            var actual = await DbContext
+                .Set<Author>()
+                .FirstAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.CreatedBy);
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.ModifiedBy);
-            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.CreatedOn.ToDateTimeUtc(), TestPrecision);
-            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), TestPrecision);
+            Assert.Equal(
+                Clock.GetCurrentInstant().ToDateTimeUtc(),
+                actual.CreatedOn.ToDateTimeUtc(),
+                _testPrecision
+            );
+            Assert.Equal(
+                Clock.GetCurrentInstant().ToDateTimeUtc(),
+                actual.ModifiedOn.ToDateTimeUtc(),
+                _testPrecision
+            );
             Assert.Equal(1, changes);
         }
 
@@ -129,35 +171,195 @@ public class UnitOfWorkTest
             ((UserAccessorFake)UserAccessor).SetCurrentIndex(0);
 
             DbContext.Add(author);
-            var changes1 = await UnitOfWork.SaveChangesAsync();
-            var toChange = await DbContext.Set<Author>().FirstAsync(x => x.Id == author.Id);
+            var changes1 = await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            var toChange = await DbContext
+                .Set<Author>()
+                .FirstAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             ((FakeClock)Clock).Advance(Duration.FromMilliseconds(200));
 
             ((UserAccessorFake)UserAccessor).SetCurrentIndex(1);
 
             toChange.FirstName = "Adam";
-            var changes2 = await UnitOfWork.SaveChangesAsync();
-            var actual = await DbContext.Set<Author>().FirstAsync(x => x.Id == author.Id);
+            var changes2 = await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            var actual = await DbContext
+                .Set<Author>()
+                .FirstAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.CreatedBy);
             Assert.Equal(PrimitiveValuesGenerator.Guids(1), actual.ModifiedBy);
-            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc().AddMilliseconds(-200),
-                actual.CreatedOn.ToDateTimeUtc(), TestPrecision);
-            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), TestPrecision);
+            Assert.Equal(
+                Clock.GetCurrentInstant().ToDateTimeUtc().AddMilliseconds(-200),
+                actual.CreatedOn.ToDateTimeUtc(),
+                _testPrecision
+            );
+            Assert.Equal(
+                Clock.GetCurrentInstant().ToDateTimeUtc(),
+                actual.ModifiedOn.ToDateTimeUtc(),
+                _testPrecision
+            );
             Assert.Equal(1, changes1);
             Assert.Equal(1, changes2);
+        }
+
+        [Fact]
+        public async Task Should_DumpHistoryChangesOnCreate()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider =
+                sendEndpointProviderMock.Object;
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+
+            DbContext.Add(author);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Once);
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
+                Times.Once
+            );
+        }
+
+        [Fact]
+        public async Task Should_DumpMultipleHistoryChangesOnCreate()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider =
+                sendEndpointProviderMock.Object;
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+            var book = new Book { Title = "Test", Author = author };
+
+            DbContext.Add(author);
+            DbContext.Add(book);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Once);
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(2)
+            );
+        }
+
+        [Fact]
+        public async Task Should_DumpHistoryChangesOnUpdate()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider =
+                sendEndpointProviderMock.Object;
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+
+            DbContext.Add(author);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            author.FirstName = "Adam";
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            sendEndpointProviderMock.Verify(
+                x => x.GetSendEndpoint(It.IsAny<Uri>()),
+                Times.Exactly(2)
+            );
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(2)
+            );
+        }
+
+        [Fact]
+        public async Task Should_DumpMultipleHistoryChangesOnUpdate()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider =
+                sendEndpointProviderMock.Object;
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+            var book = new Book { Title = "Test", Author = author };
+
+            DbContext.Add(author);
+            DbContext.Add(book);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            author.FirstName = "Adam";
+            book.Title = "Test2";
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            sendEndpointProviderMock.Verify(
+                x => x.GetSendEndpoint(It.IsAny<Uri>()),
+                Times.Exactly(2)
+            );
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(4)
+            );
+        }
+
+        [Fact]
+        public async Task Should_DumpHistoryChangesOnDelete()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider =
+                sendEndpointProviderMock.Object;
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+
+            DbContext.Add(author);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            DbContext.Remove(author);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            sendEndpointProviderMock.Verify(
+                x => x.GetSendEndpoint(It.IsAny<Uri>()),
+                Times.Exactly(2)
+            );
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(2)
+            );
+        }
+
+        [Fact]
+        public async Task Should_DumpMultipleHistoryChangesOnDelete()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider =
+                sendEndpointProviderMock.Object;
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+            var book = new Book { Title = "Test", Author = author };
+
+            DbContext.Add(author);
+            DbContext.Add(book);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            DbContext.Remove(author);
+            DbContext.Remove(book);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            sendEndpointProviderMock.Verify(
+                x => x.GetSendEndpoint(It.IsAny<Uri>()),
+                Times.Exactly(2)
+            );
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(4)
+            );
         }
     }
 
     public class RunInTransactionAsyncTest : UnitOfWorkTest
     {
-        public RunInTransactionAsyncTest(IUnitOfWork unitOfWork, IPrimitiveValuesGenerator primitiveValuesGenerator,
-            IUserAccessor userAccessor, DbContext dbContext, IClock clock) : base(unitOfWork, primitiveValuesGenerator,
-            userAccessor,
-            dbContext, clock)
-        {
-        }
+        public RunInTransactionAsyncTest(
+            IUnitOfWork unitOfWork,
+            IPrimitiveValuesGenerator primitiveValuesGenerator,
+            IUserAccessor userAccessor,
+            DbContext dbContext,
+            IClock clock
+        ) : base(unitOfWork, primitiveValuesGenerator, userAccessor, dbContext, clock) { }
 
         [Fact]
         public async Task Should_SaveInsertedElement()
@@ -165,14 +367,18 @@ public class UnitOfWorkTest
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             var changes = 0;
-            await UnitOfWork.RunInTransactionAsync(
-                async ct => {
+            await UnitOfWork
+                .RunInTransactionAsync(async ct =>
+                {
                     DbContext.Add(author);
-                    changes = await UnitOfWork.SaveChangesAsync(ct);
-                }
-            );
+                    changes = await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
+                })
+                .ConfigureAwait(false);
 
-            var actual = await DbContext.Set<Author>().FirstAsync(x => x.Id == author.Id);
+            var actual = await DbContext
+                .Set<Author>()
+                .FirstAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             Assert.Equal(author, actual);
             Assert.Equal(1, changes);
@@ -184,18 +390,25 @@ public class UnitOfWorkTest
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
-            await UnitOfWork.SaveChangesAsync();
-            var expected = await DbContext.Set<Author>().FirstAsync(x => x.Id == author.Id);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            var expected = await DbContext
+                .Set<Author>()
+                .FirstAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             var changes = 0;
-            await UnitOfWork.RunInTransactionAsync(
-                async ct => {
+            await UnitOfWork
+                .RunInTransactionAsync(async ct =>
+                {
                     expected.FirstName = "Adam";
-                    changes = await UnitOfWork.SaveChangesAsync(ct);
-                }
-            );
+                    changes = await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
+                })
+                .ConfigureAwait(false);
 
-            var actual = await DbContext.Set<Author>().FirstAsync(x => x.Id == author.Id);
+            var actual = await DbContext
+                .Set<Author>()
+                .FirstAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             Assert.Equal(expected, actual);
             Assert.Equal(1, changes);
@@ -207,17 +420,25 @@ public class UnitOfWorkTest
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
-            await UnitOfWork.SaveChangesAsync();
-            var toChange = await DbContext.Set<Author>().AsNoTracking().FirstAsync(x => x.Id == author.Id);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            var toChange = await DbContext
+                .Set<Author>()
+                .AsNoTracking()
+                .FirstAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             var changes = 0;
-            await UnitOfWork.RunInTransactionAsync(
-                async ct => {
+            await UnitOfWork
+                .RunInTransactionAsync(async ct =>
+                {
                     toChange.FirstName = "Jan";
-                    changes = await UnitOfWork.SaveChangesAsync(ct);
-                }
-            );
-            var actual = await DbContext.Set<Author>().FirstAsync(x => x.Id == author.Id);
+                    changes = await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
+                })
+                .ConfigureAwait(false);
+            var actual = await DbContext
+                .Set<Author>()
+                .FirstAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             Assert.Equal(author, actual);
             Assert.Equal(0, changes);
@@ -229,19 +450,26 @@ public class UnitOfWorkTest
             var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
 
             DbContext.Add(author);
-            await UnitOfWork.SaveChangesAsync();
-            var added = await DbContext.Set<Author>().FirstAsync(x => x.Id == author.Id);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            var added = await DbContext
+                .Set<Author>()
+                .FirstAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             Assert.Equal(author, added);
 
             var changes = 0;
-            await UnitOfWork.RunInTransactionAsync(
-                async ct => {
+            await UnitOfWork
+                .RunInTransactionAsync(async ct =>
+                {
                     DbContext.Remove(author);
-                    changes = await UnitOfWork.SaveChangesAsync(ct);
-                }
-            );
-            var deleted = await DbContext.Set<Author>().FirstOrDefaultAsync(x => x.Id == author.Id);
+                    changes = await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
+                })
+                .ConfigureAwait(false);
+            var deleted = await DbContext
+                .Set<Author>()
+                .FirstOrDefaultAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             Assert.Null(deleted);
             Assert.Equal(1, changes);
@@ -254,17 +482,21 @@ public class UnitOfWorkTest
 
             var changes1 = 0;
             var changes2 = 0;
-            await UnitOfWork.RunInTransactionAsync(
-                async ct => {
+            await UnitOfWork
+                .RunInTransactionAsync(async ct =>
+                {
                     DbContext.Add(author);
-                    changes1 = await UnitOfWork.SaveChangesAsync(ct);
+                    changes1 = await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
 
                     DbContext.Add(author);
-                    changes2 = await UnitOfWork.SaveChangesAsync(ct);
-                }
-            );
+                    changes2 = await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
+                })
+                .ConfigureAwait(false);
 
-            var addedEntity = await DbContext.Set<Author>().FirstOrDefaultAsync(x => x.Id == author.Id);
+            var addedEntity = await DbContext
+                .Set<Author>()
+                .FirstOrDefaultAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             Assert.Null(addedEntity);
             Assert.Equal(1, changes1);
@@ -279,16 +511,19 @@ public class UnitOfWorkTest
             var changes1 = 0;
             var changes2 = 0;
             var failureExecuted = false;
-            await UnitOfWork.RunInTransactionAsync(
-                async ct => {
-                    DbContext.Add(author);
-                    changes1 = await UnitOfWork.SaveChangesAsync(ct);
+            await UnitOfWork
+                .RunInTransactionAsync(
+                    async ct =>
+                    {
+                        DbContext.Add(author);
+                        changes1 = await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
 
-                    DbContext.Add(author);
-                    changes2 = await UnitOfWork.SaveChangesAsync(ct);
-                },
-                _ => failureExecuted = true
-            );
+                        DbContext.Add(author);
+                        changes2 = await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
+                    },
+                    _ => failureExecuted = true
+                )
+                .ConfigureAwait(false);
 
             Assert.True(failureExecuted);
             Assert.Equal(1, changes1);
@@ -303,18 +538,30 @@ public class UnitOfWorkTest
             ((UserAccessorFake)UserAccessor).SetCurrentIndex(0);
 
             var changes = 0;
-            await UnitOfWork.RunInTransactionAsync(
-                async ct => {
+            await UnitOfWork
+                .RunInTransactionAsync(async ct =>
+                {
                     DbContext.Add(author);
-                    changes = await UnitOfWork.SaveChangesAsync(ct);
-                }
-            );
-            var actual = await DbContext.Set<Author>().FirstAsync(x => x.Id == author.Id);
+                    changes = await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
+                })
+                .ConfigureAwait(false);
+            var actual = await DbContext
+                .Set<Author>()
+                .FirstAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.CreatedBy);
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.ModifiedBy);
-            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.CreatedOn.ToDateTimeUtc(), TestPrecision);
-            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), TestPrecision);
+            Assert.Equal(
+                Clock.GetCurrentInstant().ToDateTimeUtc(),
+                actual.CreatedOn.ToDateTimeUtc(),
+                _testPrecision
+            );
+            Assert.Equal(
+                Clock.GetCurrentInstant().ToDateTimeUtc(),
+                actual.ModifiedOn.ToDateTimeUtc(),
+                _testPrecision
+            );
             Assert.Equal(1, changes);
         }
 
@@ -326,34 +573,257 @@ public class UnitOfWorkTest
             ((UserAccessorFake)UserAccessor).SetCurrentIndex(0);
 
             var changes1 = 0;
-            await UnitOfWork.RunInTransactionAsync(
-                async ct => {
+            await UnitOfWork
+                .RunInTransactionAsync(async ct =>
+                {
                     DbContext.Add(author);
-                    changes1 = await UnitOfWork.SaveChangesAsync(ct);
-                }
-            );
-            var toChange = await DbContext.Set<Author>().FirstAsync(x => x.Id == author.Id);
+                    changes1 = await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
+                })
+                .ConfigureAwait(false);
+            var toChange = await DbContext
+                .Set<Author>()
+                .FirstAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             ((FakeClock)Clock).Advance(Duration.FromMilliseconds(200));
 
             ((UserAccessorFake)UserAccessor).SetCurrentIndex(1);
 
             var changes2 = 0;
-            await UnitOfWork.RunInTransactionAsync(
-                async ct => {
+            await UnitOfWork
+                .RunInTransactionAsync(async ct =>
+                {
                     toChange.FirstName = "Adam";
-                    changes2 = await UnitOfWork.SaveChangesAsync(ct);
-                }
-            );
-            var actual = await DbContext.Set<Author>().FirstAsync(x => x.Id == author.Id);
+                    changes2 = await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
+                })
+                .ConfigureAwait(false);
+            var actual = await DbContext
+                .Set<Author>()
+                .FirstAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             Assert.Equal(PrimitiveValuesGenerator.Guids(0), actual.CreatedBy);
             Assert.Equal(PrimitiveValuesGenerator.Guids(1), actual.ModifiedBy);
-            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc().AddMilliseconds(-200),
-                actual.CreatedOn.ToDateTimeUtc(), TestPrecision);
-            Assert.Equal(Clock.GetCurrentInstant().ToDateTimeUtc(), actual.ModifiedOn.ToDateTimeUtc(), TestPrecision);
+            Assert.Equal(
+                Clock.GetCurrentInstant().ToDateTimeUtc().AddMilliseconds(-200),
+                actual.CreatedOn.ToDateTimeUtc(),
+                _testPrecision
+            );
+            Assert.Equal(
+                Clock.GetCurrentInstant().ToDateTimeUtc(),
+                actual.ModifiedOn.ToDateTimeUtc(),
+                _testPrecision
+            );
             Assert.Equal(1, changes1);
             Assert.Equal(1, changes2);
+        }
+
+        [Fact]
+        public async Task Should_DumpHistoryChangesOnCreate()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider =
+                sendEndpointProviderMock.Object;
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+
+            await UnitOfWork
+                .RunInTransactionAsync(async ct =>
+                {
+                    DbContext.Add(author);
+                    await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
+                })
+                .ConfigureAwait(false);
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Once);
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
+                Times.Once
+            );
+        }
+
+        [Fact]
+        public async Task Should_DumpMultipleHistoryChangesOnCreate()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider =
+                sendEndpointProviderMock.Object;
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+            var book = new Book { Title = "Test", Author = author };
+
+            await UnitOfWork
+                .RunInTransactionAsync(async ct =>
+                {
+                    DbContext.Add(author);
+                    DbContext.Add(book);
+                    await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
+                })
+                .ConfigureAwait(false);
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Once);
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(2)
+            );
+        }
+
+        [Fact]
+        public async Task Should_DumpHistoryChangesOnUpdate()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider =
+                sendEndpointProviderMock.Object;
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+
+            DbContext.Add(author);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            await UnitOfWork
+                .RunInTransactionAsync(async ct =>
+                {
+                    author.FirstName = "Janusz";
+                    await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
+                })
+                .ConfigureAwait(false);
+
+            sendEndpointProviderMock.Verify(
+                x => x.GetSendEndpoint(It.IsAny<Uri>()),
+                Times.Exactly(2)
+            );
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(2)
+            );
+        }
+
+        [Fact]
+        public async Task Should_DumpMultipleHistoryChangesOnUpdate()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider =
+                sendEndpointProviderMock.Object;
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+            var book = new Book { Title = "Test", Author = author };
+
+            DbContext.Add(author);
+            DbContext.Add(book);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            await UnitOfWork
+                .RunInTransactionAsync(async ct =>
+                {
+                    author.FirstName = "Janusz";
+                    book.Title = "Test2";
+                    await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
+                })
+                .ConfigureAwait(false);
+
+            sendEndpointProviderMock.Verify(
+                x => x.GetSendEndpoint(It.IsAny<Uri>()),
+                Times.Exactly(2)
+            );
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(4)
+            );
+        }
+
+        [Fact]
+        public async Task Should_DumpHistoryChangesOnDelete()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider =
+                sendEndpointProviderMock.Object;
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+
+            DbContext.Add(author);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            await UnitOfWork
+                .RunInTransactionAsync(async ct =>
+                {
+                    DbContext.Remove(author);
+                    await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
+                })
+                .ConfigureAwait(false);
+
+            sendEndpointProviderMock.Verify(
+                x => x.GetSendEndpoint(It.IsAny<Uri>()),
+                Times.Exactly(2)
+            );
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(2)
+            );
+        }
+
+        [Fact]
+        public async Task Should_DumpMultipleHistoryChangesOnDelete()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider =
+                sendEndpointProviderMock.Object;
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+            var book = new Book { Title = "Test", Author = author };
+
+            DbContext.Add(author);
+            DbContext.Add(book);
+            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            await UnitOfWork
+                .RunInTransactionAsync(async ct =>
+                {
+                    DbContext.Remove(author);
+                    DbContext.Remove(book);
+                    await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
+                })
+                .ConfigureAwait(false);
+
+            sendEndpointProviderMock.Verify(
+                x => x.GetSendEndpoint(It.IsAny<Uri>()),
+                Times.Exactly(2)
+            );
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
+                Times.Exactly(4)
+            );
+        }
+
+        [Fact]
+        public async Task ShouldNot_DumpHistoryChangesDirectlyAfterSaveChangesAsync()
+        {
+            var sendEndpointProviderMock = new SendEndpointProviderMock();
+            new UnitOfWorkTestAccessor((UnitOfWork)UnitOfWork).SendEndpointProvider =
+                sendEndpointProviderMock.Object;
+
+            var author = new Author { FirstName = "Jan", LastName = "Kowalski" };
+
+            await UnitOfWork
+                .RunInTransactionAsync(async ct =>
+                {
+                    DbContext.Add(author);
+                    await UnitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
+                    sendEndpointProviderMock.Verify(
+                        x => x.GetSendEndpoint(It.IsAny<Uri>()),
+                        Times.Never
+                    );
+                    sendEndpointProviderMock.SendEndpointMock.Verify(
+                        x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
+                        Times.Never
+                    );
+                })
+                .ConfigureAwait(false);
+
+            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Once);
+            sendEndpointProviderMock.SendEndpointMock.Verify(
+                x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
+                Times.Once
+            );
         }
     }
 }

@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+
+        <TargetFramework>net6.0</TargetFramework>
+
+        <ImplicitUsings>enable</ImplicitUsings>
+
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+
+        <OutputPath>../../dist/libs/Tatuaz.History.DataAccess.Test</OutputPath>
+
+        <RootNamespace>Tatuaz.History.DataAccess.Test</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0"/>
+
+        <PackageReference Include="Moq" Version="4.18.2"/>
+
+        <PackageReference Include="Moq.EntityFrameworkCore" Version="6.0.1.4"/>
+
+        <PackageReference Include="xunit" Version="2.4.1"/>
+
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+
+            <PrivateAssets>all</PrivateAssets>
+
+        </PackageReference>
+
+        <PackageReference Include="coverlet.collector" Version="3.1.2">
+
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+
+            <PrivateAssets>all</PrivateAssets>
+
+        </PackageReference>
+
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Tatuaz.History.Infrastructure\Tatuaz.History.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Tatuaz.Testing.Helpers\Tatuaz.Testing.Helpers.csproj"/>
+        <ProjectReference Include="..\Tatuaz.Testing.Mocks\Tatuaz.Testing.Mocks.csproj"/>
+    </ItemGroup>
+
+</Project>

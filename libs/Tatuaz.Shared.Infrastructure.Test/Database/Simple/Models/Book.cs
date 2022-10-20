@@ -1,6 +1,5 @@
-﻿using NodaTime;
-
-using Tatuaz.Shared.Domain.Models.Common;
+using NodaTime;
+using Tatuaz.Shared.Domain.Entities.Common;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.HistModels;
 
 namespace Tatuaz.Shared.Infrastructure.Test.Database.Simple.Models;
@@ -14,7 +13,7 @@ public class Book : AuditableEntity<HistBook, Guid>
 
     public override HistBook ToHistEntity(IClock clock)
     {
-        var histBook = base.ToHistEntity(clock);
+        var histBook = (HistBook)base.ToHistEntity(clock);
         histBook.Title = Title;
         return histBook;
     }

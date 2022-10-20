@@ -21,13 +21,29 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Infrastructur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Infrastructure.Abstractions", "libs\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj", "{C7E0142D-6C12-48A0-A82A-710022CB2750}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Domain.Models", "libs\Tatuaz.Shared.Domain.Models\Tatuaz.Shared.Domain.Models.csproj", "{DDC60FB3-5B6E-4E2D-AF36-D3D8A5C6E9C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Domain.Entities", "libs\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj", "{DDC60FB3-5B6E-4E2D-AF36-D3D8A5C6E9C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Domain.Models.Test", "libs\Tatuaz.Shared.Domain.Models.Test\Tatuaz.Shared.Domain.Models.Test.csproj", "{98EC992E-9541-4049-B83E-4F20B8A10632}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Domain.Entities.Test", "libs\Tatuaz.Shared.Domain.Entities.Test\Tatuaz.Shared.Domain.Entities.Test.csproj", "{98EC992E-9541-4049-B83E-4F20B8A10632}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Domain.Models.Hist", "libs\Tatuaz.Shared.Domain.Models.Hist\Tatuaz.Shared.Domain.Models.Hist.csproj", "{5E9D7D78-CC90-45F2-B77D-61EBF75E4EF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Domain.Entities.Hist", "libs\Tatuaz.Shared.Domain.Entities.Hist\Tatuaz.Shared.Domain.Entities.Hist.csproj", "{5E9D7D78-CC90-45F2-B77D-61EBF75E4EF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Testing.Fakes", "libs\Tatuaz.Testing.Fakes\Tatuaz.Testing.Fakes.csproj", "{2517F937-F5ED-471B-A53A-5EC3B2A7DE03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Testing.Helpers", "libs\Tatuaz.Testing.Helpers\Tatuaz.Testing.Helpers.csproj", "{2517F937-F5ED-471B-A53A-5EC3B2A7DE03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.History", "apps\Tatuaz.History\Tatuaz.History.csproj", "{58CB192A-6531-4BAD-8F5D-40E144812299}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.History.Test", "apps\Tatuaz.History.Test\Tatuaz.History.Test.csproj", "{9FA65BE1-83C8-4D4A-8E5E-560246951BBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.History.Queue", "libs\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj", "{36AB9363-BD44-41E9-856E-0813A4CFED46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.History.Queue.Test", "libs\Tatuaz.History.Queue.Test\Tatuaz.History.Queue.Test.csproj", "{82A9D33E-22D0-4694-BFD8-C79B9C3F4145}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Convention.Test", "libs\Tatuaz.Convention.Test\Tatuaz.Convention.Test.csproj", "{65B6F123-4D12-4731-9926-C728686886BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Testing.Mocks", "libs\Tatuaz.Testing.Mocks\Tatuaz.Testing.Mocks.csproj", "{5F9BD548-E766-4609-9FCB-098E597E7248}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.History.Infrastructure", "libs\Tatuaz.History.Infrastructure\Tatuaz.History.Infrastructure.csproj", "{AC3F9B61-B454-4976-8327-99B2DAE52BF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.History.Infrastructure.Test", "libs\Tatuaz.History.Infrastructure.Test\Tatuaz.History.Infrastructure.Test.csproj", "{58C7634C-A1F9-4350-A05F-2D69FC3D3428}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,6 +98,38 @@ Global
 		{2517F937-F5ED-471B-A53A-5EC3B2A7DE03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2517F937-F5ED-471B-A53A-5EC3B2A7DE03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2517F937-F5ED-471B-A53A-5EC3B2A7DE03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58CB192A-6531-4BAD-8F5D-40E144812299}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58CB192A-6531-4BAD-8F5D-40E144812299}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58CB192A-6531-4BAD-8F5D-40E144812299}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58CB192A-6531-4BAD-8F5D-40E144812299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FA65BE1-83C8-4D4A-8E5E-560246951BBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FA65BE1-83C8-4D4A-8E5E-560246951BBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FA65BE1-83C8-4D4A-8E5E-560246951BBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FA65BE1-83C8-4D4A-8E5E-560246951BBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36AB9363-BD44-41E9-856E-0813A4CFED46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36AB9363-BD44-41E9-856E-0813A4CFED46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36AB9363-BD44-41E9-856E-0813A4CFED46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36AB9363-BD44-41E9-856E-0813A4CFED46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82A9D33E-22D0-4694-BFD8-C79B9C3F4145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82A9D33E-22D0-4694-BFD8-C79B9C3F4145}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82A9D33E-22D0-4694-BFD8-C79B9C3F4145}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82A9D33E-22D0-4694-BFD8-C79B9C3F4145}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65B6F123-4D12-4731-9926-C728686886BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65B6F123-4D12-4731-9926-C728686886BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65B6F123-4D12-4731-9926-C728686886BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65B6F123-4D12-4731-9926-C728686886BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F9BD548-E766-4609-9FCB-098E597E7248}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F9BD548-E766-4609-9FCB-098E597E7248}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F9BD548-E766-4609-9FCB-098E597E7248}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F9BD548-E766-4609-9FCB-098E597E7248}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC3F9B61-B454-4976-8327-99B2DAE52BF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC3F9B61-B454-4976-8327-99B2DAE52BF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC3F9B61-B454-4976-8327-99B2DAE52BF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC3F9B61-B454-4976-8327-99B2DAE52BF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58C7634C-A1F9-4350-A05F-2D69FC3D3428}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58C7634C-A1F9-4350-A05F-2D69FC3D3428}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58C7634C-A1F9-4350-A05F-2D69FC3D3428}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58C7634C-A1F9-4350-A05F-2D69FC3D3428}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{37CC9BB0-DEB1-4DAE-AA33-9B20C716D50E} = {25311259-92CF-4AA0-85FD-E7FE3579BBDA}
@@ -95,5 +143,13 @@ Global
 		{F2B18335-5186-425A-AA82-8BFBF71D3BE2} = {AD862DF1-C558-4DEA-88FB-6AA571991180}
 		{C7E0142D-6C12-48A0-A82A-710022CB2750} = {AD862DF1-C558-4DEA-88FB-6AA571991180}
 		{EC3E3A57-3D58-4669-BAB1-3CAF0EF93EF1} = {AD862DF1-C558-4DEA-88FB-6AA571991180}
+		{58CB192A-6531-4BAD-8F5D-40E144812299} = {25311259-92CF-4AA0-85FD-E7FE3579BBDA}
+		{9FA65BE1-83C8-4D4A-8E5E-560246951BBB} = {25311259-92CF-4AA0-85FD-E7FE3579BBDA}
+		{36AB9363-BD44-41E9-856E-0813A4CFED46} = {AD862DF1-C558-4DEA-88FB-6AA571991180}
+		{82A9D33E-22D0-4694-BFD8-C79B9C3F4145} = {AD862DF1-C558-4DEA-88FB-6AA571991180}
+		{65B6F123-4D12-4731-9926-C728686886BD} = {AD862DF1-C558-4DEA-88FB-6AA571991180}
+		{5F9BD548-E766-4609-9FCB-098E597E7248} = {AD862DF1-C558-4DEA-88FB-6AA571991180}
+		{AC3F9B61-B454-4976-8327-99B2DAE52BF9} = {AD862DF1-C558-4DEA-88FB-6AA571991180}
+		{58C7634C-A1F9-4350-A05F-2D69FC3D3428} = {AD862DF1-C558-4DEA-88FB-6AA571991180}
 	EndGlobalSection
 EndGlobal

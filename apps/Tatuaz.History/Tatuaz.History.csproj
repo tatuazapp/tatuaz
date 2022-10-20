@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+
+        <TargetFramework>net6.0</TargetFramework>
+
+        <LangVersion>latest</LangVersion>
+
+        <OutputPath>../../dist/apps/Tatuaz.History</OutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.7"/>
+
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\libs\Tatuaz.History.Infrastructure\Tatuaz.History.Infrastructure.csproj"/>
+        <ProjectReference Include="..\..\libs\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj"/>
+    </ItemGroup>
+
+</Project>

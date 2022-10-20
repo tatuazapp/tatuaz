@@ -18,21 +18,25 @@
 
         <PackageReference Include="EFCore.NamingConventions" Version="6.0.0"/>
 
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.7"/>
+
         <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1"/>
 
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0"/>
 
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1"/>
+
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2"/>
 
         <PackageReference Include="Moq" Version="4.18.2"/>
 
         <PackageReference Include="NodaTime.Testing" Version="3.1.3"/>
 
-        <PackageReference Include="xunit" Version="2.4.1"/>
+        <PackageReference Include="xunit" Version="2.4.2"/>
 
         <PackageReference Include="Xunit.DependencyInjection" Version="8.5.0"/>
 
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
 
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 
@@ -54,7 +58,9 @@
 
         <ProjectReference Include="..\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj"/>
 
-        <ProjectReference Include="..\Tatuaz.Testing.Fakes\Tatuaz.Testing.Fakes.csproj"/>
+        <ProjectReference Include="..\Tatuaz.Testing.Helpers\Tatuaz.Testing.Helpers.csproj"/>
+
+        <ProjectReference Include="..\Tatuaz.Testing.Mocks\Tatuaz.Testing.Mocks.csproj"/>
 
     </ItemGroup>
 

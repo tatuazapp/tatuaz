@@ -1,7 +1,6 @@
-﻿namespace Tatuaz.Shared.Infrastructure.Abstractions.Specification;
+namespace Tatuaz.Shared.Infrastructure.Abstractions.Specification;
 
-public interface ISpecification<TEntity>
-    where TEntity : class
+public interface ISpecification<TEntity> where TEntity : class
 {
     public IQueryable<TEntity> Apply(IQueryable<TEntity> query);
 }

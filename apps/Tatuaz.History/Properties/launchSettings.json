@@ -1,0 +1,12 @@
+﻿{
+  "profiles": {
+    "Tatuaz.TatuazHistory": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "applicationUrl": "http://localhost:44444",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

@@ -13,7 +13,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Tatuaz.Shared.Domain.Models\Tatuaz.Shared.Domain.Models.csproj"/>
+        <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj"/>
     </ItemGroup>
 
 </Project>
