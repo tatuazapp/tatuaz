@@ -1,4 +1,5 @@
 using MassTransit;
+using Microsoft.Extensions.Logging;
 using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.Queue.Contracts;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
@@ -10,14 +11,20 @@ public class HistExistsByIdConsumer<TEntity, TId> : IConsumer<HistExistsByIdOrde
     where TId : notnull
 {
     private readonly IHistorySearcherService<TEntity, TId> _historyRepository;
+    private readonly ILogger<HistExistsByIdConsumer<TEntity, TId>> _logger;
 
-    public HistExistsByIdConsumer(IHistorySearcherService<TEntity, TId> historyRepository)
+    public HistExistsByIdConsumer(
+        IHistorySearcherService<TEntity, TId> historyRepository,
+        ILogger<HistExistsByIdConsumer<TEntity, TId>> logger
+    )
     {
         _historyRepository = historyRepository;
+        _logger = logger;
     }
 
     public async Task Consume(ConsumeContext<HistExistsByIdOrder<TEntity, TId>> context)
     {
+        _logger.LogInformation("HistExistsByIdConsumer: {0}", context.Message.Id);
         await context
             .RespondAsync(
                 new HistExistsByIdResult<TEntity, TId>(

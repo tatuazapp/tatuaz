@@ -27,12 +27,14 @@ public class DumpHistoryConsumer : IConsumer<DumpHistoryOrder>
 
     public async Task Consume(ConsumeContext<DumpHistoryOrder> context)
     {
+        _logger.LogInformation("DumpHistoryConsumer: {0}", context.Message);
+
         var (toDump, type) = Deserialize(context.Message.Object, context.Message.ObjectType);
 
         var histId = await GetDumpTask(toDump, type).ConfigureAwait(false);
 
         _logger.LogInformation(
-            "Dumped history for {ObjectType} with id {Id}",
+            "Dumped history for {ObjectType} with HistId {Id}",
             context.Message.ObjectType,
             histId
         );
