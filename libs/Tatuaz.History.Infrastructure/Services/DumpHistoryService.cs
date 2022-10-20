@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Tatuaz.History.Infrastructure.Abstractions.Exceptions;
-using Tatuaz.History.Infrastructure.Abstractions.Services;
+using Microsoft.Extensions.Logging;
+using Tatuaz.History.DataAccess.Exceptions;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
 
 namespace Tatuaz.History.DataAccess.Services;
@@ -10,20 +10,27 @@ public class DumpHistoryService<THistEntity, TId> : IDumpHistoryService<THistEnt
     where TId : notnull
 {
     private readonly HistDbContext _histDbContext;
+    private readonly ILogger<DumpHistoryService<THistEntity, TId>> _logger;
 
-    public DumpHistoryService(HistDbContext histDbContext)
+    public DumpHistoryService(
+        HistDbContext histDbContext,
+        ILogger<DumpHistoryService<THistEntity, TId>> logger
+    )
     {
         _histDbContext = histDbContext;
+        _logger = logger;
     }
 
     public async Task<Guid> DumpAsync(THistEntity entity)
     {
+        _logger.LogInformation("Dumping history for entity {EntityId}", entity.Id);
         switch (entity.HistState)
         {
             case HistState.Added:
                 await ValidateNotYetDumpedAsync(entity).ConfigureAwait(false);
                 break;
-            case HistState.Modified or HistState.Deleted:
+            case HistState.Modified
+            or HistState.Deleted:
                 await ValidateAlreadyDumpedAsync(entity).ConfigureAwait(false);
                 break;
             default:
@@ -33,13 +40,18 @@ public class DumpHistoryService<THistEntity, TId> : IDumpHistoryService<THistEnt
         _histDbContext.Add(entity);
         await _histDbContext.SaveChangesAsync().ConfigureAwait(false);
 
+        _logger.LogInformation("History dumped for entity with histId {HistId}", entity.HistId);
         return entity.HistId;
     }
 
     private async Task ValidateAlreadyDumpedAsync(THistEntity entity)
     {
-        if (!await _histDbContext.Set<THistEntity>()
-                .AnyAsync(x => x.HistState == HistState.Added && entity.Id.Equals(x.Id)).ConfigureAwait(false))
+        if (
+            !await _histDbContext
+                .Set<THistEntity>()
+                .AnyAsync(x => x.HistState == HistState.Added && entity.Id.Equals(x.Id))
+                .ConfigureAwait(false)
+        )
         {
             throw new HistException("Entity does not exist in history yet.");
         }
@@ -47,8 +59,12 @@ public class DumpHistoryService<THistEntity, TId> : IDumpHistoryService<THistEnt
 
     private async Task ValidateNotYetDumpedAsync(THistEntity entity)
     {
-        if (await _histDbContext.Set<THistEntity>()
-                .AnyAsync(x => x.HistState == HistState.Added && entity.Id.Equals(x.Id)).ConfigureAwait(false))
+        if (
+            await _histDbContext
+                .Set<THistEntity>()
+                .AnyAsync(x => x.HistState == HistState.Added && entity.Id.Equals(x.Id))
+                .ConfigureAwait(false)
+        )
         {
             throw new HistException("Entity already exists in history");
         }

@@ -8,8 +8,11 @@ namespace Tatuaz.Shared.Infrastructure.Test.Specification;
 
 public class FullSpecificationTest
 {
-    public FullSpecificationTest(DbContext dbContext, IUnitOfWork unitOfWork,
-        IGenericRepository<Author, HistAuthor, Guid> authorRepository)
+    public FullSpecificationTest(
+        DbContext dbContext,
+        IUnitOfWork unitOfWork,
+        IGenericRepository<Author, HistAuthor, Guid> authorRepository
+    )
     {
         DbContext = dbContext;
         UnitOfWork = unitOfWork;
@@ -22,11 +25,11 @@ public class FullSpecificationTest
 
     public class TrackingStrategyTest : FullSpecificationTest
     {
-        public TrackingStrategyTest(DbContext dbContext, IUnitOfWork unitOfWork,
-            IGenericRepository<Author, HistAuthor, Guid> authorRepository) : base(dbContext, unitOfWork,
-            authorRepository)
-        {
-        }
+        public TrackingStrategyTest(
+            DbContext dbContext,
+            IUnitOfWork unitOfWork,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
+        ) : base(dbContext, unitOfWork, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnEntityWithTracking()
@@ -68,14 +71,19 @@ public class FullSpecificationTest
             DbContext.Add(expected);
             await DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var spec = new FullSpecification<Author> { TrackingStrategy = TrackingStrategy.Tracking };
+            var spec = new FullSpecification<Author>
+            {
+                TrackingStrategy = TrackingStrategy.Tracking
+            };
             spec.AddFilter(x => x.Id == expected.Id);
 
             var actual = await AuthorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
             actual.First().FirstName = "Johny";
             await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
 
-            var actual2 = await AuthorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual2 = await AuthorRepository
+                .GetBySpecificationAsync(spec)
+                .ConfigureAwait(false);
             Assert.Equal("Johny", actual2.First().FirstName);
         }
 
@@ -87,25 +95,30 @@ public class FullSpecificationTest
             DbContext.Add(expected);
             await DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var spec = new FullSpecification<Author> { TrackingStrategy = TrackingStrategy.NoTracking };
+            var spec = new FullSpecification<Author>
+            {
+                TrackingStrategy = TrackingStrategy.NoTracking
+            };
             spec.AddFilter(x => x.Id == expected.Id);
 
             var actual = await AuthorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
             actual.First().FirstName = "Johny";
             await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
 
-            var actual2 = await AuthorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual2 = await AuthorRepository
+                .GetBySpecificationAsync(spec)
+                .ConfigureAwait(false);
             Assert.Equal("John", actual2.First().FirstName);
         }
     }
 
     public class AddFilterTest : FullSpecificationTest
     {
-        public AddFilterTest(DbContext dbContext, IUnitOfWork unitOfWork,
-            IGenericRepository<Author, HistAuthor, Guid> authorRepository) : base(dbContext, unitOfWork,
-            authorRepository)
-        {
-        }
+        public AddFilterTest(
+            DbContext dbContext,
+            IUnitOfWork unitOfWork,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
+        ) : base(dbContext, unitOfWork, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnEntityWithFilter()
@@ -125,11 +138,11 @@ public class FullSpecificationTest
 
     public class AddOrderTest : FullSpecificationTest
     {
-        public AddOrderTest(DbContext dbContext, IUnitOfWork unitOfWork,
-            IGenericRepository<Author, HistAuthor, Guid> authorRepository) : base(dbContext, unitOfWork,
-            authorRepository)
-        {
-        }
+        public AddOrderTest(
+            DbContext dbContext,
+            IUnitOfWork unitOfWork,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
+        ) : base(dbContext, unitOfWork, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnEntityWithAscendingOrder()
@@ -180,11 +193,11 @@ public class FullSpecificationTest
 
     public class AddIncludeTest : FullSpecificationTest
     {
-        public AddIncludeTest(DbContext dbContext, IUnitOfWork unitOfWork,
-            IGenericRepository<Author, HistAuthor, Guid> authorRepository) : base(dbContext, unitOfWork,
-            authorRepository)
-        {
-        }
+        public AddIncludeTest(
+            DbContext dbContext,
+            IUnitOfWork unitOfWork,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
+        ) : base(dbContext, unitOfWork, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnEntityWithInclude()

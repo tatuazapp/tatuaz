@@ -15,11 +15,12 @@ namespace Tatuaz.Shared.Infrastructure.Test;
 
 public class Startup
 {
-    public void ConfigureHost(IHostBuilder hostBuilder)
-    {
-    }
+    public void ConfigureHost(IHostBuilder hostBuilder) { }
 
-    public void ConfigureServices(IServiceCollection services, HostBuilderContext hostBuilderContext)
+    public void ConfigureServices(
+        IServiceCollection services,
+        HostBuilderContext hostBuilderContext
+    )
     {
         var config = new ConfigurationBuilder()
             .AddJsonFile("appsettings.InfrastructureTest.json")
@@ -32,7 +33,13 @@ public class Startup
         services.AddScoped(typeof(IGenericRepository<,,>), typeof(GenericRepository<,,>));
         services.AddDbContext<BooksDbContext>(opt =>
         {
-            opt.UseNpgsql(config.GetConnectionString("InfrastructureTest"), npgsqlOpt => { npgsqlOpt.UseNodaTime(); });
+            opt.UseNpgsql(
+                config.GetConnectionString("InfrastructureTest"),
+                npgsqlOpt =>
+                {
+                    npgsqlOpt.UseNodaTime();
+                }
+            );
             opt.UseSnakeCaseNamingConvention();
         });
         services.AddScoped<DbContext, BooksDbContext>();

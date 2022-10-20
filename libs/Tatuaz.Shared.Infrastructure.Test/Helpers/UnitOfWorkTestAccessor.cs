@@ -17,14 +17,19 @@ public class UnitOfWorkTestAccessor
     {
         get
         {
-            var field = typeof(UnitOfWork).GetField("_sendEndpointProvider",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            return field?.GetValue(UnitOfWork) as ISendEndpointProvider ?? throw new InvalidOperationException();
+            var field = typeof(UnitOfWork).GetField(
+                "_sendEndpointProvider",
+                BindingFlags.NonPublic | BindingFlags.Instance
+            );
+            return field?.GetValue(UnitOfWork) as ISendEndpointProvider
+                ?? throw new InvalidOperationException();
         }
         set
         {
-            var field = typeof(UnitOfWork).GetField("_sendEndpointProvider",
-                BindingFlags.NonPublic | BindingFlags.Instance);
+            var field = typeof(UnitOfWork).GetField(
+                "_sendEndpointProvider",
+                BindingFlags.NonPublic | BindingFlags.Instance
+            );
             field?.SetValue(UnitOfWork, value);
         }
     }

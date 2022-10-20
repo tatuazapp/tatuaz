@@ -45,6 +45,8 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Tatuaz.History.Infrastructure\Tatuaz.History.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Tatuaz.Testing.Helpers\Tatuaz.Testing.Helpers.csproj"/>
+        <ProjectReference Include="..\Tatuaz.Testing.Mocks\Tatuaz.Testing.Mocks.csproj"/>
     </ItemGroup>
 
 </Project>

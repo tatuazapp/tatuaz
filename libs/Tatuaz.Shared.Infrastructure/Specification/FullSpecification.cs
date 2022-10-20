@@ -5,12 +5,15 @@ using Tatuaz.Shared.Infrastructure.Abstractions.Specification;
 
 namespace Tatuaz.Shared.Infrastructure.Specification;
 
-public class FullSpecification<TEntity> : ISpecification<TEntity>
-    where TEntity : class
+public class FullSpecification<TEntity> : ISpecification<TEntity> where TEntity : class
 {
     private readonly List<Func<IQueryable<TEntity>, IQueryable<TEntity>>> _customs;
     private readonly List<Expression<Func<TEntity, bool>>> _filteringPredicates;
-    private readonly List<Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>> _includes;
+
+    private readonly List<
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>
+    > _includes;
+
     private readonly List<Expression<Func<TEntity, object>>> _orderingPredicates;
 
     public FullSpecification()
@@ -49,14 +52,16 @@ public class FullSpecification<TEntity> : ISpecification<TEntity>
     }
 
     public FullSpecification<TEntity> UseInclude(
-        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> predicate)
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> predicate
+    )
     {
         _includes.Add(predicate);
         return this;
     }
 
     public FullSpecification<TEntity> UseCustom(
-        Func<IQueryable<TEntity>, IQueryable<TEntity>> predicate)
+        Func<IQueryable<TEntity>, IQueryable<TEntity>> predicate
+    )
     {
         _customs.Add(predicate);
         return this;
@@ -76,10 +81,10 @@ public class FullSpecification<TEntity> : ISpecification<TEntity>
     {
         if (_filteringPredicates.Any())
         {
-            query = _filteringPredicates
-                .Aggregate(query,
-                    (current, predicate)
-                        => current.Where(predicate));
+            query = _filteringPredicates.Aggregate(
+                query,
+                (current, predicate) => current.Where(predicate)
+            );
         }
 
         return query;
@@ -89,14 +94,18 @@ public class FullSpecification<TEntity> : ISpecification<TEntity>
     {
         if (_orderingPredicates.Any())
         {
-            query = OrderDirection == OrderDirection.Ascending
-                ? query.OrderBy(_orderingPredicates[0])
-                : query.OrderByDescending(_orderingPredicates[0]);
+            query =
+                OrderDirection == OrderDirection.Ascending
+                    ? query.OrderBy(_orderingPredicates[0])
+                    : query.OrderByDescending(_orderingPredicates[0]);
             for (var i = 1; i < _orderingPredicates.Count; i++)
             {
-                query = OrderDirection == OrderDirection.Ascending
-                    ? ((IOrderedQueryable<TEntity>)query).ThenBy(_orderingPredicates[i])
-                    : ((IOrderedQueryable<TEntity>)query).ThenByDescending(_orderingPredicates[i]);
+                query =
+                    OrderDirection == OrderDirection.Ascending
+                        ? ((IOrderedQueryable<TEntity>)query).ThenBy(_orderingPredicates[i])
+                        : ((IOrderedQueryable<TEntity>)query).ThenByDescending(
+                            _orderingPredicates[i]
+                        );
             }
         }
 

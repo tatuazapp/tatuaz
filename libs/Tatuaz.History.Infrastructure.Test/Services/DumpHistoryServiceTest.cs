@@ -1,8 +1,9 @@
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NodaTime;
+using Tatuaz.History.DataAccess.Exceptions;
 using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.DataAccess.Test.Utils;
-using Tatuaz.History.Infrastructure.Abstractions.Exceptions;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
 
 namespace Tatuaz.History.DataAccess.Test.Services;
@@ -15,7 +16,10 @@ public class DumpHistoryServiceTest
         public async Task Should_CorrectlyDumpHistory_WhenStateAddedAndNothingInDb()
         {
             var histDbContextMock = new HistDbContextMock();
-            var dumpHistoryService = new DumpHistoryService<TestHistEntity, Guid>(histDbContextMock.Object);
+            var dumpHistoryService = new DumpHistoryService<TestHistEntity, Guid>(
+                histDbContextMock.Object,
+                NullLogger<DumpHistoryService<TestHistEntity, Guid>>.Instance
+            );
 
             var toDump = new TestHistEntity
             {
@@ -36,7 +40,10 @@ public class DumpHistoryServiceTest
             Assert.Equal(toDump.Name, dumped.Name);
 
             histDbContextMock.Verify(x => x.Add(toDump), Times.Once);
-            histDbContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+            histDbContextMock.Verify(
+                x => x.SaveChangesAsync(It.IsAny<CancellationToken>()),
+                Times.Once
+            );
             histDbContextMock.Verify(x => x.Set<TestHistEntity>(), Times.Once);
         }
 
@@ -44,7 +51,10 @@ public class DumpHistoryServiceTest
         public async Task Should_CorrectlyDumpHistory_WhenStateModifiedAndOneEntityInDb()
         {
             var histDbContextMock = new HistDbContextMock();
-            var dumpHistoryService = new DumpHistoryService<TestHistEntity, Guid>(histDbContextMock.Object);
+            var dumpHistoryService = new DumpHistoryService<TestHistEntity, Guid>(
+                histDbContextMock.Object,
+                NullLogger<DumpHistoryService<TestHistEntity, Guid>>.Instance
+            );
 
             var toDump = new TestHistEntity
             {
@@ -68,9 +78,9 @@ public class DumpHistoryServiceTest
 
             await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false);
 
-            var dumped =
-                histDbContextMock.TestHistEntities.First(x =>
-                    x.HistId == Guid.Parse("C43F5099-CAB5-4469-9914-BE686FD45E40"));
+            var dumped = histDbContextMock.TestHistEntities.First(
+                x => x.HistId == Guid.Parse("C43F5099-CAB5-4469-9914-BE686FD45E40")
+            );
             Assert.Equal(toDump.Id, dumped.Id);
             Assert.Equal(toDump.HistId, dumped.HistId);
             Assert.Equal(toDump.HistDumpedAt, dumped.HistDumpedAt);
@@ -78,7 +88,10 @@ public class DumpHistoryServiceTest
             Assert.Equal(toDump.Name, dumped.Name);
 
             histDbContextMock.Verify(x => x.Add(toDump), Times.Once);
-            histDbContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+            histDbContextMock.Verify(
+                x => x.SaveChangesAsync(It.IsAny<CancellationToken>()),
+                Times.Once
+            );
             histDbContextMock.Verify(x => x.Set<TestHistEntity>(), Times.Once);
         }
 
@@ -86,7 +99,10 @@ public class DumpHistoryServiceTest
         public async Task Should_CorrectlyDumpHistory_WhenStateDeletedAndOneEntityInDb()
         {
             var histDbContextMock = new HistDbContextMock();
-            var dumpHistoryService = new DumpHistoryService<TestHistEntity, Guid>(histDbContextMock.Object);
+            var dumpHistoryService = new DumpHistoryService<TestHistEntity, Guid>(
+                histDbContextMock.Object,
+                NullLogger<DumpHistoryService<TestHistEntity, Guid>>.Instance
+            );
 
             var toDump = new TestHistEntity
             {
@@ -110,9 +126,9 @@ public class DumpHistoryServiceTest
 
             await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false);
 
-            var dumped =
-                histDbContextMock.TestHistEntities.First(x =>
-                    x.HistId == Guid.Parse("C43F5099-CAB5-4469-9914-BE686FD45E40"));
+            var dumped = histDbContextMock.TestHistEntities.First(
+                x => x.HistId == Guid.Parse("C43F5099-CAB5-4469-9914-BE686FD45E40")
+            );
             Assert.Equal(toDump.Id, dumped.Id);
             Assert.Equal(toDump.HistId, dumped.HistId);
             Assert.Equal(toDump.HistDumpedAt, dumped.HistDumpedAt);
@@ -120,7 +136,10 @@ public class DumpHistoryServiceTest
             Assert.Equal(toDump.Name, dumped.Name);
 
             histDbContextMock.Verify(x => x.Add(toDump), Times.Once);
-            histDbContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+            histDbContextMock.Verify(
+                x => x.SaveChangesAsync(It.IsAny<CancellationToken>()),
+                Times.Once
+            );
             histDbContextMock.Verify(x => x.Set<TestHistEntity>(), Times.Once);
         }
 
@@ -128,7 +147,10 @@ public class DumpHistoryServiceTest
         public async Task Should_Throw_WhenStateAddedAndOneEntityInDb()
         {
             var histDbContextMock = new HistDbContextMock();
-            var dumpHistoryService = new DumpHistoryService<TestHistEntity, Guid>(histDbContextMock.Object);
+            var dumpHistoryService = new DumpHistoryService<TestHistEntity, Guid>(
+                histDbContextMock.Object,
+                NullLogger<DumpHistoryService<TestHistEntity, Guid>>.Instance
+            );
 
             var toDump = new TestHistEntity
             {
@@ -152,14 +174,19 @@ public class DumpHistoryServiceTest
 
             await Assert
                 .ThrowsAsync<HistException>(
-                    async () => await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false)).ConfigureAwait(false);
+                    async () => await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false)
+                )
+                .ConfigureAwait(false);
         }
 
         [Fact]
         public async Task Should_Throw_WhenStateModifiedAndNothingInDb()
         {
             var histDbContextMock = new HistDbContextMock();
-            var dumpHistoryService = new DumpHistoryService<TestHistEntity, Guid>(histDbContextMock.Object);
+            var dumpHistoryService = new DumpHistoryService<TestHistEntity, Guid>(
+                histDbContextMock.Object,
+                NullLogger<DumpHistoryService<TestHistEntity, Guid>>.Instance
+            );
 
             var toDump = new TestHistEntity
             {
@@ -172,14 +199,19 @@ public class DumpHistoryServiceTest
 
             await Assert
                 .ThrowsAsync<HistException>(
-                    async () => await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false)).ConfigureAwait(false);
+                    async () => await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false)
+                )
+                .ConfigureAwait(false);
         }
 
         [Fact]
         public async Task Should_Throw_WhenStateDeletedAndNothingInDb()
         {
             var histDbContextMock = new HistDbContextMock();
-            var dumpHistoryService = new DumpHistoryService<TestHistEntity, Guid>(histDbContextMock.Object);
+            var dumpHistoryService = new DumpHistoryService<TestHistEntity, Guid>(
+                histDbContextMock.Object,
+                NullLogger<DumpHistoryService<TestHistEntity, Guid>>.Instance
+            );
 
             var toDump = new TestHistEntity
             {
@@ -192,7 +224,9 @@ public class DumpHistoryServiceTest
 
             await Assert
                 .ThrowsAsync<HistException>(
-                    async () => await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false)).ConfigureAwait(false);
+                    async () => await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false)
+                )
+                .ConfigureAwait(false);
         }
     }
 }

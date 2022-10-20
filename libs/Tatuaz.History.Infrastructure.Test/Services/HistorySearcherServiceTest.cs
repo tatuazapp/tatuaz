@@ -13,12 +13,19 @@ public class HistorySearcherServiceTest
     protected HistorySearcherServiceTest()
     {
         _dbContextMock = new HistDbContextMock();
-        _historySearcherService = new HistorySearcherService<TestHistEntity, Guid>(_dbContextMock.Object);
+        _historySearcherService = new HistorySearcherService<TestHistEntity, Guid>(
+            _dbContextMock.Object
+        );
     }
 
     private static Instant DateBeforeAdded => Instant.FromUtc(2019, 12, 31, 23, 59, 59);
-    private static Instant DateAfterAddedAndBeforeModified => Instant.FromUtc(2020, 1, 1, 23, 59, 59);
-    private static Instant DateAfterModifiedAndBeforeDeleted => Instant.FromUtc(2020, 1, 2, 23, 59, 59);
+
+    private static Instant DateAfterAddedAndBeforeModified =>
+        Instant.FromUtc(2020, 1, 1, 23, 59, 59);
+
+    private static Instant DateAfterModifiedAndBeforeDeleted =>
+        Instant.FromUtc(2020, 1, 2, 23, 59, 59);
+
     private static Instant DateAfterDeleted => Instant.FromUtc(2020, 1, 3, 23, 59, 59);
 
     private static IEnumerable<TestHistEntity> SampleDataWithAddedModifiedDeleted()
@@ -55,7 +62,8 @@ public class HistorySearcherServiceTest
         public async Task Should_ReturnNull_WhenNoHistory()
         {
             // Act
-            var result = await _historySearcherService.GetByIdAsync(Guid.NewGuid(), Instant.MaxValue)
+            var result = await _historySearcherService
+                .GetByIdAsync(Guid.NewGuid(), Instant.MaxValue)
                 .ConfigureAwait(false);
 
             // Assert
@@ -70,7 +78,8 @@ public class HistorySearcherServiceTest
             _dbContextMock.TestHistEntities.AddRange(sampleData);
 
             // Act
-            var result = await _historySearcherService.GetByIdAsync(sampleData.First().Id, DateBeforeAdded)
+            var result = await _historySearcherService
+                .GetByIdAsync(sampleData.First().Id, DateBeforeAdded)
                 .ConfigureAwait(false);
 
             // Assert
@@ -86,7 +95,8 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .GetByIdAsync(sampleData.First().Id, DateAfterAddedAndBeforeModified).ConfigureAwait(false);
+                .GetByIdAsync(sampleData.First().Id, DateAfterAddedAndBeforeModified)
+                .ConfigureAwait(false);
 
             // Assert
 #pragma warning disable CS8602
@@ -106,7 +116,8 @@ public class HistorySearcherServiceTest
             _dbContextMock.TestHistEntities.AddRange(sampleData);
 
             // Act
-            var result = await _historySearcherService.GetByIdAsync(sampleData[1].Id, DateAfterModifiedAndBeforeDeleted)
+            var result = await _historySearcherService
+                .GetByIdAsync(sampleData[1].Id, DateAfterModifiedAndBeforeDeleted)
                 .ConfigureAwait(false);
 
             // Assert
@@ -127,7 +138,8 @@ public class HistorySearcherServiceTest
             _dbContextMock.TestHistEntities.AddRange(sampleData);
 
             // Act
-            var result = await _historySearcherService.GetByIdAsync(sampleData[2].Id, DateAfterDeleted)
+            var result = await _historySearcherService
+                .GetByIdAsync(sampleData[2].Id, DateAfterDeleted)
                 .ConfigureAwait(false);
 
             // Assert
@@ -141,7 +153,8 @@ public class HistorySearcherServiceTest
         public async Task Should_ReturnFalse_WhenNoHistory()
         {
             // Act
-            var result = await _historySearcherService.ExistsByIdAsync(Guid.NewGuid(), Instant.MaxValue)
+            var result = await _historySearcherService
+                .ExistsByIdAsync(Guid.NewGuid(), Instant.MaxValue)
                 .ConfigureAwait(false);
 
             // Assert
@@ -156,7 +169,8 @@ public class HistorySearcherServiceTest
             _dbContextMock.TestHistEntities.AddRange(sampleData);
 
             // Act
-            var result = await _historySearcherService.ExistsByIdAsync(sampleData.First().Id, DateBeforeAdded)
+            var result = await _historySearcherService
+                .ExistsByIdAsync(sampleData.First().Id, DateBeforeAdded)
                 .ConfigureAwait(false);
 
             // Assert
@@ -172,7 +186,8 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .ExistsByIdAsync(sampleData.First().Id, DateAfterAddedAndBeforeModified).ConfigureAwait(false);
+                .ExistsByIdAsync(sampleData.First().Id, DateAfterAddedAndBeforeModified)
+                .ConfigureAwait(false);
 
             // Assert
             Assert.True(result);
@@ -187,7 +202,8 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .ExistsByIdAsync(sampleData[1].Id, DateAfterModifiedAndBeforeDeleted).ConfigureAwait(false);
+                .ExistsByIdAsync(sampleData[1].Id, DateAfterModifiedAndBeforeDeleted)
+                .ConfigureAwait(false);
 
             // Assert
             Assert.True(result);
@@ -201,7 +217,8 @@ public class HistorySearcherServiceTest
             _dbContextMock.TestHistEntities.AddRange(sampleData);
 
             // Act
-            var result = await _historySearcherService.ExistsByIdAsync(sampleData[2].Id, DateAfterDeleted)
+            var result = await _historySearcherService
+                .ExistsByIdAsync(sampleData[2].Id, DateAfterDeleted)
                 .ConfigureAwait(false);
 
             // Assert
@@ -209,13 +226,9 @@ public class HistorySearcherServiceTest
         }
     }
 
-    public class GetBySpecificationAsync
-    {
-    }
+    public class GetBySpecificationAsync { }
 
-    public class GetBySpecificationWithPagingAsync
-    {
-    }
+    public class GetBySpecificationWithPagingAsync { }
 
     public class ExistsByPredicateAsync : HistorySearcherServiceTest
     {
@@ -224,7 +237,8 @@ public class HistorySearcherServiceTest
         {
             // Act
             var result = await _historySearcherService
-                .ExistsByPredicateAsync(x => x.Id == Guid.NewGuid(), Instant.MaxValue).ConfigureAwait(false);
+                .ExistsByPredicateAsync(x => x.Id == Guid.NewGuid(), Instant.MaxValue)
+                .ConfigureAwait(false);
 
             // Assert
             Assert.False(result);
@@ -239,7 +253,8 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .ExistsByPredicateAsync(x => x.Id == sampleData.First().Id, DateBeforeAdded).ConfigureAwait(false);
+                .ExistsByPredicateAsync(x => x.Id == sampleData.First().Id, DateBeforeAdded)
+                .ConfigureAwait(false);
 
             // Assert
             Assert.False(result);
@@ -254,7 +269,10 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .ExistsByPredicateAsync(x => x.Id == sampleData.First().Id, DateAfterAddedAndBeforeModified)
+                .ExistsByPredicateAsync(
+                    x => x.Id == sampleData.First().Id,
+                    DateAfterAddedAndBeforeModified
+                )
                 .ConfigureAwait(false);
 
             // Assert
@@ -270,7 +288,10 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .ExistsByPredicateAsync(x => x.Id == sampleData[1].Id, DateAfterModifiedAndBeforeDeleted)
+                .ExistsByPredicateAsync(
+                    x => x.Id == sampleData[1].Id,
+                    DateAfterModifiedAndBeforeDeleted
+                )
                 .ConfigureAwait(false);
 
             // Assert
@@ -286,7 +307,8 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .ExistsByPredicateAsync(x => x.Id == sampleData[2].Id, DateAfterDeleted).ConfigureAwait(false);
+                .ExistsByPredicateAsync(x => x.Id == sampleData[2].Id, DateAfterDeleted)
+                .ConfigureAwait(false);
 
             // Assert
             Assert.False(result);
@@ -302,7 +324,8 @@ public class HistorySearcherServiceTest
         {
             // Act
             var result = await _historySearcherService
-                .CountByPredicateAsync(x => x.Id == Guid.NewGuid(), Instant.MaxValue).ConfigureAwait(false);
+                .CountByPredicateAsync(x => x.Id == Guid.NewGuid(), Instant.MaxValue)
+                .ConfigureAwait(false);
 
             // Assert
             Assert.Equal(0, result);
@@ -317,7 +340,8 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .CountByPredicateAsync(x => x.Id == sampleData.First().Id, DateBeforeAdded).ConfigureAwait(false);
+                .CountByPredicateAsync(x => x.Id == sampleData.First().Id, DateBeforeAdded)
+                .ConfigureAwait(false);
 
             // Assert
             Assert.Equal(0, result);
@@ -332,7 +356,10 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .CountByPredicateAsync(x => x.Id == sampleData.First().Id, DateAfterAddedAndBeforeModified)
+                .CountByPredicateAsync(
+                    x => x.Id == sampleData.First().Id,
+                    DateAfterAddedAndBeforeModified
+                )
                 .ConfigureAwait(false);
 
             // Assert
@@ -348,7 +375,10 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .CountByPredicateAsync(x => x.Id == sampleData[1].Id, DateAfterModifiedAndBeforeDeleted)
+                .CountByPredicateAsync(
+                    x => x.Id == sampleData[1].Id,
+                    DateAfterModifiedAndBeforeDeleted
+                )
                 .ConfigureAwait(false);
 
             // Assert
@@ -364,7 +394,8 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .CountByPredicateAsync(x => x.Id == sampleData[2].Id, DateAfterDeleted).ConfigureAwait(false);
+                .CountByPredicateAsync(x => x.Id == sampleData[2].Id, DateAfterDeleted)
+                .ConfigureAwait(false);
 
             // Assert
             Assert.Equal(0, result);

@@ -10,10 +10,22 @@ public class ConventionTest
         var dbType = typeof(DbContext);
         var histType = typeof(HistDbContext);
 
-        var dbProps = dbType.GetProperties().Where(x =>
-            x.PropertyType.IsGenericType && x.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>)).ToList();
-        var histProps = histType.GetProperties().Where(x =>
-            x.PropertyType.IsGenericType && x.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>)).ToList();
+        var dbProps = dbType
+            .GetProperties()
+            .Where(
+                x =>
+                    x.PropertyType.IsGenericType
+                    && x.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>)
+            )
+            .ToList();
+        var histProps = histType
+            .GetProperties()
+            .Where(
+                x =>
+                    x.PropertyType.IsGenericType
+                    && x.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>)
+            )
+            .ToList();
 
         var dbPropNames = dbProps.Select(p => p.Name).ToList();
         var histPropNames = histProps.Select(p => p.Name).ToList();

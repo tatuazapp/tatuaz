@@ -12,43 +12,67 @@ public interface IGenericRepository<TEntity, THistEntity, in TId>
     where THistEntity : HistEntity<TId>, new()
     where TId : notnull
 {
-    Task<TEntity?> GetByIdAsync(TId id, bool track = false,
-        CancellationToken cancellationToken = default);
+    Task<TEntity?> GetByIdAsync(
+        TId id,
+        bool track = false,
+        CancellationToken cancellationToken = default
+    );
 
-    Task<TEntity?> GetByIdAsync(TId id, Instant asOf,
-        CancellationToken cancellationToken = default);
+    Task<TEntity?> GetByIdAsync(
+        TId id,
+        Instant asOf,
+        CancellationToken cancellationToken = default
+    );
 
-    Task<bool> ExistsByIdAsync(TId id,
-        CancellationToken cancellationToken = default);
+    Task<bool> ExistsByIdAsync(TId id, CancellationToken cancellationToken = default);
 
-    Task<bool> ExistsByIdAsync(TId id, Instant asOf,
-        CancellationToken cancellationToken = default);
+    Task<bool> ExistsByIdAsync(TId id, Instant asOf, CancellationToken cancellationToken = default);
 
-    Task<IEnumerable<TEntity>> GetBySpecificationAsync(ISpecification<TEntity> specification,
-        CancellationToken cancellationToken = default);
+    Task<IEnumerable<TEntity>> GetBySpecificationAsync(
+        ISpecification<TEntity> specification,
+        CancellationToken cancellationToken = default
+    );
 
-    Task<IEnumerable<TEntity>> GetBySpecificationAsync(ISpecification<TEntity> specification, Instant asOf,
-        CancellationToken cancellationToken = default);
+    Task<IEnumerable<TEntity>> GetBySpecificationAsync(
+        ISpecification<TEntity> specification,
+        Instant asOf,
+        CancellationToken cancellationToken = default
+    );
 
-    Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(ISpecification<TEntity> specification,
+    Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(
+        ISpecification<TEntity> specification,
         PagedParams pagedParams,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken = default
+    );
 
-    Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(ISpecification<TEntity> specification,
-        PagedParams pagedParams, Instant asOf,
-        CancellationToken cancellationToken = default);
+    Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(
+        ISpecification<TEntity> specification,
+        PagedParams pagedParams,
+        Instant asOf,
+        CancellationToken cancellationToken = default
+    );
 
-    Task<bool> ExistsByPredicateAsync(Expression<Func<TEntity, bool>> predicate,
-        CancellationToken cancellationToken = default);
+    Task<bool> ExistsByPredicateAsync(
+        Expression<Func<TEntity, bool>> predicate,
+        CancellationToken cancellationToken = default
+    );
 
-    Task<bool> ExistsByPredicateAsync(Expression<Func<TEntity, bool>> predicate, Instant asOf,
-        CancellationToken cancellationToken = default);
+    Task<bool> ExistsByPredicateAsync(
+        Expression<Func<TEntity, bool>> predicate,
+        Instant asOf,
+        CancellationToken cancellationToken = default
+    );
 
-    Task<long> CountByPredicateAsync(Expression<Func<TEntity, bool>> predicate,
-        CancellationToken cancellationToken = default);
+    Task<long> CountByPredicateAsync(
+        Expression<Func<TEntity, bool>> predicate,
+        CancellationToken cancellationToken = default
+    );
 
-    Task<long> CountByPredicateAsync(Expression<Func<TEntity, bool>> predicate, Instant asOf,
-        CancellationToken cancellationToken = default);
+    Task<long> CountByPredicateAsync(
+        Expression<Func<TEntity, bool>> predicate,
+        Instant asOf,
+        CancellationToken cancellationToken = default
+    );
 
     Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
     Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);

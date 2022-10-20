@@ -33,7 +33,10 @@ public abstract class GenericToHistEntityTest<TEntity, THistEntity, TId>
         foreach (var entityProperty in entityProperties)
         {
             var present = histEntityProperties.Contains(entityProperty);
-            Assert.True(present, $"{entityProperty.Name} is not present in {typeof(THistEntity).Name}");
+            Assert.True(
+                present,
+                $"{entityProperty.Name} is not present in {typeof(THistEntity).Name}"
+            );
         }
     }
 
@@ -50,7 +53,8 @@ public abstract class GenericToHistEntityTest<TEntity, THistEntity, TId>
             foreach (var entityProperty in entityProperties)
             {
                 var expected = entityProperty.GetValue(entity);
-                var actual = histEntityProperties.FirstOrDefault(x => x.Name == entityProperty.Name)
+                var actual = histEntityProperties
+                    .FirstOrDefault(x => x.Name == entityProperty.Name)
                     ?.GetValue(histGuidEntity);
 
                 Assert.Equal(expected, actual);

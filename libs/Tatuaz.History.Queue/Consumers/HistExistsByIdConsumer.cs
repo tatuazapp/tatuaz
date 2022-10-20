@@ -1,5 +1,5 @@
 using MassTransit;
-using Tatuaz.History.Infrastructure.Abstractions.Services;
+using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.Queue.Contracts;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
 
@@ -19,9 +19,13 @@ public class HistExistsByIdConsumer<TEntity, TId> : IConsumer<HistExistsByIdOrde
     public async Task Consume(ConsumeContext<HistExistsByIdOrder<TEntity, TId>> context)
     {
         await context
-            .RespondAsync(new HistExistsByIdResult<TEntity, TId>(await _historyRepository
-                .ExistsByIdAsync(context.Message.Id, context.Message.AsOf)
-                .ConfigureAwait(false)))
+            .RespondAsync(
+                new HistExistsByIdResult<TEntity, TId>(
+                    await _historyRepository
+                        .ExistsByIdAsync(context.Message.Id, context.Message.AsOf)
+                        .ConfigureAwait(false)
+                )
+            )
             .ConfigureAwait(false);
     }
 }

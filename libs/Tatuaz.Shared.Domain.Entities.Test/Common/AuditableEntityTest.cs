@@ -7,31 +7,22 @@ namespace Tatuaz.Shared.Domain.Entities.Test.Common;
 
 public class AuditableEntityTest
 {
-    public class BareGuidAuditableEntity : AuditableEntity<BareGuidHistAuditableEntity, Guid>
-    {
-    }
+    public class BareGuidAuditableEntity : AuditableEntity<BareGuidHistAuditableEntity, Guid> { }
 
-    public class BareGuidHistAuditableEntity : AuditableHistEntity<Guid>
-    {
-    }
+    public class BareGuidHistAuditableEntity : AuditableHistEntity<Guid> { }
 
-    public class BareIntAuditableEntity : AuditableEntity<BareIntAuditableHistEntity, int>
-    {
-    }
+    public class BareIntAuditableEntity : AuditableEntity<BareIntAuditableHistEntity, int> { }
 
-    public class BareIntAuditableHistEntity : AuditableHistEntity<int>
-    {
-    }
+    public class BareIntAuditableHistEntity : AuditableHistEntity<int> { }
 
-    public class BareStringAuditableEntity : AuditableEntity<BareStringAuditableHistEntity, string>
-    {
-    }
+    public class BareStringAuditableEntity
+        : AuditableEntity<BareStringAuditableHistEntity, string>
+    { }
 
-    public class BareStringAuditableHistEntity : AuditableHistEntity<string>
-    {
-    }
+    public class BareStringAuditableHistEntity : AuditableHistEntity<string> { }
 
-    public class GuidToHistEntity : GenericToHistEntityTest<BareGuidAuditableEntity, BareGuidHistAuditableEntity, Guid>
+    public class GuidToHistEntity
+        : GenericToHistEntityTest<BareGuidAuditableEntity, BareGuidHistAuditableEntity, Guid>
     {
         private static readonly BareGuidAuditableEntity[] EntityTestData =
         {
@@ -45,12 +36,11 @@ public class AuditableEntityTest
             }
         };
 
-        public GuidToHistEntity(IClock clock) : base(clock, EntityTestData)
-        {
-        }
+        public GuidToHistEntity(IClock clock) : base(clock, EntityTestData) { }
     }
 
-    public class IntToHistEntity : GenericToHistEntityTest<BareIntAuditableEntity, BareIntAuditableHistEntity, int>
+    public class IntToHistEntity
+        : GenericToHistEntityTest<BareIntAuditableEntity, BareIntAuditableHistEntity, int>
     {
         private static readonly BareIntAuditableEntity[] EntityTestData =
         {
@@ -64,13 +54,11 @@ public class AuditableEntityTest
             }
         };
 
-        public IntToHistEntity(IClock clock) : base(clock, EntityTestData)
-        {
-        }
+        public IntToHistEntity(IClock clock) : base(clock, EntityTestData) { }
     }
 
-    public class
-        StringToHistEntity : GenericToHistEntityTest<BareStringAuditableEntity, BareStringAuditableHistEntity, string>
+    public class StringToHistEntity
+        : GenericToHistEntityTest<BareStringAuditableEntity, BareStringAuditableHistEntity, string>
     {
         private static readonly BareStringAuditableEntity[] EntityTestData =
         {
@@ -84,8 +72,6 @@ public class AuditableEntityTest
             }
         };
 
-        public StringToHistEntity(IClock clock) : base(clock, EntityTestData)
-        {
-        }
+        public StringToHistEntity(IClock clock) : base(clock, EntityTestData) { }
     }
 }

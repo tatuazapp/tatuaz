@@ -1,6 +1,6 @@
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
 
-namespace Tatuaz.History.Infrastructure.Abstractions.Services;
+namespace Tatuaz.History.DataAccess.Services;
 
 public interface IDumpHistoryService<in THistEntity, TId>
     where THistEntity : HistEntity<TId>

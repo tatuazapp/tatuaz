@@ -12,13 +12,11 @@ public class ConventionTest
 
         public HistIntegration()
         {
-            _entityTypes = typeof(Entity<,>)
-                .Assembly
+            _entityTypes = typeof(Entity<,>).Assembly
                 .GetTypes()
                 .Where(x => typeof(Entity<,>).IsAssignableFrom(x))
                 .ToList();
-            _histEntityTypes = typeof(HistEntity<>)
-                .Assembly
+            _histEntityTypes = typeof(HistEntity<>).Assembly
                 .GetTypes()
                 .Where(x => typeof(HistEntity<>).IsAssignableFrom(x))
                 .ToList();
@@ -30,8 +28,13 @@ public class ConventionTest
             foreach (var entityType in _entityTypes)
             {
                 var value = $"Hist{entityType.Name.Substring(0, entityType.Name.IndexOf('`'))}";
-                var present = _histEntityTypes.Any(x => x.Name.Substring(0, x.Name.IndexOf('`')) == value);
-                Assert.True(present, $"{entityType.Name} doesn't have a Hist counterpart named {value}");
+                var present = _histEntityTypes.Any(
+                    x => x.Name.Substring(0, x.Name.IndexOf('`')) == value
+                );
+                Assert.True(
+                    present,
+                    $"{entityType.Name} doesn't have a Hist counterpart named {value}"
+                );
             }
         }
     }

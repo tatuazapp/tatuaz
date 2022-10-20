@@ -18,7 +18,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Tatuaz.History.Infrastructure.Abstractions\Tatuaz.History.Infrastructure.Abstractions.csproj"/>
         <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities.Hist\Tatuaz.Shared.Domain.Entities.Hist.csproj"/>
         <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj"/>
     </ItemGroup>

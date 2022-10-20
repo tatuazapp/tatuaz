@@ -10,7 +10,10 @@ namespace Tatuaz.Shared.Infrastructure.Test.DataAccess;
 
 public class GenericRepositoryTest
 {
-    private GenericRepositoryTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository)
+    private GenericRepositoryTest(
+        DbContext dbContext,
+        IGenericRepository<Author, HistAuthor, Guid> authorRepository
+    )
     {
         DbContext = dbContext;
         AuthorRepository = authorRepository;
@@ -21,10 +24,10 @@ public class GenericRepositoryTest
 
     public class GetByIdAsyncTest : GenericRepositoryTest
     {
-        public GetByIdAsyncTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository) :
-            base(dbContext, authorRepository)
-        {
-        }
+        public GetByIdAsyncTest(
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
+        ) : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnSavedEntity()
@@ -65,7 +68,9 @@ public class GenericRepositoryTest
             result!.LastName = "Nowak";
             var changes = await DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var updatedAuthor = await AuthorRepository.GetByIdAsync(author.Id).ConfigureAwait(false);
+            var updatedAuthor = await AuthorRepository
+                .GetByIdAsync(author.Id)
+                .ConfigureAwait(false);
 
             Assert.NotNull(updatedAuthor);
             Assert.Equal(result.FirstName, updatedAuthor?.FirstName);
@@ -88,7 +93,9 @@ public class GenericRepositoryTest
             result!.LastName = "Nowak";
             var changes = await DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var updatedAuthor = await AuthorRepository.GetByIdAsync(author.Id).ConfigureAwait(false);
+            var updatedAuthor = await AuthorRepository
+                .GetByIdAsync(author.Id)
+                .ConfigureAwait(false);
 
             Assert.NotNull(updatedAuthor);
             Assert.Equal(author.FirstName, updatedAuthor?.FirstName);
@@ -99,10 +106,10 @@ public class GenericRepositoryTest
 
     public class ExistsByIdAsyncTest : GenericRepositoryTest
     {
-        public ExistsByIdAsyncTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository) :
-            base(dbContext, authorRepository)
-        {
-        }
+        public ExistsByIdAsyncTest(
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
+        ) : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnTrueOnExistingEntity()
@@ -119,7 +126,9 @@ public class GenericRepositoryTest
         [Fact]
         public async Task Should_ReturnFalseOnNotExistingEntity()
         {
-            var result = await AuthorRepository.ExistsByIdAsync(Guid.NewGuid()).ConfigureAwait(false);
+            var result = await AuthorRepository
+                .ExistsByIdAsync(Guid.NewGuid())
+                .ConfigureAwait(false);
 
             Assert.False(result);
         }
@@ -127,10 +136,10 @@ public class GenericRepositoryTest
 
     public class GetBySpecificationAsyncTest : GenericRepositoryTest
     {
-        public GetBySpecificationAsyncTest(DbContext dbContext,
-            IGenericRepository<Author, HistAuthor, Guid> authorRepository) : base(dbContext, authorRepository)
-        {
-        }
+        public GetBySpecificationAsyncTest(
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
+        ) : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnEntity()
@@ -140,11 +149,13 @@ public class GenericRepositoryTest
             await DbContext.AddRangeAsync(author1, author2).ConfigureAwait(false);
             await DbContext.SaveChangesAsync().ConfigureAwait(false);
             var specMock = new Mock<ISpecification<Author>>();
-            specMock.Setup(x => x.Apply(It.IsAny<IQueryable<Author>>()))
-                .Returns<IQueryable<Author>>(q
-                    => q.Where(x => x.Id == author1.Id).AsQueryable());
+            specMock
+                .Setup(x => x.Apply(It.IsAny<IQueryable<Author>>()))
+                .Returns<IQueryable<Author>>(q => q.Where(x => x.Id == author1.Id).AsQueryable());
 
-            var result = await AuthorRepository.GetBySpecificationAsync(specMock.Object).ConfigureAwait(false);
+            var result = await AuthorRepository
+                .GetBySpecificationAsync(specMock.Object)
+                .ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.Single(result);
@@ -154,10 +165,10 @@ public class GenericRepositoryTest
 
     public class GetBySpecificationWithPagingAsyncTest : GenericRepositoryTest
     {
-        public GetBySpecificationWithPagingAsyncTest(DbContext dbContext,
-            IGenericRepository<Author, HistAuthor, Guid> authorRepository) : base(dbContext, authorRepository)
-        {
-        }
+        public GetBySpecificationWithPagingAsyncTest(
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
+        ) : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnEntityWithPaging()
@@ -167,13 +178,13 @@ public class GenericRepositoryTest
             await DbContext.AddRangeAsync(author1, author2).ConfigureAwait(false);
             await DbContext.SaveChangesAsync().ConfigureAwait(false);
             var specMock = new Mock<ISpecification<Author>>();
-            specMock.Setup(x => x.Apply(It.IsAny<IQueryable<Author>>()))
-                .Returns<IQueryable<Author>>(q
-                    => q.Where(x => x.Id == author1.Id).AsQueryable());
+            specMock
+                .Setup(x => x.Apply(It.IsAny<IQueryable<Author>>()))
+                .Returns<IQueryable<Author>>(q => q.Where(x => x.Id == author1.Id).AsQueryable());
 
-            var result =
-                await AuthorRepository.GetBySpecificationWithPagingAsync(specMock.Object, new PagedParams(1, 1))
-                    .ConfigureAwait(false);
+            var result = await AuthorRepository
+                .GetBySpecificationWithPagingAsync(specMock.Object, new PagedParams(1, 1))
+                .ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.Single(result.Data);
@@ -187,10 +198,10 @@ public class GenericRepositoryTest
 
     public class ExistsByPredicateAsyncTest : GenericRepositoryTest
     {
-        public ExistsByPredicateAsyncTest(DbContext dbContext,
-            IGenericRepository<Author, HistAuthor, Guid> authorRepository) : base(dbContext, authorRepository)
-        {
-        }
+        public ExistsByPredicateAsyncTest(
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
+        ) : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnTrueOnExistingEntity()
@@ -199,7 +210,9 @@ public class GenericRepositoryTest
             await DbContext.AddAsync(author).ConfigureAwait(false);
             await DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var result = await AuthorRepository.ExistsByPredicateAsync(x => x.Id == author.Id).ConfigureAwait(false);
+            var result = await AuthorRepository
+                .ExistsByPredicateAsync(x => x.Id == author.Id)
+                .ConfigureAwait(false);
 
             Assert.True(result);
         }
@@ -208,7 +221,9 @@ public class GenericRepositoryTest
         public async Task Should_ReturnFalseOnNotExistingEntity()
         {
             var randomGuid = Guid.NewGuid();
-            var result = await AuthorRepository.ExistsByPredicateAsync(x => x.Id == randomGuid).ConfigureAwait(false);
+            var result = await AuthorRepository
+                .ExistsByPredicateAsync(x => x.Id == randomGuid)
+                .ConfigureAwait(false);
 
             Assert.False(result);
         }
@@ -216,10 +231,10 @@ public class GenericRepositoryTest
 
     public class CountByPredicateAsyncTest : GenericRepositoryTest
     {
-        public CountByPredicateAsyncTest(DbContext dbContext,
-            IGenericRepository<Author, HistAuthor, Guid> authorRepository) : base(dbContext, authorRepository)
-        {
-        }
+        public CountByPredicateAsyncTest(
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
+        ) : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnCount()
@@ -229,7 +244,9 @@ public class GenericRepositoryTest
             await DbContext.AddRangeAsync(author1, author2).ConfigureAwait(false);
             await DbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var result = await AuthorRepository.CountByPredicateAsync(x => x.Id == author1.Id).ConfigureAwait(false);
+            var result = await AuthorRepository
+                .CountByPredicateAsync(x => x.Id == author1.Id)
+                .ConfigureAwait(false);
 
             Assert.Equal(1, result);
         }
@@ -238,7 +255,9 @@ public class GenericRepositoryTest
         public async Task Should_ReturnZero()
         {
             var randomGuid = Guid.NewGuid();
-            var result = await AuthorRepository.CountByPredicateAsync(x => x.Id == randomGuid).ConfigureAwait(false);
+            var result = await AuthorRepository
+                .CountByPredicateAsync(x => x.Id == randomGuid)
+                .ConfigureAwait(false);
 
             Assert.Equal(0, result);
         }
@@ -246,10 +265,10 @@ public class GenericRepositoryTest
 
     public class CreateAsyncTest : GenericRepositoryTest
     {
-        public CreateAsyncTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository) :
-            base(dbContext, authorRepository)
-        {
-        }
+        public CreateAsyncTest(
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
+        ) : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_CreateEntity()
@@ -265,10 +284,10 @@ public class GenericRepositoryTest
 
     public class DeleteAsyncTest : GenericRepositoryTest
     {
-        public DeleteAsyncTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository) :
-            base(dbContext, authorRepository)
-        {
-        }
+        public DeleteAsyncTest(
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
+        ) : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_DeleteEntity()

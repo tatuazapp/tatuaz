@@ -25,7 +25,9 @@ public class PrimitiveValuesGenerator : IPrimitiveValuesGenerator
         for (var i = 0; i < 10; i++)
         {
             _guids[i] = Guid.NewGuid();
-            _instants[i] = Instant.FromUtc(2020, 1, 1, 0, 0).Plus(Duration.FromMilliseconds(Random.Shared.Next()));
+            _instants[i] = Instant
+                .FromUtc(2020, 1, 1, 0, 0)
+                .Plus(Duration.FromMilliseconds(Random.Shared.Next()));
             _strings[i] = Guid.NewGuid().ToString();
             _ints[i] = Random.Shared.Next();
             _floats[i] = Random.Shared.NextSingle() * 2048f - 1024f;
