@@ -23,7 +23,6 @@ public class DumpHistoryService<THistEntity, TId> : IDumpHistoryService<THistEnt
 
     public async Task<Guid> DumpAsync(THistEntity entity)
     {
-        _logger.LogInformation("Dumping history for entity {EntityId}", entity.Id);
         switch (entity.HistState)
         {
             case HistState.Added:
@@ -40,7 +39,6 @@ public class DumpHistoryService<THistEntity, TId> : IDumpHistoryService<THistEnt
         _histDbContext.Add(entity);
         await _histDbContext.SaveChangesAsync().ConfigureAwait(false);
 
-        _logger.LogInformation("History dumped for entity with histId {HistId}", entity.HistId);
         return entity.HistId;
     }
 

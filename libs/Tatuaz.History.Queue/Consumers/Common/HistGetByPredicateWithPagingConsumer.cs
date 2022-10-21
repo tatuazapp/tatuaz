@@ -1,4 +1,5 @@
 using MassTransit;
+using Microsoft.Extensions.Logging;
 using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.Queue.Contracts;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
@@ -11,18 +12,22 @@ public class HistGetByPredicateWithPagingConsumer<TEntity, TId>
     where TId : notnull
 {
     private readonly IHistorySearcherService<TEntity, TId> _historySearcherService;
+    private readonly ILogger<HistGetByPredicateWithPagingConsumer<TEntity, TId>> _logger;
 
     public HistGetByPredicateWithPagingConsumer(
-        IHistorySearcherService<TEntity, TId> historySearcherService
+        IHistorySearcherService<TEntity, TId> historySearcherService,
+        ILogger<HistGetByPredicateWithPagingConsumer<TEntity, TId>> logger
     )
     {
         _historySearcherService = historySearcherService;
+        _logger = logger;
     }
 
     public async Task Consume(
         ConsumeContext<HistGetByPredicateWithPagingOrder<TEntity, TId>> context
     )
     {
+        _logger.LogInformation("HistGetByPredicateWithPagingConsumer: {0}", context.Message);
         await context
             .RespondAsync(
                 new HistGetByPredicateWithPagingResult<TEntity, TId>(
