@@ -6,5 +6,5 @@ public interface IDumpHistoryService<in THistEntity, TId>
     where THistEntity : HistEntity<TId>
     where TId : notnull
 {
-    Task<Guid> DumpAsync(THistEntity entity);
+    Task<Guid> DumpAsync(THistEntity entity, CancellationToken cancellationToken = default);
 }

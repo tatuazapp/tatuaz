@@ -25,7 +25,7 @@ public class HistCountByPredicateConsumer<TEntity, TId>
 
     public async Task Consume(ConsumeContext<HistCountByPredicateOrder<TEntity, TId>> context)
     {
-        _logger.LogInformation("HistCountByPredicateConsumer: {0}", context.Message);
+        _logger.LogInformation("HistCountByPredicateConsumer: {Message}", context.Message);
 
         await context
             .RespondAsync(

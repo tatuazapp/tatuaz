@@ -11,7 +11,12 @@ public abstract class Entity<THistEntity, TId> : IHistDumpableEntity
 
     public virtual HistEntity ToHistEntity(IClock clock)
     {
-        var histEntity = new THistEntity { Id = Id, HistDumpedAt = clock.GetCurrentInstant() };
+        var histEntity = new THistEntity
+        {
+            Id = Id,
+            HistDumpedAt = clock.GetCurrentInstant(),
+            HistId = Guid.NewGuid()
+        };
         return histEntity;
     }
 }

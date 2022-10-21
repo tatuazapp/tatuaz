@@ -7,6 +7,7 @@ namespace Tatuaz.History.Queue.Consumers;
 /// <summary>
 ///     Przykładowy Consumer żeby wiedzieć jak zarejestrować
 ///     do usunięcia gdy powstanie pierwszy prawdziwy
+///     TODO: usunąć
 /// </summary>
 public class Test1Consumer : HistGetByIdConsumer<HistEntity<Guid>, Guid>
 {
