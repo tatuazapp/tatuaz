@@ -16,7 +16,8 @@ public class AuditableEntityTest
     public class BareIntAuditableHistEntity : AuditableHistEntity<int> { }
 
     public class BareStringAuditableEntity
-        : AuditableEntity<BareStringAuditableHistEntity, string> { }
+        : AuditableEntity<BareStringAuditableHistEntity, string>
+    { }
 
     public class BareStringAuditableHistEntity : AuditableHistEntity<string> { }
 

@@ -70,7 +70,9 @@ public class FullSpecification<TEntity> : ISpecification<TEntity> where TEntity 
     private IQueryable<TEntity> ApplyTracking(IQueryable<TEntity> query)
     {
         if (TrackingStrategy == TrackingStrategy.NoTracking)
+        {
             query = query.AsNoTracking();
+        }
 
         return query;
     }
@@ -78,10 +80,12 @@ public class FullSpecification<TEntity> : ISpecification<TEntity> where TEntity 
     private IQueryable<TEntity> ApplyFiltering(IQueryable<TEntity> query)
     {
         if (_filteringPredicates.Any())
+        {
             query = _filteringPredicates.Aggregate(
                 query,
                 (current, predicate) => current.Where(predicate)
             );
+        }
 
         return query;
     }
@@ -95,12 +99,14 @@ public class FullSpecification<TEntity> : ISpecification<TEntity> where TEntity 
                     ? query.OrderBy(_orderingPredicates[0])
                     : query.OrderByDescending(_orderingPredicates[0]);
             for (var i = 1; i < _orderingPredicates.Count; i++)
+            {
                 query =
                     OrderDirection == OrderDirection.Ascending
                         ? ((IOrderedQueryable<TEntity>)query).ThenBy(_orderingPredicates[i])
                         : ((IOrderedQueryable<TEntity>)query).ThenByDescending(
                             _orderingPredicates[i]
                         );
+            }
         }
 
         return query;
@@ -109,7 +115,9 @@ public class FullSpecification<TEntity> : ISpecification<TEntity> where TEntity 
     private IQueryable<TEntity> ApplyIncludes(IQueryable<TEntity> query)
     {
         if (_includes.Any())
+        {
             query = _includes.Aggregate(query, (_, include) => include(query));
+        }
 
         return query;
     }
@@ -117,7 +125,9 @@ public class FullSpecification<TEntity> : ISpecification<TEntity> where TEntity 
     private IQueryable<TEntity> ApplyCustoms(IQueryable<TEntity> query)
     {
         if (_customs.Any())
+        {
             query = _customs.Aggregate(query, (_, custom) => custom(query));
+        }
 
         return query;
     }

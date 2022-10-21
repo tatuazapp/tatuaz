@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using Tatuaz.History.DataAccess.Services;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
 

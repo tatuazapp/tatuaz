@@ -48,13 +48,17 @@ public class DumpHistoryConsumer : IConsumer<DumpHistoryOrder>
 
         var type = typeof(HistEntity<>).Assembly.GetType(typeName);
         if (type is null)
+        {
             throw new HistException(
                 "Type to deserialize doesn't derive from HistEntity<> or is not in the same assembly."
             );
+        }
 
         var toDump = JsonConvert.DeserializeObject(objectJson, type, jsonSerializerSettings);
         if (toDump is null)
+        {
             throw new HistException($"Cannot deserialize object of type {type.Name} to dump.");
+        }
 
         return (toDump, type);
     }
@@ -67,24 +71,30 @@ public class DumpHistoryConsumer : IConsumer<DumpHistoryOrder>
     {
         var idType = toDump.GetType().GetProperty("Id")?.PropertyType;
         if (idType is null)
+        {
             throw new HistException($"Cannot find Id property in type {type.Name}.");
+        }
 
         var serviceType = typeof(IDumpHistoryService<,>).MakeGenericType(toDump.GetType(), idType);
         var service = _serviceProvider.GetRequiredService(serviceType);
 
         var dumpAsyncMethodInfo = service.GetType().GetMethod("DumpAsync");
         if (dumpAsyncMethodInfo is null)
+        {
             throw new HistException(
                 $"Cannot find required DumpAsync method in service {serviceType.Name}."
             );
+        }
 
         if (
             dumpAsyncMethodInfo.Invoke(service, new[] { toDump, cancellationToken })
             is not Task<Guid> dumpTask
         )
+        {
             throw new HistException(
                 $"Cannot invoke DumpAsync method in service {serviceType.Name}."
             );
+        }
 
         return dumpTask;
     }

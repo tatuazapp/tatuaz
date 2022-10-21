@@ -49,7 +49,9 @@ public class UnitOfWork : IUnitOfWork
         _histEntitiesToDump.AddRange(GetDumpHistoryOrders());
         var changes = await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         if (_currentTransaction == null)
+        {
             await DumpHistoryChanges(cancellationToken).ConfigureAwait(false);
+        }
 
         return changes;
     }
@@ -129,9 +131,13 @@ public class UnitOfWork : IUnitOfWork
     {
         var auditableEntries = _context.ChangeTracker.Entries<IAuditableEntity>().ToList();
         foreach (var entry in auditableEntries.Where(x => x.State == EntityState.Added))
+        {
             entry.Entity.UpdateCreationData(_userAccessor.CurrentUserId, _clock);
+        }
 
         foreach (var entry in auditableEntries.Where(x => x.State is EntityState.Modified))
+        {
             entry.Entity.UpdateModificationData(_userAccessor.CurrentUserId, _clock);
+        }
     }
 }

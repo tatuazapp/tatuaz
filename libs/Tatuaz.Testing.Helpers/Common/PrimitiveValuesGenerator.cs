@@ -39,7 +39,9 @@ public class PrimitiveValuesGenerator : IPrimitiveValuesGenerator
     public Guid Guids(int index)
     {
         if (index < 0 || index >= 10)
+        {
             throw new ArgumentException(null, nameof(index));
+        }
 
         return _guids[index];
     }
@@ -47,7 +49,9 @@ public class PrimitiveValuesGenerator : IPrimitiveValuesGenerator
     public Instant Instants(int index)
     {
         if (index < 0 || index >= 10)
+        {
             throw new ArgumentException(null, nameof(index));
+        }
 
         return _instants[index];
     }
@@ -55,7 +59,9 @@ public class PrimitiveValuesGenerator : IPrimitiveValuesGenerator
     public string Strings(int index)
     {
         if (index < 0 || index >= 10)
+        {
             throw new ArgumentException(null, nameof(index));
+        }
 
         return _strings[index];
     }
@@ -63,7 +69,9 @@ public class PrimitiveValuesGenerator : IPrimitiveValuesGenerator
     public int Ints(int index)
     {
         if (index < 0 || index >= 10)
+        {
             throw new ArgumentException(null, nameof(index));
+        }
 
         return _ints[index];
     }
@@ -71,7 +79,9 @@ public class PrimitiveValuesGenerator : IPrimitiveValuesGenerator
     public float Floats(int index)
     {
         if (index < 0 || index >= 10)
+        {
             throw new ArgumentException(null, nameof(index));
+        }
 
         return _floats[index];
     }
@@ -79,7 +89,9 @@ public class PrimitiveValuesGenerator : IPrimitiveValuesGenerator
     public double Doubles(int index)
     {
         if (index < 0 || index >= 10)
+        {
             throw new ArgumentException(null, nameof(index));
+        }
 
         return _doubles[index];
     }
@@ -87,7 +99,9 @@ public class PrimitiveValuesGenerator : IPrimitiveValuesGenerator
     public decimal Decimals(int index)
     {
         if (index < 0 || index >= 10)
+        {
             throw new ArgumentException(null, nameof(index));
+        }
 
         return _decimals[index];
     }
