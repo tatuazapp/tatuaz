@@ -1,0 +1,6 @@
+{
+  "apiEndpoint": "https://tatuaz-app.prismic.io/api/v2",
+  "localSliceSimulatorURL": "http://localhost:4200/slice-simulator",
+  "libraries": ["@/apps/web/slices"],
+  "_latest": "0.5.0"
+}
