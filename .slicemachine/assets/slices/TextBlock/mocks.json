@@ -1,0 +1,24 @@
+[
+  {
+    "variation": "default",
+    "version": "sktwi1xtmkfgx8626",
+    "items": [{}],
+    "primary": {
+      "title": [
+        {
+          "type": "heading1",
+          "text": "Least",
+          "spans": []
+        }
+      ],
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "Voluptate ea ea amet dolore id incididunt ullamco non qui proident Lorem consectetur sint commodo nulla.",
+          "spans": []
+        }
+      ]
+    },
+    "slice_type": "text_block"
+  }
+]
