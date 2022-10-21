@@ -8,4 +8,4 @@ metadata:
 data:
   POSTGRES_DB: tatuaz
   POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: postgres
+  POSTGRES_PASSWORD: password
