@@ -7,6 +7,7 @@
     "gateway-test": "apps/Tatuaz.Gateway.Test",
     "history": "apps/Tatuaz.History",
     "history-infrastructure": "libs/Tatuaz.History.Infrastructure",
+    "history-infrastructure-abstractions": "libs/Tatuaz.History.Infrastructure.Abstractions",
     "history-infrastructure-test": "libs/Tatuaz.History.Infrastructure.Test",
     "history-queue": "libs/Tatuaz.History.Queue",
     "history-queue-test": "libs/Tatuaz.History.Queue.Test",
