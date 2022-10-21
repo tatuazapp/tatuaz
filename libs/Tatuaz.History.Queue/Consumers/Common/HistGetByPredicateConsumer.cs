@@ -25,7 +25,7 @@ public class HistGetByPredicateConsumer<TEntity, TId>
 
     public async Task Consume(ConsumeContext<HistGetByPredicateOrder<TEntity, TId>> context)
     {
-        _logger.LogInformation("HistGetByPredicateConsumer: {0}", context.Message);
+        _logger.LogInformation("HistGetByPredicateConsumer: {Message}", context.Message);
 
         await context
             .RespondAsync(

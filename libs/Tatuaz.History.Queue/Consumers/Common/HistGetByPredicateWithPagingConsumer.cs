@@ -27,7 +27,7 @@ public class HistGetByPredicateWithPagingConsumer<TEntity, TId>
         ConsumeContext<HistGetByPredicateWithPagingOrder<TEntity, TId>> context
     )
     {
-        _logger.LogInformation("HistGetByPredicateWithPagingConsumer: {0}", context.Message);
+        _logger.LogInformation("HistGetByPredicateWithPagingConsumer: {Message}", context.Message);
         await context
             .RespondAsync(
                 new HistGetByPredicateWithPagingResult<TEntity, TId>(

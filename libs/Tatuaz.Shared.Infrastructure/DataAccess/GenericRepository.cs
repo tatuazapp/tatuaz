@@ -30,9 +30,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
     {
         var baseQuery = _dbContext.Set<TEntity>().AsQueryable();
         if (!track)
-        {
             baseQuery = baseQuery.AsNoTracking();
-        }
 
         return await baseQuery
             .FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken)
@@ -182,9 +180,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
             .FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken)
             .ConfigureAwait(false);
         if (toDelete == null)
-        {
             return;
-        }
 
         _dbContext.Set<TEntity>().Remove(toDelete);
     }

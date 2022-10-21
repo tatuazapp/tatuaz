@@ -25,7 +25,7 @@ public class HistExistsByPredicateConsumer<TEntity, TId>
 
     public async Task Consume(ConsumeContext<HistExistsByPredicateOrder<TEntity, TId>> context)
     {
-        _logger.LogInformation("HistExistsByPredicateConsumer: {0}", context.Message);
+        _logger.LogInformation("HistExistsByPredicateConsumer: {Message}", context.Message);
         await context
             .RespondAsync(
                 await _historySearcherService

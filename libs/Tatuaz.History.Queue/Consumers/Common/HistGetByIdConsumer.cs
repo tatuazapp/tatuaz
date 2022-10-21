@@ -24,7 +24,7 @@ public class HistGetByIdConsumer<TEntity, TId> : IConsumer<HistGetByIdOrder<TEnt
 
     public async Task Consume(ConsumeContext<HistGetByIdOrder<TEntity, TId>> context)
     {
-        _logger.LogInformation("HistGetByIdConsumer: {0}", context.Message);
+        _logger.LogInformation("HistGetByIdConsumer: {Message}", context.Message);
 
         await context
             .RespondAsync(

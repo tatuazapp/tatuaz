@@ -47,4 +47,8 @@
         <ProjectReference Include="..\Tatuaz.Testing.Mocks\Tatuaz.Testing.Mocks.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="Models"/>
+    </ItemGroup>
+
 </Project>
