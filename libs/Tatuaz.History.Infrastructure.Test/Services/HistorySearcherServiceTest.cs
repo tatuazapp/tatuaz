@@ -285,6 +285,28 @@ public class HistorySearcherServiceTest
         }
 
         [Fact]
+        public async Task Should_ReturnTrue_WhenDateAfterAdded2AndBeforeModifiedProvided()
+        {
+            // Arrange
+            var sampleData = SampleDataWithAddedModifiedDeleted().ToList();
+            _dbContextMock.TestHistEntities.AddRange(sampleData);
+
+            var sampleData2 = SampleDataWithAddedModifiedDeleted().ToList();
+            _dbContextMock.TestHistEntities.AddRange(sampleData2);
+
+            // Act
+            var result = await _historySearcherService
+                .ExistsByPredicateAsync(
+                    x => x.Id == sampleData.First().Id || x.Id == sampleData2.First().Id,
+                    DateAdded.Plus(Duration.FromMilliseconds(1))
+                )
+                .ConfigureAwait(false);
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
         public async Task Should_ReturnTrue_WhenDateAfterModifiedAndBeforeDeletedProvided()
         {
             // Arrange
