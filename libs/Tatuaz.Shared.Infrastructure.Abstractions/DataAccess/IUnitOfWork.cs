@@ -7,7 +7,6 @@ public interface IUnitOfWork : IDisposable
     Task RunInTransactionAsync(
         Func<CancellationToken, Task> action,
         Action<Exception>? onFailure = null,
-        bool rollbackOnFailure = true,
         CancellationToken cancellationToken = default
     );
 }
