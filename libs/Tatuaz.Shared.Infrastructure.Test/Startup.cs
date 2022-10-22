@@ -34,7 +34,7 @@ public class Startup
         services.AddDbContext<BooksDbContext>(opt =>
         {
             opt.UseNpgsql(
-                config.GetConnectionString("InfrastructureTest"),
+                config.GetConnectionString("Default"),
                 npgsqlOpt =>
                 {
                     npgsqlOpt.UseNodaTime();
