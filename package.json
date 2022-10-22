@@ -9,7 +9,7 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
-    "prepare": "node tools/cloudflare/skipRestore.js"
+    "prepare": "nx g @nx-dotnet/core:restore"
   },
   "private": true,
   "dependencies": {
