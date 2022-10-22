@@ -55,4 +55,4 @@ jobs:
       - name: Run Tests
         run: npx nx affected --target=test --parallel=3
         env:
-          TATUAZ_ConnectionStrings__InfrastructureTest: "Server=postgres;Port=5432;Database=tatuaz-infrastructure-test-db;User Id=postgres;Password=password;"
+          TATUAZ_ConnectionStrings__InfrastructureTest: 'Server=postgres;Port=5432;Database=tatuaz-infrastructure-test-db;User Id=postgres;Password=password;'
