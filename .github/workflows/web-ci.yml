@@ -51,6 +51,6 @@ jobs:
       - name: Install Dependencies
         run: npm ci
       - name: Run Tests
-        run: npx nx affected --target=test --parallel=3
+        run: echo $InfrastructureTest_ConnectionStrings__Default
         env:
           InfrastructureTest_ConnectionStrings__Default: Server=postgres;Port=5432;Database=tatuaz-infrastructure-test-db;User Id=postgres;Password=password;
