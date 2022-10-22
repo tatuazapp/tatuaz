@@ -29,7 +29,7 @@ jobs:
     name: Nx Cloud - Postgres Tests
     needs: main
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
     services:
       postgres:
         image: postgres
