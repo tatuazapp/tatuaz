@@ -29,10 +29,12 @@ jobs:
     name: Nx Cloud - Postgres Tests
     needs: main
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     services:
       postgres:
         image: postgres
         env:
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
         options: >-
           --health-cmd pg_isready
@@ -51,4 +53,4 @@ jobs:
       - name: Run Tests
         run: npx nx affected --target=test --parallel=3
         env:
-          ConnectionStrings:InfrastructureTest: Server=postgres;Port=5432;Database=infrastructure-test-db;User Id=postgres;Password=password;
+          ConnectionStrings:InfrastructureTest: Server=postgres;Port=5432;Database=tatuaz-infrastructure-test-db;User Id=postgres;Password=password;
