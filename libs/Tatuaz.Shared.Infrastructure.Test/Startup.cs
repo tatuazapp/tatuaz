@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +25,7 @@ public class Startup
     {
         var config = new ConfigurationBuilder()
             .AddJsonFile("appsettings.InfrastructureTest.json")
-            .AddEnvironmentVariables(prefix: "InfrastructureTest_")
+            .AddEnvironmentVariables()
             .Build();
 
         services.AddSingleton<IPrimitiveValuesGenerator, PrimitiveValuesGenerator>();
@@ -34,7 +35,7 @@ public class Startup
         services.AddDbContext<BooksDbContext>(opt =>
         {
             opt.UseNpgsql(
-                config.GetConnectionString("Default"),
+                config.GetConnectionString("GhActions"),
                 npgsqlOpt =>
                 {
                     npgsqlOpt.UseNodaTime();

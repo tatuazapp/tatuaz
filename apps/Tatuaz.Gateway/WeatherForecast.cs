@@ -1,4 +1,4 @@
-﻿namespace Tatuaz.Gateway;
+namespace Tatuaz.Gateway;
 
 public class WeatherForecast
 {
