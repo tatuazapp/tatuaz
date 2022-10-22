@@ -59,7 +59,6 @@ public class UnitOfWork : IUnitOfWork
     public async Task RunInTransactionAsync(
         Func<CancellationToken, Task> action,
         Action<Exception>? onFailure = null,
-        bool rollbackOnFailure = true,
         CancellationToken cancellationToken = default
     )
     {
