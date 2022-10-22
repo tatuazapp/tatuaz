@@ -24,7 +24,7 @@ public class Startup
     {
         var config = new ConfigurationBuilder()
             .AddJsonFile("appsettings.InfrastructureTest.json")
-            .AddEnvironmentVariables()
+            .AddEnvironmentVariables(prefix: "InfrastructureTest_")
             .Build();
 
         services.AddSingleton<IPrimitiveValuesGenerator, PrimitiveValuesGenerator>();
