@@ -1,0 +1,38 @@
+{
+  "slices": {
+    "TextBlock": {}
+  },
+  "_cts": {
+    "test": {}
+  },
+  "apps/web/slices": {
+    "TextBlock": {
+      "default": {
+        "primary": {
+          "title": {
+            "config": {
+              "patternType": "HEADING",
+              "blocks": 1
+            }
+          }
+        },
+        "items": {}
+      }
+    },
+    "Test": {
+      "default": {
+        "primary": {
+          "img": {
+            "content": "https://images.unsplash.com/photo-1555169062-013468b47731"
+          }
+        }
+      }
+    },
+    "Image": {
+      "default": {
+        "primary": {},
+        "items": {}
+      }
+    }
+  }
+}
