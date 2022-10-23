@@ -2,15 +2,11 @@ using System.Reflection;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using NodaTime;
-using NodaTime.Serialization.JsonNet;
 using Tatuaz.History.DataAccess.Exceptions;
 using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.Queue.Contracts;
 using Tatuaz.History.Queue.Util;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
-using Tatuaz.Shared.Helpers;
 
 namespace Tatuaz.History.Queue.Consumers;
 

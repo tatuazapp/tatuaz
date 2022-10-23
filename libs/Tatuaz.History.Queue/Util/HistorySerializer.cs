@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Tatuaz.History.DataAccess.Exceptions;
 using Tatuaz.History.Queue.Contracts;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
@@ -13,10 +13,7 @@ public static class HistorySerializer
         var jsonSerializer = SerializationUtils.GetTatuazSerializerSettings();
         return new DumpHistoryOrder(
             histEntity.GetType().AssemblyQualifiedName!,
-            JsonConvert.SerializeObject(
-                histEntity,
-                jsonSerializer
-            )
+            JsonConvert.SerializeObject(histEntity, jsonSerializer)
         );
     }
 
@@ -35,10 +32,7 @@ public static class HistorySerializer
 
         var jsonSerializer = SerializationUtils.GetTatuazSerializerSettings();
 
-        return (HistEntity)JsonConvert.DeserializeObject(
-            dumpHistoryOrder.Object,
-            type,
-            jsonSerializer
-        )!;
+        return (HistEntity)
+            JsonConvert.DeserializeObject(dumpHistoryOrder.Object, type, jsonSerializer)!;
     }
 }
