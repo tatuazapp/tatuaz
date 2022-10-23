@@ -5,6 +5,7 @@ using NodaTime.Serialization.JsonNet;
 using Tatuaz.History.Queue;
 using Tatuaz.History.Queue.Contracts;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
+using Tatuaz.Shared.Helpers;
 using Xunit;
 
 namespace Tatuaz.History.Test;
@@ -21,9 +22,6 @@ public class ManualTesting
     [Fact]
     public async Task Test()
     {
-        var jsonSerializerSettings = new JsonSerializerSettings();
-        jsonSerializerSettings.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
-
         var sendEndpoint = await _sendEndpointProvider
             .GetSendEndpoint(HistoryQueueConstants.DumpQueueUri)
             .ConfigureAwait(false);
@@ -37,7 +35,7 @@ public class ManualTesting
             .Send(
                 new DumpHistoryOrder(
                     histEntity.GetType().FullName,
-                    JsonConvert.SerializeObject(histEntity, jsonSerializerSettings)
+                    JsonConvert.SerializeObject(histEntity, SerializationUtils.GetTatuazSerializerSettings())
                 )
             )
             .ConfigureAwait(false);

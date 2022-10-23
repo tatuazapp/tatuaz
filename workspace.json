@@ -19,6 +19,7 @@
     "shared-infrastructure": "libs/Tatuaz.Shared.Infrastructure",
     "shared-infrastructure-abstractions": "libs/Tatuaz.Shared.Infrastructure.Abstractions",
     "shared-infrastructure-test": "libs/Tatuaz.Shared.Infrastructure.Test",
+    "shared-helpers": "libs/Tatuaz.Shared.Helpers",
     "testing-helpers": "libs/Tatuaz.Testing.Helpers",
     "testing-mocks": "libs/Tatuaz.Testing.Mocks",
     "ui": "libs/ui",

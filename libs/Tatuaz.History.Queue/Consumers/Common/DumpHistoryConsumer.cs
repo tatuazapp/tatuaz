@@ -1,3 +1,4 @@
+using System.Reflection;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -7,7 +8,9 @@ using NodaTime.Serialization.JsonNet;
 using Tatuaz.History.DataAccess.Exceptions;
 using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.Queue.Contracts;
+using Tatuaz.History.Queue.Util;
 using Tatuaz.Shared.Domain.Entities.Hist.Common;
+using Tatuaz.Shared.Helpers;
 
 namespace Tatuaz.History.Queue.Consumers;
 
@@ -29,9 +32,9 @@ public class DumpHistoryConsumer : IConsumer<DumpHistoryOrder>
     {
         _logger.LogInformation("DumpHistoryConsumer: {Message}", context.Message);
 
-        var (toDump, type) = Deserialize(context.Message.Object, context.Message.ObjectType);
+        var toDump = HistorySerializer.DeserializeDumpHistoryOrder(context.Message);
 
-        var histId = await GetDumpTask(toDump, type, context.CancellationToken)
+        var histId = await GetDumpTask(toDump, toDump.GetType(), context.CancellationToken)
             .ConfigureAwait(false);
 
         _logger.LogInformation(
@@ -41,31 +44,9 @@ public class DumpHistoryConsumer : IConsumer<DumpHistoryOrder>
         );
     }
 
-    private static (object toDump, Type type) Deserialize(string objectJson, string typeName)
-    {
-        var jsonSerializerSettings = new JsonSerializerSettings();
-        jsonSerializerSettings.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
-
-        var type = typeof(HistEntity<>).Assembly.GetType(typeName);
-        if (type is null)
-        {
-            throw new HistException(
-                "Type to deserialize doesn't derive from HistEntity<> or is not in the same assembly."
-            );
-        }
-
-        var toDump = JsonConvert.DeserializeObject(objectJson, type, jsonSerializerSettings);
-        if (toDump is null)
-        {
-            throw new HistException($"Cannot deserialize object of type {type.Name} to dump.");
-        }
-
-        return (toDump, type);
-    }
-
     private Task<Guid> GetDumpTask(
-        object toDump,
-        Type type,
+        HistEntity toDump,
+        MemberInfo type,
         CancellationToken cancellationToken = default
     )
     {
@@ -87,7 +68,7 @@ public class DumpHistoryConsumer : IConsumer<DumpHistoryOrder>
         }
 
         if (
-            dumpAsyncMethodInfo.Invoke(service, new[] { toDump, cancellationToken })
+            dumpAsyncMethodInfo.Invoke(service, new object[] { toDump, cancellationToken })
             is not Task<Guid> dumpTask
         )
         {
