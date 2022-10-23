@@ -15,8 +15,7 @@ public static class HistorySerializer
             histEntity.GetType().AssemblyQualifiedName!,
             JsonConvert.SerializeObject(
                 histEntity,
-                jsonSerializer.Formatting,
-                jsonSerializer.Converters.ToArray()
+                jsonSerializer
             )
         );
     }
@@ -39,7 +38,7 @@ public static class HistorySerializer
         return (HistEntity)JsonConvert.DeserializeObject(
             dumpHistoryOrder.Object,
             type,
-            jsonSerializer.Converters.ToArray()
+            jsonSerializer
         )!;
     }
 }

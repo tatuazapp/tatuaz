@@ -40,30 +40,13 @@ public class DumpHistoryConsumerTest
         public string Name { get; set; } = default!;
     }
 
+    public class TestHistEntity2 : HistEntity
+    {
+        public string Name { get; set; } = default!;
+    }
+
     public class Consume : DumpHistoryConsumerTest
     {
-        [Fact]
-        public async Task Should_ConsumeDumpHistoryOrder_WhenCorrectHistEntitySent()
-        {
-            var harness = _serviceProvider.GetRequiredService<ITestHarness>();
-            await harness.Start().ConfigureAwait(false);
-            var testHistEntity = new TestHistEntity()
-            {
-                Id = Guid.NewGuid(),
-                Name = "Test",
-                HistDumpedAt = Instant.FromUtc(2001, 1, 1, 0, 0),
-                HistId = Guid.NewGuid(),
-                HistState = HistState.Added,
-            };
-            var sentEndpoint =
-                await harness.Bus.GetSendEndpoint(HistoryQueueConstants.DumpQueueUri).ConfigureAwait(false);
-
-            await sentEndpoint.Send(HistorySerializer.SerializeDumpHistoryOrder(testHistEntity)).ConfigureAwait(false);
-
-            Assert.True(await harness.Sent.Any<DumpHistoryOrder>().ConfigureAwait(false));
-            Assert.True(await harness.Consumed.Any<DumpHistoryOrder>().ConfigureAwait(false));
-        }
-
         [Fact]
         public async Task Should_CorrectlyDeserializeDumpHistoryOrder_WhenCorrectHistEntitySent()
         {
@@ -96,6 +79,29 @@ public class DumpHistoryConsumerTest
             Assert.Equal(testHistEntity.HistDumpedAt, actual.HistDumpedAt);
             Assert.Equal(testHistEntity.HistId, actual.HistId);
             Assert.Equal(testHistEntity.HistState, actual.HistState);
+        }
+
+        [Fact]
+        public async Task Should_Fail_WhenNoIdProvided()
+        {
+            var harness = _serviceProvider.GetRequiredService<ITestHarness>();
+            await harness.Start().ConfigureAwait(false);
+            var testHistEntity = new TestHistEntity2()
+            {
+                Name = "Test",
+                HistDumpedAt = Instant.FromUtc(2001, 1, 1, 0, 0),
+                HistState = HistState.Added,
+            };
+            var sentEndpoint =
+                await harness.Bus.GetSendEndpoint(HistoryQueueConstants.DumpQueueUri).ConfigureAwait(false);
+
+            await sentEndpoint.Send(HistorySerializer.SerializeDumpHistoryOrder(testHistEntity)).ConfigureAwait(false);
+
+            Assert.True(await harness.Sent.Any<DumpHistoryOrder>().ConfigureAwait(false));
+            Assert.True(await harness.Consumed.Any<DumpHistoryOrder>().ConfigureAwait(false));
+
+            _dumpHistoryServiceMock.Verify(x => x.DumpAsync(It.IsAny<TestHistEntity>(), It.IsAny<CancellationToken>()),
+                Times.Never);
         }
     }
 }
