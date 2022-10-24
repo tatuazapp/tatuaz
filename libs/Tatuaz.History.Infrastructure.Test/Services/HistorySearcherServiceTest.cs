@@ -17,6 +17,7 @@ public class HistorySearcherServiceTest
             _dbContextMock.Object
         );
     }
+
     private static Instant DateAdded => Instant.FromUtc(2020, 1, 1, 0, 0, 0);
     private static Instant DateModified => Instant.FromUtc(2020, 1, 2, 0, 0, 0);
     private static Instant DateDeleted => Instant.FromUtc(2020, 1, 3, 0, 0, 0);
@@ -163,7 +164,10 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .ExistsByIdAsync(sampleData.First().Id, DateAdded.Minus(Duration.FromMilliseconds(1)))
+                .ExistsByIdAsync(
+                    sampleData.First().Id,
+                    DateAdded.Minus(Duration.FromMilliseconds(1))
+                )
                 .ConfigureAwait(false);
 
             // Assert
@@ -179,7 +183,10 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .ExistsByIdAsync(sampleData.First().Id, DateAdded.Plus(Duration.FromMilliseconds(1)))
+                .ExistsByIdAsync(
+                    sampleData.First().Id,
+                    DateAdded.Plus(Duration.FromMilliseconds(1))
+                )
                 .ConfigureAwait(false);
 
             // Assert
@@ -246,7 +253,10 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .ExistsByPredicateAsync(x => x.Id == sampleData.First().Id, DateAdded.Minus(Duration.FromMilliseconds(1)))
+                .ExistsByPredicateAsync(
+                    x => x.Id == sampleData.First().Id,
+                    DateAdded.Minus(Duration.FromMilliseconds(1))
+                )
                 .ConfigureAwait(false);
 
             // Assert
@@ -300,7 +310,10 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .ExistsByPredicateAsync(x => x.Id == sampleData[2].Id, DateDeleted.Plus(Duration.FromMilliseconds(1)))
+                .ExistsByPredicateAsync(
+                    x => x.Id == sampleData[2].Id,
+                    DateDeleted.Plus(Duration.FromMilliseconds(1))
+                )
                 .ConfigureAwait(false);
 
             // Assert
@@ -333,7 +346,10 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .CountByPredicateAsync(x => x.Id == sampleData.First().Id, DateAdded.Minus(Duration.FromMilliseconds(1)))
+                .CountByPredicateAsync(
+                    x => x.Id == sampleData.First().Id,
+                    DateAdded.Minus(Duration.FromMilliseconds(1))
+                )
                 .ConfigureAwait(false);
 
             // Assert
@@ -387,7 +403,10 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .CountByPredicateAsync(x => x.Id == sampleData[2].Id, DateDeleted.Plus(Duration.FromMilliseconds(1)))
+                .CountByPredicateAsync(
+                    x => x.Id == sampleData[2].Id,
+                    DateDeleted.Plus(Duration.FromMilliseconds(1))
+                )
                 .ConfigureAwait(false);
 
             // Assert

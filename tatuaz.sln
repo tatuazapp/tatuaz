@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.History.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.History.Infrastructure.Test", "libs\Tatuaz.History.Infrastructure.Test\Tatuaz.History.Infrastructure.Test.csproj", "{58C7634C-A1F9-4350-A05F-2D69FC3D3428}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tatuaz.Shared.Helpers", "libs\Tatuaz.Shared.Helpers\Tatuaz.Shared.Helpers.csproj", "{501DA862-4458-4278-AF5A-719ADA61AC22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -130,6 +132,10 @@ Global
 		{58C7634C-A1F9-4350-A05F-2D69FC3D3428}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58C7634C-A1F9-4350-A05F-2D69FC3D3428}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58C7634C-A1F9-4350-A05F-2D69FC3D3428}.Release|Any CPU.Build.0 = Release|Any CPU
+		{501DA862-4458-4278-AF5A-719ADA61AC22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{501DA862-4458-4278-AF5A-719ADA61AC22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{501DA862-4458-4278-AF5A-719ADA61AC22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{501DA862-4458-4278-AF5A-719ADA61AC22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{37CC9BB0-DEB1-4DAE-AA33-9B20C716D50E} = {25311259-92CF-4AA0-85FD-E7FE3579BBDA}
@@ -151,5 +157,6 @@ Global
 		{5F9BD548-E766-4609-9FCB-098E597E7248} = {AD862DF1-C558-4DEA-88FB-6AA571991180}
 		{AC3F9B61-B454-4976-8327-99B2DAE52BF9} = {AD862DF1-C558-4DEA-88FB-6AA571991180}
 		{58C7634C-A1F9-4350-A05F-2D69FC3D3428} = {AD862DF1-C558-4DEA-88FB-6AA571991180}
+		{501DA862-4458-4278-AF5A-719ADA61AC22} = {AD862DF1-C558-4DEA-88FB-6AA571991180}
 	EndGlobalSection
 EndGlobal

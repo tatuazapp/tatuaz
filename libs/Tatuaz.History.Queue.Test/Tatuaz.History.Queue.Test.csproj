@@ -15,6 +15,8 @@
 
     <ItemGroup>
 
+        <PackageReference Include="MassTransit" Version="8.0.7"/>
+
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2"/>
 
         <PackageReference Include="xunit" Version="2.4.2"/>
@@ -41,10 +43,6 @@
         <ProjectReference Include="..\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj"/>
         <ProjectReference Include="..\Tatuaz.Testing.Helpers\Tatuaz.Testing.Helpers.csproj"/>
         <ProjectReference Include="..\Tatuaz.Testing.Mocks\Tatuaz.Testing.Mocks.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Consumers"/>
     </ItemGroup>
 
 </Project>

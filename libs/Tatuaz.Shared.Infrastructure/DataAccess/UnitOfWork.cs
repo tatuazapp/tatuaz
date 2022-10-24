@@ -2,11 +2,9 @@ using System.Collections.Immutable;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Newtonsoft.Json;
 using NodaTime;
-using NodaTime.Serialization.JsonNet;
 using Tatuaz.History.Queue;
-using Tatuaz.History.Queue.Contracts;
+using Tatuaz.History.Queue.Util;
 using Tatuaz.Shared.Domain.Entities.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 
@@ -86,22 +84,9 @@ public class UnitOfWork : IUnitOfWork
 
     private async Task DumpHistoryChanges(CancellationToken cancellationToken = default)
     {
-        var jsonSerializer = new JsonSerializer();
-        jsonSerializer.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
-
         var dumpHistoryOrders = _histEntitiesToDump
             .Select(x => x.ToHistEntity(_clock))
-            .Select(
-                x =>
-                    new DumpHistoryOrder(
-                        x.GetType().AssemblyQualifiedName!,
-                        JsonConvert.SerializeObject(
-                            x,
-                            jsonSerializer.Formatting,
-                            jsonSerializer.Converters.ToArray()
-                        )
-                    )
-            )
+            .Select(HistorySerializer.SerializeDumpHistoryOrder)
             .ToImmutableArray();
 
         if (dumpHistoryOrders.Any())
