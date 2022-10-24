@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Tatuaz.History.DataAccess.Exceptions;
 using Tatuaz.History.Queue.Contracts;
-using Tatuaz.Shared.Domain.Entities.Hist.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Tatuaz.Shared.Helpers;
 
 namespace Tatuaz.History.Queue.Util;

@@ -1,6 +1,6 @@
 using NodaTime;
 
-namespace Tatuaz.Shared.Domain.Entities.Common;
+namespace Tatuaz.Shared.Domain.Entities.Models.Common;
 
 public interface IAuditableEntity
 {

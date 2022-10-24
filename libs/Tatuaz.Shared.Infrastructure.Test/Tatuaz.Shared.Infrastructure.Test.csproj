@@ -16,6 +16,8 @@
 
     <ItemGroup>
 
+        <PackageReference Include="Bogus" Version="34.0.2"/>
+
         <PackageReference Include="EFCore.NamingConventions" Version="6.0.0"/>
 
         <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.7"/>
@@ -68,6 +70,10 @@
         <None Update="appsettings.InfrastructureTest.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Database\Simple\HistFakers"/>
     </ItemGroup>
 
 </Project>

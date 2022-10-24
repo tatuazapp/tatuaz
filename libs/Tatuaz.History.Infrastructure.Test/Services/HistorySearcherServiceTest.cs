@@ -1,7 +1,7 @@
 using NodaTime;
 using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.DataAccess.Test.Utils;
-using Tatuaz.Shared.Domain.Entities.Hist.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
 namespace Tatuaz.History.DataAccess.Test.Services;
 
@@ -17,7 +17,6 @@ public class HistorySearcherServiceTest
             _dbContextMock.Object
         );
     }
-
     private static Instant DateAdded => Instant.FromUtc(2020, 1, 1, 0, 0, 0);
     private static Instant DateModified => Instant.FromUtc(2020, 1, 2, 0, 0, 0);
     private static Instant DateDeleted => Instant.FromUtc(2020, 1, 3, 0, 0, 0);

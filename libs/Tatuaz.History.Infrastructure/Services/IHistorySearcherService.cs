@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using NodaTime;
-using Tatuaz.Shared.Domain.Entities.Hist.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 
 namespace Tatuaz.History.DataAccess.Services;

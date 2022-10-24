@@ -15,7 +15,9 @@ namespace Tatuaz.Shared.Infrastructure.Test;
 
 public class Startup
 {
-    public void ConfigureHost(IHostBuilder hostBuilder) { }
+    public void ConfigureHost(IHostBuilder hostBuilder)
+    {
+    }
 
     public void ConfigureServices(
         IServiceCollection services,
@@ -29,20 +31,16 @@ public class Startup
 
         services.AddSingleton<IPrimitiveValuesGenerator, PrimitiveValuesGenerator>();
         services.AddScoped<IUserAccessor, UserAccessorFake>();
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddScoped(typeof(IGenericRepository<,,>), typeof(GenericRepository<,,>));
+        services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
+        services.AddScoped(typeof(IGenericRepository<,,,>), typeof(GenericRepository<,,,>));
         services.AddDbContext<BooksDbContext>(opt =>
         {
             opt.UseNpgsql(
                 config.GetConnectionString("InfrastructureTest"),
-                npgsqlOpt =>
-                {
-                    npgsqlOpt.UseNodaTime();
-                }
+                npgsqlOpt => { npgsqlOpt.UseNodaTime(); }
             );
             opt.UseSnakeCaseNamingConvention();
         });
-        services.AddScoped<DbContext, BooksDbContext>();
         services.AddScoped<IClock>(_ => new FakeClock(Instant.FromUtc(2021, 1, 1, 0, 0)));
 
         services.RegisterQueuesMocks();
@@ -50,7 +48,7 @@ public class Startup
 
     public void Configure(IServiceProvider applicationServices)
     {
-        var dbContext = applicationServices.GetRequiredService<DbContext>();
+        var dbContext = applicationServices.GetRequiredService<BooksDbContext>();
         dbContext.Database.EnsureDeleted();
         dbContext.Database.EnsureCreated();
     }

@@ -1,5 +1,6 @@
 using NodaTime;
-using Tatuaz.Shared.Domain.Entities.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
+using Tatuaz.Shared.Domain.Entities.Models.Common;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.HistModels;
 
 namespace Tatuaz.Shared.Infrastructure.Test.Database.Simple.Models;
@@ -11,9 +12,9 @@ public class Book : AuditableEntity<HistBook, Guid>
     public virtual Author Author { get; set; } = default!;
     public virtual IEnumerable<Award> Awards { get; set; } = default!;
 
-    public override HistBook ToHistEntity(IClock clock)
+    public override HistBook ToHistEntity(IClock clock, HistState state)
     {
-        var histBook = (HistBook)base.ToHistEntity(clock);
+        var histBook = (HistBook)base.ToHistEntity(clock, state);
         histBook.Title = Title;
         return histBook;
     }

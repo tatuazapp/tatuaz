@@ -5,10 +5,10 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NodaTime;
 using Tatuaz.History.DataAccess.Services;
-using Tatuaz.History.Queue.Consumers;
+using Tatuaz.History.Queue.Consumers.Common;
 using Tatuaz.History.Queue.Contracts;
 using Tatuaz.History.Queue.Util;
-using Tatuaz.Shared.Domain.Entities.Hist.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Xunit;
 
 namespace Tatuaz.History.Queue.Test.Consumers.Common;

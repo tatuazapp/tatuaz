@@ -1,36 +1,38 @@
 using NodaTime;
-using Tatuaz.Shared.Domain.Entities.Hist.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
+using Tatuaz.Shared.Domain.Entities.Models.Attributes;
 
-namespace Tatuaz.Shared.Domain.Entities.Common;
+namespace Tatuaz.Shared.Domain.Entities.Models.Common;
 
+[BaseEntity]
 public abstract class AuditableEntity<THistEntity, TId> : Entity<THistEntity, TId>, IAuditableEntity
-    where THistEntity : AuditableHistEntity<TId>, new()
+    where THistEntity : HistAuditableEntity<TId>, new()
     where TId : notnull
 {
     public Guid ModifiedBy { get; set; }
-    public Instant ModifiedOn { get; set; }
+    public Instant ModifiedAt { get; set; }
     public Guid CreatedBy { get; set; }
-    public Instant CreatedOn { get; set; }
+    public Instant CreatedAt { get; set; }
 
     public void UpdateCreationData(Guid userId, IClock clock)
     {
-        CreatedOn = ModifiedOn = clock.GetCurrentInstant();
+        CreatedAt = ModifiedAt = clock.GetCurrentInstant();
         CreatedBy = ModifiedBy = userId;
     }
 
     public void UpdateModificationData(Guid userId, IClock clock)
     {
-        ModifiedOn = clock.GetCurrentInstant();
+        ModifiedAt = clock.GetCurrentInstant();
         ModifiedBy = userId;
     }
 
-    public override HistEntity<TId> ToHistEntity(IClock clock)
+    public override HistEntity<TId> ToHistEntity(IClock clock, HistState state)
     {
-        var histEntity = (AuditableHistEntity<TId>)base.ToHistEntity(clock);
+        var histEntity = (HistAuditableEntity<TId>)base.ToHistEntity(clock, state);
         histEntity.ModifiedBy = ModifiedBy;
-        histEntity.ModifiedOn = ModifiedOn;
+        histEntity.ModifiedAt = ModifiedAt;
         histEntity.CreatedBy = CreatedBy;
-        histEntity.CreatedOn = CreatedOn;
+        histEntity.CreatedAt = CreatedAt;
         return histEntity;
     }
 }

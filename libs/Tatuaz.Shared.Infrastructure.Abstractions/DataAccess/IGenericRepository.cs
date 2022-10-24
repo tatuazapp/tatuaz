@@ -1,13 +1,15 @@
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using NodaTime;
-using Tatuaz.Shared.Domain.Entities.Common;
-using Tatuaz.Shared.Domain.Entities.Hist.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
+using Tatuaz.Shared.Domain.Entities.Models.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 using Tatuaz.Shared.Infrastructure.Abstractions.Specification;
 
 namespace Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 
-public interface IGenericRepository<TEntity, THistEntity, in TId>
+public interface IGenericRepository<TDbContext, TEntity, THistEntity, in TId>
+    where TDbContext : DbContext
     where TEntity : Entity<THistEntity, TId>, new()
     where THistEntity : HistEntity<TId>, new()
     where TId : notnull
