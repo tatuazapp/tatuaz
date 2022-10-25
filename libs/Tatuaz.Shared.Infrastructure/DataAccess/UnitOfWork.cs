@@ -5,22 +5,24 @@ using Microsoft.EntityFrameworkCore.Storage;
 using NodaTime;
 using Tatuaz.History.Queue;
 using Tatuaz.History.Queue.Util;
-using Tatuaz.Shared.Domain.Entities.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
+using Tatuaz.Shared.Domain.Entities.Models.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 
 namespace Tatuaz.Shared.Infrastructure.DataAccess;
 
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWork<TDbContext> : IUnitOfWork<TDbContext>
+    where TDbContext : DbContext
 {
     private readonly IClock _clock;
-    private readonly DbContext _context;
-    private readonly List<IHistDumpableEntity> _histEntitiesToDump;
+    private readonly TDbContext _context;
+    private readonly List<HistEntity> _histEntitiesToDump;
     private readonly ISendEndpointProvider _sendEndpointProvider;
     private readonly IUserAccessor _userAccessor;
     private IDbContextTransaction? _currentTransaction;
 
     public UnitOfWork(
-        DbContext context,
+        TDbContext context,
         IUserAccessor userAccessor,
         IClock clock,
         ISendEndpointProvider sendEndpointProvider
@@ -31,7 +33,7 @@ public class UnitOfWork : IUnitOfWork
         _clock = clock;
         _sendEndpointProvider = sendEndpointProvider;
         _currentTransaction = null;
-        _histEntitiesToDump = new List<IHistDumpableEntity>();
+        _histEntitiesToDump = new List<HistEntity>();
     }
 
     public void Dispose()
@@ -85,7 +87,6 @@ public class UnitOfWork : IUnitOfWork
     private async Task DumpHistoryChanges(CancellationToken cancellationToken = default)
     {
         var dumpHistoryOrders = _histEntitiesToDump
-            .Select(x => x.ToHistEntity(_clock))
             .Select(HistorySerializer.SerializeDumpHistoryOrder)
             .ToImmutableArray();
 
@@ -102,13 +103,24 @@ public class UnitOfWork : IUnitOfWork
         _histEntitiesToDump.Clear();
     }
 
-    private IEnumerable<IHistDumpableEntity> GetDumpHistoryOrders()
+    private IEnumerable<HistEntity> GetDumpHistoryOrders()
     {
         return _context.ChangeTracker
             .Entries<IHistDumpableEntity>()
             .Where(x => x.State is EntityState.Added or EntityState.Modified or EntityState.Deleted)
-            .Select(x => x.Entity)
+            .Select(x => x.Entity.ToHistEntity(_clock, HistStateFromEntityState(x.State)))
             .ToImmutableArray();
+    }
+
+    private static HistState HistStateFromEntityState(EntityState entityState)
+    {
+        return entityState switch
+        {
+            EntityState.Added => HistState.Added,
+            EntityState.Modified => HistState.Modified,
+            EntityState.Deleted => HistState.Deleted,
+            _ => throw new ArgumentOutOfRangeException(nameof(entityState), entityState, "Invalid entity state")
+        };
     }
 
     private void UpdateUserContext()

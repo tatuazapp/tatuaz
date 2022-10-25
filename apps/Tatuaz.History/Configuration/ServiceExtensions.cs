@@ -1,11 +1,9 @@
 using MassTransit;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Tatuaz.History.DataAccess;
-using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.Queue;
 using Tatuaz.History.Queue.Consumers;
+using Tatuaz.History.Queue.Consumers.Common;
 
 namespace Tatuaz.History.Configuration;
 
@@ -34,43 +32,16 @@ public static class ServiceExtensions
 
                     cfg.ReceiveEndpoint(
                         HistoryQueueConstants.DumpQueueName,
-                        e =>
-                        {
-                            e.ConfigureConsumer<DumpHistoryConsumer>(context);
-                        }
+                        e => { e.ConfigureConsumer<DumpHistoryConsumer>(context); }
                     );
                     cfg.ReceiveEndpoint(
                         HistoryQueueConstants.QueryQueueName,
-                        e =>
-                        {
-                            e.ConfigureConsumer<Test1Consumer>(context);
-                        }
+                        e => { e.ConfigureConsumer<Test1Consumer>(context); }
                     );
                 }
             );
         });
 
-        return services;
-    }
-
-    public static IServiceCollection AddHistoryDatabaseProvider(
-        this IServiceCollection services,
-        IConfiguration configuration
-    )
-    {
-        services.AddScoped(typeof(IDumpHistoryService<,>), typeof(DumpHistoryService<,>));
-        services.AddScoped(typeof(IHistorySearcherService<,>), typeof(HistorySearcherService<,>));
-        services.AddDbContext<HistDbContext>(opt =>
-        {
-            opt.UseNpgsql(
-                configuration.GetConnectionString("TatuazHistory"),
-                npgsqlOpt =>
-                {
-                    npgsqlOpt.EnableRetryOnFailure(5);
-                    npgsqlOpt.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
-                }
-            );
-        });
         return services;
     }
 }

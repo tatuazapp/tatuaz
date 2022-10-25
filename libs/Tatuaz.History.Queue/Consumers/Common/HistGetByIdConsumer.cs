@@ -2,9 +2,9 @@ using MassTransit;
 using Microsoft.Extensions.Logging;
 using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.Queue.Contracts;
-using Tatuaz.Shared.Domain.Entities.Hist.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
-namespace Tatuaz.History.Queue.Consumers;
+namespace Tatuaz.History.Queue.Consumers.Common;
 
 public class HistGetByIdConsumer<TEntity, TId> : IConsumer<HistGetByIdOrder<TEntity, TId>>
     where TEntity : HistEntity<TId>

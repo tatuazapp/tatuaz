@@ -6,9 +6,9 @@ using Tatuaz.History.DataAccess.Exceptions;
 using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.Queue.Contracts;
 using Tatuaz.History.Queue.Util;
-using Tatuaz.Shared.Domain.Entities.Hist.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
-namespace Tatuaz.History.Queue.Consumers;
+namespace Tatuaz.History.Queue.Consumers.Common;
 
 public class DumpHistoryConsumer : IConsumer<DumpHistoryOrder>
 {

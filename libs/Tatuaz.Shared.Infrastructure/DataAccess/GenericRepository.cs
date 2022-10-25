@@ -1,23 +1,24 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
-using Tatuaz.Shared.Domain.Entities.Common;
-using Tatuaz.Shared.Domain.Entities.Hist.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
+using Tatuaz.Shared.Domain.Entities.Models.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 using Tatuaz.Shared.Infrastructure.Abstractions.Specification;
 
 namespace Tatuaz.Shared.Infrastructure.DataAccess;
 
-public class GenericRepository<TEntity, THistEntity, TId>
-    : IGenericRepository<TEntity, THistEntity, TId>
+public class GenericRepository<TDbContext, TEntity, THistEntity, TId>
+    : IGenericRepository<TDbContext, TEntity, THistEntity, TId>
+    where TDbContext : DbContext
     where TEntity : Entity<THistEntity, TId>, new()
     where THistEntity : HistEntity<TId>, new()
     where TId : notnull
 {
-    private readonly DbContext _dbContext;
+    private readonly TDbContext _dbContext;
 
-    public GenericRepository(DbContext dbContext)
+    public GenericRepository(TDbContext dbContext)
     {
         _dbContext = dbContext;
     }

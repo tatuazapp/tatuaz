@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.Specification;
+using Tatuaz.Shared.Infrastructure.Test.Database.Simple;
+using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Fakers;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.HistModels;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Models;
 
@@ -8,68 +10,39 @@ namespace Tatuaz.Shared.Infrastructure.Test.Specification;
 
 public class FullSpecificationTest
 {
+    private readonly IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> _authorRepository;
+
+    private readonly BooksDbContext _dbContext;
+    private readonly IUnitOfWork<BooksDbContext> _unitOfWork;
+
     public FullSpecificationTest(
-        DbContext dbContext,
-        IUnitOfWork unitOfWork,
-        IGenericRepository<Author, HistAuthor, Guid> authorRepository
+        BooksDbContext dbContext,
+        IUnitOfWork<BooksDbContext> unitOfWork,
+        IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
     )
     {
-        DbContext = dbContext;
-        UnitOfWork = unitOfWork;
-        AuthorRepository = authorRepository;
+        _dbContext = dbContext;
+        _unitOfWork = unitOfWork;
+        _authorRepository = authorRepository;
     }
-
-    protected DbContext DbContext { get; }
-    protected IUnitOfWork UnitOfWork { get; }
-    protected IGenericRepository<Author, HistAuthor, Guid> AuthorRepository { get; }
 
     public class TrackingStrategyTest : FullSpecificationTest
     {
         public TrackingStrategyTest(
-            DbContext dbContext,
-            IUnitOfWork unitOfWork,
-            IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, unitOfWork, authorRepository) { }
+            BooksDbContext dbContext,
+            IUnitOfWork<BooksDbContext> unitOfWork,
+            IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+        ) : base(dbContext, unitOfWork, authorRepository)
+        {
+        }
 
         [Fact]
         public async Task Should_ReturnEntityWithTracking()
         {
-            var expected = new Author { FirstName = "John", LastName = "Doe" };
+            var expected = AuthorFaker.Generate();
 
-            DbContext.Add(expected);
-            await DbContext.SaveChangesAsync().ConfigureAwait(false);
-
-            var spec = new FullSpecification<Author>();
-            spec.TrackingStrategy = TrackingStrategy.Tracking;
-            spec.AddFilter(x => x.Id == expected.Id);
-
-            var actual = await AuthorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
-            Assert.Equal(expected.FirstName, actual.First().FirstName);
-        }
-
-        [Fact]
-        public async Task Should_ReturnEntityWithNoTracking()
-        {
-            var expected = new Author { FirstName = "John", LastName = "Doe" };
-
-            DbContext.Add(expected);
-            await DbContext.SaveChangesAsync().ConfigureAwait(false);
-
-            var spec = new FullSpecification<Author>();
-            spec.TrackingStrategy = TrackingStrategy.NoTracking;
-            spec.AddFilter(x => x.Id == expected.Id);
-
-            var actual = await AuthorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
-            Assert.Equal(expected.FirstName, actual.First().FirstName);
-        }
-
-        [Fact]
-        public async Task Should_UpdateEntityWithTracking()
-        {
-            var expected = new Author { FirstName = "John", LastName = "Doe" };
-
-            DbContext.Add(expected);
-            await DbContext.SaveChangesAsync().ConfigureAwait(false);
+            _dbContext.Add(expected);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
             var spec = new FullSpecification<Author>
             {
@@ -77,11 +50,47 @@ public class FullSpecificationTest
             };
             spec.AddFilter(x => x.Id == expected.Id);
 
-            var actual = await AuthorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
-            actual.First().FirstName = "Johny";
-            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            Assert.Equal(expected.FirstName, actual.First().FirstName);
+        }
 
-            var actual2 = await AuthorRepository
+        [Fact]
+        public async Task Should_ReturnEntityWithNoTracking()
+        {
+            var expected = AuthorFaker.Generate();
+
+            _dbContext.Add(expected);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+
+            var spec = new FullSpecification<Author>
+            {
+                TrackingStrategy = TrackingStrategy.NoTracking
+            };
+            spec.AddFilter(x => x.Id == expected.Id);
+
+            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            Assert.Equal(expected.FirstName, actual.First().FirstName);
+        }
+
+        [Fact]
+        public async Task Should_UpdateEntityWithTracking()
+        {
+            var expected = AuthorFaker.Generate();
+
+            _dbContext.Add(expected);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+
+            var spec = new FullSpecification<Author>
+            {
+                TrackingStrategy = TrackingStrategy.Tracking
+            };
+            spec.AddFilter(x => x.Id == expected.Id);
+
+            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            actual.First().FirstName = "Johny";
+            await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            var actual2 = await _authorRepository
                 .GetBySpecificationAsync(spec)
                 .ConfigureAwait(false);
             Assert.Equal("Johny", actual2.First().FirstName);
@@ -90,10 +99,10 @@ public class FullSpecificationTest
         [Fact]
         public async Task Should_NotUpdateEntityWithNoTracking()
         {
-            var expected = new Author { FirstName = "John", LastName = "Doe" };
+            var expected = AuthorFaker.Generate();
 
-            DbContext.Add(expected);
-            await DbContext.SaveChangesAsync().ConfigureAwait(false);
+            _dbContext.Add(expected);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
             var spec = new FullSpecification<Author>
             {
@@ -101,37 +110,39 @@ public class FullSpecificationTest
             };
             spec.AddFilter(x => x.Id == expected.Id);
 
-            var actual = await AuthorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
             actual.First().FirstName = "Johny";
-            await UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
 
-            var actual2 = await AuthorRepository
+            var actual2 = await _authorRepository
                 .GetBySpecificationAsync(spec)
                 .ConfigureAwait(false);
-            Assert.Equal("John", actual2.First().FirstName);
+            Assert.Equal(expected.FirstName, actual2.First().FirstName);
         }
     }
 
     public class AddFilterTest : FullSpecificationTest
     {
         public AddFilterTest(
-            DbContext dbContext,
-            IUnitOfWork unitOfWork,
-            IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, unitOfWork, authorRepository) { }
+            BooksDbContext dbContext,
+            IUnitOfWork<BooksDbContext> unitOfWork,
+            IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+        ) : base(dbContext, unitOfWork, authorRepository)
+        {
+        }
 
         [Fact]
         public async Task Should_ReturnEntityWithFilter()
         {
-            var expected = new Author { FirstName = "John", LastName = "Doe" };
+            var expected = AuthorFaker.Generate();
 
-            DbContext.Add(expected);
-            await DbContext.SaveChangesAsync().ConfigureAwait(false);
+            _dbContext.Add(expected);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
             var spec = new FullSpecification<Author>();
             spec.AddFilter(x => x.Id == expected.Id);
 
-            var actual = await AuthorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
             Assert.Equal(expected.FirstName, actual.First().FirstName);
         }
     }
@@ -139,54 +150,56 @@ public class FullSpecificationTest
     public class AddOrderTest : FullSpecificationTest
     {
         public AddOrderTest(
-            DbContext dbContext,
-            IUnitOfWork unitOfWork,
-            IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, unitOfWork, authorRepository) { }
+            BooksDbContext dbContext,
+            IUnitOfWork<BooksDbContext> unitOfWork,
+            IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+        ) : base(dbContext, unitOfWork, authorRepository)
+        {
+        }
 
         [Fact]
         public async Task Should_ReturnEntityWithAscendingOrder()
         {
-            var author1 = new Author { FirstName = "John", LastName = "Doe" };
+            var authors = AuthorFaker.Generate(2).OrderByDescending(x => x.FirstName).ToList();
 
-            var author2 = new Author { FirstName = "Anna", LastName = "Doe" };
+            _dbContext.AddRange(authors);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            DbContext.AddRange(author1, author2);
-            await DbContext.SaveChangesAsync().ConfigureAwait(false);
-
-            var spec = new FullSpecification<Author>();
-            spec.OrderDirection = OrderDirection.Ascending;
+            var spec = new FullSpecification<Author>
+            {
+                OrderDirection = OrderDirection.Ascending
+            };
             spec.AddOrder(x => x.FirstName);
-            spec.AddFilter(x => x.Id == author1.Id || x.Id == author2.Id);
+            spec.AddFilter(x => authors.Contains(x));
 
-            var actual = await AuthorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
 
             // ReSharper disable PossibleMultipleEnumeration
-            Assert.Equal(author2.FirstName, actual.First().FirstName);
-            Assert.Equal(author1.FirstName, actual.Last().FirstName);
+            Assert.Equal(authors.Last().FirstName, actual.First().FirstName);
+            Assert.Equal(authors.First().FirstName, actual.Last().FirstName);
             // ReSharper restore PossibleMultipleEnumeration
         }
 
         [Fact]
         public async Task Should_ReturnEntityWithDescendingOrder()
         {
-            var author1 = new Author { FirstName = "John", LastName = "Doe" };
+            var authors = AuthorFaker.Generate(2).OrderByDescending(x => x.FirstName).ToList();
 
-            var author2 = new Author { FirstName = "Anna", LastName = "Doe" };
+            _dbContext.AddRange(authors);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            DbContext.AddRange(author1, author2);
-            await DbContext.SaveChangesAsync().ConfigureAwait(false);
-
-            var spec = new FullSpecification<Author>();
-            spec.OrderDirection = OrderDirection.Descending;
+            var spec = new FullSpecification<Author>
+            {
+                OrderDirection = OrderDirection.Descending
+            };
             spec.AddOrder(x => x.FirstName);
-            spec.AddFilter(x => x.Id == author1.Id || x.Id == author2.Id);
+            spec.AddFilter(x => authors.Contains(x));
 
-            var actual = await AuthorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
 
             // ReSharper disable PossibleMultipleEnumeration
-            Assert.Equal(author1.FirstName, actual.First().FirstName);
-            Assert.Equal(author2.FirstName, actual.Last().FirstName);
+            Assert.Equal(authors.First().FirstName, actual.First().FirstName);
+            Assert.Equal(authors.Last().FirstName, actual.Last().FirstName);
             // ReSharper restore PossibleMultipleEnumeration
         }
     }
@@ -194,25 +207,27 @@ public class FullSpecificationTest
     public class AddIncludeTest : FullSpecificationTest
     {
         public AddIncludeTest(
-            DbContext dbContext,
-            IUnitOfWork unitOfWork,
-            IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, unitOfWork, authorRepository) { }
+            BooksDbContext dbContext,
+            IUnitOfWork<BooksDbContext> unitOfWork,
+            IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+        ) : base(dbContext, unitOfWork, authorRepository)
+        {
+        }
 
         [Fact]
         public async Task Should_ReturnEntityWithInclude()
         {
-            var author = new Author { FirstName = "John", LastName = "Doe" };
-            var book = new Book { Title = "Book", Author = author };
+            var author = AuthorFaker.Generate();
+            var book = BookFaker.FromAuthorId(author.Id);
 
-            DbContext.AddRange(author, book);
-            await DbContext.SaveChangesAsync().ConfigureAwait(false);
+            _dbContext.AddRange(author, book);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
             var spec = new FullSpecification<Author>();
             spec.UseInclude(x => x.Include(y => y.Books));
             spec.AddFilter(x => x.Id == author.Id);
 
-            var actual = await AuthorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
             // ReSharper disable PossibleMultipleEnumeration
             Assert.Equal(author.FirstName, actual.First().FirstName);
             Assert.NotNull(actual.First().Books);
@@ -224,19 +239,19 @@ public class FullSpecificationTest
         [Fact]
         public async Task Should_ReturnEntityWithIncludeAndThenInclude()
         {
-            var author = new Author { FirstName = "John", LastName = "Doe" };
-            var book = new Book { Title = "Book", Author = author };
-            var award = new Award { Name = "Guinness", Book = book };
+            var author = AuthorFaker.Generate();
+            var book = BookFaker.FromAuthorId(author.Id);
+            var award = AwardFaker.FromBookId(book.Id);
 
-            DbContext.AddRange(author, book, award);
-            await DbContext.SaveChangesAsync().ConfigureAwait(false);
+            _dbContext.AddRange(author, book, award);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
             var spec = new FullSpecification<Author>();
             spec.UseInclude(x => x.Include(y => y.Books).ThenInclude(z => z.Awards));
             spec.AddFilter(x => x.Id == author.Id);
 
             // ReSharper disable PossibleMultipleEnumeration
-            var actual = await AuthorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
             Assert.Equal(author.FirstName, actual.First().FirstName);
             Assert.NotNull(actual.First().Books);
             Assert.NotEmpty(actual.First().Books);
@@ -247,4 +262,15 @@ public class FullSpecificationTest
             // ReSharper restore PossibleMultipleEnumeration
         }
     }
+
+#pragma warning disable CA1823
+    // ReSharper disable once UnusedMember.Local
+    private static readonly BookFaker BookFaker = new();
+
+    // ReSharper disable once UnusedMember.Local
+    private static readonly AuthorFaker AuthorFaker = new();
+
+    // ReSharper disable once UnusedMember.Local
+    private static readonly AwardFaker AwardFaker = new();
+#pragma warning restore CA1823
 }

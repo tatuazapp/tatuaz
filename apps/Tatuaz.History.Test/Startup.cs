@@ -7,7 +7,9 @@ namespace Tatuaz.History.Test;
 
 public class Startup
 {
-    public void ConfigureHost(IHostBuilder hostBuilder) { }
+    public void ConfigureHost(IHostBuilder hostBuilder)
+    {
+    }
 
     public void ConfigureServices(
         IServiceCollection services,
@@ -35,5 +37,7 @@ public class Startup
         services.AddScoped(typeof(IDumpHistoryService<,>), typeof(DumpHistoryService<,>));
     }
 
-    public void Configure(IServiceProvider applicationServices) { }
+    public void Configure(IServiceProvider applicationServices)
+    {
+    }
 }

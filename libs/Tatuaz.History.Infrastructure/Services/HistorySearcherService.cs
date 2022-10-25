@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
-using Tatuaz.Shared.Domain.Entities.Hist.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 
 namespace Tatuaz.History.DataAccess.Services;
@@ -130,15 +130,15 @@ public class HistorySearcherService<TEntity, TId> : IHistorySearcherService<TEnt
     )
     {
         return (
-            await _histDbContext
-                .Set<TEntity>()
-                .AsNoTracking()
-                .Where(x => x.HistDumpedAt < asOf)
-                .Where(predicate)
-                .OrderByDescending(x => x.HistDumpedAt)
-                .ToListAsync(cancellationToken)
-                .ConfigureAwait(false)
-        )
+                await _histDbContext
+                    .Set<TEntity>()
+                    .AsNoTracking()
+                    .Where(x => x.HistDumpedAt < asOf)
+                    .Where(predicate)
+                    .OrderByDescending(x => x.HistDumpedAt)
+                    .ToListAsync(cancellationToken)
+                    .ConfigureAwait(false)
+            )
             .Aggregate(
                 new List<TEntity>(),
                 (collection, entity) =>
@@ -156,15 +156,15 @@ public class HistorySearcherService<TEntity, TId> : IHistorySearcherService<TEnt
     )
     {
         return (
-            await _histDbContext
-                .Set<TEntity>()
-                .AsNoTracking()
-                .Where(x => x.HistDumpedAt < asOf)
-                .Where(predicate)
-                .OrderByDescending(x => x.HistDumpedAt)
-                .ToListAsync(cancellationToken)
-                .ConfigureAwait(false)
-        )
+                await _histDbContext
+                    .Set<TEntity>()
+                    .AsNoTracking()
+                    .Where(x => x.HistDumpedAt < asOf)
+                    .Where(predicate)
+                    .OrderByDescending(x => x.HistDumpedAt)
+                    .ToListAsync(cancellationToken)
+                    .ConfigureAwait(false)
+            )
             .Aggregate(
                 new List<TEntity>(),
                 (collection, entity) =>

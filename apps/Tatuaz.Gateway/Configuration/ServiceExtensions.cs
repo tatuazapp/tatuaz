@@ -3,6 +3,7 @@ using System.Text.Json;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.OpenApi.Models;
 using Tatuaz.Gateway.Configuration.Options;
+using Tatuaz.Shared.Infrastructure;
 
 namespace Tatuaz.Gateway.Configuration;
 
@@ -45,6 +46,8 @@ public static class ServiceExtensions
             opt.SupportNonNullableReferenceTypes();
             opt.CustomSchemaIds(type => type.ShortDisplayName().Replace('<', '_').Replace(">", ""));
         });
+
+        services.AddInfrastructure(configuration);
 
         return services;
     }

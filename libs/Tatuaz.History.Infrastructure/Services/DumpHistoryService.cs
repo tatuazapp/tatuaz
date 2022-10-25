@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Tatuaz.History.DataAccess.Exceptions;
-using Tatuaz.Shared.Domain.Entities.Hist.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
 namespace Tatuaz.History.DataAccess.Services;
 
@@ -33,7 +33,7 @@ public class DumpHistoryService<THistEntity, TId> : IDumpHistoryService<THistEnt
                 await ValidateNotYetDumpedAsync(entity, cancellationToken).ConfigureAwait(false);
                 break;
             case HistState.Modified
-            or HistState.Deleted:
+                or HistState.Deleted:
                 await ValidateAlreadyDumpedAsync(entity, cancellationToken).ConfigureAwait(false);
                 break;
             default:

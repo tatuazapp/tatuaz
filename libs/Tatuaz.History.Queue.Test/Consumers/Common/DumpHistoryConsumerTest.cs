@@ -5,10 +5,10 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NodaTime;
 using Tatuaz.History.DataAccess.Services;
-using Tatuaz.History.Queue.Consumers;
+using Tatuaz.History.Queue.Consumers.Common;
 using Tatuaz.History.Queue.Contracts;
 using Tatuaz.History.Queue.Util;
-using Tatuaz.Shared.Domain.Entities.Hist.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Xunit;
 
 namespace Tatuaz.History.Queue.Test.Consumers.Common;
@@ -54,10 +54,7 @@ public class DumpHistoryConsumerTest
             _dumpHistoryServiceMock
                 .Setup(x => x.DumpAsync(It.IsAny<TestHistEntity>(), It.IsAny<CancellationToken>()))
                 .Callback<TestHistEntity, CancellationToken>(
-                    (entity, ct) =>
-                    {
-                        actual = entity;
-                    }
+                    (entity, ct) => { actual = entity; }
                 );
             var harness = _serviceProvider.GetRequiredService<ITestHarness>();
             await harness.Start().ConfigureAwait(false);
