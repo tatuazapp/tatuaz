@@ -54,10 +54,7 @@ public class DumpHistoryConsumerTest
             _dumpHistoryServiceMock
                 .Setup(x => x.DumpAsync(It.IsAny<TestHistEntity>(), It.IsAny<CancellationToken>()))
                 .Callback<TestHistEntity, CancellationToken>(
-                    (entity, ct) =>
-                    {
-                        actual = entity;
-                    }
+                    (entity, ct) => { actual = entity; }
                 );
             var harness = _serviceProvider.GetRequiredService<ITestHarness>();
             await harness.Start().ConfigureAwait(false);

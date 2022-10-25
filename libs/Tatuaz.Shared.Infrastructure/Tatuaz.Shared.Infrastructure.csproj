@@ -21,7 +21,6 @@
         <PackageReference Include="MassTransit" Version="8.0.7"/>
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime" Version="6.0.4"/>
         <PackageReference Include="EFCore.NamingConventions" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.4"/>
     </ItemGroup>
 
 </Project>

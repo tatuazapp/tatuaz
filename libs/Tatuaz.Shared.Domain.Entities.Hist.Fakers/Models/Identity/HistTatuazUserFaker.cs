@@ -14,7 +14,7 @@ public sealed class HistTatuazUserFaker : Faker<HistTatuazUser>
         RuleFor(x => x.HistState, f => f.PickRandom<HistState>());
         RuleFor(x => x.HistDumpedAt, f => f.Date.Past().ToUniversalTime().ToInstant());
         RuleFor(x => x.Id, f => f.Random.Guid());
-        RuleFor(x => x.UserName, f => f.Internet.UserName());
+        RuleFor(x => x.Username, f => f.Internet.UserName());
         RuleFor(x => x.Email, f => f.Internet.Email());
         RuleFor(x => x.PhoneNumber, f => f.Phone.PhoneNumber());
     }

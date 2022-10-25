@@ -9,15 +9,5 @@ public class TatuazUserRoleConfiguration : IEntityTypeConfiguration<TatuazUserRo
     public void Configure(EntityTypeBuilder<TatuazUserRole> builder)
     {
         builder.ToTable("tatuaz_user_roles", TatuazIdentityConstants.SchemaName);
-
-        builder.HasOne<TatuazUser>()
-            .WithMany()
-            .HasForeignKey(x => x.UserId)
-            .HasConstraintName("fk_tatuaz_user_roles_tatuaz_users_user_id");
-
-        builder.HasOne<TatuazRole>()
-            .WithMany()
-            .HasForeignKey(x => x.RoleId)
-            .HasConstraintName("fk_tatuaz_user_roles_tatuaz_roles_role_id");
     }
 }

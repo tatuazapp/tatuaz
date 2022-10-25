@@ -12,8 +12,8 @@ public class HistTatuazRoleConfiguration : IEntityTypeConfiguration<HistTatuazRo
 
         builder.HasKey(x => x.HistId);
 
-        builder.Property(x => x.Name)
-            .HasColumnType("character varying(256)")
-            .HasMaxLength(256);
+        builder
+            .Property(x => x.Name)
+            .HasMaxLength(128);
     }
 }

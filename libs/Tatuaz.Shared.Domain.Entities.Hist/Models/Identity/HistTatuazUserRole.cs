@@ -2,8 +2,8 @@ using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
 namespace Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 
-public class HistTatuazUserRole : HistEntity
+public class HistTatuazUserRole : HistEntity<Guid>
 {
-    public Guid UserId { get; set; }
-    public Guid RoleId { get; set; }
+    public Guid TatuazUserId { get; set; }
+    public Guid TatuazRoleId { get; set; }
 }

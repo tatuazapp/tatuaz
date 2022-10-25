@@ -8,16 +8,28 @@ public sealed class TatuazUserRoleFaker : Faker<TatuazUserRole>
     public TatuazUserRoleFaker()
     {
         StrictMode(true);
-        RuleFor(x => x.UserId, f => f.Random.Guid());
-        RuleFor(x => x.RoleId, f => f.Random.Guid());
+        RuleFor(x => x.Id, f => f.Random.Guid());
+        RuleFor(x => x.TatuazUserId, f => f.Random.Guid());
+        RuleFor(x => x.TatuazUser, f => null!);
+        RuleFor(x => x.TatuazRoleId, f => f.Random.Guid());
+        RuleFor(x => x.TatuazRole, f => null!);
     }
 
-    public TatuazUserRole FromUserIdAndRoleId(Guid userId, Guid roleId)
+    public TatuazUserRole FromUserIdAndRoleId(Guid tatuazUserId, Guid tatuazRoleId)
     {
-        return new TatuazUserRole
-        {
-            UserId = userId,
-            RoleId = roleId
-        };
+        var generated = Generate();
+        generated.TatuazUserId = tatuazUserId;
+        generated.TatuazRoleId = tatuazRoleId;
+        return generated;
+    }
+
+    public TatuazUserRole FromUserAndRole(TatuazUser tatuazUser, TatuazRole tatuazRole)
+    {
+        var generated = Generate();
+        generated.TatuazUser = tatuazUser;
+        generated.TatuazUserId = tatuazUser.Id;
+        generated.TatuazRole = tatuazRole;
+        generated.TatuazRoleId = tatuazRole.Id;
+        return generated;
     }
 }

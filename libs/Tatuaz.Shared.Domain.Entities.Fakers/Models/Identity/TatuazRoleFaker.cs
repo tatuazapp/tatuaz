@@ -10,7 +10,6 @@ public sealed class TatuazRoleFaker : Faker<TatuazRole>
         StrictMode(true);
         RuleFor(x => x.Id, f => f.Random.Guid());
         RuleFor(x => x.Name, f => f.Name.JobArea());
-        RuleFor(x => x.NormalizedName, (f, x) => x.Name.ToUpper());
-        RuleFor(x => x.ConcurrencyStamp, f => f.Random.Guid().ToString());
+        RuleFor(x => x.TatuazUserRoles, f => new List<TatuazUserRole>());
     }
 }

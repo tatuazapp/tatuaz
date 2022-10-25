@@ -1,13 +1,14 @@
 using Microsoft.EntityFrameworkCore;
+using Tatuaz.Shared.Infrastructure.DataAccess;
 
 namespace Tatuaz.History.DataAccess.Test;
 
 public class ConventionTest
 {
     [Fact]
-    public void Should_HistDbContextMirrorDbContext()
+    public void Should_HistDbContextMirrorMainDbContext()
     {
-        var dbType = typeof(DbContext);
+        var dbType = typeof(MainDbContext);
         var histType = typeof(HistDbContext);
 
         var dbProps = dbType
@@ -28,7 +29,7 @@ public class ConventionTest
             .ToList();
 
         var dbPropNames = dbProps.Select(p => p.Name).ToList();
-        var histPropNames = histProps.Select(p => p.Name).ToList();
+        var histPropNames = histProps.Select(p => p.Name.TrimStart('H')).ToList();
 
         var missingProps = dbPropNames.Except(histPropNames).ToList();
         var extraProps = histPropNames.Except(dbPropNames).ToList();

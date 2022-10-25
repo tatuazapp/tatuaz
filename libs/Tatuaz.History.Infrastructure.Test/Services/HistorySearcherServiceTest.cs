@@ -17,6 +17,7 @@ public class HistorySearcherServiceTest
             _dbContextMock.Object
         );
     }
+
     private static Instant DateAdded => Instant.FromUtc(2020, 1, 1, 0, 0, 0);
     private static Instant DateModified => Instant.FromUtc(2020, 1, 2, 0, 0, 0);
     private static Instant DateDeleted => Instant.FromUtc(2020, 1, 3, 0, 0, 0);
@@ -225,9 +226,13 @@ public class HistorySearcherServiceTest
         }
     }
 
-    public class GetBySpecificationAsync { }
+    public class GetBySpecificationAsync
+    {
+    }
 
-    public class GetBySpecificationWithPagingAsync { }
+    public class GetBySpecificationWithPagingAsync
+    {
+    }
 
     public class ExistsByPredicateAsync : HistorySearcherServiceTest
     {

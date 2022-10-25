@@ -4,7 +4,7 @@ namespace Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 
 public class HistTatuazUser : HistEntity<Guid>
 {
-    public string? UserName { get; set; }
-    public string? Email { get; set; }
+    public string Username { get; set; } = default!;
+    public string Email { get; set; } = default!;
     public string? PhoneNumber { get; set; }
 }
