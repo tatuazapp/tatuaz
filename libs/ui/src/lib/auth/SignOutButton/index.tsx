@@ -4,5 +4,13 @@ import { Button } from "../../common/Button"
 export const SignOutButton = () => {
   const { logout } = useAuth0()
 
-  return <Button onClick={() => logout()}>Young Logout</Button>
+  return (
+    <Button
+      onClick={() =>
+        logout({ returnTo: process.env["NEXT_PUBLIC_AUTH0_REDIRECT_URI"] })
+      }
+    >
+      Young Logout
+    </Button>
+  )
 }
