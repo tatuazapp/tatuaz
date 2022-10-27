@@ -15,9 +15,9 @@
 
     <ItemGroup>
 
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
 
-        <PackageReference Include="xunit" Version="2.4.2"/>
+        <PackageReference Include="xunit" Version="2.4.2" />
 
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
 
@@ -38,13 +38,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\apps\Tatuaz.Gateway\Tatuaz.Gateway.csproj"/>
-        <ProjectReference Include="..\..\apps\Tatuaz.History\Tatuaz.History.csproj"/>
-        <ProjectReference Include="..\..\apps\Tatuaz.IntegrationPoC\Tatuaz.IntegrationPoC.csproj"/>
-        <ProjectReference Include="..\Tatuaz.History.Infrastructure\Tatuaz.History.Infrastructure.csproj"/>
-        <ProjectReference Include="..\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj"/>
+        <ProjectReference Include="..\..\apps\Tatuaz.Gateway\Tatuaz.Gateway.csproj" />
+        <ProjectReference Include="..\..\apps\Tatuaz.History\Tatuaz.History.csproj" />
+        <ProjectReference Include="..\Tatuaz.History.Infrastructure\Tatuaz.History.Infrastructure.csproj" />
+        <ProjectReference Include="..\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj" />
+        <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj" />
+        <ProjectReference Include="..\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

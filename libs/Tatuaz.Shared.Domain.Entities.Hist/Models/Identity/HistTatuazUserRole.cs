@@ -4,6 +4,6 @@ namespace Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 
 public class HistTatuazUserRole : HistEntity<Guid>
 {
-    public Guid TatuazUserId { get; set; }
+    public string TatuazUserId { get; set; } = default!;
     public Guid TatuazRoleId { get; set; }
 }

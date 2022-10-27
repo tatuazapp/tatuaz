@@ -11,8 +11,6 @@
     "history-queue": "libs/Tatuaz.History.Queue",
     "history-queue-test": "libs/Tatuaz.History.Queue.Test",
     "history-test": "apps/Tatuaz.History.Test",
-    "integration-poc": "apps/Tatuaz.IntegrationPoC",
-    "integration-poc-test": "apps/Tatuaz.IntegrationPoC.Test",
     "shared-domain-entities": "libs/Tatuaz.Shared.Domain.Entities",
     "shared-domain-entities-fakers": "libs/Tatuaz.Shared.Domain.Entities.Fakers",
     "shared-domain-entities-hist": "libs/Tatuaz.Shared.Domain.Entities.Hist",

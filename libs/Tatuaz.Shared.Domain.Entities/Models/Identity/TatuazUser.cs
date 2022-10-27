@@ -5,7 +5,7 @@ using Tatuaz.Shared.Domain.Entities.Models.Common;
 
 namespace Tatuaz.Shared.Domain.Entities.Models.Identity;
 
-public class TatuazUser : Entity<HistTatuazUser, Guid>
+public class TatuazUser : Entity<HistTatuazUser, string>
 {
     public string Username { get; set; } = default!;
     public string Email { get; set; } = default!;

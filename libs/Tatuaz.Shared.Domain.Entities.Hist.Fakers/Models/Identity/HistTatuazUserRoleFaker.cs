@@ -14,11 +14,11 @@ public sealed class HistTatuazUserRoleFaker : Faker<HistTatuazUserRole>
         RuleFor(x => x.HistState, f => f.PickRandom<HistState>());
         RuleFor(x => x.HistDumpedAt, f => f.Date.Past().ToUniversalTime().ToInstant());
         RuleFor(x => x.Id, f => f.Random.Guid());
-        RuleFor(x => x.TatuazUserId, f => f.Random.Guid());
+        RuleFor(x => x.TatuazUserId, f => f.Random.Hash(20));
         RuleFor(x => x.TatuazRoleId, f => f.Random.Guid());
     }
 
-    public HistTatuazUserRole FromUserIdAndRoleId(Guid tatuazUserId, Guid tatuazRoleId)
+    public HistTatuazUserRole FromUserIdAndRoleId(string tatuazUserId, Guid tatuazRoleId)
     {
         var generated = Generate();
         generated.TatuazUserId = tatuazUserId;
