@@ -1,4 +1,9 @@
 {
   "typescript.preferences.importModuleSpecifier": "relative",
-  "stylelint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "stylelint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
 }
