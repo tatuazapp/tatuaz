@@ -1,4 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react"
+import Image from "next/image"
 import { ProfileWrapper } from "./styles"
 
 export const Profile = () => {
@@ -11,7 +12,7 @@ export const Profile = () => {
 
   return isAuthenticated ? (
     <ProfileWrapper>
-      <img alt={user.name} src={user.picture} />
+      <Image alt={user.name} height={80} src={user.picture} width={80} />
       <h2>{user.name}</h2>
       <p>{user.email}</p>
     </ProfileWrapper>

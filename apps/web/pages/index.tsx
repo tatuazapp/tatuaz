@@ -1,11 +1,9 @@
 import { useAuth0 } from "@auth0/auth0-react"
 import { SliceZone } from "@prismicio/react"
-import {
-  CenteredLayout,
-  Profile,
-  SignInButton,
-  SignOutButton,
-} from "@tatuaz/ui"
+import { CenteredLayout } from "@tatuaz/ui"
+import { Profile } from "../components/auth/Profile"
+import { SignInButton } from "../components/auth/SignInButton"
+import { SignOutButton } from "../components/auth/SignOutButton"
 import { createClient } from "../prismicio"
 import { components } from "../slices"
 
