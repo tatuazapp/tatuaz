@@ -2,6 +2,7 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using NodaTime;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
@@ -12,8 +13,9 @@ public static class InfrastructureServiceExtensions
 {
     public const string DefaultConnectionStringName = "TatuazMainDb";
 
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration, ILogger logger)
     {
+        logger.LogInformation("Adding infrastructure services");
         services.AddDbContextPool<MainDbContext>(opt =>
         {
             opt.UseNpgsql(

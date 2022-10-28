@@ -4,6 +4,8 @@
   "projects": {
     "convention-test": "libs/Tatuaz.Convention.Test",
     "gateway": "apps/Tatuaz.Gateway",
+    "gateway-handlers": "libs/Tatuaz.Gateway.Handlers",
+    "gateway-handlers-test": "libs/Tatuaz.Gateway.Handlers.Test",
     "gateway-test": "apps/Tatuaz.Gateway.Test",
     "history": "apps/Tatuaz.History",
     "history-infrastructure": "libs/Tatuaz.History.Infrastructure",
@@ -20,6 +22,8 @@
     "shared-infrastructure": "libs/Tatuaz.Shared.Infrastructure",
     "shared-infrastructure-abstractions": "libs/Tatuaz.Shared.Infrastructure.Abstractions",
     "shared-infrastructure-test": "libs/Tatuaz.Shared.Infrastructure.Test",
+    "shared-pipeline": "libs/Tatuaz.Shared.Pipeline",
+    "shared-pipeline-test": "libs/Tatuaz.Shared.Pipeline.Test",
     "testing-helpers": "libs/Tatuaz.Testing.Helpers",
     "testing-mocks": "libs/Tatuaz.Testing.Mocks",
     "ui": "libs/ui",
