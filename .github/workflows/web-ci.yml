@@ -35,7 +35,7 @@ jobs:
         run: npm ci
 
       - name: Restore
-        run: dotnet restore
+        run: nx g @nx-dotnet/core:restore
 
       - name: Lint workspace
         run: npx nx workspace-lint
