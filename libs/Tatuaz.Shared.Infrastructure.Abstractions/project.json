@@ -5,9 +5,7 @@
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": [
-        "dist/libs/Tatuaz.Shared.Infrastructure.Abstractions"
-      ],
+      "outputs": ["dist/libs/Tatuaz.Shared.Infrastructure.Abstractions"],
       "options": {
         "configuration": "Debug"
       },
