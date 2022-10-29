@@ -16,10 +16,7 @@ public static class Auth0Helpers
     public static string GetAuth0Token(Auth0Options auth0Options)
     {
         var client = new RestClient($"https://{auth0Options.Domain}/oauth/token");
-        var request = new RestRequest
-        {
-            Method = Method.Post
-        };
+        var request = new RestRequest { Method = Method.Post };
         request.AddHeader("content-type", "application/json");
         request.AddParameter("application/json",
             $"{{\"client_id\":\"{auth0Options.ClientId}\",\"client_secret\":\"{auth0Options.ClientSecret}\",\"audience\":\"{auth0Options.Audience}\",\"grant_type\":\"client_credentials\"}}",

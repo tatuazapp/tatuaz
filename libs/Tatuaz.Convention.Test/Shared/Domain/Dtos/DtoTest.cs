@@ -1,12 +1,13 @@
-﻿using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Domain.Dtos.Fakers.Identity;
 
 namespace Tatuaz.Convention.Test.Shared.Domain.Dtos;
 
 public class DtoTest
 {
-    private readonly List<Type> _dtos;
     private readonly List<Type> _dtoFakers;
+    private readonly List<Type> _dtos;
+
     public DtoTest()
     {
         _dtos = typeof(CreateUserDto).Assembly
@@ -27,7 +28,8 @@ public class DtoTest
         public void AllDtosHaveFakers()
         {
             var dtosWithoutFakers = _dtos
-                .Where(x => !_dtoFakers.Any(y => y.BaseType?.GenericTypeArguments.FirstOrDefault() == x && y.Name == x.Name + "Faker"))
+                .Where(x => !_dtoFakers.Any(y =>
+                    y.BaseType?.GenericTypeArguments.FirstOrDefault() == x && y.Name == x.Name + "Faker"))
                 .ToList();
             Assert.Empty(dtosWithoutFakers);
         }

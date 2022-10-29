@@ -1,24 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  
+
   <PropertyGroup>
-    
+
     <TargetFramework>net6.0</TargetFramework>
-    
+
     <ImplicitUsings>enable</ImplicitUsings>
-    
+
     <Nullable>enable</Nullable>
-    
+
     <OutputPath>../../dist/libs/Tatuaz.Gateway.Handlers</OutputPath>
   </PropertyGroup>
-  
+
   <ItemGroup>
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0"/>
   </ItemGroup>
-  
+
   <ItemGroup>
-    <ProjectReference Include="..\Tatuaz.Gateway.Infrastructure\Tatuaz.Gateway.Infrastructure.csproj" />
-    <ProjectReference Include="..\Tatuaz.Gateway.Requests\Tatuaz.Gateway.Requests.csproj" />
-    <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj" />
+    <ProjectReference Include="..\Tatuaz.Gateway.Infrastructure\Tatuaz.Gateway.Infrastructure.csproj"/>
+    <ProjectReference Include="..\Tatuaz.Gateway.Requests\Tatuaz.Gateway.Requests.csproj"/>
+    <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj"/>
+    <ProjectReference Include="..\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj"/>
   </ItemGroup>
-  
+
 </Project>

@@ -1,4 +1,4 @@
-﻿using Bogus;
+using Bogus;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 
 namespace Tatuaz.Shared.Domain.Dtos.Fakers.Identity;

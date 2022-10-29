@@ -1,52 +1,52 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
+  <PropertyGroup>
 
-        <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
 
-        <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>enable</ImplicitUsings>
 
-        <Nullable>enable</Nullable>
+    <Nullable>enable</Nullable>
 
-        <IsPackable>false</IsPackable>
+    <IsPackable>false</IsPackable>
 
-        <OutputPath>../../dist/libs/Tatuaz.History.DataAccess.Test</OutputPath>
+    <OutputPath>../../dist/libs/Tatuaz.History.DataAccess.Test</OutputPath>
 
-        <RootNamespace>Tatuaz.History.DataAccess.Test</RootNamespace>
-    </PropertyGroup>
+    <RootNamespace>Tatuaz.History.DataAccess.Test</RootNamespace>
+  </PropertyGroup>
 
-    <ItemGroup>
+  <ItemGroup>
 
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0"/>
 
-        <PackageReference Include="Moq" Version="4.18.2"/>
+    <PackageReference Include="Moq" Version="4.18.2"/>
 
-        <PackageReference Include="Moq.EntityFrameworkCore" Version="6.0.1.4"/>
+    <PackageReference Include="Moq.EntityFrameworkCore" Version="6.0.1.4"/>
 
-        <PackageReference Include="xunit" Version="2.4.1"/>
+    <PackageReference Include="xunit" Version="2.4.1"/>
 
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
 
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 
-            <PrivateAssets>all</PrivateAssets>
+      <PrivateAssets>all</PrivateAssets>
 
-        </PackageReference>
+    </PackageReference>
 
-        <PackageReference Include="coverlet.collector" Version="3.1.2">
+    <PackageReference Include="coverlet.collector" Version="3.1.2">
 
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 
-            <PrivateAssets>all</PrivateAssets>
+      <PrivateAssets>all</PrivateAssets>
 
-        </PackageReference>
+    </PackageReference>
 
-    </ItemGroup>
+  </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\Tatuaz.History.Infrastructure\Tatuaz.History.Infrastructure.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Testing.Helpers\Tatuaz.Testing.Helpers.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Testing.Mocks\Tatuaz.Testing.Mocks.csproj"/>
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tatuaz.History.Infrastructure\Tatuaz.History.Infrastructure.csproj"/>
+    <ProjectReference Include="..\Tatuaz.Testing.Helpers\Tatuaz.Testing.Helpers.csproj"/>
+    <ProjectReference Include="..\Tatuaz.Testing.Mocks\Tatuaz.Testing.Mocks.csproj"/>
+  </ItemGroup>
 
 </Project>

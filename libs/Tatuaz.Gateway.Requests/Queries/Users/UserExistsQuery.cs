@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 
 namespace Tatuaz.Gateway.Requests.Queries.Users;
 

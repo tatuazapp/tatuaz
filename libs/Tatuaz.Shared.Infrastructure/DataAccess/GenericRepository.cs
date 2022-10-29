@@ -193,4 +193,9 @@ public class GenericRepository<TDbContext, TEntity, THistEntity, TId>
     {
         _dbContext.Set<TEntity>().Remove(entity);
     }
+
+    public void Dispose()
+    {
+        _dbContext.Dispose();
+    }
 }

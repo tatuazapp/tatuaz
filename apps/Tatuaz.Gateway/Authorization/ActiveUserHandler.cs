@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Tatuaz.Gateway.Requests.Queries.Users;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
@@ -15,14 +15,17 @@ public class ActiveUserHandler : AuthorizationHandler<ActiveUserRequirement>
         _mediator = mediator;
         _userAccessor = userAccessor;
     }
-    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, ActiveUserRequirement requirement)
+
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
+        ActiveUserRequirement requirement)
     {
-        if(_userAccessor.CurrentUserId == null)
+        if (_userAccessor.CurrentUserId == null)
         {
             context.Fail();
             return;
         }
-        var userExists = await _mediator.Send(new UserExistsQuery(_userAccessor.CurrentUserId));
+
+        var userExists = await _mediator.Send(new UserExistsQuery(_userAccessor.CurrentUserId)).ConfigureAwait(false);
 
         if (userExists)
         {

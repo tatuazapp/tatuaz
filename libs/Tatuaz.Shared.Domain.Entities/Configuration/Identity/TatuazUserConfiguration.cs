@@ -23,7 +23,7 @@ public class TatuazUserConfiguration : IEntityTypeConfiguration<TatuazUser>
         builder
             .HasMany(x => x.TatuazUserRoles)
             .WithOne(x => x.TatuazUser)
-            .HasForeignKey(x => x.TatuazRoleId)
+            .HasForeignKey(x => x.TatuazUserId)
             .HasConstraintName("fk_tatuaz_user_roles_tatuaz_users_tatuaz_user_id");
     }
 }

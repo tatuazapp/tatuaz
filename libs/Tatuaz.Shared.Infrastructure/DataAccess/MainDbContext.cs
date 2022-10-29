@@ -10,6 +10,10 @@ public class MainDbContext : DbContext
     {
     }
 
+    public MainDbContext()
+    {
+    }
+
     // identity
     public DbSet<TatuazUser> TatuazUsers { get; set; } = default!;
     public DbSet<TatuazRole> TatuazRoles { get; set; } = default!;

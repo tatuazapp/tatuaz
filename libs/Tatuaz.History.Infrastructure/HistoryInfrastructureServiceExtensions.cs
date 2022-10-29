@@ -14,7 +14,7 @@ public static class HistoryInfrastructureServiceExtensions
     {
         services.AddScoped(typeof(IDumpHistoryService<,>), typeof(DumpHistoryService<,>));
         services.AddScoped(typeof(IHistorySearcherService<,>), typeof(HistorySearcherService<,>));
-        services.AddDbContextPool<HistDbContext>(opt =>
+        services.AddDbContext<HistDbContext>(opt =>
         {
             opt.UseNpgsql(
                 configuration.GetConnectionString("TatuazHistory"),
@@ -22,6 +22,7 @@ public static class HistoryInfrastructureServiceExtensions
                 {
                     npgsqlOpt.EnableRetryOnFailure(5);
                     npgsqlOpt.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                    npgsqlOpt.UseNodaTime();
                 }
             );
             opt.UseSnakeCaseNamingConvention();

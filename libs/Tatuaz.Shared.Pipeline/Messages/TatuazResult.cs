@@ -4,11 +4,6 @@ namespace Tatuaz.Shared.Pipeline.Messages;
 
 public sealed record TatuazResult<T>
 {
-    public T? Value { get; }
-    public TatuazError[] Errors { get; }
-    public HttpStatusCode HttpStatusCode { get; }
-    public bool Successful => !Errors.Any();
-
     internal TatuazResult(T? value, TatuazError[] errors, HttpStatusCode httpStatusCode)
     {
         Value = value;
@@ -19,4 +14,9 @@ public sealed record TatuazResult<T>
     internal TatuazResult(TatuazError[] errors, HttpStatusCode httpStatusCode) : this(default, errors, httpStatusCode)
     {
     }
+
+    public T? Value { get; }
+    public TatuazError[] Errors { get; }
+    public HttpStatusCode HttpStatusCode { get; }
+    public bool Successful => !Errors.Any();
 }

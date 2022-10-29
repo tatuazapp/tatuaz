@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using MediatR;
 using Tatuaz.Gateway.Infrastructure;
 using Tatuaz.Gateway.Requests.Queries.Users;
@@ -14,27 +14,29 @@ namespace Tatuaz.Gateway.Handlers.Queries.Users;
 public class WhoAmIQueryHandler : IRequestHandler<WhoAmIQuery, TatuazResult<UserDto>>
 {
     private readonly IMapper _mapper;
+    private readonly IUserAccessor _userAccessor;
     private readonly IGenericRepository<GatewayDbContext, TatuazUser, HistTatuazUser, string> _userRepository;
 
     public WhoAmIQueryHandler(
         IMapper mapper,
-        IGenericRepository<GatewayDbContext, TatuazUser, HistTatuazUser, string> userRepository
+        IGenericRepository<GatewayDbContext, TatuazUser, HistTatuazUser, string> userRepository,
+        IUserAccessor userAccessor
     )
     {
         _mapper = mapper;
         _userRepository = userRepository;
+        _userAccessor = userAccessor;
     }
+
     public async Task<TatuazResult<UserDto>> Handle(WhoAmIQuery request, CancellationToken cancellationToken)
     {
         var user = await _userRepository
-            .GetByIdAsync(request.UserId, cancellationToken: cancellationToken)
+            .GetByIdAsync(_userAccessor.CurrentUserId ?? string.Empty, cancellationToken: cancellationToken)
             .ConfigureAwait(false);
-        if (user == null)
-        {
+        return user == null
+            ?
             // Authorization challenge should catch this
-            return CommonResultFactory.InternalError<UserDto>();
-        }
-
-        return CommonResultFactory.Ok(_mapper.Map<UserDto>(user));
+            CommonResultFactory.InternalError<UserDto>()
+            : CommonResultFactory.Ok(_mapper.Map<UserDto>(user));
     }
 }

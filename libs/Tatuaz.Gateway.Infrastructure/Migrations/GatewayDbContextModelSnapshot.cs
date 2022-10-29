@@ -31,13 +31,14 @@ namespace Tatuaz.Gateway.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
                         .HasName("pk_tatuaz_roles");
 
-                    b.ToTable("tatuaz_roles", (string)null);
+                    b.ToTable("tatuaz_roles", "identity");
                 });
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", b =>
@@ -48,22 +49,25 @@ namespace Tatuaz.Gateway.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
                         .HasColumnName("email");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
                         .HasColumnName("phone_number");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
                         .HasColumnName("username");
 
                     b.HasKey("Id")
                         .HasName("pk_tatuaz_users");
 
-                    b.ToTable("tatuaz_users", (string)null);
+                    b.ToTable("tatuaz_users", "identity");
                 });
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUserRole", b =>
@@ -91,7 +95,7 @@ namespace Tatuaz.Gateway.Infrastructure.Migrations
                     b.HasIndex("TatuazUserId")
                         .HasDatabaseName("ix_tatuaz_user_roles_tatuaz_user_id");
 
-                    b.ToTable("tatuaz_user_roles", (string)null);
+                    b.ToTable("tatuaz_user_roles", "identity");
                 });
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUserRole", b =>

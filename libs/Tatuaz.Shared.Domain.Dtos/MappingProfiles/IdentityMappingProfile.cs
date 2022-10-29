@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 

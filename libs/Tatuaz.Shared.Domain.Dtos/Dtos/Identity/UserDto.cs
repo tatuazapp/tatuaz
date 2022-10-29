@@ -1,4 +1,4 @@
-﻿namespace Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
+namespace Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 
 public record UserDto
 (

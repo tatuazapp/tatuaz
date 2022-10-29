@@ -1,7 +1,9 @@
-﻿namespace Tatuaz.Shared.Pipeline.Factories.ErrorCodes.Identity;
+namespace Tatuaz.Shared.Pipeline.Factories.ErrorCodes.Identity;
 
 public class CreateUserErrorCodes
 {
+    public const string UserAlreadyExists = "UserAlreadyExists";
+
     public const string EmailEmpty = "EmailEmpty";
     public const string EmailInvalid = "EmailInvalid";
     public const string EmailAlreadyExists = "EmailAlreadyExists";

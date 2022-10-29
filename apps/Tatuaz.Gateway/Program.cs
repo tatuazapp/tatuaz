@@ -2,10 +2,7 @@ using Tatuaz.Gateway.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var logger = LoggerFactory.Create(config =>
-{
-    config.AddConsole();
-}).CreateLogger("Program");
+var logger = LoggerFactory.Create(config => { config.AddConsole(); }).CreateLogger("Program");
 
 builder.Services.AddConfiguration(builder.Configuration);
 builder.Services.AddGatewayServices(builder.Configuration);

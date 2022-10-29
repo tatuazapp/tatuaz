@@ -7,6 +7,7 @@ namespace Tatuaz.History.DataAccess.Test.Services;
 
 public class HistorySearcherServiceTest
 {
+    private static readonly Guid SampleGuid1 = Guid.Parse("AE070011-E390-4D68-8BF5-CA34C7DE02A6");
     private readonly HistDbContextMock _dbContextMock;
     private readonly HistorySearcherService<TestHistEntity, Guid> _historySearcherService;
 
@@ -23,8 +24,6 @@ public class HistorySearcherServiceTest
     private static Instant DateModified => Instant.FromUtc(2020, 3, 1, 0, 0, 0);
 
     private static Instant DateDeleted => Instant.FromUtc(2020, 5, 1, 0, 0, 0);
-
-    private static readonly Guid SampleGuid1 = Guid.Parse("AE070011-E390-4D68-8BF5-CA34C7DE02A6");
 
     private static IEnumerable<TestHistEntity> SampleDataWithAddedModifiedDeleted()
     {

@@ -13,10 +13,11 @@ public static class InfrastructureServiceExtensions
 {
     public const string DefaultConnectionStringName = "TatuazMainDb";
 
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration, ILogger logger)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration,
+        ILogger logger)
     {
         logger.LogInformation("Adding infrastructure services");
-        services.AddDbContextPool<MainDbContext>(opt =>
+        services.AddDbContext<MainDbContext>(opt =>
         {
             opt.UseNpgsql(
                 configuration.GetConnectionString(DefaultConnectionStringName),
@@ -24,6 +25,7 @@ public static class InfrastructureServiceExtensions
                 {
                     npgsqlOpt.EnableRetryOnFailure(5);
                     npgsqlOpt.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                    npgsqlOpt.UseNodaTime();
                 }
             );
             opt.UseNpgsql(configuration.GetConnectionString(DefaultConnectionStringName));

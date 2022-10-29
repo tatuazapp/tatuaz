@@ -1,26 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
+  <PropertyGroup>
 
-        <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
 
-        <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>enable</ImplicitUsings>
 
-        <Nullable>enable</Nullable>
+    <Nullable>enable</Nullable>
 
-        <OutputPath>../../dist/libs/Tatuaz.History.Queue</OutputPath>
-    </PropertyGroup>
+    <OutputPath>../../dist/libs/Tatuaz.History.Queue</OutputPath>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="MassTransit.Abstractions" Version="8.0.7"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1"/>
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MassTransit.Abstractions" Version="8.0.7"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1"/>
+  </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\Tatuaz.History.Infrastructure\Tatuaz.History.Infrastructure.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Shared.Helpers\Tatuaz.Shared.Helpers.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj"/>
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tatuaz.History.Infrastructure\Tatuaz.History.Infrastructure.csproj"/>
+    <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj"/>
+    <ProjectReference Include="..\Tatuaz.Shared.Helpers\Tatuaz.Shared.Helpers.csproj"/>
+    <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj"/>
+  </ItemGroup>
 
 </Project>

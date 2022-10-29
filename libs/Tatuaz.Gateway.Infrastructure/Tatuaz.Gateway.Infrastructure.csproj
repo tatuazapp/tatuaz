@@ -1,24 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  
+
   <PropertyGroup>
-    
+
     <TargetFramework>net6.0</TargetFramework>
-    
+
     <ImplicitUsings>enable</ImplicitUsings>
-    
+
     <Nullable>enable</Nullable>
-    
+
     <OutputPath>../../dist/libs/Tatuaz.Gateway.Infrastructure</OutputPath>
   </PropertyGroup>
-  
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4"/>
   </ItemGroup>
-  
+
   <ItemGroup>
-    <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj" />
-    <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj" />
+    <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj"/>
+    <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj"/>
   </ItemGroup>
-  
+
 </Project>

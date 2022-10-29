@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
@@ -21,7 +21,9 @@ public class CreateUserDtoValidator<TDbContext> : AbstractValidator<CreateUserDt
             {
                 return !await userRepository.ExistsByPredicateAsync(x => x.Email == email, ct)
                     .ConfigureAwait(false);
-            }).WithErrorCode(CreateUserErrorCodes.EmailAlreadyExists);
+            })
+            .WithErrorCode(CreateUserErrorCodes.EmailAlreadyExists)
+            .WithMessage("Email already exists");
 
         RuleFor(x => x.Username)
             .NotEmpty().WithErrorCode(CreateUserErrorCodes.UsernameEmpty)
@@ -31,11 +33,14 @@ public class CreateUserDtoValidator<TDbContext> : AbstractValidator<CreateUserDt
             {
                 return !await userRepository.ExistsByPredicateAsync(x => x.Username == username, ct)
                     .ConfigureAwait(false);
-            }).WithErrorCode(CreateUserErrorCodes.UsernameAlreadyExists);
+            })
+            .WithErrorCode(CreateUserErrorCodes.UsernameAlreadyExists)
+            .WithMessage("Username already exists");
 
         RuleFor(x => x.PhoneNumber)
-            .Must((phoneNumber) =>
+            .Must(phoneNumber =>
                 string.IsNullOrEmpty(phoneNumber) || RegexUtils.PhoneNumberRegex.IsMatch(phoneNumber))
-            .WithErrorCode(CreateUserErrorCodes.PhoneNumberInvalid);
+            .WithErrorCode(CreateUserErrorCodes.PhoneNumberInvalid)
+            .WithMessage("Phone number is invalid");
     }
 }

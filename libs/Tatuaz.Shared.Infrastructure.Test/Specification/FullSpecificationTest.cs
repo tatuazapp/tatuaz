@@ -44,10 +44,7 @@ public class FullSpecificationTest
             _dbContext.Add(expected);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var spec = new FullSpecification<Author>
-            {
-                TrackingStrategy = TrackingStrategy.Tracking
-            };
+            var spec = new FullSpecification<Author> { TrackingStrategy = TrackingStrategy.Tracking };
             spec.AddFilter(x => x.Id == expected.Id);
 
             var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
@@ -62,10 +59,7 @@ public class FullSpecificationTest
             _dbContext.Add(expected);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var spec = new FullSpecification<Author>
-            {
-                TrackingStrategy = TrackingStrategy.NoTracking
-            };
+            var spec = new FullSpecification<Author> { TrackingStrategy = TrackingStrategy.NoTracking };
             spec.AddFilter(x => x.Id == expected.Id);
 
             var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
@@ -80,10 +74,7 @@ public class FullSpecificationTest
             _dbContext.Add(expected);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var spec = new FullSpecification<Author>
-            {
-                TrackingStrategy = TrackingStrategy.Tracking
-            };
+            var spec = new FullSpecification<Author> { TrackingStrategy = TrackingStrategy.Tracking };
             spec.AddFilter(x => x.Id == expected.Id);
 
             var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
@@ -104,10 +95,7 @@ public class FullSpecificationTest
             _dbContext.Add(expected);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var spec = new FullSpecification<Author>
-            {
-                TrackingStrategy = TrackingStrategy.NoTracking
-            };
+            var spec = new FullSpecification<Author> { TrackingStrategy = TrackingStrategy.NoTracking };
             spec.AddFilter(x => x.Id == expected.Id);
 
             var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
@@ -165,10 +153,7 @@ public class FullSpecificationTest
             _dbContext.AddRange(authors);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var spec = new FullSpecification<Author>
-            {
-                OrderDirection = OrderDirection.Ascending
-            };
+            var spec = new FullSpecification<Author> { OrderDirection = OrderDirection.Ascending };
             spec.AddOrder(x => x.FirstName);
             spec.AddFilter(x => authors.Contains(x));
 
@@ -188,10 +173,7 @@ public class FullSpecificationTest
             _dbContext.AddRange(authors);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var spec = new FullSpecification<Author>
-            {
-                OrderDirection = OrderDirection.Descending
-            };
+            var spec = new FullSpecification<Author> { OrderDirection = OrderDirection.Descending };
             spec.AddOrder(x => x.FirstName);
             spec.AddFilter(x => authors.Contains(x));
 

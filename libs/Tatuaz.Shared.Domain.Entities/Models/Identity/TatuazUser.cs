@@ -9,7 +9,7 @@ public class TatuazUser : Entity<HistTatuazUser, string>
 {
     public string Username { get; set; } = default!;
     public string Email { get; set; } = default!;
-    public string? PhoneNumber { get; set; } = default!;
+    public string? PhoneNumber { get; set; }
 
     public virtual IEnumerable<TatuazUserRole> TatuazUserRoles { get; set; } = default!;
 

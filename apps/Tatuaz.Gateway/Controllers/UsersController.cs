@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tatuaz.Gateway.Authorization;
@@ -14,15 +14,17 @@ public class UsersController : TatuazControllerBase
     {
     }
 
-    [HttpGet("[action]"), AuthorizeActiveUser]
-    public async Task<ActionResult<UserDto>> WhoAmI([FromQuery] WhoAmIQuery query)
+    [HttpGet("[action]")]
+    [AuthorizeActiveUser]
+    public async Task<ActionResult<UserDto>> WhoAmI()
     {
-        return ResultToActionResult(await Mediator.Send(query).ConfigureAwait(false));
+        return ResultToActionResult(await Mediator.Send(new WhoAmIQuery()).ConfigureAwait(false));
     }
 
-    [HttpPost("[action]"), Authorize]
-    public async Task<ActionResult<UserDto>> SignUp([FromBody] SignUpCommand command)
+    [HttpPost("[action]")]
+    [Authorize]
+    public async Task<ActionResult<UserDto>> SignUp([FromBody] CreateUserDto createUserDto)
     {
-        return ResultToActionResult(await Mediator.Send(command).ConfigureAwait(false));
+        return ResultToActionResult(await Mediator.Send(new SignUpCommand(createUserDto)).ConfigureAwait(false));
     }
 }
