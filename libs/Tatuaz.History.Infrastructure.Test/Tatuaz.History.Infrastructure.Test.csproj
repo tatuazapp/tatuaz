@@ -19,8 +19,6 @@
 
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0"/>
 
-    <PackageReference Include="Moq" Version="4.18.2"/>
-
     <PackageReference Include="Moq.EntityFrameworkCore" Version="6.0.1.4"/>
 
     <PackageReference Include="xunit" Version="2.4.1"/>
@@ -44,9 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tatuaz.History.Infrastructure\Tatuaz.History.Infrastructure.csproj"/>
-    <ProjectReference Include="..\Tatuaz.Testing.Helpers\Tatuaz.Testing.Helpers.csproj"/>
-    <ProjectReference Include="..\Tatuaz.Testing.Mocks\Tatuaz.Testing.Mocks.csproj"/>
+    <ProjectReference Include="..\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj"/>
   </ItemGroup>
 
 </Project>

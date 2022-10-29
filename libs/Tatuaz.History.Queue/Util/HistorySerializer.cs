@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using Tatuaz.History.DataAccess.Exceptions;
 using Tatuaz.History.Queue.Contracts;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Tatuaz.Shared.Helpers;
@@ -22,12 +21,12 @@ public static class HistorySerializer
         var type = Type.GetType(dumpHistoryOrder.ObjectType);
         if (type is null)
         {
-            throw new HistException("Cannot determine type of object to deserialize");
+            throw new InvalidOperationException("Cannot determine type of object to deserialize");
         }
 
         if (!type.IsSubclassOf(typeof(HistEntity)))
         {
-            throw new HistException("Cannot deserialize object of type " + type.FullName);
+            throw new InvalidOperationException("Cannot deserialize object of type " + type.FullName);
         }
 
         var jsonSerializer = SerializationUtils.GetTatuazSerializerSettings();

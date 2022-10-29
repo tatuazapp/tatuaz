@@ -26,7 +26,6 @@ public class Startup
     {
         var config = new ConfigurationBuilder()
             .AddJsonFile("appsettings.InfrastructureTest.json")
-            .AddEnvironmentVariables("TATUAZ_")
             .Build();
 
         services.AddSingleton<IPrimitiveValuesGenerator, PrimitiveValuesGenerator>();

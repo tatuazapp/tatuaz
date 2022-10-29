@@ -38,13 +38,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\apps\Tatuaz.Gateway\Tatuaz.Gateway.csproj"/>
-    <ProjectReference Include="..\..\apps\Tatuaz.History\Tatuaz.History.csproj"/>
-    <ProjectReference Include="..\Tatuaz.History.Infrastructure\Tatuaz.History.Infrastructure.csproj"/>
-    <ProjectReference Include="..\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj"/>
     <ProjectReference Include="..\Tatuaz.Shared.Domain.Dtos.Fakers\Tatuaz.Shared.Domain.Dtos.Fakers.csproj"/>
     <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj"/>
-    <ProjectReference Include="..\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj"/>
   </ItemGroup>
 
 </Project>

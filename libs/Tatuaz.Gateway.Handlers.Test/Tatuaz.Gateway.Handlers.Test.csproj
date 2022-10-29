@@ -38,7 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tatuaz.Gateway.Handlers\Tatuaz.Gateway.Handlers.csproj"/>
   </ItemGroup>
 
 </Project>

@@ -12,12 +12,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="11.0.0"/>
+    <PackageReference Include="MediatR.Contracts" Version="1.0.1"/>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Tatuaz.Shared.Domain.Dtos\Tatuaz.Shared.Domain.Dtos.csproj"/>
-    <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj"/>
     <ProjectReference Include="..\Tatuaz.Shared.Pipeline\Tatuaz.Shared.Pipeline.csproj"/>
   </ItemGroup>
 

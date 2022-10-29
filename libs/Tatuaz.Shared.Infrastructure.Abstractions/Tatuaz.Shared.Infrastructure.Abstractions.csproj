@@ -13,13 +13,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj"/>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime" Version="6.0.4"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Tatuaz.Shared.Infrastructure">
-      <HintPath>..\..\dist\apps\Tatuaz.Gateway\net6.0\Tatuaz.Shared.Infrastructure.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj"/>
   </ItemGroup>
 
 </Project>

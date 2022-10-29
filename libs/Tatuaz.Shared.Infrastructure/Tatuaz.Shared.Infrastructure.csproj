@@ -13,14 +13,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj"/>
-    <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj"/>
+    <PackageReference Include="EFCore.NamingConventions" Version="6.0.0"/>
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.7"/>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime" Version="6.0.4"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit" Version="8.0.7"/>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime" Version="6.0.4"/>
-    <PackageReference Include="EFCore.NamingConventions" Version="6.0.0"/>
+    <ProjectReference Include="..\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj"/>
+    <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj"/>
   </ItemGroup>
 
 </Project>

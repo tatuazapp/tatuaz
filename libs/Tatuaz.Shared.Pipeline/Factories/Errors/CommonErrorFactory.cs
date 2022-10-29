@@ -29,6 +29,6 @@ public static class CommonErrorFactory
 
     public static TatuazError ValidationError(ValidationFailure validationFailure)
     {
-        return new(validationFailure.ErrorCode, validationFailure.ErrorMessage);
+        return new TatuazError(validationFailure.ErrorCode, validationFailure.ErrorMessage);
     }
 }
