@@ -32,7 +32,7 @@ public class ExceptionMiddleware
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
         await context
             .Response
-            .WriteAsJsonAsync(CommonResultFactory.InternalError<object>())
+            .WriteAsJsonAsync(HttpHelpers.ToErrorsObject(CommonResultFactory.InternalError<object>().Errors))
             .ConfigureAwait(false);
 
         if (context.Response.StatusCode == (int)HttpStatusCode.InternalServerError)

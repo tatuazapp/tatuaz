@@ -3,7 +3,7 @@ using MassTransit;
 using Tatuaz.Shared.Pipeline.Factories.Errors;
 using Tatuaz.Shared.Pipeline.Messages;
 
-namespace Tatuaz.Shared.Pipeline.Consumers;
+namespace Tatuaz.Shared.Pipeline.Queues;
 
 public abstract class TatuazConsumerBase<TMessage, TData> : IConsumer<TMessage>
     where TMessage : class

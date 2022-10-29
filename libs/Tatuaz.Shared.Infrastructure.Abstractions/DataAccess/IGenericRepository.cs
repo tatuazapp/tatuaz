@@ -76,7 +76,7 @@ public interface IGenericRepository<TDbContext, TEntity, THistEntity, in TId>
         CancellationToken cancellationToken = default
     );
 
-    Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
-    Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);
+    void Create(TEntity entity);
+    void Delete(TEntity entity);
     Task DeleteAsync(TId id, CancellationToken cancellationToken = default);
 }

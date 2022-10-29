@@ -170,10 +170,9 @@ public class GenericRepository<TDbContext, TEntity, THistEntity, TId>
         throw new NotImplementedException();
     }
 
-    public Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public void Create(TEntity entity)
     {
         _dbContext.Set<TEntity>().Add(entity);
-        return Task.CompletedTask;
     }
 
     public async Task DeleteAsync(TId id, CancellationToken cancellationToken = default)
@@ -190,9 +189,8 @@ public class GenericRepository<TDbContext, TEntity, THistEntity, TId>
         _dbContext.Set<TEntity>().Remove(toDelete);
     }
 
-    public Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public void Delete(TEntity entity)
     {
         _dbContext.Set<TEntity>().Remove(entity);
-        return Task.CompletedTask;
     }
 }

@@ -15,4 +15,10 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
   </ItemGroup>
   
+  <ItemGroup>
+    <ProjectReference Include="..\Tatuaz.Gateway.Infrastructure\Tatuaz.Gateway.Infrastructure.csproj" />
+    <ProjectReference Include="..\Tatuaz.Gateway.Requests\Tatuaz.Gateway.Requests.csproj" />
+    <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj" />
+  </ItemGroup>
+  
 </Project>

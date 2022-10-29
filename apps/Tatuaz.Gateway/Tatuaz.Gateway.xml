@@ -45,12 +45,12 @@
             </summary>
         </member>
         <member name="M:Tatuaz.Gateway.Configuration.ServiceExtensions.AddConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="services"></param>
-            <param name="configuration"></param>
-            <returns></returns>
+             </summary>
+             <param name="services"></param>
+             <param name="configuration"></param>
+             <returns></returns>
         </member>
         <member name="M:Tatuaz.Gateway.Configuration.ServiceExtensions.AddGatewayServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>

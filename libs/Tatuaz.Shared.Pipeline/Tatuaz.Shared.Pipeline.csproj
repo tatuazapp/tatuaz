@@ -12,6 +12,7 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.2.2" />
     <PackageReference Include="MassTransit.Abstractions" Version="8.0.7" />
   </ItemGroup>
   

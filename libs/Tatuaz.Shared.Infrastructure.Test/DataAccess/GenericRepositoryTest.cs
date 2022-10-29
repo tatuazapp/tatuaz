@@ -294,7 +294,7 @@ public class GenericRepositoryTest
         {
             var author = AuthorFaker.Generate();
 
-            await _authorRepository.CreateAsync(author).ConfigureAwait(false);
+            _authorRepository.Create(author);
 
             Assert.NotEqual(Guid.Empty, author.Id);
             Assert.Equal(EntityState.Added, _dbContext.Entry(author).State);
@@ -317,7 +317,7 @@ public class GenericRepositoryTest
             await _dbContext.AddAsync(author).ConfigureAwait(false);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            await _authorRepository.DeleteAsync(author).ConfigureAwait(false);
+            _authorRepository.Delete(author);
 
             Assert.Equal(EntityState.Deleted, _dbContext.Entry(author).State);
         }

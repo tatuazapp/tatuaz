@@ -14,7 +14,7 @@ public class UserAccessorFake : IUserAccessor
         _currentIndex = 0;
     }
 
-    public Guid CurrentUserId => _primitiveTestFactory.Guids(_currentIndex);
+    public string? CurrentUserId => _primitiveTestFactory.Guids(_currentIndex).ToString();
 
     public void SetCurrentIndex(int index)
     {

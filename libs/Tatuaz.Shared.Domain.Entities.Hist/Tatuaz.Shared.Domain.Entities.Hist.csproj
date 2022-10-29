@@ -13,10 +13,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper" Version="12.0.0"/>
-        <PackageReference Include="FluentValidation" Version="11.2.2"/>
-        <PackageReference Include="NodaTime.Serialization.JsonNet" Version="3.0.0"/>
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime" Version="6.0.4"/>
+        <PackageReference Include="AutoMapper" Version="12.0.0" />
+        <PackageReference Include="FluentValidation" Version="11.2.2" />
+        <PackageReference Include="NodaTime.Serialization.JsonNet" Version="3.0.0" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime" Version="6.0.4" />
     </ItemGroup>
 
 </Project>

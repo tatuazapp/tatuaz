@@ -152,8 +152,8 @@ public class UnitOfWorkTest
                 .FirstAsync(x => x.Id == author.Id)
                 .ConfigureAwait(false);
 
-            Assert.Equal(_primitiveValuesGenerator.Guids(0), actual.CreatedBy);
-            Assert.Equal(_primitiveValuesGenerator.Guids(0), actual.ModifiedBy);
+            Assert.Equal(_primitiveValuesGenerator.Guids(0).ToString(), actual.CreatedBy);
+            Assert.Equal(_primitiveValuesGenerator.Guids(0).ToString(), actual.ModifiedBy);
             Assert.Equal(
                 _clock.GetCurrentInstant().ToDateTimeUtc(),
                 actual.CreatedAt.ToDateTimeUtc(),
@@ -192,8 +192,8 @@ public class UnitOfWorkTest
                 .FirstAsync(x => x.Id == author.Id)
                 .ConfigureAwait(false);
 
-            Assert.Equal(_primitiveValuesGenerator.Guids(0), actual.CreatedBy);
-            Assert.Equal(_primitiveValuesGenerator.Guids(1), actual.ModifiedBy);
+            Assert.Equal(_primitiveValuesGenerator.Guids(0).ToString(), actual.CreatedBy);
+            Assert.Equal(_primitiveValuesGenerator.Guids(1).ToString(), actual.ModifiedBy);
             Assert.Equal(
                 _clock.GetCurrentInstant().ToDateTimeUtc().AddMilliseconds(-200),
                 actual.CreatedAt.ToDateTimeUtc(),
@@ -556,8 +556,8 @@ public class UnitOfWorkTest
                 .FirstAsync(x => x.Id == author.Id)
                 .ConfigureAwait(false);
 
-            Assert.Equal(_primitiveValuesGenerator.Guids(0), actual.CreatedBy);
-            Assert.Equal(_primitiveValuesGenerator.Guids(0), actual.ModifiedBy);
+            Assert.Equal(_primitiveValuesGenerator.Guids(0).ToString(), actual.CreatedBy);
+            Assert.Equal(_primitiveValuesGenerator.Guids(0).ToString(), actual.ModifiedBy);
             Assert.Equal(
                 _clock.GetCurrentInstant().ToDateTimeUtc(),
                 actual.CreatedAt.ToDateTimeUtc(),
@@ -608,8 +608,8 @@ public class UnitOfWorkTest
                 .FirstAsync(x => x.Id == author.Id)
                 .ConfigureAwait(false);
 
-            Assert.Equal(_primitiveValuesGenerator.Guids(0), actual.CreatedBy);
-            Assert.Equal(_primitiveValuesGenerator.Guids(1), actual.ModifiedBy);
+            Assert.Equal(_primitiveValuesGenerator.Guids(0).ToString(), actual.CreatedBy);
+            Assert.Equal(_primitiveValuesGenerator.Guids(1).ToString(), actual.ModifiedBy);
             Assert.Equal(
                 _clock.GetCurrentInstant().ToDateTimeUtc().AddMilliseconds(-200),
                 actual.CreatedAt.ToDateTimeUtc(),

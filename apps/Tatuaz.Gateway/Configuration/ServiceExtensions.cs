@@ -2,19 +2,34 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Text.Json;
 using Auth0.ManagementApi;
+using MassTransit;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NodaTime;
+using Tatuaz.Gateway.Authorization;
 using Tatuaz.Gateway.Configuration.Helpers;
 using Tatuaz.Gateway.Configuration.Options;
+using Tatuaz.Gateway.Handlers.Queries.Users;
+using Tatuaz.Gateway.Infrastructure;
+using Tatuaz.Gateway.Requests.Queries.Users;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
+using Tatuaz.Shared.Domain.Entities.Models.Identity;
+using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using Tatuaz.Shared.Infrastructure.DataAccess;
 
 namespace Tatuaz.Gateway.Configuration;
 
 public static class ServiceExtensions
 {
+
+    public const string DefaultConnectionStringName = "TatuazMainDb";
+
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="services"></param>
     /// <param name="configuration"></param>
@@ -42,6 +57,10 @@ public static class ServiceExtensions
         services.AddTatuazSwagger();
         services.AddTatuazCors();
         services.AddTatuazAuth0(configuration);
+        services.AddTatuazGatewayInfrastructure(configuration);
+        services.AddGatewayMediator(configuration);
+        services.AddGatewayMapper(configuration);
+        services.AddGatewayMassTransit(configuration);
 
         return services;
     }
@@ -130,11 +149,11 @@ public static class ServiceExtensions
     {
         var auth0Options = configuration.GetAuth0Options();
 
-        var auth0Token = Auth0Helpers.GetAuth0Token(auth0Options);
-
         var apiIdentifier = $"https://{auth0Options.Domain}/api/v2";
-        services.AddScoped<IManagementApiClient>(_ =>
-            new ManagementApiClient(auth0Token, new Uri(apiIdentifier)));
+        // var auth0Token = Auth0Helpers.GetAuth0Token(auth0Options);
+        //
+        // services.AddScoped<IManagementApiClient>(_ =>
+        //     new ManagementApiClient(auth0Token, new Uri(apiIdentifier)));
 
         var domain = $"https://{auth0Options.Domain}/";
         services.AddAuthentication(options =>
@@ -151,6 +170,76 @@ public static class ServiceExtensions
             };
         });
 
+        services.AddAuthorization(opt =>
+        {
+            opt.AddPolicy(ActiveUserRequirement.Name, policy =>
+            {
+                policy.Requirements.Add(new ActiveUserRequirement());
+            });
+        });
+
+        return services;
+    }
+
+    public static IServiceCollection AddTatuazGatewayInfrastructure(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddDbContextPool<GatewayDbContext>(opt =>
+        {
+            opt.UseNpgsql(
+                configuration.GetConnectionString(DefaultConnectionStringName),
+                npgsqlOpt =>
+                {
+                    npgsqlOpt.EnableRetryOnFailure(5);
+                    npgsqlOpt.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                }
+            );
+            opt.UseNpgsql(configuration.GetConnectionString(DefaultConnectionStringName));
+            opt.UseSnakeCaseNamingConvention();
+        });
+
+        services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
+        services.AddScoped(typeof(IGenericRepository<,,,>), typeof(GenericRepository<,,,>));
+        services.AddScoped<IUserAccessor, GatewayUserAccessor>();
+        services.AddScoped<IClock>(_ => SystemClock.Instance);
+        services.AddHttpContextAccessor();
+
+        return services;
+    }
+
+    public static IServiceCollection AddGatewayMediator(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddMediatR(typeof(WhoAmIQuery).Assembly, typeof(WhoAmIQueryHandler).Assembly);
+        return services;
+    }
+
+    public static IServiceCollection AddGatewayMapper(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddAutoMapper(typeof(TatuazUser).Assembly, typeof(HistTatuazUser).Assembly);
+        return services;
+    }
+
+    public static IServiceCollection AddGatewayMassTransit(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddMassTransit(x =>
+        {
+            x.UsingRabbitMq(
+                (context, cfg) =>
+                {
+                    cfg.Host(
+                        "localhost",
+                        "/",
+                        h =>
+                        {
+                            h.Username("guest");
+                            h.Password("guest");
+                        }
+                    );
+                }
+            );
+        });
         return services;
     }
 }
