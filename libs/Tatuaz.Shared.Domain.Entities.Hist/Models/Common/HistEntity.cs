@@ -1,3 +1,4 @@
+using System;
 using NodaTime;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Attributes;
 

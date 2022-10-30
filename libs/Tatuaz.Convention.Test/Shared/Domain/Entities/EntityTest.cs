@@ -1,9 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Attributes;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Tatuaz.Shared.Domain.Entities.Models.Attributes;
 using Tatuaz.Shared.Domain.Entities.Models.Common;
+using Xunit;
 
 namespace Tatuaz.Convention.Test.Shared.Domain.Entities;
 

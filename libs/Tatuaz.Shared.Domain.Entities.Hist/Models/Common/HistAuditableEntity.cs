@@ -6,8 +6,8 @@ namespace Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 [BaseHistEntity]
 public class HistAuditableEntity<TId> : HistEntity<TId> where TId : notnull
 {
-    public Guid ModifiedBy { get; set; }
+    public string ModifiedBy { get; set; } = default!;
     public Instant ModifiedAt { get; set; }
-    public Guid CreatedBy { get; set; }
+    public string CreatedBy { get; set; } = default!;
     public Instant CreatedAt { get; set; }
 }

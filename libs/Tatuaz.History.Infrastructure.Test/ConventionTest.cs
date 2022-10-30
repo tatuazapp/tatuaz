@@ -1,5 +1,7 @@
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Tatuaz.Shared.Infrastructure.DataAccess;
+using Xunit;
 
 namespace Tatuaz.History.DataAccess.Test;
 

@@ -1,3 +1,4 @@
+using System;
 using NodaTime;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
@@ -7,7 +8,7 @@ namespace Tatuaz.Shared.Domain.Entities.Models.Identity;
 
 public class TatuazUserRole : Entity<HistTatuazUserRole, Guid>
 {
-    public Guid TatuazUserId { get; set; }
+    public string TatuazUserId { get; set; } = default!;
     public virtual TatuazUser TatuazUser { get; set; } = default!;
     public Guid TatuazRoleId { get; set; }
     public virtual TatuazRole TatuazRole { get; set; } = default!;

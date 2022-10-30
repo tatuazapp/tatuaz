@@ -2,6 +2,7 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using NodaTime;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
@@ -12,9 +13,11 @@ public static class InfrastructureServiceExtensions
 {
     public const string DefaultConnectionStringName = "TatuazMainDb";
 
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration,
+        ILogger logger)
     {
-        services.AddDbContextPool<MainDbContext>(opt =>
+        logger.LogInformation("Adding infrastructure services");
+        services.AddDbContext<MainDbContext>(opt =>
         {
             opt.UseNpgsql(
                 configuration.GetConnectionString(DefaultConnectionStringName),
@@ -22,6 +25,7 @@ public static class InfrastructureServiceExtensions
                 {
                     npgsqlOpt.EnableRetryOnFailure(5);
                     npgsqlOpt.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                    npgsqlOpt.UseNodaTime();
                 }
             );
             opt.UseNpgsql(configuration.GetConnectionString(DefaultConnectionStringName));
@@ -30,7 +34,6 @@ public static class InfrastructureServiceExtensions
 
         services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
         services.AddScoped(typeof(IGenericRepository<,,,>), typeof(GenericRepository<,,,>));
-        services.AddScoped<IUserAccessor, UserAccessor>();
         services.AddScoped<IClock>(_ => SystemClock.Instance);
 
         services.AddMassTransit(x => { x.UsingInMemory(); });

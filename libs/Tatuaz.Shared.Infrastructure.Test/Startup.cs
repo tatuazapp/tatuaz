@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,7 +27,6 @@ public class Startup
     {
         var config = new ConfigurationBuilder()
             .AddJsonFile("appsettings.InfrastructureTest.json")
-            .AddEnvironmentVariables("TATUAZ_")
             .Build();
 
         services.AddSingleton<IPrimitiveValuesGenerator, PrimitiveValuesGenerator>();

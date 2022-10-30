@@ -1,3 +1,5 @@
+using System;
+
 namespace Tatuaz.History.DataAccess.Exceptions;
 
 public class HistException : Exception

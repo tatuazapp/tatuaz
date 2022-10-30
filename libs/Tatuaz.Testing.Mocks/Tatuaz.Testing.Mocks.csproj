@@ -1,24 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
+  <PropertyGroup>
 
-        <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
 
-        <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>disable</ImplicitUsings>
 
-        <Nullable>enable</Nullable>
+    <Nullable>enable</Nullable>
 
-        <OutputPath>../../dist/libs/Tatuaz.Testing.Mocks</OutputPath>
-    </PropertyGroup>
+    <OutputPath>../../dist/libs/Tatuaz.Testing.Mocks</OutputPath>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="MassTransit.Abstractions" Version="8.0.7"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0"/>
-        <PackageReference Include="Moq" Version="4.18.2"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj"/>
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MassTransit.Abstractions" Version="8.0.7"/>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0"/>
+    <PackageReference Include="Moq" Version="4.18.2"/>
+  </ItemGroup>
 
 </Project>

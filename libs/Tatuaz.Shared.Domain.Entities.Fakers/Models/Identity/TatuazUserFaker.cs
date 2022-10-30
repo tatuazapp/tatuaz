@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Bogus;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 
@@ -8,7 +9,7 @@ public sealed class TatuazUserFaker : Faker<TatuazUser>
     public TatuazUserFaker()
     {
         StrictMode(true);
-        RuleFor(x => x.Id, f => f.Random.Guid());
+        RuleFor(x => x.Id, f => f.Random.Hash(20));
         RuleFor(x => x.Username, f => f.Internet.UserName());
         RuleFor(x => x.Email, f => f.Internet.Email());
         RuleFor(x => x.PhoneNumber, f => f.Phone.PhoneNumber());

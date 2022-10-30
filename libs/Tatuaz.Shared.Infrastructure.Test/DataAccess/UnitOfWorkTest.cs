@@ -1,3 +1,6 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NodaTime;
@@ -12,6 +15,7 @@ using Tatuaz.Shared.Infrastructure.Test.Helpers;
 using Tatuaz.Testing.Fakes.Common;
 using Tatuaz.Testing.Fakes.Infrastructure;
 using Tatuaz.Testing.Mocks.Queues;
+using Xunit;
 
 namespace Tatuaz.Shared.Infrastructure.Test.DataAccess;
 
@@ -152,8 +156,8 @@ public class UnitOfWorkTest
                 .FirstAsync(x => x.Id == author.Id)
                 .ConfigureAwait(false);
 
-            Assert.Equal(_primitiveValuesGenerator.Guids(0), actual.CreatedBy);
-            Assert.Equal(_primitiveValuesGenerator.Guids(0), actual.ModifiedBy);
+            Assert.Equal(_primitiveValuesGenerator.Guids(0).ToString(), actual.CreatedBy);
+            Assert.Equal(_primitiveValuesGenerator.Guids(0).ToString(), actual.ModifiedBy);
             Assert.Equal(
                 _clock.GetCurrentInstant().ToDateTimeUtc(),
                 actual.CreatedAt.ToDateTimeUtc(),
@@ -192,8 +196,8 @@ public class UnitOfWorkTest
                 .FirstAsync(x => x.Id == author.Id)
                 .ConfigureAwait(false);
 
-            Assert.Equal(_primitiveValuesGenerator.Guids(0), actual.CreatedBy);
-            Assert.Equal(_primitiveValuesGenerator.Guids(1), actual.ModifiedBy);
+            Assert.Equal(_primitiveValuesGenerator.Guids(0).ToString(), actual.CreatedBy);
+            Assert.Equal(_primitiveValuesGenerator.Guids(1).ToString(), actual.ModifiedBy);
             Assert.Equal(
                 _clock.GetCurrentInstant().ToDateTimeUtc().AddMilliseconds(-200),
                 actual.CreatedAt.ToDateTimeUtc(),
@@ -556,8 +560,8 @@ public class UnitOfWorkTest
                 .FirstAsync(x => x.Id == author.Id)
                 .ConfigureAwait(false);
 
-            Assert.Equal(_primitiveValuesGenerator.Guids(0), actual.CreatedBy);
-            Assert.Equal(_primitiveValuesGenerator.Guids(0), actual.ModifiedBy);
+            Assert.Equal(_primitiveValuesGenerator.Guids(0).ToString(), actual.CreatedBy);
+            Assert.Equal(_primitiveValuesGenerator.Guids(0).ToString(), actual.ModifiedBy);
             Assert.Equal(
                 _clock.GetCurrentInstant().ToDateTimeUtc(),
                 actual.CreatedAt.ToDateTimeUtc(),
@@ -608,8 +612,8 @@ public class UnitOfWorkTest
                 .FirstAsync(x => x.Id == author.Id)
                 .ConfigureAwait(false);
 
-            Assert.Equal(_primitiveValuesGenerator.Guids(0), actual.CreatedBy);
-            Assert.Equal(_primitiveValuesGenerator.Guids(1), actual.ModifiedBy);
+            Assert.Equal(_primitiveValuesGenerator.Guids(0).ToString(), actual.CreatedBy);
+            Assert.Equal(_primitiveValuesGenerator.Guids(1).ToString(), actual.ModifiedBy);
             Assert.Equal(
                 _clock.GetCurrentInstant().ToDateTimeUtc().AddMilliseconds(-200),
                 actual.CreatedAt.ToDateTimeUtc(),

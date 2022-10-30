@@ -1,47 +1,48 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
+  <PropertyGroup>
 
-        <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
 
-        <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>disable</ImplicitUsings>
 
-        <Nullable>enable</Nullable>
+    <Nullable>enable</Nullable>
 
-        <IsPackable>false</IsPackable>
+    <IsPackable>false</IsPackable>
 
-        <OutputPath>../../dist/apps/Tatuaz.History.Test</OutputPath>
-    </PropertyGroup>
+    <OutputPath>../../dist/apps/Tatuaz.History.Test</OutputPath>
+  </PropertyGroup>
 
-    <ItemGroup>
+  <ItemGroup>
 
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2"/>
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.7"/>
 
-        <PackageReference Include="xunit" Version="2.4.2"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2"/>
 
-        <PackageReference Include="Xunit.DependencyInjection" Version="8.6.0"/>
+    <PackageReference Include="xunit" Version="2.4.2"/>
 
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+    <PackageReference Include="Xunit.DependencyInjection" Version="8.6.0"/>
 
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
 
-            <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 
-        </PackageReference>
+      <PrivateAssets>all</PrivateAssets>
 
-        <PackageReference Include="coverlet.collector" Version="3.1.2">
+    </PackageReference>
 
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    <PackageReference Include="coverlet.collector" Version="3.1.2">
 
-            <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 
-        </PackageReference>
+      <PrivateAssets>all</PrivateAssets>
 
-    </ItemGroup>
+    </PackageReference>
 
-    <ItemGroup>
-        <ProjectReference Include="..\..\libs\Tatuaz.History.Infrastructure\Tatuaz.History.Infrastructure.csproj"/>
-        <ProjectReference Include="..\Tatuaz.History\Tatuaz.History.csproj"/>
-    </ItemGroup>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\libs\Tatuaz.History.Infrastructure\Tatuaz.History.Infrastructure.csproj"/>
+  </ItemGroup>
 
 </Project>

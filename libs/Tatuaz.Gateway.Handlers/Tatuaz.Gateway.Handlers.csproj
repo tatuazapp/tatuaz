@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+
+    <TargetFramework>net6.0</TargetFramework>
+
+    <ImplicitUsings>disable</ImplicitUsings>
+
+    <Nullable>enable</Nullable>
+
+    <OutputPath>../../dist/libs/Tatuaz.Gateway.Handlers</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tatuaz.Gateway.Infrastructure\Tatuaz.Gateway.Infrastructure.csproj"/>
+    <ProjectReference Include="..\Tatuaz.Gateway.Requests\Tatuaz.Gateway.Requests.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0"/>
+  </ItemGroup>
+
+</Project>

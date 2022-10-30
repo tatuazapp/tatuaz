@@ -1,3 +1,4 @@
+using System;
 using Bogus;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Tatuaz.Shared.Domain.Entities.Models.Common;

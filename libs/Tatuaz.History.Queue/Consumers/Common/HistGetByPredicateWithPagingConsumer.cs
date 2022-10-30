@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 using Tatuaz.History.DataAccess.Services;

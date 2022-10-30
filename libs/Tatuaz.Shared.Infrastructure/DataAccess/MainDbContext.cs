@@ -10,10 +10,14 @@ public class MainDbContext : DbContext
     {
     }
 
+    public MainDbContext()
+    {
+    }
+
     // identity
-    public DbSet<TatuazUser> TatuazUsers { get; set; }
-    public DbSet<TatuazRole> TatuazRoles { get; set; }
-    public DbSet<TatuazUserRole> TatuazUserRoles { get; set; }
+    public DbSet<TatuazUser> TatuazUsers { get; set; } = default!;
+    public DbSet<TatuazRole> TatuazRoles { get; set; } = default!;
+    public DbSet<TatuazUserRole> TatuazUserRoles { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

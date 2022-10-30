@@ -1,3 +1,4 @@
+using System;
 using Bogus;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 
@@ -9,13 +10,13 @@ public sealed class TatuazUserRoleFaker : Faker<TatuazUserRole>
     {
         StrictMode(true);
         RuleFor(x => x.Id, f => f.Random.Guid());
-        RuleFor(x => x.TatuazUserId, f => f.Random.Guid());
+        RuleFor(x => x.TatuazUserId, f => f.Random.Hash(20));
         RuleFor(x => x.TatuazUser, f => null!);
         RuleFor(x => x.TatuazRoleId, f => f.Random.Guid());
         RuleFor(x => x.TatuazRole, f => null!);
     }
 
-    public TatuazUserRole FromUserIdAndRoleId(Guid tatuazUserId, Guid tatuazRoleId)
+    public TatuazUserRole FromUserIdAndRoleId(string tatuazUserId, Guid tatuazRoleId)
     {
         var generated = Generate();
         generated.TatuazUserId = tatuazUserId;

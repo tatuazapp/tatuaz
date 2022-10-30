@@ -1,4 +1,8 @@
+using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
@@ -8,7 +12,7 @@ using Tatuaz.Shared.Infrastructure.Abstractions.Specification;
 
 namespace Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 
-public interface IGenericRepository<TDbContext, TEntity, THistEntity, in TId>
+public interface IGenericRepository<TDbContext, TEntity, THistEntity, in TId> : IDisposable
     where TDbContext : DbContext
     where TEntity : Entity<THistEntity, TId>, new()
     where THistEntity : HistEntity<TId>, new()
@@ -76,7 +80,7 @@ public interface IGenericRepository<TDbContext, TEntity, THistEntity, in TId>
         CancellationToken cancellationToken = default
     );
 
-    Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
-    Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);
+    void Create(TEntity entity);
+    void Delete(TEntity entity);
     Task DeleteAsync(TId id, CancellationToken cancellationToken = default);
 }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 
 public class PagedData<T>

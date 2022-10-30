@@ -1,3 +1,5 @@
+using System;
+
 namespace Tatuaz.History.Queue;
 
 public static class HistoryQueueConstants

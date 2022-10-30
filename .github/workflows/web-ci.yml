@@ -43,8 +43,8 @@ jobs:
       - name: Lint affected
         run: npx nx affected --target=lint --parallel=3
 
-      - name: Test affected
-        run: npx nx affected --target=test --parallel=3
-
       - name: Build affected
         run: npx nx affected --target=build --parallel=3
+
+      - name: Test affected
+        run: npx nx affected --target=test --parallel=3
