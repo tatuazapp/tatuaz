@@ -1,14 +1,15 @@
 import styled from "styled-components"
+import { rem } from "../../../styles/utils"
 
 export const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: ${({ theme }) => theme.space.small};
   align-items: center;
   justify-content: center;
 
-  max-width: 400px;
-  padding: 16px;
+  max-width: ${rem(400)};
+  padding: ${({ theme }) => theme.space.small};
 
   background-color: #fff;
   border-radius: 8px;

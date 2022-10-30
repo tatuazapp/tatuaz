@@ -14,12 +14,23 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
         hostname: "**.googleusercontent.com",
       },
     ],
+  },
+  exportPathMap: async function (defaultPathMap, { dev }) {
+    if (dev) {
+      return defaultPathMap
+    }
+
+    return {
+      "/": { page: "/" },
+      "/404": { page: "/404" },
+    }
   },
 }
 

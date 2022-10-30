@@ -1,5 +1,4 @@
 import { extendTheme } from "@chakra-ui/react"
-import styled from "styled-components"
 import { theme } from "./theme"
 
 const chakraTheme = extendTheme({
@@ -36,7 +35,3 @@ const chakraTheme = extendTheme({
 })
 
 export default chakraTheme
-
-styled.div`
-  background: ${(props) => props.theme.colors.primary};
-`
