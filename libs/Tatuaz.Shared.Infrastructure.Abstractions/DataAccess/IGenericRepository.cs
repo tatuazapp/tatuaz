@@ -12,12 +12,13 @@ using Tatuaz.Shared.Infrastructure.Abstractions.Specification;
 
 namespace Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 
-public interface IGenericRepository<TDbContext, TEntity, THistEntity, in TId> : IDisposable
-    where TDbContext : DbContext
+public interface IGenericRepository<TEntity, THistEntity, in TId> : IDisposable
     where TEntity : Entity<THistEntity, TId>, new()
     where THistEntity : HistEntity<TId>, new()
     where TId : notnull
 {
+    void ExplicitlyUseDbContext(DbContext dbContext);
+
     Task<TEntity?> GetByIdAsync(
         TId id,
         bool track = false,

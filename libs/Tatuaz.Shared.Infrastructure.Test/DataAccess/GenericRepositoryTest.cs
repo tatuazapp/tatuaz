@@ -6,7 +6,6 @@ using Moq;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 using Tatuaz.Shared.Infrastructure.Abstractions.Specification;
-using Tatuaz.Shared.Infrastructure.Test.Database.Simple;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Fakers;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.HistModels;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Models;
@@ -16,13 +15,13 @@ namespace Tatuaz.Shared.Infrastructure.Test.DataAccess;
 
 public class GenericRepositoryTest
 {
-    private readonly IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> _authorRepository;
+    private readonly IGenericRepository<Author, HistAuthor, Guid> _authorRepository;
 
-    private readonly BooksDbContext _dbContext;
+    private readonly DbContext _dbContext;
 
     public GenericRepositoryTest(
-        BooksDbContext dbContext,
-        IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+        DbContext dbContext,
+        IGenericRepository<Author, HistAuthor, Guid> authorRepository
     )
     {
         _dbContext = dbContext;
@@ -32,8 +31,8 @@ public class GenericRepositoryTest
     public class GetByIdAsyncTest : GenericRepositoryTest
     {
         public GetByIdAsyncTest(
-            BooksDbContext dbContext,
-            IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
         ) : base(dbContext, authorRepository)
         {
         }
@@ -118,8 +117,8 @@ public class GenericRepositoryTest
     public class ExistsByIdAsyncTest : GenericRepositoryTest
     {
         public ExistsByIdAsyncTest(
-            BooksDbContext dbContext,
-            IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
         ) : base(dbContext, authorRepository)
         {
         }
@@ -150,8 +149,8 @@ public class GenericRepositoryTest
     public class GetBySpecificationAsyncTest : GenericRepositoryTest
     {
         public GetBySpecificationAsyncTest(
-            BooksDbContext dbContext,
-            IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
         ) : base(dbContext, authorRepository)
         {
         }
@@ -181,8 +180,8 @@ public class GenericRepositoryTest
     public class GetBySpecificationWithPagingAsyncTest : GenericRepositoryTest
     {
         public GetBySpecificationWithPagingAsyncTest(
-            BooksDbContext dbContext,
-            IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
         ) : base(dbContext, authorRepository)
         {
         }
@@ -216,8 +215,8 @@ public class GenericRepositoryTest
     public class ExistsByPredicateAsyncTest : GenericRepositoryTest
     {
         public ExistsByPredicateAsyncTest(
-            BooksDbContext dbContext,
-            IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
         ) : base(dbContext, authorRepository)
         {
         }
@@ -251,8 +250,8 @@ public class GenericRepositoryTest
     public class CountByPredicateAsyncTest : GenericRepositoryTest
     {
         public CountByPredicateAsyncTest(
-            BooksDbContext dbContext,
-            IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
         ) : base(dbContext, authorRepository)
         {
         }
@@ -287,8 +286,8 @@ public class GenericRepositoryTest
     public class CreateAsyncTest : GenericRepositoryTest
     {
         public CreateAsyncTest(
-            BooksDbContext dbContext,
-            IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
         ) : base(dbContext, authorRepository)
         {
         }
@@ -308,8 +307,8 @@ public class GenericRepositoryTest
     public class DeleteAsyncTest : GenericRepositoryTest
     {
         public DeleteAsyncTest(
-            BooksDbContext dbContext,
-            IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
         ) : base(dbContext, authorRepository)
         {
         }

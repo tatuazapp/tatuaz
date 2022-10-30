@@ -2,7 +2,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Tatuaz.Gateway.Infrastructure;
 using Tatuaz.Gateway.Requests.Queries.Users;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
@@ -17,11 +16,11 @@ public class WhoAmIQueryHandler : IRequestHandler<WhoAmIQuery, TatuazResult<User
 {
     private readonly IMapper _mapper;
     private readonly IUserAccessor _userAccessor;
-    private readonly IGenericRepository<GatewayDbContext, TatuazUser, HistTatuazUser, string> _userRepository;
+    private readonly IGenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
 
     public WhoAmIQueryHandler(
         IMapper mapper,
-        IGenericRepository<GatewayDbContext, TatuazUser, HistTatuazUser, string> userRepository,
+        IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository,
         IUserAccessor userAccessor
     )
     {

@@ -1,26 +1,24 @@
 using System;
 using System.Reflection;
 using MassTransit;
-using Microsoft.EntityFrameworkCore;
 using Tatuaz.Shared.Infrastructure.DataAccess;
 
 namespace Tatuaz.Shared.Infrastructure.Test.Helpers;
 
-public class UnitOfWorkTestAccessor<TDbContext>
-    where TDbContext : DbContext
+public class UnitOfWorkTestAccessor
 {
-    public UnitOfWorkTestAccessor(UnitOfWork<TDbContext> unitOfWork)
+    public UnitOfWorkTestAccessor(UnitOfWork unitOfWork)
     {
         UnitOfWork = unitOfWork;
     }
 
-    public UnitOfWork<TDbContext> UnitOfWork { get; set; }
+    public UnitOfWork UnitOfWork { get; set; }
 
     public ISendEndpointProvider SendEndpointProvider
     {
         get
         {
-            var field = typeof(UnitOfWork<TDbContext>).GetField(
+            var field = typeof(UnitOfWork).GetField(
                 "_sendEndpointProvider",
                 BindingFlags.NonPublic | BindingFlags.Instance
             );
@@ -29,7 +27,7 @@ public class UnitOfWorkTestAccessor<TDbContext>
         }
         set
         {
-            var field = typeof(UnitOfWork<TDbContext>).GetField(
+            var field = typeof(UnitOfWork).GetField(
                 "_sendEndpointProvider",
                 BindingFlags.NonPublic | BindingFlags.Instance
             );

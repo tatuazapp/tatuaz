@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 
-public interface IUnitOfWork<TDbContext> : IDisposable
-    where TDbContext : DbContext
+public interface IUnitOfWork : IDisposable
 {
+    void ExplicitlyUseDbContext(DbContext dbContext);
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
     Task RunInTransactionAsync(

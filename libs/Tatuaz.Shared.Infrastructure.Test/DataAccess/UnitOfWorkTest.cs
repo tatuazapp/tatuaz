@@ -8,7 +8,6 @@ using NodaTime.Testing;
 using Tatuaz.History.Queue.Contracts;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
-using Tatuaz.Shared.Infrastructure.Test.Database.Simple;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Fakers;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Models;
 using Tatuaz.Shared.Infrastructure.Test.Helpers;
@@ -22,18 +21,18 @@ namespace Tatuaz.Shared.Infrastructure.Test.DataAccess;
 public class UnitOfWorkTest
 {
     private readonly IClock _clock;
-    private readonly BooksDbContext _dbContext;
+    private readonly DbContext _dbContext;
     private readonly IPrimitiveValuesGenerator _primitiveValuesGenerator;
     private readonly TimeSpan _testPrecision = TimeSpan.FromMilliseconds(10);
 
-    private readonly IUnitOfWork<BooksDbContext> _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IUserAccessor _userAccessor;
 
     public UnitOfWorkTest(
-        IUnitOfWork<BooksDbContext> unitOfWork,
+        IUnitOfWork unitOfWork,
         IPrimitiveValuesGenerator primitiveValuesGenerator,
         IUserAccessor userAccessor,
-        BooksDbContext dbContext,
+        DbContext dbContext,
         IClock clock
     )
     {
@@ -47,10 +46,10 @@ public class UnitOfWorkTest
     public class SaveChangesAsyncTest : UnitOfWorkTest
     {
         public SaveChangesAsyncTest(
-            IUnitOfWork<BooksDbContext> unitOfWork,
+            IUnitOfWork unitOfWork,
             IPrimitiveValuesGenerator primitiveValuesGenerator,
             IUserAccessor userAccessor,
-            BooksDbContext dbContext,
+            DbContext dbContext,
             IClock clock
         ) : base(unitOfWork, primitiveValuesGenerator, userAccessor, dbContext, clock)
         {
@@ -216,7 +215,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpHistoryChangesOnCreate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -235,7 +234,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpMultipleHistoryChangesOnCreate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -256,7 +255,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpHistoryChangesOnUpdate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -281,7 +280,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpMultipleHistoryChangesOnUpdate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -309,7 +308,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpHistoryChangesOnDelete()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -334,7 +333,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpMultipleHistoryChangesOnDelete()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -362,10 +361,10 @@ public class UnitOfWorkTest
     public class RunInTransactionAsyncTest : UnitOfWorkTest
     {
         public RunInTransactionAsyncTest(
-            IUnitOfWork<BooksDbContext> unitOfWork,
+            IUnitOfWork unitOfWork,
             IPrimitiveValuesGenerator primitiveValuesGenerator,
             IUserAccessor userAccessor,
-            BooksDbContext dbContext,
+            DbContext dbContext,
             IClock clock
         ) : base(unitOfWork, primitiveValuesGenerator, userAccessor, dbContext, clock)
         {
@@ -632,7 +631,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpHistoryChangesOnCreate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -656,7 +655,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpMultipleHistoryChangesOnCreate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -682,7 +681,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpHistoryChangesOnUpdate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -712,7 +711,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpMultipleHistoryChangesOnUpdate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -745,7 +744,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpHistoryChangesOnDelete()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -775,7 +774,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpMultipleHistoryChangesOnDelete()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -808,7 +807,7 @@ public class UnitOfWorkTest
         public async Task ShouldNot_DumpHistoryChangesDirectlyAfterSaveChangesAsync()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();

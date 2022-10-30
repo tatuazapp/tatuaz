@@ -14,16 +14,37 @@ using Tatuaz.Shared.Infrastructure.Abstractions.Specification;
 
 namespace Tatuaz.Shared.Infrastructure.DataAccess;
 
-public class GenericRepository<TDbContext, TEntity, THistEntity, TId>
-    : IGenericRepository<TDbContext, TEntity, THistEntity, TId>
-    where TDbContext : DbContext
+public class GenericRepository<TEntity, THistEntity, TId>
+    : IGenericRepository<TEntity, THistEntity, TId>
     where TEntity : Entity<THistEntity, TId>, new()
     where THistEntity : HistEntity<TId>, new()
     where TId : notnull
 {
-    private readonly TDbContext _dbContext;
+    private DbContext _dbContext;
 
-    public GenericRepository(TDbContext dbContext)
+    public GenericRepository(DbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+    /// <summary>
+    ///     Use only if you want to use other dbContext than configured in DI container.
+    /// </summary>
+    /// <example>
+    ///     <code>
+    /// using(var scope = _scopeFactory.CreateScope())
+    /// {
+    ///     var dbContext = scope.ServiceProvider.GetRequiredService<Example_db_context>
+    ///             ();
+    ///             // use dbContext
+    ///             }
+    ///             // here this repository won't work if you want
+    ///             // to use it again you have to call ExplicitlyUseDbContext method
+    ///             // with dbContext from DI container
+    /// </code>
+    /// </example>
+    /// <param name="dbContext"></param>
+    public void ExplicitlyUseDbContext(DbContext dbContext)
     {
         _dbContext = dbContext;
     }
