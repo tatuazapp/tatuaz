@@ -37,7 +37,9 @@
           "default": {
             "variation": "default",
             "version": "sktwi1xtmkfgx8626",
-            "items": [{}],
+            "items": [
+              {}
+            ],
             "primary": {
               "image": {
                 "dimensions": {
@@ -109,7 +111,9 @@
           "default": {
             "variation": "default",
             "version": "sktwi1xtmkfgx8626",
-            "items": [{}],
+            "items": [
+              {}
+            ],
             "primary": {
               "title": [
                 {

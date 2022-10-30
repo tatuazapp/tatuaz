@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@tatuaz/ui": ["libs/ui/src/index.ts"]
+      "@tatuaz/ui": ["libs/ui/src/index.ts"],
+      "@tatuaz/utils": ["libs/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

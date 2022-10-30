@@ -14,7 +14,7 @@ const Image: FunctionComponent<ImageProps> = ({
   <section>
     {prismicH.isFilled.image(image) && (
       <div>
-        <PrismicNextImage field={image} layout="responsive" />
+        <PrismicNextImage field={image} />
       </div>
     )}
   </section>

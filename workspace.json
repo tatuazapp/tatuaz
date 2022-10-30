@@ -37,6 +37,7 @@
     "testing-helpers": "libs/Tatuaz.Testing.Helpers",
     "testing-mocks": "libs/Tatuaz.Testing.Mocks",
     "ui": "libs/ui",
+    "utils": "libs/utils",
     "web": "apps/web",
     "web-e2e": "apps/web-e2e"
   }
