@@ -5,7 +5,7 @@
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["dist/apps/Tatuaz.History.Test"],
+      "outputs": ["{workspaceRoot}/dist/apps/Tatuaz.History.Test"],
       "options": {
         "configuration": "Debug"
       },

@@ -1,21 +1,19 @@
-import { SliceZone } from "@prismicio/react"
-import { createClient } from "../prismicio"
-import { components } from "../slices"
+import { useAuth0 } from "@auth0/auth0-react"
+import { Container } from "@chakra-ui/react"
+import AppLayout from "../components/auth/AppLayout"
+import { Profile } from "../components/auth/Profile"
+import { SignInButton } from "../components/auth/SignInButton"
 
-const Index = ({ page }) => (
-  <SliceZone components={components} slices={page.data.slices} />
-)
+const Index = () => {
+  const { isAuthenticated, isLoading } = useAuth0()
+
+  return (
+    <AppLayout>
+      <Container centerContent>
+        {isAuthenticated || isLoading ? <Profile /> : <SignInButton />}
+      </Container>
+    </AppLayout>
+  )
+}
 
 export default Index
-
-export async function getStaticProps({ previewData }) {
-  const client = createClient({ previewData })
-
-  const page = await client.getSingle("test")
-
-  return {
-    props: {
-      page,
-    },
-  }
-}
