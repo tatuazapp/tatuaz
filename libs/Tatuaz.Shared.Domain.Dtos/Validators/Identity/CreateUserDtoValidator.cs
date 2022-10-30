@@ -21,7 +21,9 @@ public class CreateUserDtoValidator : AbstractValidator<CreateUserDto>
                     .ConfigureAwait(false);
             })
             .WithErrorCode(CreateUserErrorCodes.EmailAlreadyExists)
-            .WithMessage("Email already exists");
+            .WithMessage("Email already exists")
+            .MaximumLength(256)
+            .WithErrorCode(CreateUserErrorCodes.EmailTooLong);
 
         RuleFor(x => x.Username)
             .NotEmpty().WithErrorCode(CreateUserErrorCodes.UsernameEmpty)

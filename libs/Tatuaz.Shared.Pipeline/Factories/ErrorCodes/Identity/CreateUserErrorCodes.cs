@@ -6,6 +6,7 @@ public class CreateUserErrorCodes
 
     public const string EmailEmpty = "EmailEmpty";
     public const string EmailInvalid = "EmailInvalid";
+    public const string EmailTooLong = "EmailTooLong";
     public const string EmailAlreadyExists = "EmailAlreadyExists";
 
     public const string UsernameEmpty = "UsernameEmpty";
