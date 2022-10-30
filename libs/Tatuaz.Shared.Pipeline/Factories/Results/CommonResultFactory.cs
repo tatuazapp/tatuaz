@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Net;
 using FluentValidation.Results;
 using Tatuaz.Shared.Pipeline.Factories.Errors;

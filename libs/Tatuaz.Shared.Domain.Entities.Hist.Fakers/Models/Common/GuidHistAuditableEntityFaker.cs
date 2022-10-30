@@ -1,3 +1,4 @@
+using System;
 using Bogus;
 using NodaTime.Extensions;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;

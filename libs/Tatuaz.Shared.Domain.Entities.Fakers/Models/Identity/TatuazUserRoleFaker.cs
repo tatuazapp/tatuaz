@@ -1,3 +1,4 @@
+using System;
 using Bogus;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 

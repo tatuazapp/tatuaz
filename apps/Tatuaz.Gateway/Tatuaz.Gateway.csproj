@@ -6,7 +6,7 @@
 
     <Nullable>enable</Nullable>
 
-    <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>disable</ImplicitUsings>
 
     <OutputPath>../../dist/apps/Tatuaz.Gateway</OutputPath>
 

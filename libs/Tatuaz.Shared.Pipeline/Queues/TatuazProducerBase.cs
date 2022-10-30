@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using MassTransit;
 using Tatuaz.Shared.Pipeline.Messages;
 

@@ -1,3 +1,5 @@
+using System;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using RestSharp;
 using Tatuaz.Gateway.Configuration.Options;

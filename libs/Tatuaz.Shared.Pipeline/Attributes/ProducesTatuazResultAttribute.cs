@@ -1,3 +1,5 @@
+using System;
+
 namespace Tatuaz.Shared.Pipeline.Attributes;
 
 [AttributeUsage(AttributeTargets.Method)]

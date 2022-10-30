@@ -1,4 +1,8 @@
+using System;
 using System.Net;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 
 namespace Tatuaz.Gateway.Middleware;

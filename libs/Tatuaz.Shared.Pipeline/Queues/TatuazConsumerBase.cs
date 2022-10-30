@@ -1,4 +1,6 @@
+using System;
 using System.Net;
+using System.Threading.Tasks;
 using MassTransit;
 using Tatuaz.Shared.Pipeline.Factories.Errors;
 using Tatuaz.Shared.Pipeline.Messages;

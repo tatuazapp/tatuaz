@@ -1,7 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using NodaTime;
 using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.DataAccess.Test.Utils;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
+using Xunit;
 
 namespace Tatuaz.History.DataAccess.Test.Services;
 

@@ -1,3 +1,4 @@
+using System;
 using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Shared.Pipeline.Attributes;

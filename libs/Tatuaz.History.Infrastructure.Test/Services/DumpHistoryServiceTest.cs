@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NodaTime;
@@ -5,6 +9,7 @@ using Tatuaz.History.DataAccess.Exceptions;
 using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.DataAccess.Test.Utils;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
+using Xunit;
 
 namespace Tatuaz.History.DataAccess.Test.Services;
 

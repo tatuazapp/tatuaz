@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 using Tatuaz.History.Queue.Contracts;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;

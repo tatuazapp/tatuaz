@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Bogus;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 

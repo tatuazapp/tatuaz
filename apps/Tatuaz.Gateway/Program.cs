@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Logging;
 using Tatuaz.Gateway.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);

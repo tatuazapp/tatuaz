@@ -1,3 +1,4 @@
+using System;
 using Bogus;
 using NodaTime.Extensions;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Models;

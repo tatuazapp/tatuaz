@@ -1,3 +1,6 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
 namespace Tatuaz.History.DataAccess.Services;

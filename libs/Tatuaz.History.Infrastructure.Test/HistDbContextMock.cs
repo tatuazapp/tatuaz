@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Moq;
 using Moq.EntityFrameworkCore;
 using Tatuaz.History.DataAccess.Test.Utils;
