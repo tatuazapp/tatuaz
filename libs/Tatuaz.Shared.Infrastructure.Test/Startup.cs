@@ -39,6 +39,8 @@ public class Startup
                 config.GetConnectionString("InfrastructureTest"),
                 npgsqlOpt => { npgsqlOpt.UseNodaTime(); }
             );
+            opt.EnableDetailedErrors();
+            opt.EnableSensitiveDataLogging();
             opt.UseSnakeCaseNamingConvention();
         });
         services.AddScoped<DbContext, BooksDbContext>();
