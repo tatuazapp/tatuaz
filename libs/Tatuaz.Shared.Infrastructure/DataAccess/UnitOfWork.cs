@@ -13,27 +13,27 @@ using Tatuaz.History.Queue.Util;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Tatuaz.Shared.Domain.Entities.Models.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using static System.GC;
 
 namespace Tatuaz.Shared.Infrastructure.DataAccess;
 
-public class UnitOfWork<TDbContext> : IUnitOfWork<TDbContext>
-    where TDbContext : DbContext
+public class UnitOfWork : IUnitOfWork
 {
     private readonly IClock _clock;
-    private readonly TDbContext _context;
     private readonly List<HistEntity> _histEntitiesToDump;
     private readonly ISendEndpointProvider _sendEndpointProvider;
     private readonly IUserAccessor _userAccessor;
     private IDbContextTransaction? _currentTransaction;
+    private DbContext _dbContext;
 
     public UnitOfWork(
-        TDbContext context,
+        DbContext dbContext,
         IUserAccessor userAccessor,
         IClock clock,
         ISendEndpointProvider sendEndpointProvider
     )
     {
-        _context = context;
+        _dbContext = dbContext;
         _userAccessor = userAccessor;
         _clock = clock;
         _sendEndpointProvider = sendEndpointProvider;
@@ -43,16 +43,38 @@ public class UnitOfWork<TDbContext> : IUnitOfWork<TDbContext>
 
     public void Dispose()
     {
-        _context.Dispose();
+        _dbContext.Dispose();
         _currentTransaction = null;
-        GC.SuppressFinalize(this);
+        SuppressFinalize(this);
+    }
+
+    /// <summary>
+    ///     Use only if you want to use other dbContext than configured in DI container.
+    /// </summary>
+    /// <example>
+    ///     <code>
+    /// using(var scope = _scopeFactory.CreateScope())
+    /// {
+    ///     var dbContext = scope.ServiceProvider.GetRequiredService<Example_db_context>
+    ///             ();
+    ///             // use dbContext
+    ///             }
+    ///             // here this uow won't work if you want
+    ///             // to use it again you have to call ExplicitlyUseDbContext method
+    ///             // with dbContext from DI container
+    /// </code>
+    /// </example>
+    /// <param name="dbContext"></param>
+    public void ExplicitlyUseDbContext(DbContext dbContext)
+    {
+        _dbContext = dbContext;
     }
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         UpdateUserContext();
         _histEntitiesToDump.AddRange(GetDumpHistoryOrders());
-        var changes = await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        var changes = await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         if (_currentTransaction == null)
         {
             await DumpHistoryChanges(cancellationToken).ConfigureAwait(false);
@@ -67,7 +89,7 @@ public class UnitOfWork<TDbContext> : IUnitOfWork<TDbContext>
         CancellationToken cancellationToken = default
     )
     {
-        _currentTransaction = await _context.Database
+        _currentTransaction = await _dbContext.Database
             .BeginTransactionAsync(cancellationToken)
             .ConfigureAwait(false);
         try
@@ -110,7 +132,7 @@ public class UnitOfWork<TDbContext> : IUnitOfWork<TDbContext>
 
     private IEnumerable<HistEntity> GetDumpHistoryOrders()
     {
-        return _context.ChangeTracker
+        return _dbContext.ChangeTracker
             .Entries<IHistDumpableEntity>()
             .Where(x => x.State is EntityState.Added or EntityState.Modified or EntityState.Deleted)
             .Select(x => x.Entity.ToHistEntity(_clock, HistStateFromEntityState(x.State)))
@@ -130,7 +152,7 @@ public class UnitOfWork<TDbContext> : IUnitOfWork<TDbContext>
 
     private void UpdateUserContext()
     {
-        var auditableEntries = _context.ChangeTracker.Entries<IAuditableEntity>().ToList();
+        var auditableEntries = _dbContext.ChangeTracker.Entries<IAuditableEntity>().ToList();
         foreach (var entry in auditableEntries.Where(x => x.State == EntityState.Added))
         {
             entry.Entity.UpdateCreationData(_userAccessor.CurrentUserId, _clock);

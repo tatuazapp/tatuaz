@@ -31,8 +31,8 @@ public class Startup
 
         services.AddSingleton<IPrimitiveValuesGenerator, PrimitiveValuesGenerator>();
         services.AddScoped<IUserAccessor, UserAccessorFake>();
-        services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
-        services.AddScoped(typeof(IGenericRepository<,,,>), typeof(GenericRepository<,,,>));
+        services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+        services.AddScoped(typeof(IGenericRepository<,,>), typeof(GenericRepository<,,>));
         services.AddDbContext<BooksDbContext>(opt =>
         {
             opt.UseNpgsql(
@@ -41,6 +41,7 @@ public class Startup
             );
             opt.UseSnakeCaseNamingConvention();
         });
+        services.AddScoped<DbContext, BooksDbContext>();
         services.AddScoped<IClock>(_ => new FakeClock(Instant.FromUtc(2021, 1, 1, 0, 0)));
 
         services.RegisterQueuesMocks();
@@ -48,7 +49,7 @@ public class Startup
 
     public void Configure(IServiceProvider applicationServices)
     {
-        var dbContext = applicationServices.GetRequiredService<BooksDbContext>();
+        var dbContext = applicationServices.GetRequiredService<DbContext>();
         dbContext.Database.EnsureDeleted();
         dbContext.Database.EnsureCreated();
     }

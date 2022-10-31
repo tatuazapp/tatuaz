@@ -15,11 +15,11 @@ public class TatuazControllerBase : ControllerBase
 
     protected IMediator Mediator { get; set; }
 
-    public ActionResult<TData> ResultToActionResult<TData>(TatuazResult<TData> result)
+    public IActionResult ResultToActionResult<TData>(TatuazResult<TData> result)
     {
         if (result.Successful)
         {
-            return Ok(HttpHelpers.ToOkObject(result));
+            return new ObjectResult(HttpHelpers.ToOkObject(result)) { StatusCode = (int)result.HttpStatusCode };
         }
 
         return new ObjectResult(HttpHelpers.ToErrorsObject(result.Errors)) { StatusCode = (int)result.HttpStatusCode };

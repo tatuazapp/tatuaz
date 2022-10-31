@@ -1,6 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text.Json;
+using FluentValidation;
 using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,6 +22,7 @@ using Tatuaz.Gateway.Configuration.Options;
 using Tatuaz.Gateway.Handlers.Queries.Users;
 using Tatuaz.Gateway.Infrastructure;
 using Tatuaz.Gateway.Requests.Queries.Users;
+using Tatuaz.Gateway.Swagger;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
@@ -59,6 +64,7 @@ public static class ServiceExtensions
     {
         services.AddTatuazControllers();
         services.AddTatuazSwagger();
+        services.AddTatuazValidators();
         services.AddTatuazCors();
         services.AddTatuazAuth0(configuration);
         services.AddTatuazGatewayInfrastructure(configuration);
@@ -96,15 +102,51 @@ public static class ServiceExtensions
     {
         services.AddSwaggerGen(opt =>
         {
+            opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Description = @"JWT Authorization header using the Bearer scheme.",
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer"
+            });
+
+            opt.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        },
+                        Scheme = "oauth2",
+                        Name = "Bearer",
+                        In = ParameterLocation.Header,
+
+                    },
+                    new List<string>()
+                }
+            });
+            opt.SchemaFilter<FluentValidationSchemaFilter>();
             opt.SwaggerDoc(
                 "v1",
                 new OpenApiInfo { Version = "v1", Title = "tatuaz.app API", Description = "API for tatuaz.app" }
             );
-            opt.IncludeXmlComments($"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            opt.IncludeXmlComments(xmlPath);
             opt.SupportNonNullableReferenceTypes();
             opt.CustomSchemaIds(type => type.ShortDisplayName().Replace('<', '_').Replace(">", ""));
         });
 
+        return services;
+    }
+
+    public static IServiceCollection AddTatuazValidators(this IServiceCollection services)
+    {
+        services.AddValidatorsFromAssemblies(new[] { typeof(CreateUserDto).Assembly });
         return services;
     }
 
@@ -186,8 +228,9 @@ public static class ServiceExtensions
             opt.UseSnakeCaseNamingConvention();
         });
 
-        services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
-        services.AddScoped(typeof(IGenericRepository<,,,>), typeof(GenericRepository<,,,>));
+        services.AddScoped<DbContext, GatewayDbContext>();
+        services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+        services.AddScoped(typeof(IGenericRepository<,,>), typeof(GenericRepository<,,>));
 
         services.AddSingleton<IUserAccessor, GatewayUserAccessor>();
         services.AddScoped<IClock>(_ => SystemClock.Instance);

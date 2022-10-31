@@ -1,16 +1,28 @@
+using Tatuaz.Gateway.HttpResponses;
 using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway;
 
 public static class HttpHelpers
 {
-    public static object ToOkObject<TData>(TatuazResult<TData> result)
+    /// <summary>
+    ///     Helper method for generating response.
+    /// </summary>
+    /// <param name="result"></param>
+    /// <typeparam name="TData"></typeparam>
+    /// <returns></returns>
+    public static OkResponse<TData> ToOkObject<TData>(TatuazResult<TData> result)
     {
-        return new { result.Value, result.Successful };
+        return new OkResponse<TData>(result.Value);
     }
 
-    public static object ToErrorsObject(params TatuazError[] errors)
+    /// <summary>
+    ///     Helper method for generating response.
+    /// </summary>
+    /// <param name="errors"></param>
+    /// <returns></returns>
+    public static ErrorResponse ToErrorsObject(params TatuazError[] errors)
     {
-        return new { Errors = errors };
+        return new ErrorResponse(errors);
     }
 }

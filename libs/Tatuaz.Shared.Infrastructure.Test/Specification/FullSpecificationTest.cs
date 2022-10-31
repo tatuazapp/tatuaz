@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.Specification;
-using Tatuaz.Shared.Infrastructure.Test.Database.Simple;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Fakers;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.HistModels;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Models;
@@ -14,15 +13,15 @@ namespace Tatuaz.Shared.Infrastructure.Test.Specification;
 
 public class FullSpecificationTest
 {
-    private readonly IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> _authorRepository;
+    private readonly IGenericRepository<Author, HistAuthor, Guid> _authorRepository;
 
-    private readonly BooksDbContext _dbContext;
-    private readonly IUnitOfWork<BooksDbContext> _unitOfWork;
+    private readonly DbContext _dbContext;
+    private readonly IUnitOfWork _unitOfWork;
 
     public FullSpecificationTest(
-        BooksDbContext dbContext,
-        IUnitOfWork<BooksDbContext> unitOfWork,
-        IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+        DbContext dbContext,
+        IUnitOfWork unitOfWork,
+        IGenericRepository<Author, HistAuthor, Guid> authorRepository
     )
     {
         _dbContext = dbContext;
@@ -33,9 +32,9 @@ public class FullSpecificationTest
     public class TrackingStrategyTest : FullSpecificationTest
     {
         public TrackingStrategyTest(
-            BooksDbContext dbContext,
-            IUnitOfWork<BooksDbContext> unitOfWork,
-            IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+            DbContext dbContext,
+            IUnitOfWork unitOfWork,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
         ) : base(dbContext, unitOfWork, authorRepository)
         {
         }
@@ -116,9 +115,9 @@ public class FullSpecificationTest
     public class AddFilterTest : FullSpecificationTest
     {
         public AddFilterTest(
-            BooksDbContext dbContext,
-            IUnitOfWork<BooksDbContext> unitOfWork,
-            IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+            DbContext dbContext,
+            IUnitOfWork unitOfWork,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
         ) : base(dbContext, unitOfWork, authorRepository)
         {
         }
@@ -142,9 +141,9 @@ public class FullSpecificationTest
     public class AddOrderTest : FullSpecificationTest
     {
         public AddOrderTest(
-            BooksDbContext dbContext,
-            IUnitOfWork<BooksDbContext> unitOfWork,
-            IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+            DbContext dbContext,
+            IUnitOfWork unitOfWork,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
         ) : base(dbContext, unitOfWork, authorRepository)
         {
         }
@@ -193,9 +192,9 @@ public class FullSpecificationTest
     public class AddIncludeTest : FullSpecificationTest
     {
         public AddIncludeTest(
-            BooksDbContext dbContext,
-            IUnitOfWork<BooksDbContext> unitOfWork,
-            IGenericRepository<BooksDbContext, Author, HistAuthor, Guid> authorRepository
+            DbContext dbContext,
+            IUnitOfWork unitOfWork,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository
         ) : base(dbContext, unitOfWork, authorRepository)
         {
         }

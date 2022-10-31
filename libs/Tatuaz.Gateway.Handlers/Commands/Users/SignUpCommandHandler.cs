@@ -1,9 +1,9 @@
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Tatuaz.Gateway.Infrastructure;
 using Tatuaz.Gateway.Requests.Commands.Users;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Domain.Dtos.Validators.Identity;
@@ -19,13 +19,13 @@ namespace Tatuaz.Gateway.Handlers.Commands.Users;
 public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<UserDto>>
 {
     private readonly IMapper _mapper;
-    private readonly IUnitOfWork<GatewayDbContext> _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IUserAccessor _userAccessor;
-    private readonly IGenericRepository<GatewayDbContext, TatuazUser, HistTatuazUser, string> _userRepository;
+    private readonly IGenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
 
     public SignUpCommandHandler(
-        IGenericRepository<GatewayDbContext, TatuazUser, HistTatuazUser, string> userRepository,
-        IUnitOfWork<GatewayDbContext> unitOfWork,
+        IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository,
+        IUnitOfWork unitOfWork,
         IMapper mapper,
         IUserAccessor userAccessor
     )
@@ -38,7 +38,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
 
     public async Task<TatuazResult<UserDto>> Handle(SignUpCommand request, CancellationToken cancellationToken)
     {
-        var validationResult = await new CreateUserDtoValidator<GatewayDbContext>(_userRepository)
+        var validationResult = await new CreateUserDtoValidator(_userRepository)
             .ValidateAsync(request.CreateUserDto, cancellationToken).ConfigureAwait(false);
 
         if (!validationResult.IsValid)
@@ -58,6 +58,6 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
         _userRepository.Create(user);
         await _unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
-        return CommonResultFactory.Ok(_mapper.Map<UserDto>(user));
+        return CommonResultFactory.Ok(_mapper.Map<UserDto>(user), HttpStatusCode.Created);
     }
 }

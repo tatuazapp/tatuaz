@@ -1,5 +1,4 @@
 using FluentValidation;
-using Microsoft.EntityFrameworkCore;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
@@ -9,10 +8,9 @@ using Tatuaz.Shared.Pipeline.Factories.ErrorCodes.Identity;
 
 namespace Tatuaz.Shared.Domain.Dtos.Validators.Identity;
 
-public class CreateUserDtoValidator<TDbContext> : AbstractValidator<CreateUserDto>
-    where TDbContext : DbContext
+public class CreateUserDtoValidator : AbstractValidator<CreateUserDto>
 {
-    public CreateUserDtoValidator(IGenericRepository<TDbContext, TatuazUser, HistTatuazUser, string> userRepository)
+    public CreateUserDtoValidator(IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository)
     {
         RuleFor(x => x.Email)
             .NotEmpty().WithErrorCode(CreateUserErrorCodes.EmailEmpty)
@@ -23,7 +21,9 @@ public class CreateUserDtoValidator<TDbContext> : AbstractValidator<CreateUserDt
                     .ConfigureAwait(false);
             })
             .WithErrorCode(CreateUserErrorCodes.EmailAlreadyExists)
-            .WithMessage("Email already exists");
+            .WithMessage("Email already exists")
+            .MaximumLength(256)
+            .WithErrorCode(CreateUserErrorCodes.EmailTooLong);
 
         RuleFor(x => x.Username)
             .NotEmpty().WithErrorCode(CreateUserErrorCodes.UsernameEmpty)
@@ -38,8 +38,7 @@ public class CreateUserDtoValidator<TDbContext> : AbstractValidator<CreateUserDt
             .WithMessage("Username already exists");
 
         RuleFor(x => x.PhoneNumber)
-            .Must(phoneNumber =>
-                string.IsNullOrEmpty(phoneNumber) || RegexUtils.PhoneNumberRegex.IsMatch(phoneNumber))
+            .Matches(RegexUtils.PhoneNumberRegex)
             .WithErrorCode(CreateUserErrorCodes.PhoneNumberInvalid)
             .WithMessage("Phone number is invalid");
     }

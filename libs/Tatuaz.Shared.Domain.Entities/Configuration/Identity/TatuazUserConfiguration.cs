@@ -12,13 +12,13 @@ public class TatuazUserConfiguration : IEntityTypeConfiguration<TatuazUser>
 
         builder
             .Property(x => x.Username)
-            .HasMaxLength(128);
+            .HasMaxLength(32);
         builder
             .Property(x => x.Email)
             .HasMaxLength(256);
         builder
             .Property(x => x.PhoneNumber)
-            .HasMaxLength(64);
+            .HasMaxLength(16);
 
         builder
             .HasMany(x => x.TatuazUserRoles)
