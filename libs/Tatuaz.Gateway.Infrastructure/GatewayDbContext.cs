@@ -14,9 +14,9 @@ public class GatewayDbContext : DbContext
     {
     }
 
-    public DbSet<TatuazUser> TatuazUsers { get; set; } = default!;
-    public DbSet<TatuazRole> TatuazRoles { get; set; } = default!;
-    public DbSet<TatuazUserRole> TatuazUserRoles { get; set; } = default!;
+    public virtual DbSet<TatuazUser> TatuazUsers { get; set; } = default!;
+    public virtual DbSet<TatuazRole> TatuazRoles { get; set; } = default!;
+    public virtual DbSet<TatuazUserRole> TatuazUserRoles { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

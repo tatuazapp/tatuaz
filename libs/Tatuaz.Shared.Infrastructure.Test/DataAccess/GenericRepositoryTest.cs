@@ -165,7 +165,7 @@ public class GenericRepositoryTest
             var specMock = new Mock<ISpecification<Author>>();
             specMock
                 .Setup(x => x.Apply(It.IsAny<IQueryable<Author>>()))
-                .Returns<IQueryable<Author>>(q => q.Where(x => x.Id == author1.Id).AsQueryable());
+                .Returns<IQueryable<Author>>(q => q.Where(x => x.Id == author1.Id));
 
             var result = (await _authorRepository
                 .GetBySpecificationAsync(specMock.Object)
@@ -196,7 +196,7 @@ public class GenericRepositoryTest
             var specMock = new Mock<ISpecification<Author>>();
             specMock
                 .Setup(x => x.Apply(It.IsAny<IQueryable<Author>>()))
-                .Returns<IQueryable<Author>>(q => q.Where(x => x.Id == author1.Id).AsQueryable());
+                .Returns<IQueryable<Author>>(q => q.Where(x => x.Id == author1.Id));
 
             var result = await _authorRepository
                 .GetBySpecificationWithPagingAsync(specMock.Object, new PagedParams(1, 1))

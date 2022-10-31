@@ -6,7 +6,7 @@
       "dotnetRunMessages": true,
       "launchBrowser": false,
       "launchUrl": "api-docs",
-      "applicationUrl": "http://localhost:80",
+      "applicationUrl": "http://localhost:31337",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -16,7 +16,7 @@
       "dotnetRunMessages": true,
       "launchBrowser": false,
       "launchUrl": "api-docs",
-      "applicationUrl": "http://localhost:80",
+      "applicationUrl": "http://localhost:31337",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Staging"
       }
@@ -26,7 +26,7 @@
       "dotnetRunMessages": true,
       "launchBrowser": false,
       "launchUrl": "api-docs",
-      "applicationUrl": "http://localhost:80",
+      "applicationUrl": "http://localhost:31337",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"
       }

@@ -7,8 +7,6 @@ public sealed class UserDtoFaker : Faker<UserDto>
 {
     public UserDtoFaker()
     {
-        StrictMode(true);
-        RuleFor(x => x.Email, f => f.Internet.Email());
-        RuleFor(x => x.Username, f => f.Internet.UserName());
+        CustomInstantiator(f => new UserDto(f.Internet.Email(), f.Internet.UserName()));
     }
 }

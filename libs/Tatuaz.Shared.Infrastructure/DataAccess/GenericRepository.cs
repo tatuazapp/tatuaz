@@ -55,7 +55,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
         CancellationToken cancellationToken = default
     )
     {
-        var baseQuery = _dbContext.Set<TEntity>().AsQueryable();
+        IQueryable<TEntity> baseQuery = _dbContext.Set<TEntity>();
         if (!track)
         {
             baseQuery = baseQuery.AsNoTracking();
@@ -78,7 +78,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
 
     public async Task<bool> ExistsByIdAsync(TId id, CancellationToken cancellationToken = default)
     {
-        var baseQuery = _dbContext.Set<TEntity>().AsQueryable();
+        var baseQuery = _dbContext.Set<TEntity>();
         return await baseQuery
             .AnyAsync(x => x.Id.Equals(id), cancellationToken)
             .ConfigureAwait(false);
