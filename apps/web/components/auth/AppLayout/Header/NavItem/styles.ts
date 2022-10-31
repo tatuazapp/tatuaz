@@ -2,7 +2,7 @@ import Link from "next/link"
 import styled from "styled-components"
 import { rem } from "../../../../../styles/utils"
 
-export const NavItemWrapper = styled(Link)`
+export const NavItemWrapper = styled(Link)<{ active?: boolean }>`
   cursor: pointer;
 
   position: relative;
@@ -18,9 +18,9 @@ export const NavItemWrapper = styled(Link)`
 
     position: absolute;
     bottom: 0;
-    left: 50%;
+    left: ${({ active }) => (active ? 0 : "50%")};
 
-    width: 0;
+    width: ${({ active }) => (active ? "100%" : 0)};
     height: 3px;
 
     background-color: ${({ theme }) => theme.colors.secondary};

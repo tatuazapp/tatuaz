@@ -4,11 +4,17 @@ import { NavItemWrapper } from "./styles"
 type NavItemProps = {
   children: React.ReactNode
   href: string
+  active?: boolean
 }
 
 const NavItem: FunctionComponent<NavItemProps> = ({
   href,
   children: title,
-}) => <NavItemWrapper href={href}>{title}</NavItemWrapper>
+  active = false,
+}) => (
+  <NavItemWrapper active={active} href={href}>
+    {title}
+  </NavItemWrapper>
+)
 
 export default NavItem
