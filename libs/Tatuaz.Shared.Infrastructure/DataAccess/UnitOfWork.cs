@@ -154,7 +154,7 @@ public class UnitOfWork : IUnitOfWork
     {
         var auditableEntries = _dbContext.ChangeTracker.Entries<IAuditableEntity>().ToList();
         var userId = _userAccessor.CurrentUserId;
-        if(userId == null)
+        if (userId == null)
         {
             throw new ArgumentNullException(nameof(userId), "User id can't be null");
         }
