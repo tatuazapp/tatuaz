@@ -22,15 +22,8 @@ const nextConfig = {
       },
     ],
   },
-  exportPathMap: async function (defaultPathMap, { dev }) {
-    if (dev) {
-      return defaultPathMap
-    }
-
-    return {
-      "/": { page: "/" },
-      "/404": { page: "/404" },
-    }
+  exportPathMap: async function (defaultPathMap) {
+    return defaultPathMap
   },
 }
 
