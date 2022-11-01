@@ -153,14 +153,19 @@ public class UnitOfWork : IUnitOfWork
     private void UpdateUserContext()
     {
         var auditableEntries = _dbContext.ChangeTracker.Entries<IAuditableEntity>().ToList();
+        var userId = _userAccessor.CurrentUserId;
+        if (userId == null)
+        {
+            throw new ArgumentNullException(nameof(userId), "User id can't be null");
+        }
         foreach (var entry in auditableEntries.Where(x => x.State == EntityState.Added))
         {
-            entry.Entity.UpdateCreationData(_userAccessor.CurrentUserId, _clock);
+            entry.Entity.UpdateCreationData(userId, _clock);
         }
 
         foreach (var entry in auditableEntries.Where(x => x.State is EntityState.Modified))
         {
-            entry.Entity.UpdateModificationData(_userAccessor.CurrentUserId, _clock);
+            entry.Entity.UpdateModificationData(userId, _clock);
         }
     }
 }
