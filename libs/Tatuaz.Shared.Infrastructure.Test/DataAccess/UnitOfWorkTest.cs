@@ -12,7 +12,6 @@ using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Fakers;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Models;
-using Tatuaz.Shared.Infrastructure.Test.Helpers;
 using Tatuaz.Testing.Mocks.Infrastructure;
 using Tatuaz.Testing.Mocks.Queues;
 using Xunit;
@@ -327,16 +326,12 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DumpCorrectHistStateOnAdd()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
 
             _dbContext.Add(author);
             await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
@@ -344,7 +339,7 @@ public class UnitOfWorkTest
                 Times.Once
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
@@ -352,7 +347,7 @@ public class UnitOfWorkTest
                 Times.Never
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
@@ -364,10 +359,6 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DumpCorrectHistStateOnUpdate()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
 
             _dbContext.Add(author);
@@ -376,7 +367,7 @@ public class UnitOfWorkTest
             author.FirstName = "Adam";
             await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
@@ -384,7 +375,7 @@ public class UnitOfWorkTest
                 Times.Never
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
@@ -392,7 +383,7 @@ public class UnitOfWorkTest
                 Times.Once
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
@@ -404,10 +395,6 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DumpCorrectHistStateOnDelete()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
 
             _dbContext.Add(author);
@@ -416,7 +403,7 @@ public class UnitOfWorkTest
             _dbContext.Remove(author);
             await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
@@ -424,7 +411,7 @@ public class UnitOfWorkTest
                 Times.Never
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
@@ -432,7 +419,7 @@ public class UnitOfWorkTest
                 Times.Never
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
@@ -709,10 +696,6 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DumpHistoryChangesOnCreate()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
 
             await _unitOfWork
@@ -723,8 +706,8 @@ public class UnitOfWorkTest
                 })
                 .ConfigureAwait(false);
 
-            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Once);
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Once);
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
                 Times.Once
             );
@@ -733,10 +716,6 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DumpMultipleHistoryChangesOnCreate()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
             var book = BookFaker.FromAuthorId(author.Id);
 
@@ -749,8 +728,8 @@ public class UnitOfWorkTest
                 })
                 .ConfigureAwait(false);
 
-            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Once);
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Once);
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(2)
             );
@@ -759,10 +738,6 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DumpHistoryChangesOnUpdate()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
 
             _dbContext.Add(author);
@@ -776,11 +751,11 @@ public class UnitOfWorkTest
                 })
                 .ConfigureAwait(false);
 
-            sendEndpointProviderMock.Verify(
+            _sendEndpointProviderMock.Verify(
                 x => x.GetSendEndpoint(It.IsAny<Uri>()),
                 Times.Exactly(2)
             );
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(2)
             );
@@ -789,10 +764,6 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DumpMultipleHistoryChangesOnUpdate()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
             var book = BookFaker.FromAuthorId(author.Id);
 
@@ -809,11 +780,11 @@ public class UnitOfWorkTest
                 })
                 .ConfigureAwait(false);
 
-            sendEndpointProviderMock.Verify(
+            _sendEndpointProviderMock.Verify(
                 x => x.GetSendEndpoint(It.IsAny<Uri>()),
                 Times.Exactly(2)
             );
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(4)
             );
@@ -822,10 +793,6 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DumpHistoryChangesOnDelete()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
 
             _dbContext.Add(author);
@@ -839,11 +806,11 @@ public class UnitOfWorkTest
                 })
                 .ConfigureAwait(false);
 
-            sendEndpointProviderMock.Verify(
+            _sendEndpointProviderMock.Verify(
                 x => x.GetSendEndpoint(It.IsAny<Uri>()),
                 Times.Exactly(2)
             );
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(2)
             );
@@ -852,10 +819,6 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DumpMultipleHistoryChangesOnDelete()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
             var book = BookFaker.FromAuthorId(author.Id);
 
@@ -872,11 +835,11 @@ public class UnitOfWorkTest
                 })
                 .ConfigureAwait(false);
 
-            sendEndpointProviderMock.Verify(
+            _sendEndpointProviderMock.Verify(
                 x => x.GetSendEndpoint(It.IsAny<Uri>()),
                 Times.Exactly(2)
             );
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(4)
             );
@@ -885,10 +848,6 @@ public class UnitOfWorkTest
         [Fact]
         public async Task ShouldNot_DumpHistoryChangesDirectlyAfterSaveChangesAsync()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
 
             await _unitOfWork
@@ -896,19 +855,19 @@ public class UnitOfWorkTest
                 {
                     _dbContext.Add(author);
                     await _unitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
-                    sendEndpointProviderMock.Verify(
+                    _sendEndpointProviderMock.Verify(
                         x => x.GetSendEndpoint(It.IsAny<Uri>()),
                         Times.Never
                     );
-                    sendEndpointProviderMock.SendEndpointMock.Verify(
+                    _sendEndpointProviderMock.SendEndpointMock.Verify(
                         x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
                         Times.Never
                     );
                 })
                 .ConfigureAwait(false);
 
-            sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Once);
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.Verify(x => x.GetSendEndpoint(It.IsAny<Uri>()), Times.Once);
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(It.IsAny<DumpHistoryOrder>(), It.IsAny<CancellationToken>()),
                 Times.Once
             );
@@ -917,10 +876,6 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DumpCorrectHistStateOnAdd()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
 
             await _unitOfWork
@@ -931,7 +886,7 @@ public class UnitOfWorkTest
                 })
                 .ConfigureAwait(false);
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
@@ -939,7 +894,7 @@ public class UnitOfWorkTest
                 Times.Once
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
@@ -947,7 +902,7 @@ public class UnitOfWorkTest
                 Times.Never
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
@@ -959,10 +914,6 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DumpCorrectHistStateOnUpdate()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
 
             _dbContext.Add(author);
@@ -976,7 +927,7 @@ public class UnitOfWorkTest
                 })
                 .ConfigureAwait(false);
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
@@ -984,7 +935,7 @@ public class UnitOfWorkTest
                 Times.Never
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
@@ -992,7 +943,7 @@ public class UnitOfWorkTest
                 Times.Once
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
@@ -1004,10 +955,6 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DumpCorrectHistStateOnDelete()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
 
             _dbContext.Add(author);
@@ -1021,7 +968,7 @@ public class UnitOfWorkTest
                 })
                 .ConfigureAwait(false);
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
@@ -1029,7 +976,7 @@ public class UnitOfWorkTest
                 Times.Never
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
@@ -1037,7 +984,7 @@ public class UnitOfWorkTest
                 Times.Never
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
@@ -1049,10 +996,6 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DumpCorrectHistStateOnMultipleAdd()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
             var book = BookFaker.FromAuthorId(author.Id);
 
@@ -1065,7 +1008,7 @@ public class UnitOfWorkTest
                 })
                 .ConfigureAwait(false);
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
@@ -1073,7 +1016,7 @@ public class UnitOfWorkTest
                 Times.Exactly(2)
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
@@ -1081,7 +1024,7 @@ public class UnitOfWorkTest
                 Times.Never
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
@@ -1093,10 +1036,6 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DumpCorrectHistStateOnMultipleUpdate()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
             var book = BookFaker.FromAuthorId(author.Id);
 
@@ -1113,7 +1052,7 @@ public class UnitOfWorkTest
                 })
                 .ConfigureAwait(false);
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
@@ -1121,7 +1060,7 @@ public class UnitOfWorkTest
                 Times.Never
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
@@ -1129,7 +1068,7 @@ public class UnitOfWorkTest
                 Times.Exactly(2)
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
@@ -1141,10 +1080,6 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DumpCorrectHistStateOnMultipleDelete()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
             var book = BookFaker.FromAuthorId(author.Id);
 
@@ -1161,7 +1096,7 @@ public class UnitOfWorkTest
                 })
                 .ConfigureAwait(false);
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
@@ -1169,7 +1104,7 @@ public class UnitOfWorkTest
                 Times.Never
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
@@ -1177,7 +1112,7 @@ public class UnitOfWorkTest
                 Times.Never
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
@@ -1189,10 +1124,6 @@ public class UnitOfWorkTest
         [Fact]
         public async Task Should_DumpCorrectHistStateOnAddUpdateDelete()
         {
-            var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
-                sendEndpointProviderMock.Object;
-
             var author = AuthorFaker.Generate();
 
             await _unitOfWork
@@ -1207,7 +1138,7 @@ public class UnitOfWorkTest
                 })
                 .ConfigureAwait(false);
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
@@ -1215,7 +1146,7 @@ public class UnitOfWorkTest
                 Times.Once
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
@@ -1223,7 +1154,7 @@ public class UnitOfWorkTest
                 Times.Once
             );
 
-            sendEndpointProviderMock.SendEndpointMock.Verify(
+            _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
                     It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
