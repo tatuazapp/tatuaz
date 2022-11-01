@@ -1,9 +1,5 @@
-﻿using System;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Threading;
 using System.Threading.Tasks;
-using Moq;
 using Tatuaz.Shared.Domain.Dtos.Fakers.Identity;
 using Tatuaz.Shared.Domain.Dtos.Validators.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
@@ -17,7 +13,7 @@ namespace Tatuaz.Shared.Domain.Dtos.Test.Validators.Identity;
 public class CreateUserDtoValidatorTest
 {
     private readonly GatewayDbContextMock _dbContextMock;
-    private readonly GenericRepository<TatuazUser,HistTatuazUser,string> _userRepository;
+    private readonly GenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
     private readonly CreateUserDtoFaker _createUserDtoFaker;
 
     public CreateUserDtoValidatorTest()
@@ -85,7 +81,7 @@ public class CreateUserDtoValidatorTest
         public async Task Should_ReturnInvalidWhenEmailIsInvalid()
         {
             var createUserDto = _createUserDtoFaker.Generate();
-            createUserDto = createUserDto with {Email = "invalidEmail"};
+            createUserDto = createUserDto with { Email = "invalidEmail" };
             var validator = new CreateUserDtoValidator(_userRepository);
 
             var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
@@ -97,7 +93,7 @@ public class CreateUserDtoValidatorTest
         public async Task Should_ReturnInvalidWhenEmailTooLong()
         {
             var createUserDto = _createUserDtoFaker.Generate();
-            createUserDto = createUserDto with {Email = new string('a', 247) + "@gmail.com"};
+            createUserDto = createUserDto with { Email = new string('a', 247) + "@gmail.com" };
             var validator = new CreateUserDtoValidator(_userRepository);
 
             var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
@@ -109,7 +105,7 @@ public class CreateUserDtoValidatorTest
         public async Task Should_ReturnInvalidWhenUsernameTooLong()
         {
             var createUserDto = _createUserDtoFaker.Generate();
-            createUserDto = createUserDto with {Username = new string('a', 33)};
+            createUserDto = createUserDto with { Username = new string('a', 33) };
             var validator = new CreateUserDtoValidator(_userRepository);
 
             var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
@@ -121,7 +117,7 @@ public class CreateUserDtoValidatorTest
         public async Task Should_ReturnInvalidWhenUsernameTooShort()
         {
             var createUserDto = _createUserDtoFaker.Generate();
-            createUserDto = createUserDto with {Username = new string('a', 3)};
+            createUserDto = createUserDto with { Username = new string('a', 3) };
             var validator = new CreateUserDtoValidator(_userRepository);
 
             var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
@@ -133,7 +129,7 @@ public class CreateUserDtoValidatorTest
         public async Task Should_ReturnInvalidWhenPhoneNumberInvalid()
         {
             var createUserDto = _createUserDtoFaker.Generate();
-            createUserDto = createUserDto with {PhoneNumber = "invalidPhoneNumber"};
+            createUserDto = createUserDto with { PhoneNumber = "invalidPhoneNumber" };
             var validator = new CreateUserDtoValidator(_userRepository);
 
             var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);

@@ -8,8 +8,6 @@ using NodaTime.Testing;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple;
-using Tatuaz.Testing.Fakes.Common;
-using Tatuaz.Testing.Fakes.Infrastructure;
 using Tatuaz.Testing.Mocks.Queues;
 
 namespace Tatuaz.Shared.Infrastructure.Test;
@@ -29,8 +27,6 @@ public class Startup
             .AddJsonFile("appsettings.InfrastructureTest.json")
             .Build();
 
-        services.AddSingleton<IPrimitiveValuesGenerator, PrimitiveValuesGenerator>();
-        services.AddScoped<IUserAccessor, UserAccessorFake>();
         services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
         services.AddScoped(typeof(IGenericRepository<,,>), typeof(GenericRepository<,,>));
         services.AddDbContext<BooksDbContext>(opt =>

@@ -1,18 +1,13 @@
-﻿using System;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using Tatuaz.Gateway.Handlers.Commands.Users;
 using Tatuaz.Gateway.Requests.Commands.Users;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Domain.Dtos.Fakers.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
-using Tatuaz.Shared.Infrastructure.DataAccess;
 using Tatuaz.Testing.Mocks.Infrastructure;
 using Xunit;
 
