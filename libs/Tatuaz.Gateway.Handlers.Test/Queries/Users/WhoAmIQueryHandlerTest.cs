@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -42,7 +42,7 @@ public class WhoAmIQueryHandlerTest
             var query = new WhoAmIQuery();
             var handler = new WhoAmIQueryHandler(_mapper, _userRepositoryMock.Object, _userAccessorMock.Object);
             var result = await handler.Handle(query, CancellationToken.None).ConfigureAwait(false);
-            
+
             Assert.True(result.Successful);
             Assert.NotNull(result.Value);
             Assert.Equal(user.Email, result.Value.Email);
@@ -60,12 +60,12 @@ public class WhoAmIQueryHandlerTest
             var query = new WhoAmIQuery();
             var handler = new WhoAmIQueryHandler(_mapper, _userRepositoryMock.Object, _userAccessorMock.Object);
             var result = await handler.Handle(query, CancellationToken.None).ConfigureAwait(false);
-            
+
             Assert.False(result.Successful);
             Assert.Null(result.Value);
             Assert.Equal("InternalError", result.Errors.First().Code);
         }
-        
+
         [Fact]
         public async Task Should_ReturnErrorWhenUserAccessorReturnsNull()
         {
@@ -74,7 +74,7 @@ public class WhoAmIQueryHandlerTest
             var query = new WhoAmIQuery();
             var handler = new WhoAmIQueryHandler(_mapper, _userRepositoryMock.Object, _userAccessorMock.Object);
             var result = await handler.Handle(query, CancellationToken.None).ConfigureAwait(false);
-            
+
             Assert.False(result.Successful);
             Assert.Null(result.Value);
             Assert.Equal("InternalError", result.Errors.First().Code);
