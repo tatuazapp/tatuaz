@@ -45,6 +45,7 @@
     <ProjectReference Include="..\Tatuaz.Gateway.Handlers\Tatuaz.Gateway.Handlers.csproj" />
     <ProjectReference Include="..\Tatuaz.Shared.Domain.Dtos.Fakers\Tatuaz.Shared.Domain.Dtos.Fakers.csproj" />
     <ProjectReference Include="..\Tatuaz.Shared.Domain.Dtos\Tatuaz.Shared.Domain.Dtos.csproj" />
+    <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities.Fakers\Tatuaz.Shared.Domain.Entities.Fakers.csproj" />
     <ProjectReference Include="..\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj" />
     <ProjectReference Include="..\Tatuaz.Testing.Mocks\Tatuaz.Testing.Mocks.csproj" />
   </ItemGroup>

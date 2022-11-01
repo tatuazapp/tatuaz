@@ -10,7 +10,7 @@ public class UserAccessorMock : Mock<IUserAccessor>
         Setup(x => x.CurrentUserId).Returns("1");
     }
 
-    public UserAccessorMock ReturnUserId(string userId)
+    public UserAccessorMock ReturnUserId(string? userId)
     {
         Setup(x => x.CurrentUserId).Returns(userId);
         return this;

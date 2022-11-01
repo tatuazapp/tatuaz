@@ -1,10 +1,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Tatuaz.Gateway.Infrastructure;
 using Tatuaz.Gateway.Requests.Queries.Users;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
+using Tatuaz.Shared.Domain.Entities.Models.Identity;
+using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 
 namespace Tatuaz.Gateway.Handlers.Queries.Users;
 
@@ -20,9 +21,8 @@ public class UserExistsQueryHandler : IRequestHandler<UserExistsQuery, bool>
     public async Task<bool> Handle(UserExistsQuery request, CancellationToken cancellationToken)
     {
         using var scope = _scopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<GatewayDbContext>();
-        return await dbContext.TatuazUsers
-            .FirstOrDefaultAsync(x => x.Id == request.UserId, cancellationToken)
-            .ConfigureAwait(false) != null;
+        var userRepository = scope.ServiceProvider
+            .GetRequiredService<IGenericRepository<TatuazUser, HistTatuazUser, string>>();
+        return await userRepository.ExistsByIdAsync(request.UserId, cancellationToken).ConfigureAwait(false);
     }
 }
