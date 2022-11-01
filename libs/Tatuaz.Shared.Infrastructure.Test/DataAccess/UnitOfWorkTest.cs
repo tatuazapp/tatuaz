@@ -363,7 +363,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpCorrectHistStateOnAdd()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -400,7 +400,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpCorrectHistStateOnUpdate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -440,7 +440,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpCorrectHistStateOnDelete()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -958,7 +958,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpCorrectHistStateOnAdd()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -1000,7 +1000,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpCorrectHistStateOnUpdate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -1045,7 +1045,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpCorrectHistStateOnDelete()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -1090,7 +1090,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpCorrectHistStateOnMultipleAdd()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -1134,7 +1134,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpCorrectHistStateOnMultipleUpdate()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -1182,7 +1182,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpCorrectHistStateOnMultipleDelete()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
@@ -1230,7 +1230,7 @@ public class UnitOfWorkTest
         public async Task Should_DumpCorrectHistStateOnAddUpdateDelete()
         {
             var sendEndpointProviderMock = new SendEndpointProviderMock();
-            new UnitOfWorkTestAccessor<BooksDbContext>((UnitOfWork<BooksDbContext>)_unitOfWork).SendEndpointProvider =
+            new UnitOfWorkTestAccessor((UnitOfWork)_unitOfWork).SendEndpointProvider =
                 sendEndpointProviderMock.Object;
 
             var author = AuthorFaker.Generate();
