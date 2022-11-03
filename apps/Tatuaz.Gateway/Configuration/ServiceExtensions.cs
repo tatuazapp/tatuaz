@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using FluentValidation;
 using MassTransit;
 using MediatR;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NodaTime;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using Tatuaz.Gateway.Authorization;
 using Tatuaz.Gateway.Configuration.Helpers;
 using Tatuaz.Gateway.Configuration.Options;
@@ -88,6 +90,7 @@ public static class ServiceExtensions
             {
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                 options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
         return service;
@@ -110,6 +113,7 @@ public static class ServiceExtensions
                 Type = SecuritySchemeType.ApiKey,
                 Scheme = "Bearer"
             });
+            
 
             opt.AddSecurityRequirement(new OpenApiSecurityRequirement()
             {

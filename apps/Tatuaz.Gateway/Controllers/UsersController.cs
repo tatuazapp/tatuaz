@@ -21,7 +21,7 @@ public class UsersController : TatuazControllerBase
     ///     Check what user is logged in
     /// </summary>
     /// <returns>UserDto</returns>
-    [HttpGet("[action]")]
+    [HttpPost("[action]")]
     [AuthorizeActiveUser]
     [Produces("application/json")]
     [Consumes("application/json")]

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using Tatuaz.Gateway.Configuration.Options;
 using Tatuaz.Gateway.Middleware;
 
@@ -19,9 +20,12 @@ public static class WebApplicationExtensions
             {
                 cfg.SwaggerEndpoint("/api-docs/v1/swagger.json", "tatuaz.app API");
                 cfg.RoutePrefix = "api-docs";
+                cfg.DocumentTitle = "Halloween API";
+                cfg.InjectStylesheet("/Assets/swagger/halloween.css");
             });
         }
 
+        app.UseStaticFiles();
         app.UseRouting();
 
         app.UseAuthentication();

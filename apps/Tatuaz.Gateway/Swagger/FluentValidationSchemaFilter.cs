@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Text;
+using AutoMapper;
 using FluentValidation;
 using FluentValidation.Validators;
 using Microsoft.Extensions.DependencyInjection;
