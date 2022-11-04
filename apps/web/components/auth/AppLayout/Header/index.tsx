@@ -35,7 +35,7 @@ const Header: FunctionComponent<HeaderProps> = () => {
         {navItems.map((item) => (
           <NavItem
             key={item.href}
-            active={router.pathname == item.href}
+            active={router.pathname === item.href}
             href={item.href}
           >
             {item.title}

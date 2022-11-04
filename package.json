@@ -14,7 +14,8 @@
     "web:prismic:generate": "cd apps/web && prismic-ts-codegen",
     "web:i18n:compile": "formatjs compile apps/web/i18n/pl.temp.json  --out-file apps/web/i18n/pl.json && rm apps/web/i18n/pl.temp.json",
     "web:i18n:extract": "formatjs extract \"apps/web/**/*.ts*\" --ignore='**/*.d.ts' --out-file apps/web/i18n/pl.temp.json",
-    "web:i18n": "npm run web:i18n:extract && npm run web:i18n:compile"
+    "web:i18n": "npm run web:i18n:extract && npm run web:i18n:compile",
+    "web:generate": "swagger-typescript-api -p http://localhost:31337/api-docs/v1/swagger.json -o ./apps/web/api -n tatuazApi.ts -r"
   },
   "private": true,
   "dependencies": {
@@ -29,8 +30,10 @@
     "@prismicio/react": "2.5.0",
     "@prismicio/slice-simulator-react": "0.2.2",
     "@swc/helpers": "0.3.3",
+    "@tanstack/react-query": "4.13.5",
     "core-js": "3.6.5",
     "framer-motion": "7.6.2",
+    "lodash": "4.17.21",
     "next": "13.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -105,6 +108,7 @@
     "stylelint-config-prettier": "9.0.3",
     "stylelint-order": "5.0.0",
     "stylelint-prettier": "2.0.0",
+    "swagger-typescript-api": "11.1.2",
     "ts-jest": "28.0.5",
     "ts-node": "10.9.1",
     "typescript": "4.8.4",
