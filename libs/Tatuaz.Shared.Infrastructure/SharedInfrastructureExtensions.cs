@@ -1,26 +1,24 @@
-using MassTransit;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using NodaTime;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
 
 namespace Tatuaz.Shared.Infrastructure;
 
-public static class InfrastructureServiceExtensions
+public static class SharedInfrastructureExtensions
 {
-    public const string DefaultConnectionStringName = "TatuazMainDb";
-
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration,
-        ILogger logger)
+    public const string MainDbConnectionStringName = "TatuazMainDb";
+    public const string HistDbConnectionStringName = "TatuazHistDb";
+    
+    public static IServiceCollection RegisterSharedInfrastructureServices<TDbContext>(this IServiceCollection services, string connectionString)
+    where TDbContext : DbContext
     {
-        logger.LogInformation("Adding infrastructure services");
-        services.AddDbContext<MainDbContext>(opt =>
+
+        services.AddDbContext<TDbContext>(opt =>
         {
             opt.UseNpgsql(
-                configuration.GetConnectionString(DefaultConnectionStringName),
+                connectionString,
                 npgsqlOpt =>
                 {
                     npgsqlOpt.EnableRetryOnFailure(5);
@@ -28,17 +26,14 @@ public static class InfrastructureServiceExtensions
                     npgsqlOpt.UseNodaTime();
                 }
             );
-            opt.UseNpgsql(configuration.GetConnectionString(DefaultConnectionStringName));
             opt.UseSnakeCaseNamingConvention();
         });
 
-        services.AddScoped<DbContext, MainDbContext>();
+        services.AddScoped<DbContext, TDbContext>();
         services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
         services.AddScoped(typeof(IGenericRepository<,,>), typeof(GenericRepository<,,>));
         services.AddScoped<IClock>(_ => SystemClock.Instance);
-
-        services.AddMassTransit(x => { x.UsingInMemory(); });
-
+        
         return services;
     }
 }

@@ -8,9 +8,6 @@ namespace Tatuaz.Testing.Mocks.Infrastructure;
 
 public class GatewayDbContextMock : Mock<GatewayDbContext>
 {
-    public List<TatuazUser> TatuazUsers { get; set; }
-    public List<TatuazRole> TatuazRoles { get; set; }
-    public List<TatuazUserRole> TatuazUserRoles { get; set; }
     public GatewayDbContextMock()
     {
         TatuazUsers = new List<TatuazUser>();
@@ -30,4 +27,8 @@ public class GatewayDbContextMock : Mock<GatewayDbContext>
         Setup(x => x.Remove(It.IsAny<TatuazRole>())).Callback<TatuazRole>(x => TatuazRoles.Remove(x));
         Setup(x => x.Remove(It.IsAny<TatuazUserRole>())).Callback<TatuazUserRole>(x => TatuazUserRoles.Remove(x));
     }
+
+    public List<TatuazUser> TatuazUsers { get; set; }
+    public List<TatuazRole> TatuazRoles { get; set; }
+    public List<TatuazUserRole> TatuazUserRoles { get; set; }
 }

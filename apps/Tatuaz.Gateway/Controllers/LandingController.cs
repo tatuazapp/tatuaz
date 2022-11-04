@@ -14,7 +14,7 @@ public class LandingController : TatuazControllerBase
     public LandingController(IMediator mediator) : base(mediator)
     {
     }
-    
+
     [HttpPost("[action]")]
     [Produces("application/json")]
     [Consumes("application/json")]

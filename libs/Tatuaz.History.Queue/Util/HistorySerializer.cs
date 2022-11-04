@@ -20,15 +20,10 @@ public static class HistorySerializer
     public static HistEntity DeserializeDumpHistoryOrder(DumpHistoryOrder dumpHistoryOrder)
     {
         var type = Type.GetType(dumpHistoryOrder.ObjectType);
-        if (type is null)
-        {
-            throw new InvalidOperationException("Cannot determine type of object to deserialize");
-        }
+        if (type is null) throw new InvalidOperationException("Cannot determine type of object to deserialize");
 
         if (!type.IsSubclassOf(typeof(HistEntity)))
-        {
             throw new InvalidOperationException("Cannot deserialize object of type " + type.FullName);
-        }
 
         var jsonSerializer = SerializationUtils.GetTatuazSerializerSettings();
 

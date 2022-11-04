@@ -1,33 +1,35 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
 
-  <PropertyGroup>
+    <PropertyGroup>
 
-    <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
 
-    <LangVersion>latest</LangVersion>
+        <LangVersion>latest</LangVersion>
 
-    <OutputPath>../../dist/apps/Tatuaz.History</OutputPath>
-  </PropertyGroup>
+        <OutputPath>../../dist/apps/Tatuaz.History</OutputPath>
+    </PropertyGroup>
 
-  <ItemGroup>
+    <ItemGroup>
 
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
 
-    <PackageReference Include="Serilog.AspNetCore" Version="6.0.1"/>
+        <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
 
-    <PackageReference Include="Serilog.Enrichers.MassTransit" Version="1.1.0"/>
+        <PackageReference Include="Serilog.Enrichers.MassTransit" Version="1.1.0" />
 
-    <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0"/>
+        <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
 
-    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0"/>
+        <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
 
-  </ItemGroup>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\libs\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj"/>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\libs\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj" />
+        <ProjectReference Include="..\..\libs\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\libs\Tatuaz.Shared.Pipeline\Tatuaz.Shared.Pipeline.csproj" />
+    </ItemGroup>
 
 </Project>

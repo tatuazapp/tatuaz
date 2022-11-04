@@ -1,11 +1,11 @@
 namespace Tatuaz.Gateway.Configuration.Options;
 
-public class Auth0Options
+public class AuthOpt
 {
     /// <summary>
     ///     Name of section this corresponds to in appsettings.json
     /// </summary>
-    public const string SectionName = "Auth0";
+    public const string SectionName = "Auth";
 
     /// <summary>
     ///     Auth0 authority

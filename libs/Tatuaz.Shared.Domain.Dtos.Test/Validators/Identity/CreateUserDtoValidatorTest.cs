@@ -12,9 +12,9 @@ namespace Tatuaz.Shared.Domain.Dtos.Test.Validators.Identity;
 
 public class CreateUserDtoValidatorTest
 {
+    private readonly CreateUserDtoFaker _createUserDtoFaker;
     private readonly GatewayDbContextMock _dbContextMock;
     private readonly GenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
-    private readonly CreateUserDtoFaker _createUserDtoFaker;
 
     public CreateUserDtoValidatorTest()
     {
@@ -39,7 +39,7 @@ public class CreateUserDtoValidatorTest
         public async Task Should_ReturnInvalidWhenUserEmailAlreadyExists()
         {
             var createUserDto = _createUserDtoFaker.Generate();
-            _dbContextMock.TatuazUsers.Add(new TatuazUser()
+            _dbContextMock.TatuazUsers.Add(new TatuazUser
             {
                 Email = createUserDto.Email
             });
@@ -54,7 +54,7 @@ public class CreateUserDtoValidatorTest
         public async Task Should_ReturnInvalidWhenUserUsernameAlreadyExists()
         {
             var createUserDto = _createUserDtoFaker.Generate();
-            _dbContextMock.TatuazUsers.Add(new TatuazUser()
+            _dbContextMock.TatuazUsers.Add(new TatuazUser
             {
                 Username = createUserDto.Username
             });

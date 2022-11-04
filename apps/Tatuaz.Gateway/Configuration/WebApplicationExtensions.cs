@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.SwaggerUI;
 using Tatuaz.Gateway.Configuration.Options;
 using Tatuaz.Gateway.Middleware;
 
@@ -13,7 +12,7 @@ public static class WebApplicationExtensions
     {
         app.UseMiddleware<ExceptionMiddleware>();
 
-        if (app.Services.GetService<IOptions<SwaggerOptions>>()!.Value.Enabled)
+        if (app.Services.GetService<IOptions<SwaggerOpt>>()!.Value.Enabled)
         {
             app.UseSwagger(cfg => cfg.RouteTemplate = "api-docs/{documentName}/swagger.json");
             app.UseSwaggerUI(cfg =>

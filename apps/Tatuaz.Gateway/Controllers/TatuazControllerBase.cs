@@ -18,9 +18,7 @@ public class TatuazControllerBase : ControllerBase
     public IActionResult ResultToActionResult<TData>(TatuazResult<TData> result)
     {
         if (result.Successful)
-        {
             return new ObjectResult(HttpHelpers.ToOkObject(result)) { StatusCode = (int)result.HttpStatusCode };
-        }
 
         return new ObjectResult(HttpHelpers.ToErrorsObject(result.Errors)) { StatusCode = (int)result.HttpStatusCode };
     }

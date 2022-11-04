@@ -4,5 +4,5 @@ public enum StatsTimePeriod
 {
     Day = 1,
     Week = 7,
-    Month = 31,
+    Month = 31
 }

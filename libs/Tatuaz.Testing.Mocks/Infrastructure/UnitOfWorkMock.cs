@@ -5,8 +5,4 @@ namespace Tatuaz.Testing.Mocks.Infrastructure;
 
 public class UnitOfWorkMock : Mock<IUnitOfWork>
 {
-    public UnitOfWorkMock()
-    {
-
-    }
 }

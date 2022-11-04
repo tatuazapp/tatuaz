@@ -1,20 +1,44 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Logging;
-using Tatuaz.Gateway.Configuration;
+using Serilog;
+using Tatuaz.Gateway;
+using Tatuaz.Gateway.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var logger = LoggerFactory.Create(config => { config.AddConsole(); }).CreateLogger("Program");
+builder.Services.RegisterGatewayServices(builder.Configuration);
 
-builder.Services.AddConfiguration(builder.Configuration);
-builder.Services.AddGatewayServices(builder.Configuration);
+builder.Host.RegisterGatewatHost();
 
-logger.LogInformation("Added Gateway Services");
+var swaggerOpt = builder.Configuration.GetSwaggerOpt();
 
 var app = builder.Build();
 
-app.ConfigurePipeline();
+app.UseSerilogRequestLogging();
 
-logger.LogInformation("Configured Pipeline");
+app.UseMiddleware<ExceptionMiddleware>();
+
+if (swaggerOpt.Enabled)
+{
+    app.UseSwagger(cfg => cfg.RouteTemplate = swaggerOpt.Route + "/{documentName}/swagger.json");
+    app.UseSwaggerUI(cfg =>
+    {
+        cfg.SwaggerEndpoint($"/{swaggerOpt.Route}/v1/swagger.json", swaggerOpt.Name);
+        cfg.RoutePrefix = swaggerOpt.Route;
+        cfg.DocumentTitle = swaggerOpt.Title;
+        if (!string.IsNullOrEmpty(swaggerOpt.Theme))
+        {
+            cfg.InjectStylesheet($"/Assets/swagger/{swaggerOpt.Theme}.css");
+
+        }
+    });
+}
+
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();

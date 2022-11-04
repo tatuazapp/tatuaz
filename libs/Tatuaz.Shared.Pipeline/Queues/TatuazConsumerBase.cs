@@ -2,18 +2,21 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using MassTransit;
+using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline.Factories.Errors;
 using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Shared.Pipeline.Queues;
 
 public abstract class TatuazConsumerBase<TMessage, TData> : IConsumer<TMessage>
-    where TMessage : class
+    where TMessage : TatuazMessage
 {
+    protected IUserAccessor UserAccessor { get; private set; }
     public async Task Consume(ConsumeContext<TMessage> context)
     {
         try
         {
+            UserAccessor = new InternalUserAccessor(context.Message.UserId);
             await context.RespondAsync(ConsumeMessage(context.Message)).ConfigureAwait(false);
         }
         catch (Exception exception)

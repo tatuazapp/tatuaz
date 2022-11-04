@@ -75,10 +75,7 @@ public class UnitOfWork : IUnitOfWork
         UpdateUserContext();
         _histEntitiesToDump.AddRange(GetDumpHistoryOrders());
         var changes = await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-        if (_currentTransaction == null)
-        {
-            await DumpHistoryChanges(cancellationToken).ConfigureAwait(false);
-        }
+        if (_currentTransaction == null) await DumpHistoryChanges(cancellationToken).ConfigureAwait(false);
 
         return changes;
     }
@@ -154,18 +151,11 @@ public class UnitOfWork : IUnitOfWork
     {
         var auditableEntries = _dbContext.ChangeTracker.Entries<IAuditableEntity>().ToList();
         var userId = _userAccessor.CurrentUserId;
-        if (userId == null)
-        {
-            throw new ArgumentNullException(nameof(userId), "User id can't be null");
-        }
+        if (userId == null) throw new ArgumentNullException(nameof(userId), "User id can't be null");
         foreach (var entry in auditableEntries.Where(x => x.State == EntityState.Added))
-        {
             entry.Entity.UpdateCreationData(userId, _clock);
-        }
 
         foreach (var entry in auditableEntries.Where(x => x.State is EntityState.Modified))
-        {
             entry.Entity.UpdateModificationData(userId, _clock);
-        }
     }
 }

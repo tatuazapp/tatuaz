@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Builder;
-using Tatuaz.History.Configuration;
-using Tatuaz.History.DataAccess;
+using Tatuaz.History;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.AddHistoryLogging();
-builder.Services.AddHistoryQueue(builder.Configuration);
-builder.Services.AddHistoryInfrastructure(builder.Configuration);
+builder.Services.RegisterHistoryServices(builder.Configuration);
+
+builder.Host.RegisterHistoryHost();
 
 builder.Build().Run();

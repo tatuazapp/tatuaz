@@ -22,10 +22,10 @@ public class UnitOfWorkTest
 {
     private readonly IClock _clock;
     private readonly DbContext _dbContext;
+    private readonly SendEndpointProviderMock _sendEndpointProviderMock;
     private readonly TimeSpan _testPrecision = TimeSpan.FromMilliseconds(10);
     private readonly IUnitOfWork _unitOfWork;
     private readonly UserAccessorMock _userAccessorMock;
-    private readonly SendEndpointProviderMock _sendEndpointProviderMock;
 
     public UnitOfWorkTest(
         DbContext dbContext,
@@ -41,6 +41,9 @@ public class UnitOfWorkTest
 
     public class SaveChangesAsyncTest : UnitOfWorkTest
     {
+        public SaveChangesAsyncTest(DbContext dbContext, IClock clock) : base(dbContext, clock)
+        {
+        }
 
         [Fact]
         public async Task Should_SaveInsertedElement()
@@ -333,7 +336,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Once
@@ -341,7 +345,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -349,7 +354,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -369,7 +375,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -377,7 +384,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Once
@@ -385,7 +393,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -405,7 +414,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -413,7 +423,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -421,19 +432,20 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Once
             );
         }
-        public SaveChangesAsyncTest(DbContext dbContext, IClock clock) : base(dbContext, clock)
-        {
-        }
     }
 
     public class RunInTransactionAsyncTest : UnitOfWorkTest
     {
+        public RunInTransactionAsyncTest(DbContext dbContext, IClock clock) : base(dbContext, clock)
+        {
+        }
 
         [Fact]
         public async Task Should_SaveInsertedElement()
@@ -888,7 +900,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Once
@@ -896,7 +909,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -904,7 +918,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -929,7 +944,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -937,7 +953,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Once
@@ -945,7 +962,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -970,7 +988,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -978,7 +997,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -986,7 +1006,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Once
@@ -1010,7 +1031,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Exactly(2)
@@ -1018,7 +1040,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -1026,7 +1049,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -1054,7 +1078,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -1062,7 +1087,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Exactly(2)
@@ -1070,7 +1096,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -1098,7 +1125,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -1106,7 +1134,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Never
@@ -1114,7 +1143,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Exactly(2)
@@ -1140,7 +1170,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Added),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Once
@@ -1148,7 +1179,8 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Modified),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Once
@@ -1156,14 +1188,12 @@ public class UnitOfWorkTest
 
             _sendEndpointProviderMock.SendEndpointMock.Verify(
                 x => x.Send(
-                    It.Is<DumpHistoryOrder>(o => HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
+                    It.Is<DumpHistoryOrder>(o =>
+                        HistorySerializer.DeserializeDumpHistoryOrder(o).HistState == HistState.Deleted),
                     It.IsAny<CancellationToken>()
                 ),
                 Times.Once
             );
-        }
-        public RunInTransactionAsyncTest(DbContext dbContext, IClock clock) : base(dbContext, clock)
-        {
         }
     }
 

@@ -5,7 +5,9 @@
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["dist/libs/Tatuaz.Shared.Domain.Dtos.Hist"],
+      "outputs": [
+        "dist/libs/Tatuaz.Shared.Domain.Dtos.Hist"
+      ],
       "options": {
         "configuration": "Debug"
       },

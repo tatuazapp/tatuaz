@@ -14,8 +14,8 @@ using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 namespace Tatuaz.History.DataAccess.Migrations
 {
     [DbContext(typeof(HistDbContext))]
-    [Migration("20221031002547_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20221104175152_InitialHistMigration")]
+    partial class InitialHistMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

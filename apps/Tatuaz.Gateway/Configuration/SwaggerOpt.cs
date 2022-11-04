@@ -1,6 +1,6 @@
 namespace Tatuaz.Gateway.Configuration.Options;
 
-public class SwaggerOptions
+public class SwaggerOpt
 {
     /// <summary>
     ///     Name of section this corresponds to in appsettings.json
@@ -11,4 +11,10 @@ public class SwaggerOptions
     ///     Is swagger enabled
     /// </summary>
     public bool Enabled { get; set; }
+
+    public string Route { get; set; } = default!;
+    public string Name { get; set; } = default!;
+    public string Title { get; set; } = default!;
+
+    public string? Theme { get; set; }
 }

@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Landing;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.Enums;
 using Tatuaz.Shared.Pipeline.Factories.ErrorCodes.Landing;
 
 namespace Tatuaz.Shared.Domain.Dtos.Validators.Landing;
@@ -16,8 +15,8 @@ public class GetStatsDtoValidator : AbstractValidator<ListStatsDto>
             .IsInEnum()
             .WithErrorCode(GetStatsErrorCodes.TimePeriodInvalid)
             .WithErrorCode("TimePeriod must be valid enum")
-;
-        
+            ;
+
         RuleFor(x => x.Count)
             .NotEmpty()
             .WithErrorCode(GetStatsErrorCodes.CountEmpty)

@@ -50,31 +50,24 @@ public class DumpHistoryConsumer : IConsumer<DumpHistoryOrder>
     )
     {
         var idType = toDump.GetType().GetProperty("Id")?.PropertyType;
-        if (idType is null)
-        {
-            throw new HistException($"Cannot find Id property in type {type.Name}.");
-        }
+        if (idType is null) throw new HistException($"Cannot find Id property in type {type.Name}.");
 
         var serviceType = typeof(IDumpHistoryService<,>).MakeGenericType(toDump.GetType(), idType);
         var service = _serviceProvider.GetRequiredService(serviceType);
 
         var dumpAsyncMethodInfo = service.GetType().GetMethod("DumpAsync");
         if (dumpAsyncMethodInfo is null)
-        {
             throw new HistException(
                 $"Cannot find required DumpAsync method in service {serviceType.Name}."
             );
-        }
 
         if (
             dumpAsyncMethodInfo.Invoke(service, new object[] { toDump, cancellationToken })
             is not Task<Guid> dumpTask
         )
-        {
             throw new HistException(
                 $"Cannot invoke DumpAsync method in service {serviceType.Name}."
             );
-        }
 
         return dumpTask;
     }

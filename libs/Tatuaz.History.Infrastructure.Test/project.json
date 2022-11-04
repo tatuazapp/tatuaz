@@ -5,7 +5,9 @@
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["{workspaceRoot}/dist/libs/Tatuaz.History.DataAccess.Test"],
+      "outputs": [
+        "{workspaceRoot}/dist/libs/Tatuaz.History.DataAccess.Test"
+      ],
       "options": {
         "configuration": "Debug"
       },

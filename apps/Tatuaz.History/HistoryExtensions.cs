@@ -1,13 +1,35 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
+using Tatuaz.History.DataAccess;
+using Tatuaz.History.DataAccess.Services;
+using Tatuaz.History.Queue.Consumers.Common;
+using Tatuaz.Shared.Infrastructure;
+using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using Tatuaz.Shared.Pipeline;
 
-namespace Tatuaz.History.Configuration;
+namespace Tatuaz.History;
 
-public static class HostExtensions
+public static class HistoryExtensions
 {
-    public static ConfigureHostBuilder AddHistoryLogging(this ConfigureHostBuilder host)
+    public static IServiceCollection RegisterHistoryServices(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.RegisterSharedPipelineServices(configuration, typeof(DumpHistoryConsumer).Assembly);
+
+        services.AddScoped(typeof(IDumpHistoryService<,>), typeof(DumpHistoryService<,>));
+        services.AddScoped(typeof(IHistorySearcherService<,>), typeof(HistorySearcherService<,>));
+        services.AddSingleton<IUserAccessor, HistUserAccessor>();
+
+        services.RegisterSharedInfrastructureServices<HistDbContext>(configuration.GetConnectionString(SharedInfrastructureExtensions
+            .HistDbConnectionStringName));
+        return services;
+    }
+
+    public static ConfigureHostBuilder RegisterHistoryHost(this ConfigureHostBuilder host)
     {
         host.UseSerilog(
             (context, services, loggerConfiguration) =>
@@ -44,6 +66,7 @@ public static class HostExtensions
                 loggerConfiguration.Enrich.FromMassTransit();
             }
         );
+
         return host;
     }
 }
