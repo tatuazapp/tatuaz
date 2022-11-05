@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Worker">
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
     <PropertyGroup>
 
@@ -7,7 +7,9 @@
         <LangVersion>latest</LangVersion>
 
         <OutputPath>../../dist/apps/Tatuaz.History</OutputPath>
-    </PropertyGroup>
+
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
 
     <ItemGroup>
 
@@ -30,6 +32,12 @@
         <ProjectReference Include="..\..\libs\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj" />
         <ProjectReference Include="..\..\libs\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj" />
         <ProjectReference Include="..\..\libs\Tatuaz.Shared.Pipeline\Tatuaz.Shared.Pipeline.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Update="appsettings.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

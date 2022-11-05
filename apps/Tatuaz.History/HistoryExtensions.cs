@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+using System;
+using System.IO;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -15,6 +17,17 @@ namespace Tatuaz.History;
 
 public static class HistoryExtensions
 {
+    public static IConfiguration RegisterConfiguration(this IConfiguration configuration)
+    {
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
+            .AddEnvironmentVariables();
+
+        return builder.Build();
+    }
+
     public static IServiceCollection RegisterHistoryServices(this IServiceCollection services,
         IConfiguration configuration)
     {

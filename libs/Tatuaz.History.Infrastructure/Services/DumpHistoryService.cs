@@ -47,11 +47,13 @@ public class DumpHistoryService<THistEntity, TId> : IDumpHistoryService<THistEnt
         await _histDbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         if (emptyHistId)
+        {
             _logger.LogWarning(
                 "HistId for entity with Id: {Id} was empty. Generated new one: {HistId}",
                 entity.Id,
                 entity.HistId
             );
+        }
 
         return entity.HistId;
     }
@@ -70,7 +72,9 @@ public class DumpHistoryService<THistEntity, TId> : IDumpHistoryService<THistEnt
                 )
                 .ConfigureAwait(false)
         )
+        {
             throw new HistException("Entity does not exist in history yet.");
+        }
     }
 
     private async Task ValidateNotYetDumpedAsync(
@@ -87,6 +91,8 @@ public class DumpHistoryService<THistEntity, TId> : IDumpHistoryService<THistEnt
                 )
                 .ConfigureAwait(false)
         )
+        {
             throw new HistException("Entity already exists in history");
+        }
     }
 }

@@ -18,16 +18,6 @@ public class AuthOpt
     public string Audience { get; set; } = default!;
 
     /// <summary>
-    ///     Auth0 client id
-    /// </summary>
-    public string ClientId { get; set; } = default!;
-
-    /// <summary>
-    ///     Auth0 client secret
-    /// </summary>
-    public string ClientSecret { get; set; } = default!;
-
-    /// <summary>
     ///     Auth0 domain
     /// </summary>
     public string Domain { get; set; } = default!;

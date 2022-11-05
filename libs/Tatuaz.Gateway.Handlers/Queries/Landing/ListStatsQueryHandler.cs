@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MassTransit;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using NodaTime;
 using Tatuaz.Gateway.Queue.Contracts;
 using Tatuaz.Gateway.Queue.Producers;
@@ -21,17 +22,19 @@ public class ListStatsQueryHandler : IRequestHandler<ListStatsQuery, TatuazResul
 {
     private readonly IClock _clock;
     private readonly IUserAccessor _userAccessor;
+    private readonly ILogger<ListStatsProducer> _logger;
     private readonly IRequestClient<ListStatsOrder> _requestClient;
 
     public ListStatsQueryHandler(
         IRequestClient<ListStatsOrder> requestClient,
         IClock clock,
-        IUserAccessor userAccessor
-    )
+        IUserAccessor userAccessor,
+        ILogger<ListStatsProducer> logger)
     {
         _requestClient = requestClient;
         _clock = clock;
         _userAccessor = userAccessor;
+        _logger = logger;
     }
 
     public async Task<TatuazResult<IEnumerable<StatDto>>> Handle(ListStatsQuery request,
@@ -41,23 +44,27 @@ public class ListStatsQueryHandler : IRequestHandler<ListStatsQuery, TatuazResul
         var validationResult =
             await validator.ValidateAsync(request.ListStatsDto, cancellationToken).ConfigureAwait(false);
         if (validationResult.IsValid == false)
+        {
             return CommonResultFactory.ValidationError<IEnumerable<StatDto>>(validationResult);
+        }
 
-        var producer = new ListStatsProducer(_requestClient, _userAccessor);
+        var producer = new ListStatsProducer(_requestClient, _userAccessor, _logger);
         var from = request.ListStatsDto.TimePeriod switch
         {
             StatsTimePeriod.Day => _clock.GetCurrentInstant().Minus(Duration.FromDays(1)),
             StatsTimePeriod.Week => _clock.GetCurrentInstant().Minus(Duration.FromDays(7)),
             StatsTimePeriod.Month => _clock.GetCurrentInstant().Minus(Duration.FromDays(31)),
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentException(nameof(request.ListStatsDto.TimePeriod))
         };
 
         var result = await producer
-            .Send(new ListStatsOrder(from, _clock.GetCurrentInstant(), request.ListStatsDto.Count))
+            .Send(new ListStatsOrder(from, _clock.GetCurrentInstant(), request.ListStatsDto.Count), cancellationToken)
             .ConfigureAwait(false);
 
         if (result == null)
+        {
             throw new NullReferenceException();
+        }
 
         return result;
     }

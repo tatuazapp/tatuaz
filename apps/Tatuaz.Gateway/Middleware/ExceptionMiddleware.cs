@@ -40,6 +40,8 @@ public class ExceptionMiddleware
             .ConfigureAwait(false);
 
         if (context.Response.StatusCode == (int)HttpStatusCode.InternalServerError)
+        {
             _logger.LogError(exception, "Internal server error:");
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -34,7 +34,6 @@ namespace Tatuaz.Gateway;
 public static class GatewayExtensions
 {
     public static string TatuazCorsName => "AllowAll";
-
     public static ConfigureHostBuilder RegisterGatewatHost(this ConfigureHostBuilder host)
     {
         host.UseSerilog(
@@ -99,10 +98,9 @@ public static class GatewayExtensions
                 Description = @"JWT Authorization header using the Bearer scheme.",
                 Name = "Bearer",
                 In = ParameterLocation.Header,
-                Type = SecuritySchemeType.ApiKey,
+                Type = SecuritySchemeType.Http,
                 Scheme = "Bearer"
             });
-
 
             opt.AddSecurityRequirement(new OpenApiSecurityRequirement
             {

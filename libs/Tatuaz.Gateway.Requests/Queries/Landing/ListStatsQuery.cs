@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using MediatR;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Landing;
 using Tatuaz.Shared.Pipeline.Messages;

@@ -16,6 +16,17 @@ spec:
       containers:
         - name: rabbitmq
           image: masstransit/rabbitmq:latest
+      resources:
+        requests:
+          cpu: 500m
+          memory: 1Gi
+        limits:
+          cpu: 500m
+          memory: 1Gi
       ports:
         - containerPort: 5672
         - containerPort: 15672
+      volumes:
+        - name: rabbitmqdata
+          persistentVolumeClaim:
+            claimName: rabbitmq-volume-claim

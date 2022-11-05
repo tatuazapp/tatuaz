@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Microsoft.Extensions.Configuration;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Tatuaz.Gateway.Handlers.Queries.Users;
 using Tatuaz.Gateway.Requests.Queries.Users;

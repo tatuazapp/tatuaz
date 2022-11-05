@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Reflection;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +32,7 @@ public static class SharedPipelineExtensions
                             h.Password(rabbitMqOpt.Password);
                         }
                     );
+                    cfg.ConfigureEndpoints(context);
                 }
             );
         });

@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NodaTime;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
@@ -10,7 +10,7 @@ public static class SharedInfrastructureExtensions
 {
     public const string MainDbConnectionStringName = "TatuazMainDb";
     public const string HistDbConnectionStringName = "TatuazHistDb";
-    
+
     public static IServiceCollection RegisterSharedInfrastructureServices<TDbContext>(this IServiceCollection services, string connectionString)
     where TDbContext : DbContext
     {
@@ -33,7 +33,7 @@ public static class SharedInfrastructureExtensions
         services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
         services.AddScoped(typeof(IGenericRepository<,,>), typeof(GenericRepository<,,>));
         services.AddScoped<IClock>(_ => SystemClock.Instance);
-        
+
         return services;
     }
 }

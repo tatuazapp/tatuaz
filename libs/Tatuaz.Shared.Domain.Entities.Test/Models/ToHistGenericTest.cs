@@ -67,7 +67,9 @@ public class ToHistGenericTest
         foreach (var histEntityProperty in histEntityProperties.Where(histEntityProperty =>
                      !histEntityProperty.GetValue(histEntity)!.Equals(entityProperties
                          .FirstOrDefault(x => x.Name == histEntityProperty.Name)?.GetValue(entity))))
+        {
             match = false;
+        }
 
         return match;
     }

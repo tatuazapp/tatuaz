@@ -1,4 +1,4 @@
-﻿namespace Tatuaz.Shared.Pipeline.Configuration.Options;
+namespace Tatuaz.Shared.Pipeline.Configuration.Options;
 
 public class RabbitMqOpt
 {

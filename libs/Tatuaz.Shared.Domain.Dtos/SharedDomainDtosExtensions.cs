@@ -1,4 +1,3 @@
-﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 
@@ -10,7 +9,7 @@ public static class SharedDomainDtosExtensions
     {
         // TODO Add Dtos.Hist later
         services.AddAutoMapper(typeof(UserDto).Assembly);
-        
+
         return services;
     }
 }

@@ -19,16 +19,6 @@
                 Auth0 audience
             </summary>
         </member>
-        <member name="P:Tatuaz.Gateway.Configuration.Options.AuthOpt.ClientId">
-            <summary>
-                Auth0 client id
-            </summary>
-        </member>
-        <member name="P:Tatuaz.Gateway.Configuration.Options.AuthOpt.ClientSecret">
-            <summary>
-                Auth0 client secret
-            </summary>
-        </member>
         <member name="P:Tatuaz.Gateway.Configuration.Options.AuthOpt.Domain">
             <summary>
                 Auth0 domain

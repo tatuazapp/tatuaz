@@ -1,4 +1,4 @@
-﻿using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 
 namespace Tatuaz.History.DataAccess;
 

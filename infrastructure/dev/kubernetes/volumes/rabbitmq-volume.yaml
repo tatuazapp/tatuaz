@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: postgresql-volume
+  name: rabbitmq-volume
   namespace: tatuaz-dev
   labels:
     type: local
-    app: postgresql
+    app: rabbitmq
 spec:
   storageClassName: manual
   capacity:
-    storage: 5Gi
+    storage: 2Gi
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: '/data/postgresql'
+    path: "/data/rabbitmq"

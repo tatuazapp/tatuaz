@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Landing;
 using Tatuaz.Shared.Pipeline.Factories.ErrorCodes.Landing;
 

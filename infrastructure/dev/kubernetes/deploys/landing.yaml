@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: landing
+  namespace: tatuaz-dev
+spec:
+  selector:
+    matchLabels:
+      app: landing
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: landing
+    spec:
+      containers:
+        - name: landing
+          image: landing
+          command: ["npx", "nx", "run", "landing:serve"]
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: landing-config-map
+            - configMapRef:
+                name: rabbitmq-config-map

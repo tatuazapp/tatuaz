@@ -29,8 +29,12 @@ public class ActiveUserHandler : AuthorizationHandler<ActiveUserRequirement>
         var userExists = await _mediator.Send(new UserExistsQuery(_userAccessor.CurrentUserId)).ConfigureAwait(false);
 
         if (userExists)
+        {
             context.Succeed(requirement);
+        }
         else
+        {
             context.Fail();
+        }
     }
 }

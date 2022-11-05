@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rabbitmq-config-map
+  namespace: tatuaz-dev
+  labels:
+    app: postgresql
+data:
+  RabbitMq__Host: rabbitmq-service.tatuaz-dev.svc.cluster.local
+  RabbitMq__VirtualHost: /
+  RabbitMq__Username: guest
+  RabbitMq__Password: guest

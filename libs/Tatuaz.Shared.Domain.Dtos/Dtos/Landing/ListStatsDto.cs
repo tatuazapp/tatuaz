@@ -1,4 +1,4 @@
-﻿using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.Enums;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.Enums;
 
 namespace Tatuaz.Shared.Domain.Dtos.Dtos.Landing;
 
