@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-service
+  namespace: tatuaz-dev
+  labels:
+    app: rabbitmq
+spec:
+  ports:
+    - port: 5672
+      protocol: TCP
+  selector:
+    app: rabbitmq

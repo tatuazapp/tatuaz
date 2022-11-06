@@ -536,6 +536,11 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+
+# Ignore out from tilt
+infrastructure/dev/out
+
 #Environment variables
 .env
 .env.local
+

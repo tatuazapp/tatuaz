@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: swagger-config-map
+  namespace: tatuaz-dev
+  labels:
+    app: postgresql
+data:
+  Swagger__Enabled: "true"
+  Swagger__Route: api-docs
+  Swagger__Name: Tatuaz API
+  Swagger__Title: Tatuaz $wagger
+  Swagger__Theme: halloween

@@ -15,11 +15,11 @@ namespace Tatuaz.Gateway.Handlers.Test.Commands.Users;
 
 public class SignUpCommandHandlerTest
 {
-    private readonly IMapper _mapper;
-    private readonly UserAccessorMock _userAccessorMock;
-    private readonly UnitOfWorkMock _unitOfWorkMock;
     private readonly CreateUserDtoFaker _createUserDtoFaker;
     private readonly GatewayDbContextMock _dbContextMock;
+    private readonly IMapper _mapper;
+    private readonly UnitOfWorkMock _unitOfWorkMock;
+    private readonly UserAccessorMock _userAccessorMock;
     private readonly Mock<IGenericRepository<TatuazUser, HistTatuazUser, string>> _userRepositoryMock;
 
     public SignUpCommandHandlerTest(IMapper mapper)
@@ -34,6 +34,10 @@ public class SignUpCommandHandlerTest
 
     public class Handle : SignUpCommandHandlerTest
     {
+        public Handle(IMapper mapper) : base(mapper)
+        {
+        }
+
         [Fact]
         public async Task Should_ReturnUserWhenCorrectCommandProvided()
         {
@@ -90,7 +94,8 @@ public class SignUpCommandHandlerTest
             var command = new SignUpCommand(createUserDto);
 
             await commandHandler.Handle(command, CancellationToken.None).ConfigureAwait(false);
-            _userRepositoryMock.Verify(x => x.ExistsByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Once);
+            _userRepositoryMock.Verify(x => x.ExistsByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
+                Times.Once);
         }
 
         [Fact]
@@ -130,10 +135,6 @@ public class SignUpCommandHandlerTest
 
             await commandHandler.Handle(command, CancellationToken.None).ConfigureAwait(false);
             _unitOfWorkMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
-        }
-
-        public Handle(IMapper mapper) : base(mapper)
-        {
         }
     }
 }

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tatuaz.Gateway.Infrastructure\Tatuaz.Gateway.Infrastructure.csproj"/>
+    <ProjectReference Include="..\Tatuaz.Gateway.Queue\Tatuaz.Gateway.Queue.csproj"/>
     <ProjectReference Include="..\Tatuaz.Gateway.Requests\Tatuaz.Gateway.Requests.csproj"/>
   </ItemGroup>
 

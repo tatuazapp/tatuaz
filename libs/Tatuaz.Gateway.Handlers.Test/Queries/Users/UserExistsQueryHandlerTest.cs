@@ -35,6 +35,10 @@ public class UserExistsQueryHandlerTest
 
     public class Handle : UserExistsQueryHandlerTest
     {
+        public Handle(DbContext dbContext) : base(dbContext)
+        {
+        }
+
         [Fact]
         public async Task Should_Return_True_When_User_Exists()
         {
@@ -58,10 +62,6 @@ public class UserExistsQueryHandlerTest
             var result = await handler.Handle(query, CancellationToken.None).ConfigureAwait(false);
 
             Assert.False(result);
-        }
-
-        public Handle(DbContext dbContext) : base(dbContext)
-        {
         }
     }
 }

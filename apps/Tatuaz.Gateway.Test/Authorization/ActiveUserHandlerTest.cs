@@ -15,8 +15,8 @@ namespace Tatuaz.Gateway.Test.Authorization;
 
 public class ActiveUserHandlerTest
 {
-    private readonly UserAccessorMock _userAccessorMock;
     private readonly Mock<IMediator> _mediatorMock;
+    private readonly UserAccessorMock _userAccessorMock;
 
     public ActiveUserHandlerTest()
     {

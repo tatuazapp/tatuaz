@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-config-map
+  namespace: tatuaz-dev
+  labels:
+    app: postgresql
+data:
+  Auth__Authority: https://tatuaz-app.eu.auth0.com/
+  Auth__Audience: https://api.tatuaz.app
+  Auth__Domain: tatuaz-app.eu.auth0.com

@@ -158,6 +158,7 @@ public class UnitOfWork : IUnitOfWork
         {
             throw new ArgumentNullException(nameof(userId), "User id can't be null");
         }
+
         foreach (var entry in auditableEntries.Where(x => x.State == EntityState.Added))
         {
             entry.Entity.UpdateCreationData(userId, _clock);

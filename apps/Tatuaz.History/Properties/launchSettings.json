@@ -1,11 +1,34 @@
 ﻿{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "Tatuaz.TatuazHistory": {
+    "Development": {
       "commandName": "Project",
-      "dotnetRunMessages": "true",
-      "applicationUrl": "http://localhost:44444",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "launchUrl": "api-docs",
+      "applicationUrl": "http://localhost:4444",
       "environmentVariables": {
-        "DOTNET_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Staging": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "launchUrl": "api-docs",
+      "applicationUrl": "http://localhost:4444",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Staging"
+      }
+    },
+    "Production": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "launchUrl": "api-docs",
+      "applicationUrl": "http://localhost:4444",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     }
   }

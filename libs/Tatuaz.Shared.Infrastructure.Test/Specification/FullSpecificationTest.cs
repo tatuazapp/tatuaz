@@ -19,10 +19,10 @@ public class FullSpecificationTest
 {
     private readonly IGenericRepository<Author, HistAuthor, Guid> _authorRepository;
     private readonly IClock _clock;
-    private readonly UserAccessorMock _userAccessorMock;
-    private readonly IUnitOfWork _unitOfWork;
     private readonly DbContext _dbContext;
     private readonly SendEndpointProviderMock _sendEndpointProviderMock;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly UserAccessorMock _userAccessorMock;
 
     public FullSpecificationTest(
         DbContext dbContext,
@@ -40,6 +40,10 @@ public class FullSpecificationTest
 
     public class TrackingStrategyTest : FullSpecificationTest
     {
+        public TrackingStrategyTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository,
+            IClock clock) : base(dbContext, authorRepository, clock)
+        {
+        }
 
         [Fact]
         public async Task Should_ReturnEntityWithTracking()
@@ -112,14 +116,14 @@ public class FullSpecificationTest
                 .ConfigureAwait(false);
             Assert.Equal(expected.FirstName, actual2.First().FirstName);
         }
-
-        public TrackingStrategyTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository, IClock clock) : base(dbContext, authorRepository, clock)
-        {
-        }
     }
 
     public class AddFilterTest : FullSpecificationTest
     {
+        public AddFilterTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository,
+            IClock clock) : base(dbContext, authorRepository, clock)
+        {
+        }
 
         [Fact]
         public async Task Should_ReturnEntityWithFilter()
@@ -135,14 +139,14 @@ public class FullSpecificationTest
             var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
             Assert.Equal(expected.FirstName, actual.First().FirstName);
         }
-
-        public AddFilterTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository, IClock clock) : base(dbContext, authorRepository, clock)
-        {
-        }
     }
 
     public class AddOrderTest : FullSpecificationTest
     {
+        public AddOrderTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository,
+            IClock clock) : base(dbContext, authorRepository, clock)
+        {
+        }
 
         [Fact]
         public async Task Should_ReturnEntityWithAscendingOrder()
@@ -183,14 +187,14 @@ public class FullSpecificationTest
             Assert.Equal(authors.Last().FirstName, actual.Last().FirstName);
             // ReSharper restore PossibleMultipleEnumeration
         }
-
-        public AddOrderTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository, IClock clock) : base(dbContext, authorRepository, clock)
-        {
-        }
     }
 
     public class AddIncludeTest : FullSpecificationTest
     {
+        public AddIncludeTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository,
+            IClock clock) : base(dbContext, authorRepository, clock)
+        {
+        }
 
         [Fact]
         public async Task Should_ReturnEntityWithInclude()
@@ -238,10 +242,6 @@ public class FullSpecificationTest
             Assert.NotEmpty(actual.First().Books.First().Awards);
             Assert.Equal(award.Name, actual.First().Books.First().Awards.First().Name);
             // ReSharper restore PossibleMultipleEnumeration
-        }
-
-        public AddIncludeTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository, IClock clock) : base(dbContext, authorRepository, clock)
-        {
         }
     }
 

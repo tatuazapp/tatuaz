@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gateway-config-map
+  namespace: tatuaz-dev
+  labels:
+    app: gateway
+data:
+  ASPNETCORE_ENVIRONMENT: Development # Change to Production to run release build
+  ConnectionStrings__TatuazMainDb: Server=postgresql-service.tatuaz-dev.svc.cluster.local;Port=5432;Database=TatuazMainDb;User Id=postgres;Password=password;

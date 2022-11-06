@@ -1,0 +1,77 @@
+﻿* {
+  cursor: url(https://cur.cursors-4u.net/holidays/hol-4/hol336.cur), auto !important;
+}
+
+#swagger-ui {
+  background-image: url("https://r1.ilikewallpaper.net/iphone-12-pro-max-wallpapers/download-113151/Vertical-Halloween-Cave.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.topbar {
+  visibility: hidden;
+  height: 0;
+}
+
+.info {
+  display: flex;
+  justify-content: center;
+}
+
+.title > span,
+p {
+  display: none;
+}
+
+.title > h2 {
+  font-weight: bolder;
+}
+
+.main {
+  padding: 1rem;
+  border: 2px solid darkorange;
+  border-radius: 1rem;
+  background-color: white;
+}
+
+.title,
+.url {
+  color: darkorange !important;
+}
+
+.scheme-container {
+  background-color: transparent !important;
+}
+
+.opblock-tag {
+  background-color: whitesmoke;
+  border-radius: 1rem 1rem 0 0;
+}
+
+.opblock-tag:hover {
+  background-color: lightpink !important;
+  border-radius: 1rem 1rem 0 0;
+}
+
+.opblock-tag > a {
+  color: black !important;
+}
+
+.operation-tag-content {
+  background-color: whitesmoke;
+  border-radius: 4px;
+}
+
+.swagger-ui .opblock.opblock-post {
+  border: none;
+  background-color: whitesmoke;
+}
+
+.opblock-section-header {
+  background-color: transparent !important;
+}
+
+.models {
+  background-color: whitesmoke !important;
+}

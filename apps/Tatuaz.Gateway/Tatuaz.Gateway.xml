@@ -4,94 +4,35 @@
         <name>Tatuaz.Gateway</name>
     </assembly>
     <members>
-        <member name="F:Tatuaz.Gateway.Configuration.Options.Auth0Options.SectionName">
+        <member name="F:Tatuaz.Gateway.Configuration.Options.AuthOpt.SectionName">
             <summary>
                 Name of section this corresponds to in appsettings.json
             </summary>
         </member>
-        <member name="P:Tatuaz.Gateway.Configuration.Options.Auth0Options.Authority">
+        <member name="P:Tatuaz.Gateway.Configuration.Options.AuthOpt.Authority">
             <summary>
                 Auth0 authority
             </summary>
         </member>
-        <member name="P:Tatuaz.Gateway.Configuration.Options.Auth0Options.Audience">
+        <member name="P:Tatuaz.Gateway.Configuration.Options.AuthOpt.Audience">
             <summary>
                 Auth0 audience
             </summary>
         </member>
-        <member name="P:Tatuaz.Gateway.Configuration.Options.Auth0Options.ClientId">
-            <summary>
-                Auth0 client id
-            </summary>
-        </member>
-        <member name="P:Tatuaz.Gateway.Configuration.Options.Auth0Options.ClientSecret">
-            <summary>
-                Auth0 client secret
-            </summary>
-        </member>
-        <member name="P:Tatuaz.Gateway.Configuration.Options.Auth0Options.Domain">
+        <member name="P:Tatuaz.Gateway.Configuration.Options.AuthOpt.Domain">
             <summary>
                 Auth0 domain
             </summary>
         </member>
-        <member name="F:Tatuaz.Gateway.Configuration.Options.SwaggerOptions.SectionName">
+        <member name="F:Tatuaz.Gateway.Configuration.Options.SwaggerOpt.SectionName">
             <summary>
                 Name of section this corresponds to in appsettings.json
             </summary>
         </member>
-        <member name="P:Tatuaz.Gateway.Configuration.Options.SwaggerOptions.Enabled">
+        <member name="P:Tatuaz.Gateway.Configuration.Options.SwaggerOpt.Enabled">
             <summary>
                 Is swagger enabled
             </summary>
-        </member>
-        <member name="P:Tatuaz.Gateway.Configuration.ServiceExtensions.TatuazCorsName">
-            <summary>
-                Cors policy name
-            </summary>
-        </member>
-        <member name="M:Tatuaz.Gateway.Configuration.ServiceExtensions.AddConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
-            <summary>
-            </summary>
-            <param name="services"></param>
-            <param name="configuration"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Tatuaz.Gateway.Configuration.ServiceExtensions.AddGatewayServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
-            <summary>
-                Add Gateway services
-            </summary>
-            <param name="services"></param>
-            <param name="configuration"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Tatuaz.Gateway.Configuration.ServiceExtensions.AddTatuazControllers(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-                Add Tatuaz Controllers
-            </summary>
-            <param name="service"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Tatuaz.Gateway.Configuration.ServiceExtensions.AddTatuazSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-                Add Swagger to the project
-            </summary>
-            <param name="services"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Tatuaz.Gateway.Configuration.ServiceExtensions.AddTatuazCors(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-                Add cors policy
-            </summary>
-            <param name="services"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Tatuaz.Gateway.Configuration.ServiceExtensions.AddTatuazAuth0(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
-            <summary>
-                Add Auth0 authentication
-            </summary>
-            <param name="services"></param>
-            <param name="configuration"></param>
-            <returns></returns>
         </member>
         <member name="M:Tatuaz.Gateway.Controllers.UsersController.WhoAmI">
             <summary>

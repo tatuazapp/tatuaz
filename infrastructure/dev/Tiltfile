@@ -1,31 +1,80 @@
-docker_build(
-    'tatuaz-main',
-    context='../../',
-    dockerfile='docker/Dockerfile.main',
-    ignore=['node_modules', 'dist', 'infrastructure'],
-    live_update=[
-        sync('../../', '/app'),
+load('ext://restart_process', 'docker_build_with_restart')
 
-        run('npm i', trigger=['../../package-lock.json']),
-    ]
+local_resource(
+    'build-gateway',
+    'dotnet publish -c Debug -o out/gateway ../../apps/Tatuaz.Gateway',
+    deps=['../../apps/Tatuaz.Gateway'],
+    ignore=['../../apps/Tatuaz.Gateway/obj']
+)
+
+local_resource(
+    'build-history',
+    'dotnet publish -c Debug -o out/history ../../apps/Tatuaz.History',
+    deps=['../../apps/Tatuaz.History'],
+    ignore=['../../apps/Tatuaz.History/obj']
+)
+
+local_resource(
+    'build-landing',
+    'dotnet publish -c Debug -o out/landing ../../apps/Tatuaz.Landing',
+    deps=['../../apps/Tatuaz.Landing'],
+    ignore=['../../apps/Tatuaz.Landing/obj']
+)
+
+docker_build_with_restart(
+    'gateway',
+    'out/gateway',
+    entrypoint=['dotnet', 'Tatuaz.Gateway.dll'],
+    dockerfile='../../apps/Tatuaz.Gateway/Dockerfile.debug',
+    live_update=[
+        sync('out/gateway', '/app/out'),
+    ],
+)
+
+docker_build_with_restart(
+    'history',
+    'out/history',
+    entrypoint=['dotnet', 'Tatuaz.History.dll'],
+    dockerfile='../../apps/Tatuaz.History/Dockerfile.debug',
+    live_update=[
+        sync('out/history', '/app/out'),
+    ],
+)
+
+docker_build_with_restart(
+    'landing',
+    'out/landing',
+    entrypoint=['dotnet', 'Tatuaz.Landing.dll'],
+    dockerfile='../../apps/Tatuaz.Landing/Dockerfile.debug',
+    live_update=[
+        sync('out/landing', '/app/out'),
+    ],
 )
 
 k8s_yaml([
+    'kubernetes/deploys/gateway.yaml',
+    'kubernetes/deploys/history.yaml',
+    'kubernetes/deploys/landing.yaml',
+    'kubernetes/deploys/postgresql.yaml',
+    'kubernetes/deploys/rabbitmq.yaml',
+    'kubernetes/configMaps/auth-config-map.yaml',
+    'kubernetes/configMaps/gateway-config-map.yaml',
+    'kubernetes/configMaps/history-config-map.yaml',
+    'kubernetes/configMaps/landing-config-map.yaml',
+    'kubernetes/configMaps/postgresql-config-map.yaml',
+    'kubernetes/configMaps/rabbitmq-config-map.yaml',
+    'kubernetes/configMaps/swagger-config-map.yaml',
+    'kubernetes/volumes/postgresql-volume-claim.yaml',
+    'kubernetes/volumes/postgresql-volume.yaml',
+    'kubernetes/volumes/rabbitmq-volume-claim.yaml',
+    'kubernetes/volumes/rabbitmq-volume.yaml',
+    'kubernetes/services/rabbitmq-service.yaml',
+    'kubernetes/services/postgresql-service.yaml',
     'kubernetes/tatuaz-dev-namespace.yaml',
-    'kubernetes/web.yaml',
-    'kubernetes/gateway.yaml',
-    'kubernetes/gateway-config-map.yaml',
-    'kubernetes/integration-poc.yaml',
-    'kubernetes/integration-poc-config-map.yaml',
-    'kubernetes/rabbitmq.yaml',
-    'kubernetes/postgresql.yaml',
-    'kubernetes/postgresql-volume.yaml',
-    'kubernetes/postgresql-volume-claim.yaml',
-    'kubernetes/postgresql-config-map.yaml',
 ])
 
-k8s_resource('web', port_forwards='4200:4200', labels='frontend')
-k8s_resource('gateway', port_forwards='8080:80', labels='backend')
-k8s_resource('integration-poc', labels='backend')
-k8s_resource('rabbitmq', port_forwards=['5672:5672', '15672:15672'], labels='backend')
-k8s_resource('postgresql', port_forwards='5432:5432', labels='backend')
+k8s_resource('gateway', port_forwards='8080:80', labels='backend', resource_deps=['build-gateway'])
+k8s_resource('history', labels='backend', resource_deps=['build-history'])
+k8s_resource('landing', labels='backend', resource_deps=['build-landing'])
+k8s_resource('rabbitmq', port_forwards=['15672:15672'], labels='queue')
+k8s_resource('postgresql', port_forwards='5432:5432', labels='postgres')
