@@ -16,7 +16,10 @@ public abstract class Entity<THistEntity, TId> : IHistDumpableEntity
     {
         var histEntity = new THistEntity
         {
-            Id = Id, HistDumpedAt = clock.GetCurrentInstant(), HistId = Guid.NewGuid(), HistState = state
+            Id = Id,
+            HistDumpedAt = clock.GetCurrentInstant(),
+            HistId = Guid.NewGuid(),
+            HistState = state
         };
         return histEntity;
     }
