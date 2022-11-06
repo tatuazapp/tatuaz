@@ -266,6 +266,26 @@ public class HistorySearcherServiceTest
         }
 
         [Fact]
+        public async Task Should_ReturnFalse_WhenDateBeforeAdded2Provided()
+        {
+            // Arrange
+            var sampleData = SampleDataWithAddedModifiedDeleted().ToList();
+            _dbContextMock.TestHistEntities.AddRange(sampleData);
+
+            var sampleData2 = SampleDataWithAddedModifiedDeleted().ToList();
+            _dbContextMock.TestHistEntities.AddRange(sampleData2);
+
+            // Act
+            var result = await _historySearcherService
+                .ExistsByPredicateAsync(x => x.Id == sampleData.First().Id || x.Id == sampleData2.First().Id,
+                    DateAdded.Minus(Duration.FromMilliseconds(1)))
+                .ConfigureAwait(false);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
         public async Task Should_ReturnTrue_WhenDateAfterAddedAndBeforeModifiedProvided()
         {
             // Arrange
@@ -326,6 +346,28 @@ public class HistorySearcherServiceTest
         }
 
         [Fact]
+        public async Task Should_ReturnTrue_When2DateAfterModifiedAndBeforeDeletedProvided()
+        {
+            // Arrange
+            var sampleData = SampleDataWithAddedModifiedDeleted().ToList();
+            _dbContextMock.TestHistEntities.AddRange(sampleData);
+
+            var sampleData2 = SampleDataWithAddedModifiedDeleted().ToList();
+            _dbContextMock.TestHistEntities.AddRange(sampleData2);
+
+            // Act
+            var result = await _historySearcherService
+                .ExistsByPredicateAsync(
+                    x => x.Id == sampleData[1].Id || x.Id == sampleData2.First().Id,
+                    DateDeleted.Minus(Duration.FromMilliseconds(1))
+                )
+                .ConfigureAwait(false);
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
         public async Task Should_ReturnFalse_WhenDateAfterDeletedProvided()
         {
             // Arrange
@@ -344,6 +386,25 @@ public class HistorySearcherServiceTest
             Assert.False(result);
         }
 
+        [Fact]
+        public async Task Should_ReturnFalse_When2DateAfterDeletedProvided()
+        {
+            // Arrange
+            var sampleData = SampleDataWithAddedModifiedDeleted().ToList();
+            _dbContextMock.TestHistEntities.AddRange(sampleData);
+
+            var sampleData2 = SampleDataWithAddedModifiedDeleted().ToList();
+            _dbContextMock.TestHistEntities.AddRange(sampleData2);
+
+            // Act
+            var result = await _historySearcherService
+                .ExistsByPredicateAsync(x => x.Id == sampleData[2].Id || x.Id == sampleData2.First().Id,
+                    DateDeleted.Plus(Duration.FromMilliseconds(1)))
+                .ConfigureAwait(false);
+
+            // Assert
+            Assert.False(result);
+        }
         // TODO: Add tests for predicate matching multiple different entities
     }
 
