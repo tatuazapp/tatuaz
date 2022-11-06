@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react"
 import AppLayout from "../components/auth/AppLayout"
 
-const Index = () => (
+const Forum = () => (
   <AppLayout>
     <Center h="400px">
       <StatGroup color="white">
@@ -47,4 +47,4 @@ const Index = () => (
   </AppLayout>
 )
 
-export default Index
+export default Forum
