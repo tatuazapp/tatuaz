@@ -6,11 +6,12 @@ public class InternalUserAccessor : IUserAccessor
 {
     public InternalUserAccessor() : this("SYSTEM")
     {
-
     }
+
     public InternalUserAccessor(string? currentUserId)
     {
         CurrentUserId = currentUserId;
     }
+
     public string? CurrentUserId { get; }
 }

@@ -21,9 +21,9 @@ namespace Tatuaz.Gateway.Handlers.Queries.Landing;
 public class ListStatsQueryHandler : IRequestHandler<ListStatsQuery, TatuazResult<IEnumerable<StatDto>>>
 {
     private readonly IClock _clock;
-    private readonly IUserAccessor _userAccessor;
     private readonly ILogger<ListStatsProducer> _logger;
     private readonly IRequestClient<ListStatsOrder> _requestClient;
+    private readonly IUserAccessor _userAccessor;
 
     public ListStatsQueryHandler(
         IRequestClient<ListStatsOrder> requestClient,

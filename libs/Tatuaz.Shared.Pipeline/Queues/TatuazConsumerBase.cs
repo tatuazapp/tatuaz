@@ -18,18 +18,23 @@ public abstract class TatuazConsumerBase<TMessage, TData> : IConsumer<TMessage>
     {
         _logger = logger;
     }
+
     protected IUserAccessor UserAccessor { get; private set; }
+
     public async Task Consume(ConsumeContext<TMessage> context)
     {
-        _logger.LogInformation("Received message {MessageId} of type {MessageType} in {ClassName}", context.MessageId, typeof(TMessage).Name, this.GetType().Name);
+        _logger.LogInformation("Received message {MessageId} of type {MessageType} in {ClassName}", context.MessageId,
+            typeof(TMessage).Name, GetType().Name);
         try
         {
             UserAccessor = new InternalUserAccessor(context.Message.UserId);
-            await context.RespondAsync(await ConsumeMessage(context.Message).ConfigureAwait(false)).ConfigureAwait(false);
+            await context.RespondAsync(await ConsumeMessage(context.Message).ConfigureAwait(false))
+                .ConfigureAwait(false);
         }
         catch (Exception exception)
         {
-            _logger.LogError("Error while processing message {MessageId} of type {MessageType}: {Exception}", context.MessageId, typeof(TMessage).Name, exception);
+            _logger.LogError("Error while processing message {MessageId} of type {MessageType}: {Exception}",
+                context.MessageId, typeof(TMessage).Name, exception);
             var (errors, httpStatusCode) =
                 await HandleException(context, exception).ConfigureAwait(false);
             await context

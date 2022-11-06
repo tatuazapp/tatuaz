@@ -34,6 +34,7 @@ namespace Tatuaz.Gateway;
 public static class GatewayExtensions
 {
     public static string TatuazCorsName => "AllowAll";
+
     public static ConfigureHostBuilder RegisterGatewatHost(this ConfigureHostBuilder host)
     {
         host.UseSerilog(
@@ -93,25 +94,22 @@ public static class GatewayExtensions
 
         services.AddSwaggerGen(opt =>
         {
-            opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            {
-                Description = @"JWT Authorization header using the Bearer scheme.",
-                Name = "Bearer",
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.Http,
-                Scheme = "Bearer"
-            });
+            opt.AddSecurityDefinition("Bearer",
+                new OpenApiSecurityScheme
+                {
+                    Description = @"JWT Authorization header using the Bearer scheme.",
+                    Name = "Bearer",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer"
+                });
 
             opt.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
                     new OpenApiSecurityScheme
                     {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        },
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" },
                         Scheme = "oauth2",
                         Name = "Bearer",
                         In = ParameterLocation.Header

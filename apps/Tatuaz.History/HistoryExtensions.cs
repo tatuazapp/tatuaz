@@ -21,8 +21,8 @@ public static class HistoryExtensions
     {
         var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
+            .AddJsonFile("appsettings.json", false, true)
+            .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", true)
             .AddEnvironmentVariables();
 
         return builder.Build();
@@ -37,8 +37,9 @@ public static class HistoryExtensions
         services.AddScoped(typeof(IHistorySearcherService<,>), typeof(HistorySearcherService<,>));
         services.AddSingleton<IUserAccessor, HistUserAccessor>();
 
-        services.RegisterSharedInfrastructureServices<HistDbContext>(configuration.GetConnectionString(SharedInfrastructureExtensions
-            .HistDbConnectionStringName));
+        services.RegisterSharedInfrastructureServices<HistDbContext>(configuration.GetConnectionString(
+            SharedInfrastructureExtensions
+                .HistDbConnectionStringName));
         return services;
     }
 

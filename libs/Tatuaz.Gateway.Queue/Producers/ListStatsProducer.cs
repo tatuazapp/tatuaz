@@ -10,7 +10,8 @@ namespace Tatuaz.Gateway.Queue.Producers;
 
 public class ListStatsProducer : TatuazProducerBase<ListStatsOrder, IEnumerable<StatDto>>
 {
-    public ListStatsProducer(IRequestClient<ListStatsOrder> requestClient, IUserAccessor userAccessor, ILogger<ListStatsProducer> logger) : base(
+    public ListStatsProducer(IRequestClient<ListStatsOrder> requestClient, IUserAccessor userAccessor,
+        ILogger<ListStatsProducer> logger) : base(
         requestClient, userAccessor, logger)
     {
     }

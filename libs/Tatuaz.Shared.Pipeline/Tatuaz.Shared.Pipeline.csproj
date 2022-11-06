@@ -1,24 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
+  <PropertyGroup>
 
-        <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
 
-        <ImplicitUsings>disable</ImplicitUsings>
+    <ImplicitUsings>disable</ImplicitUsings>
 
-        <Nullable>enable</Nullable>
+    <Nullable>enable</Nullable>
 
-        <OutputPath>../../dist/libs/Tatuaz.Shared.Pipeline</OutputPath>
-    </PropertyGroup>
+    <OutputPath>../../dist/libs/Tatuaz.Shared.Pipeline</OutputPath>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="FluentValidation" Version="11.2.2" />
-        <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.7" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.2.2"/>
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.7"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0"/>
+  </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj"/>
+  </ItemGroup>
 
 </Project>

@@ -11,10 +11,10 @@ public static class SharedInfrastructureExtensions
     public const string MainDbConnectionStringName = "TatuazMainDb";
     public const string HistDbConnectionStringName = "TatuazHistDb";
 
-    public static IServiceCollection RegisterSharedInfrastructureServices<TDbContext>(this IServiceCollection services, string connectionString)
-    where TDbContext : DbContext
+    public static IServiceCollection RegisterSharedInfrastructureServices<TDbContext>(this IServiceCollection services,
+        string connectionString)
+        where TDbContext : DbContext
     {
-
         services.AddDbContext<TDbContext>(opt =>
         {
             opt.UseNpgsql(

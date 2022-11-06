@@ -1,22 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
+  <PropertyGroup>
 
-        <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
 
-        <ImplicitUsings>disable</ImplicitUsings>
+    <ImplicitUsings>disable</ImplicitUsings>
 
-        <Nullable>enable</Nullable>
+    <Nullable>enable</Nullable>
 
-        <OutputPath>../../dist/libs/Tatuaz.Shared.Domain.Dtos.Fakers</OutputPath>
-    </PropertyGroup>
+    <OutputPath>../../dist/libs/Tatuaz.Shared.Domain.Dtos.Fakers</OutputPath>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\Tatuaz.Shared.Domain.Dtos\Tatuaz.Shared.Domain.Dtos.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tatuaz.Shared.Domain.Dtos\Tatuaz.Shared.Domain.Dtos.csproj"/>
+  </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Bogus" Version="34.0.2" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Bogus" Version="34.0.2"/>
+  </ItemGroup>
 
 </Project>

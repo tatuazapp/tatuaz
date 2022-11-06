@@ -5,7 +5,9 @@
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["dist/libs/Tatuaz.Landing.Queue.Test"],
+      "outputs": [
+        "dist/libs/Tatuaz.Landing.Queue.Test"
+      ],
       "options": {
         "configuration": "Debug"
       },

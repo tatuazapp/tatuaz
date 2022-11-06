@@ -10,9 +10,9 @@ namespace Tatuaz.Shared.Pipeline.Queues;
 public class TatuazProducerBase<TRequest, TData>
     where TRequest : TatuazMessage
 {
+    private readonly ILogger _logger;
     private readonly IRequestClient<TRequest> _requestClient;
     private readonly IUserAccessor _userAccessor;
-    private readonly ILogger _logger;
 
     public TatuazProducerBase(IRequestClient<TRequest> requestClient, IUserAccessor userAccessor, ILogger logger)
     {
@@ -23,7 +23,7 @@ public class TatuazProducerBase<TRequest, TData>
 
     public async Task<TatuazResult<TData>> Send(TRequest message, CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation("Sending message {Message} from {ClassName}", message, this.GetType().Name);
+        _logger.LogInformation("Sending message {Message} from {ClassName}", message, GetType().Name);
         message = message with { UserId = _userAccessor.CurrentUserId };
         return (
                 await

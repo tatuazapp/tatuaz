@@ -28,7 +28,6 @@ if (swaggerOpt.Enabled)
         if (!string.IsNullOrEmpty(swaggerOpt.Theme))
         {
             cfg.InjectStylesheet($"/Assets/swagger/{swaggerOpt.Theme}.css");
-
         }
     });
 }

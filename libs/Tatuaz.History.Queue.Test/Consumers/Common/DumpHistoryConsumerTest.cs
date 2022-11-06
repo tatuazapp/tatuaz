@@ -99,9 +99,7 @@ public class DumpHistoryConsumerTest
             await harness.Start().ConfigureAwait(false);
             var testHistEntity = new TestHistEntity2
             {
-                Name = "Test",
-                HistDumpedAt = Instant.FromUtc(2001, 1, 1, 0, 0),
-                HistState = HistState.Added
+                Name = "Test", HistDumpedAt = Instant.FromUtc(2001, 1, 1, 0, 0), HistState = HistState.Added
             };
             var sentEndpoint = await harness.Bus
                 .GetSendEndpoint(HistoryQueueConstants.DumpQueueUri)

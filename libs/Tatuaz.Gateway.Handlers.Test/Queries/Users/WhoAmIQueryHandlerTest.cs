@@ -17,9 +17,9 @@ namespace Tatuaz.Gateway.Handlers.Test.Queries.Users;
 public class WhoAmIQueryHandlerTest
 {
     private readonly IMapper _mapper;
-    private readonly Mock<IGenericRepository<TatuazUser, HistTatuazUser, string>> _userRepositoryMock;
-    private readonly UserAccessorMock _userAccessorMock;
     private readonly TatuazUserFaker _tatuazUserFaker;
+    private readonly UserAccessorMock _userAccessorMock;
+    private readonly Mock<IGenericRepository<TatuazUser, HistTatuazUser, string>> _userRepositoryMock;
 
     public WhoAmIQueryHandlerTest(IMapper mapper)
     {
@@ -31,6 +31,10 @@ public class WhoAmIQueryHandlerTest
 
     public class Handle : WhoAmIQueryHandlerTest
     {
+        public Handle(IMapper mapper) : base(mapper)
+        {
+        }
+
         [Fact]
         public async Task Should_ReturnUserWhenUserExists()
         {
@@ -78,10 +82,6 @@ public class WhoAmIQueryHandlerTest
             Assert.False(result.Successful);
             Assert.Null(result.Value);
             Assert.Equal("InternalError", result.Errors.First().Code);
-        }
-
-        public Handle(IMapper mapper) : base(mapper)
-        {
         }
     }
 }
