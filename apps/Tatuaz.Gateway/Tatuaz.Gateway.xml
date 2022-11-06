@@ -1,113 +1,107 @@
 <?xml version="1.0"?>
 <doc>
-  <assembly>
-    <name>Tatuaz.Gateway</name>
-  </assembly>
-  <members>
-    <member name="F:Tatuaz.Gateway.Configuration.Options.AuthOpt.SectionName">
-      <summary>
-        Name of section this corresponds to in appsettings.json
-      </summary>
-    </member>
-    <member name="P:Tatuaz.Gateway.Configuration.Options.AuthOpt.Authority">
-      <summary>
-        Auth0 authority
-      </summary>
-    </member>
-    <member name="P:Tatuaz.Gateway.Configuration.Options.AuthOpt.Audience">
-      <summary>
-        Auth0 audience
-      </summary>
-    </member>
-    <member name="P:Tatuaz.Gateway.Configuration.Options.AuthOpt.Domain">
-      <summary>
-        Auth0 domain
-      </summary>
-    </member>
-    <member name="F:Tatuaz.Gateway.Configuration.Options.SwaggerOpt.SectionName">
-      <summary>
-        Name of section this corresponds to in appsettings.json
-      </summary>
-    </member>
-    <member name="P:Tatuaz.Gateway.Configuration.Options.SwaggerOpt.Enabled">
-      <summary>
-        Is swagger enabled
-      </summary>
-    </member>
-    <member name="M:Tatuaz.Gateway.Controllers.UsersController.WhoAmI">
-      <summary>
-        Check what user is logged in
-      </summary>
-      <returns>UserDto</returns>
-    </member>
-    <member
-      name="M:Tatuaz.Gateway.Controllers.UsersController.SignUp(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.CreateUserDto)">
-      <summary>
-        Register user
-      </summary>
-      <returns>UserDto</returns>
-    </member>
-    <member name="M:Tatuaz.Gateway.HttpHelpers.ToOkObject``1(Tatuaz.Shared.Pipeline.Messages.TatuazResult{``0})">
-      <summary>
-        Helper method for generating response.
-      </summary>
-      <param name="result"></param>
-      <typeparam name="TData"></typeparam>
-      <returns></returns>
-    </member>
-    <member name="M:Tatuaz.Gateway.HttpHelpers.ToErrorsObject(Tatuaz.Shared.Pipeline.Messages.TatuazError[])">
-      <summary>
-        Helper method for generating response.
-      </summary>
-      <param name="errors"></param>
-      <returns></returns>
-    </member>
-    <member name="T:Tatuaz.Gateway.HttpResponses.ErrorResponse">
-      <summary>
-        Wrapper used for returning failed responses.
-      </summary>
-      <param name="Errors">List of errors.</param>
-      <param name="Success">Indicates if request was successful. Should be always false for this type of response.
-      </param>
-    </member>
-    <member
-      name="M:Tatuaz.Gateway.HttpResponses.ErrorResponse.#ctor(Tatuaz.Shared.Pipeline.Messages.TatuazError[],System.Boolean)">
-      <summary>
-        Wrapper used for returning failed responses.
-      </summary>
-      <param name="Errors">List of errors.</param>
-      <param name="Success">Indicates if request was successful. Should be always false for this type of response.
-      </param>
-    </member>
-    <member name="P:Tatuaz.Gateway.HttpResponses.ErrorResponse.Errors">
-      <summary>List of errors.</summary>
-    </member>
-    <member name="P:Tatuaz.Gateway.HttpResponses.ErrorResponse.Success">
-      <summary>Indicates if request was successful. Should be always false for this type of response.</summary>
-    </member>
-    <member name="T:Tatuaz.Gateway.HttpResponses.OkResponse`1">
-      <summary>
-        Wrapper used for returning success responses.
-      </summary>
-      <param name="Value">Payload of response.</param>
-      <param name="Success">Indicates if request was successful. Should be always true for this type of response.
-      </param>
-      <typeparam name="T">Type of returned payload.</typeparam>
-    </member>
-    <member name="M:Tatuaz.Gateway.HttpResponses.OkResponse`1.#ctor(`0,System.Boolean)">
-      <summary>
-        Wrapper used for returning success responses.
-      </summary>
-      <param name="Value">Payload of response.</param>
-      <param name="Success">Indicates if request was successful. Should be always true for this type of response.
-      </param>
-      <typeparam name="T">Type of returned payload.</typeparam>
-    </member>
-    <member name="P:Tatuaz.Gateway.HttpResponses.OkResponse`1.Value">
-      <summary>Payload of response.</summary>
-    </member>
-    <member name="P:Tatuaz.Gateway.HttpResponses.OkResponse`1.Success">
-      <summary>Indicates if request was successful. Should be always true for this type of response.</summary>
-    </member>
-  </members>
+    <assembly>
+        <name>Tatuaz.Gateway</name>
+    </assembly>
+    <members>
+        <member name="F:Tatuaz.Gateway.Configuration.Options.AuthOpt.SectionName">
+            <summary>
+                Name of section this corresponds to in appsettings.json
+            </summary>
+        </member>
+        <member name="P:Tatuaz.Gateway.Configuration.Options.AuthOpt.Authority">
+            <summary>
+                Auth0 authority
+            </summary>
+        </member>
+        <member name="P:Tatuaz.Gateway.Configuration.Options.AuthOpt.Audience">
+            <summary>
+                Auth0 audience
+            </summary>
+        </member>
+        <member name="P:Tatuaz.Gateway.Configuration.Options.AuthOpt.Domain">
+            <summary>
+                Auth0 domain
+            </summary>
+        </member>
+        <member name="F:Tatuaz.Gateway.Configuration.Options.SwaggerOpt.SectionName">
+            <summary>
+                Name of section this corresponds to in appsettings.json
+            </summary>
+        </member>
+        <member name="P:Tatuaz.Gateway.Configuration.Options.SwaggerOpt.Enabled">
+            <summary>
+                Is swagger enabled
+            </summary>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.UsersController.WhoAmI">
+            <summary>
+                Check what user is logged in
+            </summary>
+            <returns>UserDto</returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.UsersController.SignUp(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.CreateUserDto)">
+            <summary>
+                Register user
+            </summary>
+            <returns>UserDto</returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.HttpHelpers.ToOkObject``1(Tatuaz.Shared.Pipeline.Messages.TatuazResult{``0})">
+            <summary>
+                Helper method for generating response.
+            </summary>
+            <param name="result"></param>
+            <typeparam name="TData"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.HttpHelpers.ToErrorsObject(Tatuaz.Shared.Pipeline.Messages.TatuazError[])">
+            <summary>
+                Helper method for generating response.
+            </summary>
+            <param name="errors"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tatuaz.Gateway.HttpResponses.ErrorResponse">
+            <summary>
+                Wrapper used for returning failed responses.
+            </summary>
+            <param name="Errors">List of errors.</param>
+            <param name="Success">Indicates if request was successful. Should be always false for this type of response.</param>
+        </member>
+        <member name="M:Tatuaz.Gateway.HttpResponses.ErrorResponse.#ctor(Tatuaz.Shared.Pipeline.Messages.TatuazError[],System.Boolean)">
+            <summary>
+                Wrapper used for returning failed responses.
+            </summary>
+            <param name="Errors">List of errors.</param>
+            <param name="Success">Indicates if request was successful. Should be always false for this type of response.</param>
+        </member>
+        <member name="P:Tatuaz.Gateway.HttpResponses.ErrorResponse.Errors">
+            <summary>List of errors.</summary>
+        </member>
+        <member name="P:Tatuaz.Gateway.HttpResponses.ErrorResponse.Success">
+            <summary>Indicates if request was successful. Should be always false for this type of response.</summary>
+        </member>
+        <member name="T:Tatuaz.Gateway.HttpResponses.OkResponse`1">
+            <summary>
+                Wrapper used for returning success responses.
+            </summary>
+            <param name="Value">Payload of response.</param>
+            <param name="Success">Indicates if request was successful. Should be always true for this type of response.</param>
+            <typeparam name="T">Type of returned payload.</typeparam>
+        </member>
+        <member name="M:Tatuaz.Gateway.HttpResponses.OkResponse`1.#ctor(`0,System.Boolean)">
+            <summary>
+                Wrapper used for returning success responses.
+            </summary>
+            <param name="Value">Payload of response.</param>
+            <param name="Success">Indicates if request was successful. Should be always true for this type of response.</param>
+            <typeparam name="T">Type of returned payload.</typeparam>
+        </member>
+        <member name="P:Tatuaz.Gateway.HttpResponses.OkResponse`1.Value">
+            <summary>Payload of response.</summary>
+        </member>
+        <member name="P:Tatuaz.Gateway.HttpResponses.OkResponse`1.Success">
+            <summary>Indicates if request was successful. Should be always true for this type of response.</summary>
+        </member>
+    </members>
 </doc>
