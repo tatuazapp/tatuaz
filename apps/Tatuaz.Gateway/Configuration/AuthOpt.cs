@@ -1,4 +1,4 @@
-namespace Tatuaz.Gateway.Configuration.Options;
+namespace Tatuaz.Gateway.Configuration;
 
 public class AuthOpt
 {

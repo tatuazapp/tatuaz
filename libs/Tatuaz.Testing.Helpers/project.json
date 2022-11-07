@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "libs/Tatuaz.Testing.Hellpers",
+  "sourceRoot": "libs/Tatuaz.Testing.Helpers",
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
@@ -16,7 +16,10 @@
       }
     },
     "lint": {
-      "executor": "@nx-dotnet/core:format"
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "dotnet csharpier libs/Tatuaz.Testing.Helpers --check"
+      }
     }
   },
   "tags": []

@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Tatuaz.Gateway.Configuration.Options;
 using Tatuaz.Gateway.Middleware;
 
 namespace Tatuaz.Gateway.Configuration;

@@ -18,7 +18,7 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using Tatuaz.Gateway.Authorization;
-using Tatuaz.Gateway.Configuration.Options;
+using Tatuaz.Gateway.Configuration;
 using Tatuaz.Gateway.Handlers;
 using Tatuaz.Gateway.Infrastructure;
 using Tatuaz.Gateway.Queue;
