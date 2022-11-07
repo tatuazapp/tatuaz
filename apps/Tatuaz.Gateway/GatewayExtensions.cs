@@ -21,6 +21,7 @@ using Tatuaz.Gateway.Authorization;
 using Tatuaz.Gateway.Configuration.Options;
 using Tatuaz.Gateway.Handlers;
 using Tatuaz.Gateway.Infrastructure;
+using Tatuaz.Gateway.Queue;
 using Tatuaz.Gateway.Swagger;
 using Tatuaz.Shared.Domain.Dtos;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
@@ -181,6 +182,8 @@ public static class GatewayExtensions
 
         services.AddHttpContextAccessor();
         services.AddSingleton<IUserAccessor, GatewayUserAccessor>();
+
+        services.RegisterGatewayQueueProducers();
 
         return services;
     }

@@ -19,21 +19,16 @@ namespace Tatuaz.Gateway.Handlers.Queries.Landing;
 
 public class ListSummaryStatsQueryHandler : IRequestHandler<ListSummaryStatsQuery, TatuazResult<IEnumerable<SummaryStatDto>>>
 {
+    private readonly ListSummaryStatsProducer _listSummaryStatsProducer;
     private readonly IClock _clock;
-    private readonly ILogger<ListSummaryStatsProducer> _logger;
-    private readonly IRequestClient<ListSummaryStatsOrder> _requestClient;
-    private readonly IUserAccessor _userAccessor;
 
     public ListSummaryStatsQueryHandler(
-        IRequestClient<ListSummaryStatsOrder> requestClient,
-        IClock clock,
-        IUserAccessor userAccessor,
-        ILogger<ListSummaryStatsProducer> logger)
+        ListSummaryStatsProducer listSummaryStatsProducer,
+        IClock clock
+        )
     {
-        _requestClient = requestClient;
+        _listSummaryStatsProducer = listSummaryStatsProducer;
         _clock = clock;
-        _userAccessor = userAccessor;
-        _logger = logger;
     }
 
     public async Task<TatuazResult<IEnumerable<SummaryStatDto>>> Handle(ListSummaryStatsQuery request,
@@ -46,8 +41,7 @@ public class ListSummaryStatsQueryHandler : IRequestHandler<ListSummaryStatsQuer
         {
             return CommonResultFactory.ValidationError<IEnumerable<SummaryStatDto>>(validationResult);
         }
-
-        var producer = new ListSummaryStatsProducer(_requestClient, _userAccessor, _logger);
+        
         var from = request.ListSummaryStatsDto.TimePeriod switch
         {
             SummaryStatTimePeriod.Day => _clock.GetCurrentInstant().Minus(Duration.FromDays(1)),
@@ -56,7 +50,7 @@ public class ListSummaryStatsQueryHandler : IRequestHandler<ListSummaryStatsQuer
             _ => throw new ArgumentException(nameof(request.ListSummaryStatsDto.TimePeriod))
         };
 
-        var result = await producer
+        var result = await _listSummaryStatsProducer
             .Send(new ListSummaryStatsOrder(from, _clock.GetCurrentInstant(), request.ListSummaryStatsDto.Count), cancellationToken)
             .ConfigureAwait(false);
 

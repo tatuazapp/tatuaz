@@ -20,18 +20,13 @@ namespace Tatuaz.Gateway.Handlers.Queries.Landing;
 public class
     ListArtistStatsQueryHandler : IRequestHandler<ListArtistStatsQuery, TatuazResult<IEnumerable<ArtistStatDto>>>
 {
-    private readonly ILogger<ListArtistStatsProducer> _logger;
-    private readonly IRequestClient<ListArtistStatsOrder> _requestClient;
-    private readonly IUserAccessor _userAccessor;
+    private readonly ListArtistStatsProducer _listArtistStatsProducer;
 
     public ListArtistStatsQueryHandler(
-        ILogger<ListArtistStatsProducer> logger,
-        IRequestClient<ListArtistStatsOrder> requestClient,
-        IUserAccessor userAccessor)
+        ListArtistStatsProducer listArtistStatsProducer
+    )
     {
-        _logger = logger;
-        _requestClient = requestClient;
-        _userAccessor = userAccessor;
+        _listArtistStatsProducer = listArtistStatsProducer;
     }
 
     public async Task<TatuazResult<IEnumerable<ArtistStatDto>>> Handle(ListArtistStatsQuery request,
@@ -44,9 +39,8 @@ public class
         {
             return CommonResultFactory.ValidationError<IEnumerable<ArtistStatDto>>(validationResult);
         }
-
-        var producer = new ListArtistStatsProducer(_requestClient, _userAccessor, _logger);
-        var result = await producer
+        
+        var result = await _listArtistStatsProducer
             .Send(new ListArtistStatsOrder(request.ListArtistStatDto.Count), cancellationToken)
             .ConfigureAwait(false);
 
