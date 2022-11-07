@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
 using MassTransit;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -21,22 +22,24 @@ public class ListSummaryStatsQueryHandler : IRequestHandler<ListSummaryStatsQuer
 {
     private readonly ListSummaryStatsProducer _listSummaryStatsProducer;
     private readonly IClock _clock;
+    private readonly IValidator<ListSummaryStatsDto> _validator;
 
     public ListSummaryStatsQueryHandler(
         ListSummaryStatsProducer listSummaryStatsProducer,
-        IClock clock
+        IClock clock,
+        IValidator<ListSummaryStatsDto> validator
         )
     {
         _listSummaryStatsProducer = listSummaryStatsProducer;
         _clock = clock;
+        _validator = validator;
     }
 
     public async Task<TatuazResult<IEnumerable<SummaryStatDto>>> Handle(ListSummaryStatsQuery request,
         CancellationToken cancellationToken)
     {
-        var validator = new ListSummaryStatsDtoValidator();
         var validationResult =
-            await validator.ValidateAsync(request.ListSummaryStatsDto, cancellationToken).ConfigureAwait(false);
+            await _validator.ValidateAsync(request.ListSummaryStatsDto, cancellationToken).ConfigureAwait(false);
         if (!validationResult.IsValid)
         {
             return CommonResultFactory.ValidationError<IEnumerable<SummaryStatDto>>(validationResult);

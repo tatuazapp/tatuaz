@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
 using MassTransit;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -21,20 +22,22 @@ public class
     ListArtistStatsQueryHandler : IRequestHandler<ListArtistStatsQuery, TatuazResult<IEnumerable<ArtistStatDto>>>
 {
     private readonly ListArtistStatsProducer _listArtistStatsProducer;
+    private readonly IValidator<ListArtistStatsDto> _validator;
 
     public ListArtistStatsQueryHandler(
-        ListArtistStatsProducer listArtistStatsProducer
-    )
+        ListArtistStatsProducer listArtistStatsProducer,
+        IValidator<ListArtistStatsDto> validator
+        )
     {
         _listArtistStatsProducer = listArtistStatsProducer;
+        _validator = validator;
     }
 
     public async Task<TatuazResult<IEnumerable<ArtistStatDto>>> Handle(ListArtistStatsQuery request,
         CancellationToken cancellationToken)
     {
-        var validator = new ListArtistStatsDtoValidator();
         var validationResult =
-            await validator.ValidateAsync(request.ListArtistStatDto, cancellationToken).ConfigureAwait(false);
+            await _validator.ValidateAsync(request.ListArtistStatDto, cancellationToken).ConfigureAwait(false);
         if (!validationResult.IsValid)
         {
             return CommonResultFactory.ValidationError<IEnumerable<ArtistStatDto>>(validationResult);
