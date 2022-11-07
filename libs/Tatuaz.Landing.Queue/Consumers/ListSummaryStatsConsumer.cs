@@ -11,13 +11,13 @@ using Tatuaz.Shared.Pipeline.Queues;
 
 namespace Tatuaz.Landing.Queue.Consumers;
 
-public class ListStatsConsumer : TatuazConsumerBase<ListStatsOrder, IEnumerable<SummaryStatDto>>
+public class ListSummaryStatsConsumer : TatuazConsumerBase<ListSummaryStatsOrder, IEnumerable<SummaryStatDto>>
 {
-    public ListStatsConsumer(ILogger<ListStatsConsumer> logger) : base(logger)
+    public ListSummaryStatsConsumer(ILogger<ListSummaryStatsConsumer> logger) : base(logger)
     {
     }
 
-    protected override async Task<TatuazResult<IEnumerable<SummaryStatDto>>> ConsumeMessage(ListStatsOrder message)
+    protected override async Task<TatuazResult<IEnumerable<SummaryStatDto>>> ConsumeMessage(ListSummaryStatsOrder message)
     {
         var stats = new List<SummaryStatDto>
         {

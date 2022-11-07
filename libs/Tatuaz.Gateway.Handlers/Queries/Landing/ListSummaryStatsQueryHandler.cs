@@ -17,18 +17,18 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway.Handlers.Queries.Landing;
 
-public class ListStatsQueryHandler : IRequestHandler<ListSummaryStatsQuery, TatuazResult<IEnumerable<SummaryStatDto>>>
+public class ListSummaryStatsQueryHandler : IRequestHandler<ListSummaryStatsQuery, TatuazResult<IEnumerable<SummaryStatDto>>>
 {
     private readonly IClock _clock;
-    private readonly ILogger<ListStatsProducer> _logger;
-    private readonly IRequestClient<ListStatsOrder> _requestClient;
+    private readonly ILogger<ListSummaryStatsProducer> _logger;
+    private readonly IRequestClient<ListSummaryStatsOrder> _requestClient;
     private readonly IUserAccessor _userAccessor;
 
-    public ListStatsQueryHandler(
-        IRequestClient<ListStatsOrder> requestClient,
+    public ListSummaryStatsQueryHandler(
+        IRequestClient<ListSummaryStatsOrder> requestClient,
         IClock clock,
         IUserAccessor userAccessor,
-        ILogger<ListStatsProducer> logger)
+        ILogger<ListSummaryStatsProducer> logger)
     {
         _requestClient = requestClient;
         _clock = clock;
@@ -42,12 +42,12 @@ public class ListStatsQueryHandler : IRequestHandler<ListSummaryStatsQuery, Tatu
         var validator = new ListSummaryStatsDtoValidator();
         var validationResult =
             await validator.ValidateAsync(request.ListSummaryStatsDto, cancellationToken).ConfigureAwait(false);
-        if (validationResult.IsValid == false)
+        if (!validationResult.IsValid)
         {
             return CommonResultFactory.ValidationError<IEnumerable<SummaryStatDto>>(validationResult);
         }
 
-        var producer = new ListStatsProducer(_requestClient, _userAccessor, _logger);
+        var producer = new ListSummaryStatsProducer(_requestClient, _userAccessor, _logger);
         var from = request.ListSummaryStatsDto.TimePeriod switch
         {
             SummaryStatTimePeriod.Day => _clock.GetCurrentInstant().Minus(Duration.FromDays(1)),
@@ -57,7 +57,7 @@ public class ListStatsQueryHandler : IRequestHandler<ListSummaryStatsQuery, Tatu
         };
 
         var result = await producer
-            .Send(new ListStatsOrder(from, _clock.GetCurrentInstant(), request.ListSummaryStatsDto.Count), cancellationToken)
+            .Send(new ListSummaryStatsOrder(from, _clock.GetCurrentInstant(), request.ListSummaryStatsDto.Count), cancellationToken)
             .ConfigureAwait(false);
 
         if (result == null)

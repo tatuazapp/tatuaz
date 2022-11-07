@@ -37,7 +37,7 @@ public static class LandingExtensions
 
         services.AddSingleton<IUserAccessor>(_ => new InternalUserAccessor());
 
-        services.RegisterSharedPipelineServices(configuration, typeof(ListStatsConsumer).Assembly);
+        services.RegisterSharedPipelineServices(configuration, typeof(ListSummaryStatsConsumer).Assembly);
 
         return services;
     }
