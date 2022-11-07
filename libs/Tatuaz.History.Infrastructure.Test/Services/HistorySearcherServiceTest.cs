@@ -277,7 +277,7 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .ExistsByPredicateAsync(x => x.Id == sampleData.First().Id || x.Id == sampleData2.First().Id,
+                .ExistsByPredicateAsync(x => x.Id == SampleGuid1,
                     DateAdded.Minus(Duration.FromMilliseconds(1)))
                 .ConfigureAwait(false);
 
@@ -317,7 +317,7 @@ public class HistorySearcherServiceTest
             // Act
             var result = await _historySearcherService
                 .ExistsByPredicateAsync(
-                    x => x.Id == sampleData.First().Id || x.Id == sampleData2.First().Id,
+                    x => x.Id == SampleGuid1,
                     DateAdded.Plus(Duration.FromMilliseconds(1))
                 )
                 .ConfigureAwait(false);
@@ -358,7 +358,7 @@ public class HistorySearcherServiceTest
             // Act
             var result = await _historySearcherService
                 .ExistsByPredicateAsync(
-                    x => x.Id == sampleData[1].Id || x.Id == sampleData2.First().Id,
+                    x => x.Id == SampleGuid1,
                     DateDeleted.Minus(Duration.FromMilliseconds(1))
                 )
                 .ConfigureAwait(false);
@@ -398,14 +398,13 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .ExistsByPredicateAsync(x => x.Id == sampleData[2].Id || x.Id == sampleData2.First().Id,
+                .ExistsByPredicateAsync(x => x.Id == SampleGuid1,
                     DateDeleted.Plus(Duration.FromMilliseconds(1)))
                 .ConfigureAwait(false);
 
             // Assert
             Assert.False(result);
         }
-        // TODO: Add tests for predicate matching multiple different entities
     }
 
     public class CountByPredicateAsync : HistorySearcherServiceTest
