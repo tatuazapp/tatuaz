@@ -4,22 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Tatuaz.Gateway.Queue.Contracts;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Landing;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListSummaryStats;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Messages;
 using Tatuaz.Shared.Pipeline.Queues;
 
 namespace Tatuaz.Landing.Queue.Consumers;
 
-public class ListStatsConsumer : TatuazConsumerBase<ListStatsOrder, IEnumerable<StatDto>>
+public class ListStatsConsumer : TatuazConsumerBase<ListStatsOrder, IEnumerable<SummaryStatDto>>
 {
     public ListStatsConsumer(ILogger<ListStatsConsumer> logger) : base(logger)
     {
     }
 
-    protected override async Task<TatuazResult<IEnumerable<StatDto>>> ConsumeMessage(ListStatsOrder message)
+    protected override async Task<TatuazResult<IEnumerable<SummaryStatDto>>> ConsumeMessage(ListStatsOrder message)
     {
-        var stats = new List<StatDto>
+        var stats = new List<SummaryStatDto>
         {
             new("Nowy rekord szczupaka w polsce", "190 cm",
                 "https://dziendobry.tvn.pl/cdn-zdjecie-tqwcdx-fot-dieter-meryl-getty-images-5227704/alternates/FOUR_THREE_1280"),

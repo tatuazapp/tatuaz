@@ -9,16 +9,15 @@ using NodaTime;
 using Tatuaz.Gateway.Queue.Contracts;
 using Tatuaz.Gateway.Queue.Producers;
 using Tatuaz.Gateway.Requests.Queries.Landing;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Landing;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.Enums;
-using Tatuaz.Shared.Domain.Dtos.Validators.Landing;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListSummaryStats;
+using Tatuaz.Shared.Domain.Dtos.Validators.Landing.ListSummaryStats;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway.Handlers.Queries.Landing;
 
-public class ListStatsQueryHandler : IRequestHandler<ListStatsQuery, TatuazResult<IEnumerable<StatDto>>>
+public class ListStatsQueryHandler : IRequestHandler<ListSummaryStatsQuery, TatuazResult<IEnumerable<SummaryStatDto>>>
 {
     private readonly IClock _clock;
     private readonly ILogger<ListStatsProducer> _logger;
@@ -37,28 +36,28 @@ public class ListStatsQueryHandler : IRequestHandler<ListStatsQuery, TatuazResul
         _logger = logger;
     }
 
-    public async Task<TatuazResult<IEnumerable<StatDto>>> Handle(ListStatsQuery request,
+    public async Task<TatuazResult<IEnumerable<SummaryStatDto>>> Handle(ListSummaryStatsQuery request,
         CancellationToken cancellationToken)
     {
-        var validator = new GetStatsDtoValidator();
+        var validator = new ListSummaryStatsDtoValidator();
         var validationResult =
-            await validator.ValidateAsync(request.ListStatsDto, cancellationToken).ConfigureAwait(false);
+            await validator.ValidateAsync(request.ListSummaryStatsDto, cancellationToken).ConfigureAwait(false);
         if (validationResult.IsValid == false)
         {
-            return CommonResultFactory.ValidationError<IEnumerable<StatDto>>(validationResult);
+            return CommonResultFactory.ValidationError<IEnumerable<SummaryStatDto>>(validationResult);
         }
 
         var producer = new ListStatsProducer(_requestClient, _userAccessor, _logger);
-        var from = request.ListStatsDto.TimePeriod switch
+        var from = request.ListSummaryStatsDto.TimePeriod switch
         {
-            StatsTimePeriod.Day => _clock.GetCurrentInstant().Minus(Duration.FromDays(1)),
-            StatsTimePeriod.Week => _clock.GetCurrentInstant().Minus(Duration.FromDays(7)),
-            StatsTimePeriod.Month => _clock.GetCurrentInstant().Minus(Duration.FromDays(31)),
-            _ => throw new ArgumentException(nameof(request.ListStatsDto.TimePeriod))
+            SummaryStatTimePeriod.Day => _clock.GetCurrentInstant().Minus(Duration.FromDays(1)),
+            SummaryStatTimePeriod.Week => _clock.GetCurrentInstant().Minus(Duration.FromDays(7)),
+            SummaryStatTimePeriod.Month => _clock.GetCurrentInstant().Minus(Duration.FromDays(31)),
+            _ => throw new ArgumentException(nameof(request.ListSummaryStatsDto.TimePeriod))
         };
 
         var result = await producer
-            .Send(new ListStatsOrder(from, _clock.GetCurrentInstant(), request.ListStatsDto.Count), cancellationToken)
+            .Send(new ListStatsOrder(from, _clock.GetCurrentInstant(), request.ListSummaryStatsDto.Count), cancellationToken)
             .ConfigureAwait(false);
 
         if (result == null)
