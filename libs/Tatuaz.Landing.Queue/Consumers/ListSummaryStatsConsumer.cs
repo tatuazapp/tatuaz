@@ -17,7 +17,8 @@ public class ListSummaryStatsConsumer : TatuazConsumerBase<ListSummaryStatsOrder
     {
     }
 
-    protected override async Task<TatuazResult<IEnumerable<SummaryStatDto>>> ConsumeMessage(ListSummaryStatsOrder message)
+    protected override async Task<TatuazResult<IEnumerable<SummaryStatDto>>> ConsumeMessage(
+        ListSummaryStatsOrder message)
     {
         var stats = new List<SummaryStatDto>
         {

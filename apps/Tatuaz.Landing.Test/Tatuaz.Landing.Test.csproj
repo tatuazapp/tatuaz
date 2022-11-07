@@ -1,44 +1,44 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+    <PropertyGroup>
 
-    <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
 
-    <ImplicitUsings>disable</ImplicitUsings>
+        <ImplicitUsings>disable</ImplicitUsings>
 
-    <Nullable>enable</Nullable>
+        <Nullable>enable</Nullable>
 
-    <IsPackable>false</IsPackable>
+        <IsPackable>false</IsPackable>
 
-    <OutputPath>../../dist/apps/Tatuaz.Landing.Test</OutputPath>
-  </PropertyGroup>
+        <OutputPath>../../dist/apps/Tatuaz.Landing.Test</OutputPath>
+    </PropertyGroup>
 
-  <ItemGroup>
+    <ItemGroup>
 
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0"/>
 
-    <PackageReference Include="xunit" Version="2.4.1"/>
+        <PackageReference Include="xunit" Version="2.4.1"/>
 
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
 
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 
-      <PrivateAssets>all</PrivateAssets>
+            <PrivateAssets>all</PrivateAssets>
 
-    </PackageReference>
+        </PackageReference>
 
-    <PackageReference Include="coverlet.collector" Version="3.1.2">
+        <PackageReference Include="coverlet.collector" Version="3.1.2">
 
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 
-      <PrivateAssets>all</PrivateAssets>
+            <PrivateAssets>all</PrivateAssets>
 
-    </PackageReference>
+        </PackageReference>
 
-  </ItemGroup>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Tatuaz.Landing\Tatuaz.Landing.csproj"/>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Tatuaz.Landing\Tatuaz.Landing.csproj"/>
+    </ItemGroup>
 
 </Project>

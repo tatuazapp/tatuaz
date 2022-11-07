@@ -3,16 +3,11 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
-using MassTransit;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using Tatuaz.Gateway.Queue.Contracts.Landing.ListArtistStats;
 using Tatuaz.Gateway.Queue.Producers.Landing.ListArtistStats;
 using Tatuaz.Gateway.Requests.Queries.Landing;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListArtistStats;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListSummaryStats;
-using Tatuaz.Shared.Domain.Dtos.Validators.Landing.ListArtistStats;
-using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Messages;
 
@@ -27,7 +22,7 @@ public class
     public ListArtistStatsQueryHandler(
         ListArtistStatsProducer listArtistStatsProducer,
         IValidator<ListArtistStatsDto> validator
-        )
+    )
     {
         _listArtistStatsProducer = listArtistStatsProducer;
         _validator = validator;
@@ -42,7 +37,7 @@ public class
         {
             return CommonResultFactory.ValidationError<IEnumerable<ArtistStatDto>>(validationResult);
         }
-        
+
         var result = await _listArtistStatsProducer
             .Send(new ListArtistStatsOrder(request.ListArtistStatDto.Count), cancellationToken)
             .ConfigureAwait(false);

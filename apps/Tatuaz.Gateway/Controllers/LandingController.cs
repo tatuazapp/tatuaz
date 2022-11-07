@@ -24,7 +24,8 @@ public class LandingController : TatuazControllerBase
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> ListSummaryStats([FromBody] ListSummaryStatsDto listSummaryStatsDto)
     {
-        return ResultToActionResult(await Mediator.Send(new ListSummaryStatsQuery(listSummaryStatsDto)).ConfigureAwait(false));
+        return ResultToActionResult(await Mediator.Send(new ListSummaryStatsQuery(listSummaryStatsDto))
+            .ConfigureAwait(false));
     }
 
     [HttpPost("[action]")]
@@ -35,6 +36,7 @@ public class LandingController : TatuazControllerBase
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> ListArtistStats([FromBody] ListArtistStatsDto listArtistStatsDto)
     {
-        return ResultToActionResult(await Mediator.Send(new ListArtistStatsQuery(listArtistStatsDto)).ConfigureAwait(false));
+        return ResultToActionResult(await Mediator.Send(new ListArtistStatsQuery(listArtistStatsDto))
+            .ConfigureAwait(false));
     }
 }
