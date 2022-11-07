@@ -4,9 +4,7 @@ namespace Tatuaz.Shared.Pipeline.Queues;
 
 public class InternalUserAccessor : IUserAccessor
 {
-    public InternalUserAccessor() : this("SYSTEM")
-    {
-    }
+    public InternalUserAccessor() : this("SYSTEM") { }
 
     public InternalUserAccessor(string? currentUserId)
     {

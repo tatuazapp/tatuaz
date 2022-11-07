@@ -20,7 +20,9 @@ public class SignUpCommandHandlerTest
     private readonly IMapper _mapper;
     private readonly UnitOfWorkMock _unitOfWorkMock;
     private readonly UserAccessorMock _userAccessorMock;
-    private readonly Mock<IGenericRepository<TatuazUser, HistTatuazUser, string>> _userRepositoryMock;
+    private readonly Mock<
+        IGenericRepository<TatuazUser, HistTatuazUser, string>
+    > _userRepositoryMock;
 
     public SignUpCommandHandlerTest(IMapper mapper)
     {
@@ -34,19 +36,23 @@ public class SignUpCommandHandlerTest
 
     public class Handle : SignUpCommandHandlerTest
     {
-        public Handle(IMapper mapper) : base(mapper)
-        {
-        }
+        public Handle(IMapper mapper) : base(mapper) { }
 
         [Fact]
         public async Task Should_ReturnUserWhenCorrectCommandProvided()
         {
-            var commandHandler = new SignUpCommandHandler(_userRepositoryMock.Object, _unitOfWorkMock.Object, _mapper,
-                _userAccessorMock.Object);
+            var commandHandler = new SignUpCommandHandler(
+                _userRepositoryMock.Object,
+                _unitOfWorkMock.Object,
+                _mapper,
+                _userAccessorMock.Object
+            );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
 
-            var result = await commandHandler.Handle(command, CancellationToken.None).ConfigureAwait(false);
+            var result = await commandHandler
+                .Handle(command, CancellationToken.None)
+                .ConfigureAwait(false);
             var userDto = result.Value;
             Assert.True(result.Successful);
             Assert.NotNull(userDto);
@@ -57,14 +63,21 @@ public class SignUpCommandHandlerTest
         [Fact]
         public async Task Should_ReturnErrorWhenUserAlreadyExists()
         {
-            _userRepositoryMock.Setup(x => x.ExistsByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            _userRepositoryMock
+                .Setup(x => x.ExistsByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(true));
-            var commandHandler = new SignUpCommandHandler(_userRepositoryMock.Object, _unitOfWorkMock.Object, _mapper,
-                _userAccessorMock.Object);
+            var commandHandler = new SignUpCommandHandler(
+                _userRepositoryMock.Object,
+                _unitOfWorkMock.Object,
+                _mapper,
+                _userAccessorMock.Object
+            );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
 
-            var result = await commandHandler.Handle(command, CancellationToken.None).ConfigureAwait(false);
+            var result = await commandHandler
+                .Handle(command, CancellationToken.None)
+                .ConfigureAwait(false);
             Assert.False(result.Successful);
             Assert.Single(result.Errors);
             Assert.Equal("UserAlreadyExists", result.Errors[0].Code);
@@ -73,13 +86,19 @@ public class SignUpCommandHandlerTest
         [Fact]
         public async Task Should_ReturnErrorWhenValidationErrorsOccur()
         {
-            var commandHandler = new SignUpCommandHandler(_userRepositoryMock.Object, _unitOfWorkMock.Object, _mapper,
-                _userAccessorMock.Object);
+            var commandHandler = new SignUpCommandHandler(
+                _userRepositoryMock.Object,
+                _unitOfWorkMock.Object,
+                _mapper,
+                _userAccessorMock.Object
+            );
             var createUserDto = _createUserDtoFaker.Generate();
             createUserDto = createUserDto with { Email = "invalidEmail" };
             var command = new SignUpCommand(createUserDto);
 
-            var result = await commandHandler.Handle(command, CancellationToken.None).ConfigureAwait(false);
+            var result = await commandHandler
+                .Handle(command, CancellationToken.None)
+                .ConfigureAwait(false);
             Assert.False(result.Successful);
             Assert.Single(result.Errors);
             Assert.Equal("EmailInvalid", result.Errors[0].Code);
@@ -88,53 +107,77 @@ public class SignUpCommandHandlerTest
         [Fact]
         public async Task Should_CallUserRepositoryExistsByIdAsync()
         {
-            var commandHandler = new SignUpCommandHandler(_userRepositoryMock.Object, _unitOfWorkMock.Object, _mapper,
-                _userAccessorMock.Object);
+            var commandHandler = new SignUpCommandHandler(
+                _userRepositoryMock.Object,
+                _unitOfWorkMock.Object,
+                _mapper,
+                _userAccessorMock.Object
+            );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
 
             await commandHandler.Handle(command, CancellationToken.None).ConfigureAwait(false);
-            _userRepositoryMock.Verify(x => x.ExistsByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
-                Times.Once);
+            _userRepositoryMock.Verify(
+                x => x.ExistsByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()),
+                Times.Once
+            );
         }
 
         [Fact]
         public async Task Should_CallUserRepositoryCreate()
         {
-            var commandHandler = new SignUpCommandHandler(_userRepositoryMock.Object, _unitOfWorkMock.Object, _mapper,
-                _userAccessorMock.Object);
+            var commandHandler = new SignUpCommandHandler(
+                _userRepositoryMock.Object,
+                _unitOfWorkMock.Object,
+                _mapper,
+                _userAccessorMock.Object
+            );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
 
             await commandHandler.Handle(command, CancellationToken.None).ConfigureAwait(false);
-            _userRepositoryMock.Verify(x =>
-                x.Create(It.IsAny<TatuazUser>()));
+            _userRepositoryMock.Verify(x => x.Create(It.IsAny<TatuazUser>()));
         }
 
         [Fact]
         public async Task Should_CallUnitOfWorkSaveChangesAsyncOnSuccess()
         {
-            var commandHandler = new SignUpCommandHandler(_userRepositoryMock.Object, _unitOfWorkMock.Object, _mapper,
-                _userAccessorMock.Object);
+            var commandHandler = new SignUpCommandHandler(
+                _userRepositoryMock.Object,
+                _unitOfWorkMock.Object,
+                _mapper,
+                _userAccessorMock.Object
+            );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
 
             await commandHandler.Handle(command, CancellationToken.None).ConfigureAwait(false);
-            _unitOfWorkMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+            _unitOfWorkMock.Verify(
+                x => x.SaveChangesAsync(It.IsAny<CancellationToken>()),
+                Times.Once
+            );
         }
 
         [Fact]
         public async Task Should_NotCallUnitOfWorkSaveChangesAsyncOnFailure()
         {
-            _userRepositoryMock.Setup(x => x.ExistsByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            _userRepositoryMock
+                .Setup(x => x.ExistsByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(true));
-            var commandHandler = new SignUpCommandHandler(_userRepositoryMock.Object, _unitOfWorkMock.Object, _mapper,
-                _userAccessorMock.Object);
+            var commandHandler = new SignUpCommandHandler(
+                _userRepositoryMock.Object,
+                _unitOfWorkMock.Object,
+                _mapper,
+                _userAccessorMock.Object
+            );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
 
             await commandHandler.Handle(command, CancellationToken.None).ConfigureAwait(false);
-            _unitOfWorkMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+            _unitOfWorkMock.Verify(
+                x => x.SaveChangesAsync(It.IsAny<CancellationToken>()),
+                Times.Never
+            );
         }
     }
 }

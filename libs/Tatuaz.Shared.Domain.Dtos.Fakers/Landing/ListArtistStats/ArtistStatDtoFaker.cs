@@ -7,8 +7,14 @@ public class ArtistStatDtoFaker : Faker<ArtistStatDto>
 {
     public ArtistStatDtoFaker()
     {
-        CustomInstantiator(f =>
-            new ArtistStatDto(f.Internet.UserName(), f.Internet.Url(),
-                f.Internet.Url(), new EngagementStatDtoFaker().Generate()));
+        CustomInstantiator(
+            f =>
+                new ArtistStatDto(
+                    f.Internet.UserName(),
+                    f.Internet.Url(),
+                    f.Internet.Url(),
+                    new EngagementStatDtoFaker().Generate()
+                )
+        );
     }
 }

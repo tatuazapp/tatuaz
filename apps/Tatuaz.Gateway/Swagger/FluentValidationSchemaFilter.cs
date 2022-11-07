@@ -22,7 +22,8 @@ public class FluentValidationSchemaFilter : ISchemaFilter
     public void Apply(OpenApiSchema schema, SchemaFilterContext context)
     {
         var abstractValidatorType = typeof(AbstractValidator<>).MakeGenericType(context.Type);
-        var validatorType = new[] { typeof(CreateUserDto).Assembly }.SelectMany(x => x.GetTypes())
+        var validatorType = new[] { typeof(CreateUserDto).Assembly }
+            .SelectMany(x => x.GetTypes())
             .FirstOrDefault(x => x.IsSubclassOf(abstractValidatorType));
         if (validatorType == null)
         {
@@ -33,15 +34,20 @@ public class FluentValidationSchemaFilter : ISchemaFilter
         var validator = scope.ServiceProvider.GetService(validatorType) as IValidator;
         if (validator == null)
         {
-            throw new InvalidOperationException("Validator of type " + validatorType + " could not be resolved.");
+            throw new InvalidOperationException(
+                "Validator of type " + validatorType + " could not be resolved."
+            );
         }
 
         var validatorDescriptor = validator.CreateDescriptor();
         foreach (var key in schema.Properties.Keys)
         {
             var keyErrorCodes = new StringBuilder("ErrorCodes: ");
-            foreach (var ruleComponent in validatorDescriptor.GetRulesForMember(ToPascalCase(key))
-                         .SelectMany(x => x.Components))
+            foreach (
+                var ruleComponent in validatorDescriptor
+                    .GetRulesForMember(ToPascalCase(key))
+                    .SelectMany(x => x.Components)
+            )
             {
                 var ruleComponentValidator = ruleComponent.Validator;
 #pragma warning disable CA1305
@@ -68,15 +74,23 @@ public class FluentValidationSchemaFilter : ISchemaFilter
                     schema.Properties[key].MinLength = lengthValidator.Min;
                 }
 
-                if (ruleComponentValidator.GetType().IsAssignableTo(typeof(IRegularExpressionValidator)))
+                if (
+                    ruleComponentValidator
+                        .GetType()
+                        .IsAssignableTo(typeof(IRegularExpressionValidator))
+                )
                 {
-                    schema.Properties[key].Pattern = ((IRegularExpressionValidator)ruleComponentValidator).Expression;
+                    schema.Properties[key].Pattern = (
+                        (IRegularExpressionValidator)ruleComponentValidator
+                    ).Expression;
                 }
 
                 // Add more validation properties here;
             }
 
-            schema.Properties[key].Description = keyErrorCodes.ToString()[..(keyErrorCodes.Length - 2)];
+            schema.Properties[key].Description = keyErrorCodes.ToString()[
+                ..(keyErrorCodes.Length - 2)
+            ];
         }
     }
 

@@ -8,10 +8,12 @@ using Tatuaz.Shared.Pipeline.Queues;
 
 namespace Tatuaz.Gateway.Queue.Producers.Landing.ListArtistStats;
 
-public class ListArtistStatsProducer : TatuazProducerBase<ListArtistStatsOrder, IEnumerable<ArtistStatDto>>
+public class ListArtistStatsProducer
+    : TatuazProducerBase<ListArtistStatsOrder, IEnumerable<ArtistStatDto>>
 {
-    public ListArtistStatsProducer(IRequestClient<ListArtistStatsOrder> requestClient, IUserAccessor userAccessor,
-        ILogger<ListArtistStatsProducer> logger) : base(requestClient, userAccessor, logger)
-    {
-    }
+    public ListArtistStatsProducer(
+        IRequestClient<ListArtistStatsOrder> requestClient,
+        IUserAccessor userAccessor,
+        ILogger<ListArtistStatsProducer> logger
+    ) : base(requestClient, userAccessor, logger) { }
 }

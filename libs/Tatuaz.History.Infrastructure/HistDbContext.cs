@@ -12,13 +12,9 @@ public class HistDbContext : DbContext
         NpgsqlConnection.GlobalTypeMapper.MapEnum<HistState>();
     }
 
-    public HistDbContext(DbContextOptions<HistDbContext> options) : base(options)
-    {
-    }
+    public HistDbContext(DbContextOptions<HistDbContext> options) : base(options) { }
 
-    public HistDbContext()
-    {
-    }
+    public HistDbContext() { }
 
     public DbSet<HistTatuazUser> HTatuazUsers { get; set; } = default!;
     public DbSet<HistTatuazRole> HTatuazRoles { get; set; } = default!;

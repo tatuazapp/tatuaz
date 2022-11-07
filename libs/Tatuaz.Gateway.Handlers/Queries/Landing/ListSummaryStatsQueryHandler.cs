@@ -14,8 +14,8 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway.Handlers.Queries.Landing;
 
-public class
-    ListSummaryStatsQueryHandler : IRequestHandler<ListSummaryStatsQuery, TatuazResult<IEnumerable<SummaryStatDto>>>
+public class ListSummaryStatsQueryHandler
+    : IRequestHandler<ListSummaryStatsQuery, TatuazResult<IEnumerable<SummaryStatDto>>>
 {
     private readonly IClock _clock;
     private readonly ListSummaryStatsProducer _listSummaryStatsProducer;
@@ -32,14 +32,19 @@ public class
         _validator = validator;
     }
 
-    public async Task<TatuazResult<IEnumerable<SummaryStatDto>>> Handle(ListSummaryStatsQuery request,
-        CancellationToken cancellationToken)
+    public async Task<TatuazResult<IEnumerable<SummaryStatDto>>> Handle(
+        ListSummaryStatsQuery request,
+        CancellationToken cancellationToken
+    )
     {
-        var validationResult =
-            await _validator.ValidateAsync(request.ListSummaryStatsDto, cancellationToken).ConfigureAwait(false);
+        var validationResult = await _validator
+            .ValidateAsync(request.ListSummaryStatsDto, cancellationToken)
+            .ConfigureAwait(false);
         if (!validationResult.IsValid)
         {
-            return CommonResultFactory.ValidationError<IEnumerable<SummaryStatDto>>(validationResult);
+            return CommonResultFactory.ValidationError<IEnumerable<SummaryStatDto>>(
+                validationResult
+            );
         }
 
         var from = request.ListSummaryStatsDto.TimePeriod switch
@@ -51,8 +56,14 @@ public class
         };
 
         var result = await _listSummaryStatsProducer
-            .Send(new ListSummaryStatsOrder(from, _clock.GetCurrentInstant(), request.ListSummaryStatsDto.Count),
-                cancellationToken)
+            .Send(
+                new ListSummaryStatsOrder(
+                    from,
+                    _clock.GetCurrentInstant(),
+                    request.ListSummaryStatsDto.Count
+                ),
+                cancellationToken
+            )
             .ConfigureAwait(false);
 
         if (result == null)

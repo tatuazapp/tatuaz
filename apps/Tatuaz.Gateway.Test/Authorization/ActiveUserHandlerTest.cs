@@ -31,51 +31,74 @@ public class ActiveUserHandlerTest
         {
             _userAccessorMock.ReturnUserId(null);
             var handler = new ActiveUserHandler(_mediatorMock.Object, _userAccessorMock.Object);
-            var claimsPrincipal =
-                new GenericPrincipal(new ClaimsIdentity(Array.Empty<Claim>()), null);
-            var context = new AuthorizationHandlerContext(new[] { new ActiveUserRequirement() },
-                claimsPrincipal, null);
+            var claimsPrincipal = new GenericPrincipal(
+                new ClaimsIdentity(Array.Empty<Claim>()),
+                null
+            );
+            var context = new AuthorizationHandlerContext(
+                new[] { new ActiveUserRequirement() },
+                claimsPrincipal,
+                null
+            );
             await handler.HandleAsync(context).ConfigureAwait(false);
 
             Assert.False(context.HasSucceeded);
-            _mediatorMock.Verify(m =>
-                m.Send(It.IsAny<UserExistsQuery>(), It.IsAny<CancellationToken>()), Times.Never);
+            _mediatorMock.Verify(
+                m => m.Send(It.IsAny<UserExistsQuery>(), It.IsAny<CancellationToken>()),
+                Times.Never
+            );
         }
 
         [Fact]
         public async Task Should_FailWhenUserDoesntExist()
         {
             _userAccessorMock.ReturnUserId("1");
-            _mediatorMock.Setup(m => m.Send(It.IsAny<UserExistsQuery>(), It.IsAny<CancellationToken>()))
+            _mediatorMock
+                .Setup(m => m.Send(It.IsAny<UserExistsQuery>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(false);
             var handler = new ActiveUserHandler(_mediatorMock.Object, _userAccessorMock.Object);
-            var claimsPrincipal =
-                new GenericPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, "1") }), null);
-            var context = new AuthorizationHandlerContext(new[] { new ActiveUserRequirement() },
-                claimsPrincipal, null);
+            var claimsPrincipal = new GenericPrincipal(
+                new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, "1") }),
+                null
+            );
+            var context = new AuthorizationHandlerContext(
+                new[] { new ActiveUserRequirement() },
+                claimsPrincipal,
+                null
+            );
             await handler.HandleAsync(context).ConfigureAwait(false);
 
             Assert.False(context.HasSucceeded);
-            _mediatorMock.Verify(m =>
-                m.Send(It.IsAny<UserExistsQuery>(), It.IsAny<CancellationToken>()), Times.Once);
+            _mediatorMock.Verify(
+                m => m.Send(It.IsAny<UserExistsQuery>(), It.IsAny<CancellationToken>()),
+                Times.Once
+            );
         }
 
         [Fact]
         public async Task Should_SucceedWhenUserExists()
         {
             _userAccessorMock.ReturnUserId("1");
-            _mediatorMock.Setup(m => m.Send(It.IsAny<UserExistsQuery>(), It.IsAny<CancellationToken>()))
+            _mediatorMock
+                .Setup(m => m.Send(It.IsAny<UserExistsQuery>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(true);
             var handler = new ActiveUserHandler(_mediatorMock.Object, _userAccessorMock.Object);
-            var claimsPrincipal =
-                new GenericPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, "1") }), null);
-            var context = new AuthorizationHandlerContext(new[] { new ActiveUserRequirement() },
-                claimsPrincipal, null);
+            var claimsPrincipal = new GenericPrincipal(
+                new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, "1") }),
+                null
+            );
+            var context = new AuthorizationHandlerContext(
+                new[] { new ActiveUserRequirement() },
+                claimsPrincipal,
+                null
+            );
             await handler.HandleAsync(context).ConfigureAwait(false);
 
             Assert.True(context.HasSucceeded);
-            _mediatorMock.Verify(m =>
-                m.Send(It.IsAny<UserExistsQuery>(), It.IsAny<CancellationToken>()), Times.Once);
+            _mediatorMock.Verify(
+                m => m.Send(It.IsAny<UserExistsQuery>(), It.IsAny<CancellationToken>()),
+                Times.Once
+            );
         }
     }
 }

@@ -13,5 +13,6 @@ public class GatewayUserAccessor : IUserAccessor
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public string? CurrentUserId => _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    public string? CurrentUserId =>
+        _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 }

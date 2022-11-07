@@ -26,8 +26,13 @@ public class UserExistsQueryHandlerTest
         _dbContext = dbContext;
         var serviceScopeMock = new Mock<IServiceScope>();
         _serviceScopeFactoryMock = new Mock<IServiceScopeFactory>();
-        serviceScopeMock.Setup(x =>
-                x.ServiceProvider.GetService(typeof(IGenericRepository<TatuazUser, HistTatuazUser, string>)))
+        serviceScopeMock
+            .Setup(
+                x =>
+                    x.ServiceProvider.GetService(
+                        typeof(IGenericRepository<TatuazUser, HistTatuazUser, string>)
+                    )
+            )
             .Returns(new GenericRepository<TatuazUser, HistTatuazUser, string>(_dbContext));
         _serviceScopeFactoryMock.Setup(x => x.CreateScope()).Returns(serviceScopeMock.Object);
         _tatuazUserFaker = new TatuazUserFaker();
@@ -35,9 +40,7 @@ public class UserExistsQueryHandlerTest
 
     public class Handle : UserExistsQueryHandlerTest
     {
-        public Handle(DbContext dbContext) : base(dbContext)
-        {
-        }
+        public Handle(DbContext dbContext) : base(dbContext) { }
 
         [Fact]
         public async Task Should_Return_True_When_User_Exists()

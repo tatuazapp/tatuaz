@@ -5,7 +5,5 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway.Requests.Queries.Landing;
 
-public record ListArtistStatsQuery
-(
-    ListArtistStatsDto ListArtistStatDto
-) : IRequest<TatuazResult<IEnumerable<ArtistStatDto>>>;
+public record ListArtistStatsQuery(ListArtistStatsDto ListArtistStatDto)
+    : IRequest<TatuazResult<IEnumerable<ArtistStatDto>>>;

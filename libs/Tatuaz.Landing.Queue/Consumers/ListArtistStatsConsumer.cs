@@ -10,13 +10,14 @@ using Tatuaz.Shared.Pipeline.Queues;
 
 namespace Tatuaz.Landing.Queue.Consumers;
 
-public class ListArtistStatsConsumer : TatuazConsumerBase<ListArtistStatsOrder, IEnumerable<ArtistStatDto>>
+public class ListArtistStatsConsumer
+    : TatuazConsumerBase<ListArtistStatsOrder, IEnumerable<ArtistStatDto>>
 {
-    public ListArtistStatsConsumer(ILogger<ListArtistStatsConsumer> logger) : base(logger)
-    {
-    }
+    public ListArtistStatsConsumer(ILogger<ListArtistStatsConsumer> logger) : base(logger) { }
 
-    protected override Task<TatuazResult<IEnumerable<ArtistStatDto>>> ConsumeMessage(ListArtistStatsOrder message)
+    protected override Task<TatuazResult<IEnumerable<ArtistStatDto>>> ConsumeMessage(
+        ListArtistStatsOrder message
+    )
     {
         var faker = new ArtistStatDtoFaker();
         var result = faker.Generate(message.Amount);

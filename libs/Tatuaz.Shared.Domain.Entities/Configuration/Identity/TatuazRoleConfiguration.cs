@@ -10,9 +10,7 @@ public class TatuazRoleConfiguration : IEntityTypeConfiguration<TatuazRole>
     {
         builder.ToTable("tatuaz_roles", TatuazIdentityConstants.SchemaName);
 
-        builder
-            .Property(x => x.Name)
-            .HasMaxLength(128);
+        builder.Property(x => x.Name).HasMaxLength(128);
 
         builder
             .HasMany(x => x.TatuazUserRoles)

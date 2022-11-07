@@ -13,8 +13,8 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway.Handlers.Queries.Landing;
 
-public class
-    ListArtistStatsQueryHandler : IRequestHandler<ListArtistStatsQuery, TatuazResult<IEnumerable<ArtistStatDto>>>
+public class ListArtistStatsQueryHandler
+    : IRequestHandler<ListArtistStatsQuery, TatuazResult<IEnumerable<ArtistStatDto>>>
 {
     private readonly ListArtistStatsProducer _listArtistStatsProducer;
     private readonly IValidator<ListArtistStatsDto> _validator;
@@ -28,14 +28,19 @@ public class
         _validator = validator;
     }
 
-    public async Task<TatuazResult<IEnumerable<ArtistStatDto>>> Handle(ListArtistStatsQuery request,
-        CancellationToken cancellationToken)
+    public async Task<TatuazResult<IEnumerable<ArtistStatDto>>> Handle(
+        ListArtistStatsQuery request,
+        CancellationToken cancellationToken
+    )
     {
-        var validationResult =
-            await _validator.ValidateAsync(request.ListArtistStatDto, cancellationToken).ConfigureAwait(false);
+        var validationResult = await _validator
+            .ValidateAsync(request.ListArtistStatDto, cancellationToken)
+            .ConfigureAwait(false);
         if (!validationResult.IsValid)
         {
-            return CommonResultFactory.ValidationError<IEnumerable<ArtistStatDto>>(validationResult);
+            return CommonResultFactory.ValidationError<IEnumerable<ArtistStatDto>>(
+                validationResult
+            );
         }
 
         var result = await _listArtistStatsProducer

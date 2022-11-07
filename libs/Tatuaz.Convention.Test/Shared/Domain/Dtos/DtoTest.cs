@@ -32,8 +32,14 @@ public class DtoTest
         public void AllDtosHaveFakers()
         {
             var dtosWithoutFakers = _dtos
-                .Where(x => !_dtoFakers.Any(y =>
-                    y.BaseType?.GenericTypeArguments.FirstOrDefault() == x && y.Name == x.Name + "Faker"))
+                .Where(
+                    x =>
+                        !_dtoFakers.Any(
+                            y =>
+                                y.BaseType?.GenericTypeArguments.FirstOrDefault() == x
+                                && y.Name == x.Name + "Faker"
+                        )
+                )
                 .ToList();
             Assert.Empty(dtosWithoutFakers);
         }

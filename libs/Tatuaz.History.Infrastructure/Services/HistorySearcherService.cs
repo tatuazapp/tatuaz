@@ -135,15 +135,15 @@ public class HistorySearcherService<TEntity, TId> : IHistorySearcherService<TEnt
     )
     {
         return (
-                await _histDbContext
-                    .Set<TEntity>()
-                    .AsNoTracking()
-                    .Where(x => x.HistDumpedAt < asOf)
-                    .Where(predicate)
-                    .OrderByDescending(x => x.HistDumpedAt)
-                    .ToListAsync(cancellationToken)
-                    .ConfigureAwait(false)
-            )
+            await _histDbContext
+                .Set<TEntity>()
+                .AsNoTracking()
+                .Where(x => x.HistDumpedAt < asOf)
+                .Where(predicate)
+                .OrderByDescending(x => x.HistDumpedAt)
+                .ToListAsync(cancellationToken)
+                .ConfigureAwait(false)
+        )
             .Aggregate(
                 new List<TEntity>(),
                 (collection, entity) =>
@@ -161,15 +161,15 @@ public class HistorySearcherService<TEntity, TId> : IHistorySearcherService<TEnt
     )
     {
         return (
-                await _histDbContext
-                    .Set<TEntity>()
-                    .AsNoTracking()
-                    .Where(x => x.HistDumpedAt < asOf)
-                    .Where(predicate)
-                    .OrderByDescending(x => x.HistDumpedAt)
-                    .ToListAsync(cancellationToken)
-                    .ConfigureAwait(false)
-            )
+            await _histDbContext
+                .Set<TEntity>()
+                .AsNoTracking()
+                .Where(x => x.HistDumpedAt < asOf)
+                .Where(predicate)
+                .OrderByDescending(x => x.HistDumpedAt)
+                .ToListAsync(cancellationToken)
+                .ConfigureAwait(false)
+        )
             .Aggregate(
                 new List<TEntity>(),
                 (collection, entity) =>

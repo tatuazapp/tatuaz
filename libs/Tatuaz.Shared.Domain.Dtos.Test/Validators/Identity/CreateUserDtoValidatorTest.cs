@@ -19,7 +19,9 @@ public class CreateUserDtoValidatorTest
     public CreateUserDtoValidatorTest()
     {
         _dbContextMock = new GatewayDbContextMock();
-        _userRepository = new GenericRepository<TatuazUser, HistTatuazUser, string>(_dbContextMock.Object);
+        _userRepository = new GenericRepository<TatuazUser, HistTatuazUser, string>(
+            _dbContextMock.Object
+        );
         _createUserDtoFaker = new CreateUserDtoFaker();
     }
 

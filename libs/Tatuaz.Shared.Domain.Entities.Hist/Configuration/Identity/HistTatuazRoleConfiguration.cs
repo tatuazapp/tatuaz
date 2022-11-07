@@ -12,8 +12,6 @@ public class HistTatuazRoleConfiguration : IEntityTypeConfiguration<HistTatuazRo
 
         builder.HasKey(x => x.HistId);
 
-        builder
-            .Property(x => x.Name)
-            .HasMaxLength(128);
+        builder.Property(x => x.Name).HasMaxLength(128);
     }
 }

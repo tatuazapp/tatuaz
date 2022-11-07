@@ -9,8 +9,11 @@ namespace Tatuaz.Shared.Pipeline;
 
 public static class SharedPipelineExtensions
 {
-    public static IServiceCollection RegisterSharedPipelineServices(this IServiceCollection services,
-        IConfiguration configuration, params Assembly[] assemblies)
+    public static IServiceCollection RegisterSharedPipelineServices(
+        this IServiceCollection services,
+        IConfiguration configuration,
+        params Assembly[] assemblies
+    )
     {
         var rabbitMqOpt = configuration.GetRabbitMqOpt();
         services.AddMassTransit(x =>

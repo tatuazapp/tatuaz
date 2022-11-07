@@ -21,8 +21,11 @@ public class UserExistsQueryHandler : IRequestHandler<UserExistsQuery, bool>
     public async Task<bool> Handle(UserExistsQuery request, CancellationToken cancellationToken)
     {
         using var scope = _scopeFactory.CreateScope();
-        var userRepository = scope.ServiceProvider
-            .GetRequiredService<IGenericRepository<TatuazUser, HistTatuazUser, string>>();
-        return await userRepository.ExistsByIdAsync(request.UserId, cancellationToken).ConfigureAwait(false);
+        var userRepository = scope.ServiceProvider.GetRequiredService<
+            IGenericRepository<TatuazUser, HistTatuazUser, string>
+        >();
+        return await userRepository
+            .ExistsByIdAsync(request.UserId, cancellationToken)
+            .ConfigureAwait(false);
     }
 }

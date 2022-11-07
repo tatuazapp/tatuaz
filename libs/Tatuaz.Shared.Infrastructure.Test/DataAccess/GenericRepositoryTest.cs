@@ -33,9 +33,7 @@ public class GenericRepositoryTest
         public GetByIdAsyncTest(
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, authorRepository)
-        {
-        }
+        ) : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnSavedEntity()
@@ -66,7 +64,9 @@ public class GenericRepositoryTest
             await _dbContext.AddAsync(author).ConfigureAwait(false);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var result = await _authorRepository.GetByIdAsync(author.Id, true).ConfigureAwait(false);
+            var result = await _authorRepository
+                .GetByIdAsync(author.Id, true)
+                .ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.Equal(author.FirstName, result.FirstName);
@@ -119,9 +119,7 @@ public class GenericRepositoryTest
         public ExistsByIdAsyncTest(
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, authorRepository)
-        {
-        }
+        ) : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnTrueOnExistingEntity()
@@ -151,9 +149,7 @@ public class GenericRepositoryTest
         public GetBySpecificationAsyncTest(
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, authorRepository)
-        {
-        }
+        ) : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnEntity()
@@ -167,9 +163,11 @@ public class GenericRepositoryTest
                 .Setup(x => x.Apply(It.IsAny<IQueryable<Author>>()))
                 .Returns<IQueryable<Author>>(q => q.Where(x => x.Id == author1.Id));
 
-            var result = (await _authorRepository
-                .GetBySpecificationAsync(specMock.Object)
-                .ConfigureAwait(false)).ToList();
+            var result = (
+                await _authorRepository
+                    .GetBySpecificationAsync(specMock.Object)
+                    .ConfigureAwait(false)
+            ).ToList();
 
             Assert.NotNull(result);
             Assert.Single(result);
@@ -182,9 +180,7 @@ public class GenericRepositoryTest
         public GetBySpecificationWithPagingAsyncTest(
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, authorRepository)
-        {
-        }
+        ) : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnEntityWithPaging()
@@ -217,9 +213,7 @@ public class GenericRepositoryTest
         public ExistsByPredicateAsyncTest(
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, authorRepository)
-        {
-        }
+        ) : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnTrueOnExistingEntity()
@@ -252,9 +246,7 @@ public class GenericRepositoryTest
         public CountByPredicateAsyncTest(
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, authorRepository)
-        {
-        }
+        ) : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnCount()
@@ -288,9 +280,7 @@ public class GenericRepositoryTest
         public CreateAsyncTest(
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, authorRepository)
-        {
-        }
+        ) : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_CreateEntity()
@@ -309,9 +299,7 @@ public class GenericRepositoryTest
         public DeleteAsyncTest(
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, authorRepository)
-        {
-        }
+        ) : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_DeleteEntity()

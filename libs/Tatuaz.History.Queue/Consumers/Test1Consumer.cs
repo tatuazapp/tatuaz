@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.Extensions.Logging;
 using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.Queue.Consumers.Common;
@@ -16,7 +16,5 @@ public class Test1Consumer : HistGetByIdConsumer<HistEntity<Guid>, Guid>
     public Test1Consumer(
         IHistorySearcherService<HistEntity<Guid>, Guid> historySearcherService,
         ILogger<Test1Consumer> logger
-    ) : base(historySearcherService, logger)
-    {
-    }
+    ) : base(historySearcherService, logger) { }
 }

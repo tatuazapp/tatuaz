@@ -7,7 +7,8 @@ public sealed class ListSummaryStatsDtoFaker : Faker<ListSummaryStatsDto>
 {
     public ListSummaryStatsDtoFaker()
     {
-        CustomInstantiator(f =>
-            new ListSummaryStatsDto(f.PickRandom<SummaryStatTimePeriod>(), f.Random.Int(1, 10)));
+        CustomInstantiator(
+            f => new ListSummaryStatsDto(f.PickRandom<SummaryStatTimePeriod>(), f.Random.Int(1, 10))
+        );
     }
 }

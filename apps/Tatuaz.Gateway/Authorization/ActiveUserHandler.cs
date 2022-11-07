@@ -17,8 +17,10 @@ public class ActiveUserHandler : AuthorizationHandler<ActiveUserRequirement>
         _userAccessor = userAccessor;
     }
 
-    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
-        ActiveUserRequirement requirement)
+    protected override async Task HandleRequirementAsync(
+        AuthorizationHandlerContext context,
+        ActiveUserRequirement requirement
+    )
     {
         if (_userAccessor.CurrentUserId == null)
         {
@@ -26,7 +28,9 @@ public class ActiveUserHandler : AuthorizationHandler<ActiveUserRequirement>
             return;
         }
 
-        var userExists = await _mediator.Send(new UserExistsQuery(_userAccessor.CurrentUserId)).ConfigureAwait(false);
+        var userExists = await _mediator
+            .Send(new UserExistsQuery(_userAccessor.CurrentUserId))
+            .ConfigureAwait(false);
 
         if (userExists)
         {

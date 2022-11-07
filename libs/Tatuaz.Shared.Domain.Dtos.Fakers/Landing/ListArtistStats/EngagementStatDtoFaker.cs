@@ -7,8 +7,8 @@ public sealed class EngagementStatDtoFaker : Faker<EngagementStatDto>
 {
     public EngagementStatDtoFaker()
     {
-        CustomInstantiator(f =>
-            new EngagementStatDto(f.PickRandom<EngagementStatType>(),
-                f.Lorem.Sentence()));
+        CustomInstantiator(
+            f => new EngagementStatDto(f.PickRandom<EngagementStatType>(), f.Lorem.Sentence())
+        );
     }
 }

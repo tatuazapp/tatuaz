@@ -5,7 +5,9 @@ namespace Tatuaz.Shared.Domain.Dtos;
 
 public static class SharedDomainDtosExtensions
 {
-    public static IServiceCollection RegisterSharedDomainDtosServices(this IServiceCollection services)
+    public static IServiceCollection RegisterSharedDomainDtosServices(
+        this IServiceCollection services
+    )
     {
         // TODO Add Dtos.Hist later
         services.AddAutoMapper(typeof(UserDto).Assembly);

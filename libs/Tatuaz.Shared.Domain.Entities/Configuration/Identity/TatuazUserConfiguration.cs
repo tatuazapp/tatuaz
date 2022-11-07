@@ -10,15 +10,9 @@ public class TatuazUserConfiguration : IEntityTypeConfiguration<TatuazUser>
     {
         builder.ToTable("tatuaz_users", TatuazIdentityConstants.SchemaName);
 
-        builder
-            .Property(x => x.Username)
-            .HasMaxLength(32);
-        builder
-            .Property(x => x.Email)
-            .HasMaxLength(256);
-        builder
-            .Property(x => x.PhoneNumber)
-            .HasMaxLength(16);
+        builder.Property(x => x.Username).HasMaxLength(32);
+        builder.Property(x => x.Email).HasMaxLength(256);
+        builder.Property(x => x.PhoneNumber).HasMaxLength(16);
 
         builder
             .HasMany(x => x.TatuazUserRoles)

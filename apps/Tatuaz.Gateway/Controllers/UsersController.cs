@@ -13,9 +13,7 @@ namespace Tatuaz.Gateway.Controllers;
 
 public class UsersController : TatuazControllerBase
 {
-    public UsersController(IMediator mediator) : base(mediator)
-    {
-    }
+    public UsersController(IMediator mediator) : base(mediator) { }
 
     /// <summary>
     ///     Check what user is logged in
@@ -49,6 +47,8 @@ public class UsersController : TatuazControllerBase
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> SignUp([FromBody] CreateUserDto createUserDto)
     {
-        return ResultToActionResult(await Mediator.Send(new SignUpCommand(createUserDto)).ConfigureAwait(false));
+        return ResultToActionResult(
+            await Mediator.Send(new SignUpCommand(createUserDto)).ConfigureAwait(false)
+        );
     }
 }
