@@ -18,7 +18,7 @@ const WeekendCard: FunctionComponent<WeekendCardProps> = ({
 }) => (
   <MainContainer>
     <TopContainer>
-      <ValueContainer defaultValue={value.length}>{value}</ValueContainer>
+      <ValueContainer length={value.length}>{value}</ValueContainer>
     </TopContainer>
     <BottomContainer>
       <DescriptionContainer>{description}</DescriptionContainer>

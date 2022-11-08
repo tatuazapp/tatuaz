@@ -1,19 +1,6 @@
 import styled from "styled-components"
 import { rem } from "../../../styles/utils"
 
-export const TitleContainer = styled.div`
-  width: 30rem;
-  height: 3rem;
-  margin-top: 3rem;
-  margin-left: 3rem;
-
-  font-family: "Comfortaa";
-  font-size: 30px;
-  font-weight: 500;
-  font-style: normal;
-  line-height: 33px;
-  color: ${({ theme }) => theme.colors.primary};
-`
 export const MainContainer = styled.div`
   width: ${rem(230)};
   height: ${rem(230)};
@@ -32,30 +19,18 @@ export const BottomContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
   height: 40%;
-  margin-top: ${rem(5)};
 `
 
-export const ValueContainer = styled.div`
+export const ValueContainer = styled.div<{ length: number }>`
   width: 80%;
-  margin-bottom: ${(props) =>
-    props.defaultValue < 10
-      ? "20px"
-      : props.defaultValue > 16
-      ? "0px"
-      : "10px"};
+  margin-bottom: ${({ length }) =>
+    length < 10 ? "20px" : length > 16 ? "0px" : "10px"};
 
-  font-family: "Comfortaa";
-  font-size: ${(props) =>
-    props.defaultValue < 10
-      ? "34px"
-      : props.defaultValue > 26
-      ? "22px"
-      : "28px"};
+  font-size: ${({ length }) =>
+    length < 10 ? rem(34) : length > 26 ? rem(22) : rem(28)};
   font-weight: 700;
-  font-style: normal;
-  line-height: 32px;
+  line-height: ${rem(32)};
   color: ${({ theme }) => theme.colors.primary};
   text-align: center;
 `
@@ -63,11 +38,9 @@ export const ValueContainer = styled.div`
 export const DescriptionContainer = styled.div`
   width: 80%;
 
-  font-family: "Comfortaa";
-  font-size: 14px;
+  font-size: ${rem(14)};
   font-weight: 700;
-  font-style: normal;
-  line-height: 22px;
+  line-height: ${rem(22)};
   color: ${({ theme }) => theme.colors.primary};
   text-align: center;
 `

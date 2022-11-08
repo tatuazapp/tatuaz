@@ -1,13 +1,20 @@
-import { Box } from "@chakra-ui/react"
+import { FormattedMessage } from "react-intl"
 import StatsCard from "../StatsCard"
-import { TitleContainer } from "../StatsCard/styles"
+import { TitleContainer, CardsContainer } from "./styles"
 
 const StatsSection = () => (
   <>
-    <Box>
-      <TitleContainer>Ostatni tydzień w pigułce</TitleContainer>
-    </Box>
-    <Box display="flex" justifyContent="space-around" paddingTop={150}>
+    <FormattedMessage
+      defaultMessage="{title}"
+      description="Stats section title "
+      id="WVp2pt"
+      values={{
+        title: "Ostatni tydzień w pigułce",
+      }}
+    >
+      {(title) => <TitleContainer>{title}</TitleContainer>}
+    </FormattedMessage>
+    <CardsContainer>
       {/* MOCK_START */}
       <StatsCard
         description="
@@ -27,7 +34,7 @@ const StatsSection = () => (
         value="482"
       />
       {/* MOCK_END */}
-    </Box>
+    </CardsContainer>
   </>
 )
 
