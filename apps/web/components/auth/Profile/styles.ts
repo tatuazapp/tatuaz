@@ -16,6 +16,7 @@ export const ProfileWrapper = styled.div`
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 
   transition: all 0.15s ease 0s;
+
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 16px 70px 0 rgba(31, 38, 135, 0.37);

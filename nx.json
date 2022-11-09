@@ -13,7 +13,8 @@
           "lint",
           "test",
           "e2e",
-          "build-storybook"
+          "build-storybook",
+          "stylelint"
         ],
         "accessToken": "OWJmNjBlZTgtNmE0NS00YTY5LWFiNjQtMWY4NzgyMWRmZGQ3fHJlYWQtd3JpdGU="
       }
@@ -64,5 +65,8 @@
     }
   },
   "defaultProject": "web",
-  "plugins": ["@nx-dotnet/core"]
+  "plugins": ["@nx-dotnet/core"],
+  "implicitDependencies": {
+    ".stylelintrc.json": "*"
+  }
 }

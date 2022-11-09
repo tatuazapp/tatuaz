@@ -56,6 +56,15 @@
       "options": {
         "lintFilePatterns": ["apps/web/**/*.{ts,tsx,js,jsx}"]
       }
+    },
+    "stylelint": {
+      "executor": "nx-stylelint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "configFile": "apps/web/.stylelintrc.json",
+        "lintFilePatterns": ["apps/web/**/*.{ts,tsx,js,jsx}"],
+        "formatter": "string"
+      }
     }
   },
   "tags": []
