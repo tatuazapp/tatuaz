@@ -4,8 +4,8 @@ import { rem } from "../../../styles/utils"
 export const TitleContainer = styled.div`
   width: ${rem(540)};
   height: ${rem(40)};
-  margin-top: 50px;
-  margin-left: 50px;
+  margin-top: ${({ theme }) => theme.space.xxlarge};
+  margin-left: ${({ theme }) => theme.space.xlarge};
 
   font-size: ${rem(30)};
   color: ${({ theme }) => theme.colors.primary};
@@ -14,6 +14,6 @@ export const TitleContainer = styled.div`
 export const CardsContainer = styled.div`
   display: flex;
   justify-content: space-around;
-  margin-top: 50px;
-  margin-bottom: 100px;
+  margin-top: ${({ theme }) => theme.space.xxlarge};
+  margin-bottom: ${({ theme }) => theme.space.xxlarge};
 `

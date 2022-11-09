@@ -4,6 +4,19 @@ declare module "styled-components" {
   type Colors = {
     primary: string
     secondary: string
+    photoCard: string
+  }
+
+  type Radius = {
+    xxxsmall: string
+    xxsmall: string
+    xsmall: string
+    small: string
+    medium: string
+    large: string
+    xlarge: string
+    xxlarge: string
+    xxxlarge: string
   }
 
   type Space = {
@@ -39,5 +52,6 @@ declare module "styled-components" {
     space: Space
     sizes: Sizes
     gradients: Gradients
+    radius: Radius
   }
 }

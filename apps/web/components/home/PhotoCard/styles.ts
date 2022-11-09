@@ -4,8 +4,8 @@ import { rem } from "../../../styles/utils"
 export const MainContainer = styled.div`
   width: ${rem(230)};
   height: ${rem(300)};
-  background-color: rgba(25, 25, 30);
-  border-radius: 15px;
+  background-color: ${({ theme }) => theme.colors.photoCard};
+  border-radius: ${({ theme }) => theme.radius.small};
 `
 
 export const TopContainer = styled.div`
@@ -26,8 +26,8 @@ export const PhotoContainer = styled.div<{ url: string }>`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  border: solid rgba(25, 25, 30) 15px;
-  border-radius: 25px;
+  border: solid ${({ theme }) => theme.colors.photoCard} 15px;
+  border-radius: ${({ theme }) => theme.radius.large};
 `
 
 export const DescriptionContainer = styled.div`

@@ -4,16 +4,12 @@ import { CardsContainer, TitleContainer } from "./styles"
 
 const PhotoCardSection = () => (
   <>
-    <FormattedMessage
-      defaultMessage="{title}"
-      description="PhotoCard section title "
-      id="P66lTc"
-      values={{
-        title: "Najpopularniejsi w tym miesiącu",
-      }}
-    >
-      {(title) => <TitleContainer>{title}</TitleContainer>}
-    </FormattedMessage>
+    <TitleContainer>
+      <FormattedMessage
+        defaultMessage="Najpopularniejsi w tym miesiącu"
+        id="JRdhQk"
+      />
+    </TitleContainer>
     <CardsContainer>
       {/* MOCK_START */}
       <PhotoCard

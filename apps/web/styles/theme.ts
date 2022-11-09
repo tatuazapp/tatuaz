@@ -5,6 +5,19 @@ export const theme: DefaultTheme = {
   colors: {
     primary: "#fff",
     secondary: "#1E1E1E",
+    photoCard: "#19191E",
+  },
+
+  radius: {
+    xxxsmall: "4px",
+    xxsmall: "8px",
+    xsmall: "12px",
+    small: "16px",
+    medium: "20px",
+    large: "24px",
+    xlarge: "32px",
+    xxlarge: "48px",
+    xxxlarge: "64px",
   },
   space: {
     xxxsmall: "4px",
