@@ -10,6 +10,7 @@ jobs:
   build-push-gateway:
     name: Build and push gateway image
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -33,6 +34,7 @@ jobs:
   build-push-history:
     name: Build and push history image
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -56,6 +58,7 @@ jobs:
   build-push-landing:
     name: Build and push landing image
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -80,6 +83,7 @@ jobs:
     name: Destroy all pods with old images
     needs: [build-push-gateway, build-push-history, build-push-landing]
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Install and configure kubectl
         run: |
