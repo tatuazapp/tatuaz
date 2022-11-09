@@ -4,16 +4,12 @@ import { TitleContainer, CardsContainer } from "./styles"
 
 const StatsSection = () => (
   <>
-    <FormattedMessage
-      defaultMessage="{title}"
-      description="Stats section title "
-      id="WVp2pt"
-      values={{
-        title: "Ostatni tydzień w pigułce",
-      }}
-    >
-      {(title) => <TitleContainer>{title}</TitleContainer>}
-    </FormattedMessage>
+    <TitleContainer>
+      <FormattedMessage
+        defaultMessage="Ostatni tydzień w pigułce"
+        id="MMkYtO"
+      />
+    </TitleContainer>
     <CardsContainer>
       {/* MOCK_START */}
       <StatsCard
