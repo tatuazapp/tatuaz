@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.Extensions.Logging;
 using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.Queue.Consumers.Common;

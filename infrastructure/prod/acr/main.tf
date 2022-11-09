@@ -9,17 +9,16 @@ terraform {
 
 provider "azurerm" {
   features {}
-
-  subscription_id = var.az_principal.subscription_id
-  client_id       = var.az_principal.app_id
-  client_secret   = var.az_principal.client_secret
-  tenant_id       = var.az_principal.tenant_id
+  subscription_id = var.az_creds.subscription_id
+  client_id       = var.az_creds.client_id
+  client_secret   = var.az_creds.client_secret
+  tenant_id       = var.az_creds.tenant_id
 }
 
 resource "azurerm_resource_group" "tatuaz-main" {
   name     = "tatuaz-main"
   location = "francecentral"
-  tags                = var.tags
+  tags     = var.az_tags
 }
 
 resource "azurerm_container_registry" "tatuaz-main" {
@@ -28,5 +27,5 @@ resource "azurerm_container_registry" "tatuaz-main" {
   location            = azurerm_resource_group.tatuaz-main.location
   sku                 = "Basic"
   admin_enabled       = false
-  tags                = var.tags
+  tags                = var.az_tags
 }

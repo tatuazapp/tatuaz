@@ -4,31 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
-  build-push-web:
-    name: Build and push web image
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Log into registry
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ secrets.ACR_ENDPOINT }}
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Build & Push
-        uses: docker/build-push-action@v2
-        with:
-          context: ./
-          file: apps/web/Dockerfile
-          push: true
-          tags: ${{ secrets.ACR_ENDPOINT }}/web:latest
-          cache-from: type=registry,ref=${{ secrets.ACR_ENDPOINT }}/web:buildcache
-          cache-to: type=registry,ref=${{ secrets.ACR_ENDPOINT }}/web:buildcache,mode=max
   build-push-gateway:
     name: Build and push gateway image
     runs-on: ubuntu-latest
@@ -52,9 +30,55 @@ jobs:
           tags: ${{ secrets.ACR_ENDPOINT }}/gateway:latest
           cache-from: type=registry,ref=${{ secrets.ACR_ENDPOINT }}/gateway:buildcache
           cache-to: type=registry,ref=${{ secrets.ACR_ENDPOINT }}/gateway:buildcache,mode=max
+  build-push-history:
+    name: Build and push history image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Log into registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.ACR_ENDPOINT }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build & Push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: apps/Tatuaz.History/Dockerfile
+          push: true
+          tags: ${{ secrets.ACR_ENDPOINT }}/history:latest
+          cache-from: type=registry,ref=${{ secrets.ACR_ENDPOINT }}/history:buildcache
+          cache-to: type=registry,ref=${{ secrets.ACR_ENDPOINT }}/history:buildcache,mode=max
+  build-push-landing:
+    name: Build and push landing image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Log into registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.ACR_ENDPOINT }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build & Push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: apps/Tatuaz.Landing/Dockerfile
+          push: true
+          tags: ${{ secrets.ACR_ENDPOINT }}/landing:latest
+          cache-from: type=registry,ref=${{ secrets.ACR_ENDPOINT }}/landing:buildcache
+          cache-to: type=registry,ref=${{ secrets.ACR_ENDPOINT }}/landing:buildcache,mode=max
   destroy-all-pods:
     name: Destroy all pods with old images
-    needs: [build-push-gateway, build-push-web]
+    needs: [build-push-gateway, build-push-history, build-push-landing]
     runs-on: ubuntu-latest
     steps:
       - name: Install and configure kubectl
@@ -71,8 +95,9 @@ jobs:
         with:
           creds: '{"clientId":"${{ secrets.AZ_MAIN_CLIENT_ID }}","clientSecret":"${{ secrets.AZ_MAIN_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZ_MAIN_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZ_MAIN_TENANT_ID }}"}'
       - name: Initialize kube config
-        run: az aks get-credentials --resource-group tatuaz-test --name tatuaz-test-k8s
+        run: az aks get-credentials --resource-group tatuaz-test --name ta-aks
       - name: Destroy old pods
         run: |
-          kubectl delete pods  --namespace=tatuaz-test -l name=web-pod
           kubectl delete pods  --namespace=tatuaz-test -l name=gateway-pod
+          kubectl delete pods  --namespace=tatuaz-test -l name=history-pod
+          kubectl delete pods  --namespace=tatuaz-test -l name=landing-pod

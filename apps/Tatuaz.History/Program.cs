@@ -9,4 +9,8 @@ builder.Services.RegisterHistoryServices(builder.Configuration);
 
 builder.Host.RegisterHistoryHost();
 
-builder.Build().Run();
+var app = builder.Build();
+
+app.MapGet("/", () => "I'm alive");
+
+app.Run();

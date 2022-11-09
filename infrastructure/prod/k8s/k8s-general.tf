@@ -1,6 +1,6 @@
-resource "kubernetes_namespace" "tatuaz-test" {
+resource "kubernetes_namespace" "k8s_ns" {
   metadata {
-    name = "tatuaz-test"
+    name = "tatuaz"
     labels = {
       "cert-manager.io/disable-validation" = true
     }
