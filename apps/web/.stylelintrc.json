@@ -1,0 +1,10 @@
+{
+  "extends": ["../../.stylelintrc.json"],
+  "ignoreFiles": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["**/*.tsx", "**/*.jsx", "**/*.js", "**/*.ts"],
+      "customSyntax": "@stylelint/postcss-css-in-js"
+    }
+  ]
+}
