@@ -6,8 +6,8 @@ export const TopBar = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  min-height: ${rem(110)};
-  padding: ${({ theme }) => theme.space.large};
+  min-height: ${rem(70)};
+  padding: ${({ theme }) => theme.space.small};
 
   color: black;
 

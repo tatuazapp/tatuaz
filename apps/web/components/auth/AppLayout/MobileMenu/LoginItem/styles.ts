@@ -1,8 +1,6 @@
-import Link from "next/link"
 import styled from "styled-components"
-import { rem } from "../../../../../styles/utils"
 
-export const NavItemWrapper = styled(Link)<{ active?: boolean }>`
+export const ButtonWrapper = styled.button<{ active?: boolean }>`
   cursor: pointer;
 
   position: relative;
@@ -11,14 +9,14 @@ export const NavItemWrapper = styled(Link)<{ active?: boolean }>`
   align-items: center;
 
   /* TODO: Typography */
-  font-size: ${rem(24)};
+  font-size: ${({ theme }) => theme.sizes.xxlarge};
 
   &::after {
     content: "";
 
     position: absolute;
     bottom: 0;
-    left: ${({ active }) => (active ? 0 : "50%")};
+    /* left: ${({ active }) => (active ? 0 : 0)}; */
 
     width: ${({ active }) => (active ? "100%" : 0)};
     height: 3px;
@@ -32,7 +30,7 @@ export const NavItemWrapper = styled(Link)<{ active?: boolean }>`
     color: ${({ theme }) => theme.colors.secondary};
 
     &::after {
-      left: 0;
+      left: "100%";
       width: 100%;
     }
   }

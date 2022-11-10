@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react"
 import { FunctionComponent } from "react"
-import { SignInButton } from "../../../SignInButton"
+import { SignInButton } from "../../../../SignInButton"
 import AvatarMenu from "./AvatarMenu"
 
 type UserActionProps = {

@@ -6,7 +6,7 @@ import NavItem from "./NavItem"
 import { NavItemsWrapper, WordmarkWrapper } from "./styles"
 import UserAction from "./UserAction"
 
-type HeaderProps = {
+type DesktopHeaderProps = {
   children?: React.ReactNode
 }
 
@@ -25,7 +25,7 @@ const navItems = [
   },
 ]
 
-const Header: FunctionComponent<HeaderProps> = () => {
+const DesktopHeader: FunctionComponent<DesktopHeaderProps> = () => {
   const router = useRouter()
 
   return (
@@ -47,4 +47,4 @@ const Header: FunctionComponent<HeaderProps> = () => {
   )
 }
 
-export default Header
+export default DesktopHeader
