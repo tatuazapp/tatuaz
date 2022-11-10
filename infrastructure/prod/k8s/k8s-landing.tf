@@ -67,6 +67,6 @@ resource "kubernetes_secret" "k8s_landing" {
     RabbitMq__VirtualHost           = "/"
     RabbitMq__Username              = var.k8s_queue.default_user
     RabbitMq__Password              = var.k8s_queue.default_password
-    ConnectionStrings__TatuazMainDb = "Server=${kubernetes_service.k8s_postgres.spec[0].cluster_ip};Port=5432;Database=TatuazMainDb;User Id=${var.k8s_postgres.admin_login};Password=${var.k8s_postgres.admin_password};"
+    ConnectionStrings__TatuazMainDb = "Server=${kubernetes_service.k8s_postgres_lb.spec[0].cluster_ip};Port=5432;Database=TatuazMainDb;User Id=${var.k8s_postgres.admin_login};Password=${var.k8s_postgres.admin_password};"
   }
 }

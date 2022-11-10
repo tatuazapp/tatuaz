@@ -59,8 +59,6 @@ resource "kubernetes_service" "k8s_gateway" {
     namespace = kubernetes_namespace.k8s_ns.metadata[0].name
   }
   spec {
-    # Tu trzeba robić cyrk https://cloud-provider-azure.sigs.k8s.io/topics/shared-ip/
-    load_balancer_ip = "20.19.111.17"
     selector = {
       app = "gateway"
     }
@@ -68,7 +66,7 @@ resource "kubernetes_service" "k8s_gateway" {
       port        = 80
       target_port = 80
     }
-    type = "LoadBalancer"
+    type = "NodePort"
   }
 }
 
@@ -83,6 +81,6 @@ resource "kubernetes_secret" "k8s_gateway" {
     RabbitMq__VirtualHost           = "/"
     RabbitMq__Username              = var.k8s_queue.default_user
     RabbitMq__Password              = var.k8s_queue.default_password
-    ConnectionStrings__TatuazMainDb = "Server=${kubernetes_service.k8s_postgres.spec[0].cluster_ip};Port=5432;Database=TatuazMainDb;User Id=${var.k8s_postgres.admin_login};Password=${var.k8s_postgres.admin_password};"
+    ConnectionStrings__TatuazMainDb = "Server=${kubernetes_service.k8s_postgres_lb.spec[0].cluster_ip};Port=5432;Database=TatuazMainDb;User Id=${var.k8s_postgres.admin_login};Password=${var.k8s_postgres.admin_password};"
   }
 }
