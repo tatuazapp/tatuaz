@@ -36,17 +36,23 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
         _userAccessor = userAccessor;
     }
 
-    public async Task<TatuazResult<UserDto>> Handle(SignUpCommand request, CancellationToken cancellationToken)
+    public async Task<TatuazResult<UserDto>> Handle(
+        SignUpCommand request,
+        CancellationToken cancellationToken
+    )
     {
         var validationResult = await new CreateUserDtoValidator(_userRepository)
-            .ValidateAsync(request.CreateUserDto, cancellationToken).ConfigureAwait(false);
+            .ValidateAsync(request.CreateUserDto, cancellationToken)
+            .ConfigureAwait(false);
 
         if (!validationResult.IsValid)
         {
             return CommonResultFactory.ValidationError<UserDto>(validationResult);
         }
 
-        var userId = _userAccessor.CurrentUserId ?? throw new InvalidOperationException("User context not available");
+        var userId =
+            _userAccessor.CurrentUserId
+            ?? throw new InvalidOperationException("User context not available");
 
         if (await _userRepository.ExistsByIdAsync(userId, cancellationToken).ConfigureAwait(false))
         {

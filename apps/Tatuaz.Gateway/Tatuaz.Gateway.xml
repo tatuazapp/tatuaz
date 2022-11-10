@@ -66,14 +66,18 @@
                 Wrapper used for returning failed responses.
             </summary>
             <param name="Errors">List of errors.</param>
-            <param name="Success">Indicates if request was successful. Should be always false for this type of response.</param>
+            <param name="Success">Indicates if request was successful. Should be always false for this type of
+                response.
+            </param>
         </member>
         <member name="M:Tatuaz.Gateway.HttpResponses.ErrorResponse.#ctor(Tatuaz.Shared.Pipeline.Messages.TatuazError[],System.Boolean)">
             <summary>
                 Wrapper used for returning failed responses.
             </summary>
             <param name="Errors">List of errors.</param>
-            <param name="Success">Indicates if request was successful. Should be always false for this type of response.</param>
+            <param name="Success">Indicates if request was successful. Should be always false for this type of
+                response.
+            </param>
         </member>
         <member name="P:Tatuaz.Gateway.HttpResponses.ErrorResponse.Errors">
             <summary>List of errors.</summary>
@@ -86,7 +90,9 @@
                 Wrapper used for returning success responses.
             </summary>
             <param name="Value">Payload of response.</param>
-            <param name="Success">Indicates if request was successful. Should be always true for this type of response.</param>
+            <param name="Success">Indicates if request was successful. Should be always true for this type of
+                response.
+            </param>
             <typeparam name="T">Type of returned payload.</typeparam>
         </member>
         <member name="M:Tatuaz.Gateway.HttpResponses.OkResponse`1.#ctor(`0,System.Boolean)">
@@ -94,7 +100,9 @@
                 Wrapper used for returning success responses.
             </summary>
             <param name="Value">Payload of response.</param>
-            <param name="Success">Indicates if request was successful. Should be always true for this type of response.</param>
+            <param name="Success">Indicates if request was successful. Should be always true for this type of
+                response.
+            </param>
             <typeparam name="T">Type of returned payload.</typeparam>
         </member>
         <member name="P:Tatuaz.Gateway.HttpResponses.OkResponse`1.Value">

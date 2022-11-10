@@ -35,15 +35,21 @@ public class FullSpecificationTest
         _dbContext = dbContext;
         _authorRepository = authorRepository;
         _clock = clock;
-        _unitOfWork = new UnitOfWork(_dbContext, _userAccessorMock.Object, _clock, _sendEndpointProviderMock.Object);
+        _unitOfWork = new UnitOfWork(
+            _dbContext,
+            _userAccessorMock.Object,
+            _clock,
+            _sendEndpointProviderMock.Object
+        );
     }
 
     public class TrackingStrategyTest : FullSpecificationTest
     {
-        public TrackingStrategyTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository,
-            IClock clock) : base(dbContext, authorRepository, clock)
-        {
-        }
+        public TrackingStrategyTest(
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository,
+            IClock clock
+        ) : base(dbContext, authorRepository, clock) { }
 
         [Fact]
         public async Task Should_ReturnEntityWithTracking()
@@ -53,10 +59,15 @@ public class FullSpecificationTest
             _dbContext.Add(expected);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var spec = new FullSpecification<Author> { TrackingStrategy = TrackingStrategy.Tracking };
+            var spec = new FullSpecification<Author>
+            {
+                TrackingStrategy = TrackingStrategy.Tracking
+            };
             spec.AddFilter(x => x.Id == expected.Id);
 
-            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual = await _authorRepository
+                .GetBySpecificationAsync(spec)
+                .ConfigureAwait(false);
             Assert.Equal(expected.FirstName, actual.First().FirstName);
         }
 
@@ -68,10 +79,15 @@ public class FullSpecificationTest
             _dbContext.Add(expected);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var spec = new FullSpecification<Author> { TrackingStrategy = TrackingStrategy.NoTracking };
+            var spec = new FullSpecification<Author>
+            {
+                TrackingStrategy = TrackingStrategy.NoTracking
+            };
             spec.AddFilter(x => x.Id == expected.Id);
 
-            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual = await _authorRepository
+                .GetBySpecificationAsync(spec)
+                .ConfigureAwait(false);
             Assert.Equal(expected.FirstName, actual.First().FirstName);
         }
 
@@ -83,10 +99,15 @@ public class FullSpecificationTest
             _dbContext.Add(expected);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var spec = new FullSpecification<Author> { TrackingStrategy = TrackingStrategy.Tracking };
+            var spec = new FullSpecification<Author>
+            {
+                TrackingStrategy = TrackingStrategy.Tracking
+            };
             spec.AddFilter(x => x.Id == expected.Id);
 
-            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual = await _authorRepository
+                .GetBySpecificationAsync(spec)
+                .ConfigureAwait(false);
             actual.First().FirstName = "Johny";
             await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
 
@@ -104,10 +125,15 @@ public class FullSpecificationTest
             _dbContext.Add(expected);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var spec = new FullSpecification<Author> { TrackingStrategy = TrackingStrategy.NoTracking };
+            var spec = new FullSpecification<Author>
+            {
+                TrackingStrategy = TrackingStrategy.NoTracking
+            };
             spec.AddFilter(x => x.Id == expected.Id);
 
-            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual = await _authorRepository
+                .GetBySpecificationAsync(spec)
+                .ConfigureAwait(false);
             actual.First().FirstName = "Johny";
             await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
 
@@ -120,10 +146,11 @@ public class FullSpecificationTest
 
     public class AddFilterTest : FullSpecificationTest
     {
-        public AddFilterTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository,
-            IClock clock) : base(dbContext, authorRepository, clock)
-        {
-        }
+        public AddFilterTest(
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository,
+            IClock clock
+        ) : base(dbContext, authorRepository, clock) { }
 
         [Fact]
         public async Task Should_ReturnEntityWithFilter()
@@ -136,17 +163,20 @@ public class FullSpecificationTest
             var spec = new FullSpecification<Author>();
             spec.AddFilter(x => x.Id == expected.Id);
 
-            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual = await _authorRepository
+                .GetBySpecificationAsync(spec)
+                .ConfigureAwait(false);
             Assert.Equal(expected.FirstName, actual.First().FirstName);
         }
     }
 
     public class AddOrderTest : FullSpecificationTest
     {
-        public AddOrderTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository,
-            IClock clock) : base(dbContext, authorRepository, clock)
-        {
-        }
+        public AddOrderTest(
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository,
+            IClock clock
+        ) : base(dbContext, authorRepository, clock) { }
 
         [Fact]
         public async Task Should_ReturnEntityWithAscendingOrder()
@@ -160,7 +190,9 @@ public class FullSpecificationTest
             spec.AddOrder(x => x.FirstName);
             spec.AddFilter(x => authors.Contains(x));
 
-            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual = await _authorRepository
+                .GetBySpecificationAsync(spec)
+                .ConfigureAwait(false);
 
             // ReSharper disable PossibleMultipleEnumeration
             Assert.Equal(authors.Last().FirstName, actual.First().FirstName);
@@ -180,7 +212,9 @@ public class FullSpecificationTest
             spec.AddOrder(x => x.FirstName);
             spec.AddFilter(x => authors.Contains(x));
 
-            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual = await _authorRepository
+                .GetBySpecificationAsync(spec)
+                .ConfigureAwait(false);
 
             // ReSharper disable PossibleMultipleEnumeration
             Assert.Equal(authors.First().FirstName, actual.First().FirstName);
@@ -191,10 +225,11 @@ public class FullSpecificationTest
 
     public class AddIncludeTest : FullSpecificationTest
     {
-        public AddIncludeTest(DbContext dbContext, IGenericRepository<Author, HistAuthor, Guid> authorRepository,
-            IClock clock) : base(dbContext, authorRepository, clock)
-        {
-        }
+        public AddIncludeTest(
+            DbContext dbContext,
+            IGenericRepository<Author, HistAuthor, Guid> authorRepository,
+            IClock clock
+        ) : base(dbContext, authorRepository, clock) { }
 
         [Fact]
         public async Task Should_ReturnEntityWithInclude()
@@ -209,7 +244,9 @@ public class FullSpecificationTest
             spec.UseInclude(x => x.Include(y => y.Books));
             spec.AddFilter(x => x.Id == author.Id);
 
-            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual = await _authorRepository
+                .GetBySpecificationAsync(spec)
+                .ConfigureAwait(false);
             // ReSharper disable PossibleMultipleEnumeration
             Assert.Equal(author.FirstName, actual.First().FirstName);
             Assert.NotNull(actual.First().Books);
@@ -233,7 +270,9 @@ public class FullSpecificationTest
             spec.AddFilter(x => x.Id == author.Id);
 
             // ReSharper disable PossibleMultipleEnumeration
-            var actual = await _authorRepository.GetBySpecificationAsync(spec).ConfigureAwait(false);
+            var actual = await _authorRepository
+                .GetBySpecificationAsync(spec)
+                .ConfigureAwait(false);
             Assert.Equal(author.FirstName, actual.First().FirstName);
             Assert.NotNull(actual.First().Books);
             Assert.NotEmpty(actual.First().Books);

@@ -29,10 +29,16 @@ public class WhoAmIQueryHandler : IRequestHandler<WhoAmIQuery, TatuazResult<User
         _userAccessor = userAccessor;
     }
 
-    public async Task<TatuazResult<UserDto>> Handle(WhoAmIQuery request, CancellationToken cancellationToken)
+    public async Task<TatuazResult<UserDto>> Handle(
+        WhoAmIQuery request,
+        CancellationToken cancellationToken
+    )
     {
         var user = await _userRepository
-            .GetByIdAsync(_userAccessor.CurrentUserId ?? string.Empty, cancellationToken: cancellationToken)
+            .GetByIdAsync(
+                _userAccessor.CurrentUserId ?? string.Empty,
+                cancellationToken: cancellationToken
+            )
             .ConfigureAwait(false);
         return user == null
             ?

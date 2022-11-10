@@ -1,23 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+    <PropertyGroup>
 
-    <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
 
-    <ImplicitUsings>disable</ImplicitUsings>
+        <ImplicitUsings>disable</ImplicitUsings>
 
-    <Nullable>enable</Nullable>
+        <Nullable>enable</Nullable>
 
-    <OutputPath>../../dist/libs/Tatuaz.Shared.Infrastructure.Abstractions</OutputPath>
+        <OutputPath>../../dist/libs/Tatuaz.Shared.Infrastructure.Abstractions</OutputPath>
 
-  </PropertyGroup>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime" Version="6.0.4"/>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime" Version="6.0.4"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj"/>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj"/>
+    </ItemGroup>
 
 </Project>

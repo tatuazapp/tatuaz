@@ -34,9 +34,27 @@ public class HistorySearcherServiceTest
     {
         return new List<TestHistEntity>
         {
-            new() { Id = SampleGuid1, Name = "Test1", HistState = HistState.Added, HistDumpedAt = DateAdded },
-            new() { Id = SampleGuid1, Name = "Test2", HistState = HistState.Modified, HistDumpedAt = DateModified },
-            new() { Id = SampleGuid1, Name = "Test3", HistState = HistState.Deleted, HistDumpedAt = DateDeleted }
+            new()
+            {
+                Id = SampleGuid1,
+                Name = "Test1",
+                HistState = HistState.Added,
+                HistDumpedAt = DateAdded
+            },
+            new()
+            {
+                Id = SampleGuid1,
+                Name = "Test2",
+                HistState = HistState.Modified,
+                HistDumpedAt = DateModified
+            },
+            new()
+            {
+                Id = SampleGuid1,
+                Name = "Test3",
+                HistState = HistState.Deleted,
+                HistDumpedAt = DateDeleted
+            }
         };
     }
 
@@ -210,13 +228,9 @@ public class HistorySearcherServiceTest
         }
     }
 
-    public class GetBySpecificationAsync
-    {
-    }
+    public class GetBySpecificationAsync { }
 
-    public class GetBySpecificationWithPagingAsync
-    {
-    }
+    public class GetBySpecificationWithPagingAsync { }
 
     public class ExistsByPredicateAsync : HistorySearcherServiceTest
     {
@@ -241,8 +255,10 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .ExistsByPredicateAsync(x => x.Id == SampleGuid1,
-                    DateAdded.Minus(Duration.FromMilliseconds(1)))
+                .ExistsByPredicateAsync(
+                    x => x.Id == SampleGuid1,
+                    DateAdded.Minus(Duration.FromMilliseconds(1))
+                )
                 .ConfigureAwait(false);
 
             // Assert
@@ -332,8 +348,10 @@ public class HistorySearcherServiceTest
 
             // Act
             var result = await _historySearcherService
-                .CountByPredicateAsync(x => x.Id == SampleGuid1,
-                    DateAdded.Minus(Duration.FromMilliseconds(1)))
+                .CountByPredicateAsync(
+                    x => x.Id == SampleGuid1,
+                    DateAdded.Minus(Duration.FromMilliseconds(1))
+                )
                 .ConfigureAwait(false);
 
             // Assert

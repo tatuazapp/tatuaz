@@ -23,7 +23,7 @@ public class UnitOfWorkTestAccessor
                 BindingFlags.NonPublic | BindingFlags.Instance
             );
             return field?.GetValue(UnitOfWork) as ISendEndpointProvider
-                   ?? throw new InvalidOperationException();
+                ?? throw new InvalidOperationException();
         }
         set
         {

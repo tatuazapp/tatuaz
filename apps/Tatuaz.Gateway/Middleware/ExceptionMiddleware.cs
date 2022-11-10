@@ -34,9 +34,10 @@ public class ExceptionMiddleware
     {
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-        await context
-            .Response
-            .WriteAsJsonAsync(HttpHelpers.ToErrorsObject(CommonResultFactory.InternalError<object>().Errors))
+        await context.Response
+            .WriteAsJsonAsync(
+                HttpHelpers.ToErrorsObject(CommonResultFactory.InternalError<object>().Errors)
+            )
             .ConfigureAwait(false);
 
         if (context.Response.StatusCode == (int)HttpStatusCode.InternalServerError)

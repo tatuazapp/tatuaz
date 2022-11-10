@@ -16,7 +16,5 @@ public class Test1Consumer : HistGetByIdConsumer<HistEntity<Guid>, Guid>
     public Test1Consumer(
         IHistorySearcherService<HistEntity<Guid>, Guid> historySearcherService,
         ILogger<Test1Consumer> logger
-    ) : base(historySearcherService, logger)
-    {
-    }
+    ) : base(historySearcherService, logger) { }
 }

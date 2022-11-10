@@ -36,7 +36,7 @@ public class DumpHistoryService<THistEntity, TId> : IDumpHistoryService<THistEnt
                 await ValidateNotYetDumpedAsync(entity, cancellationToken).ConfigureAwait(false);
                 break;
             case HistState.Modified
-                or HistState.Deleted:
+            or HistState.Deleted:
                 await ValidateAlreadyDumpedAsync(entity, cancellationToken).ConfigureAwait(false);
                 break;
             default:

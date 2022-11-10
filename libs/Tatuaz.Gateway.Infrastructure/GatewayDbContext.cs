@@ -6,13 +6,9 @@ namespace Tatuaz.Gateway.Infrastructure;
 
 public class GatewayDbContext : DbContext
 {
-    public GatewayDbContext(DbContextOptions<GatewayDbContext> options) : base(options)
-    {
-    }
+    public GatewayDbContext(DbContextOptions<GatewayDbContext> options) : base(options) { }
 
-    public GatewayDbContext()
-    {
-    }
+    public GatewayDbContext() { }
 
     public virtual DbSet<TatuazUser> TatuazUsers { get; set; } = default!;
     public virtual DbSet<TatuazRole> TatuazRoles { get; set; } = default!;

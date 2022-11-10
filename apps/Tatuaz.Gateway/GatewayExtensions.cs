@@ -18,9 +18,10 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using Tatuaz.Gateway.Authorization;
-using Tatuaz.Gateway.Configuration.Options;
+using Tatuaz.Gateway.Configuration;
 using Tatuaz.Gateway.Handlers;
 using Tatuaz.Gateway.Infrastructure;
+using Tatuaz.Gateway.Queue;
 using Tatuaz.Gateway.Swagger;
 using Tatuaz.Shared.Domain.Dtos;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
@@ -76,8 +77,10 @@ public static class GatewayExtensions
         return host;
     }
 
-    public static IServiceCollection RegisterGatewayServices(this IServiceCollection services,
-        IConfiguration configuration)
+    public static IServiceCollection RegisterGatewayServices(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
         services.Configure<SwaggerOpt>(configuration.GetSection(SwaggerOpt.SectionName));
         services.Configure<AuthOpt>(configuration.GetSection(AuthOpt.SectionName));
@@ -94,7 +97,8 @@ public static class GatewayExtensions
 
         services.AddSwaggerGen(opt =>
         {
-            opt.AddSecurityDefinition("Bearer",
+            opt.AddSecurityDefinition(
+                "Bearer",
                 new OpenApiSecurityScheme
                 {
                     Description = @"JWT Authorization header using the Bearer scheme.",
@@ -102,25 +106,37 @@ public static class GatewayExtensions
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.Http,
                     Scheme = "Bearer"
-                });
-
-            opt.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" },
-                        Scheme = "oauth2",
-                        Name = "Bearer",
-                        In = ParameterLocation.Header
-                    },
-                    new List<string>()
                 }
-            });
+            );
+
+            opt.AddSecurityRequirement(
+                new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header
+                        },
+                        new List<string>()
+                    }
+                }
+            );
             opt.SchemaFilter<FluentValidationSchemaFilter>();
             opt.SwaggerDoc(
                 "v1",
-                new OpenApiInfo { Version = "v1", Title = "tatuaz.app API", Description = "API for tatuaz.app" }
+                new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "tatuaz.app API",
+                    Description = "API for tatuaz.app"
+                }
             );
             var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -137,10 +153,7 @@ public static class GatewayExtensions
                 TatuazCorsName,
                 builder =>
                 {
-                    builder
-                        .AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 }
             );
         });
@@ -148,30 +161,36 @@ public static class GatewayExtensions
         var auth0Options = configuration.GetAuthOpt();
 
         var apiIdentifier = $"https://{auth0Options.Domain}/api/v2";
-        services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options =>
-        {
-            options.Authority = auth0Options.Authority;
-            options.TokenValidationParameters = new TokenValidationParameters
+        services
+            .AddAuthentication(options =>
             {
-                NameClaimType = ClaimTypes.NameIdentifier,
-                ValidAudiences = new[] { apiIdentifier, auth0Options.Audience }
-            };
-        });
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.Authority = auth0Options.Authority;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = ClaimTypes.NameIdentifier,
+                    ValidAudiences = new[] { apiIdentifier, auth0Options.Audience }
+                };
+            });
 
         services.AddAuthorization(opt =>
         {
-            opt.AddPolicy(ActiveUserRequirement.Name,
-                policy => policy.AddRequirements(new ActiveUserRequirement()));
+            opt.AddPolicy(
+                ActiveUserRequirement.Name,
+                policy => policy.AddRequirements(new ActiveUserRequirement())
+            );
         });
         services.AddSingleton<IAuthorizationHandler, ActiveUserHandler>();
 
-        services.RegisterSharedInfrastructureServices<GatewayDbContext>(configuration.GetConnectionString(
-            SharedInfrastructureExtensions
-                .MainDbConnectionStringName));
+        services.RegisterSharedInfrastructureServices<GatewayDbContext>(
+            configuration.GetConnectionString(
+                SharedInfrastructureExtensions.MainDbConnectionStringName
+            )
+        );
 
         services.RegisterGatewayHandlersServices();
 
@@ -181,6 +200,8 @@ public static class GatewayExtensions
 
         services.AddHttpContextAccessor();
         services.AddSingleton<IUserAccessor, GatewayUserAccessor>();
+
+        services.RegisterGatewayQueueProducers();
 
         return services;
     }

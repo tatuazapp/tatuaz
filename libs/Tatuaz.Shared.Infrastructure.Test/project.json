@@ -22,7 +22,10 @@
       "options": {}
     },
     "lint": {
-      "executor": "@nx-dotnet/core:format"
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "dotnet csharpier libs/Tatuaz.Shared.Infrastructure.Test --check"
+      }
     }
   },
   "tags": []

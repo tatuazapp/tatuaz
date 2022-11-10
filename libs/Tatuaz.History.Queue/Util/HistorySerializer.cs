@@ -27,7 +27,9 @@ public static class HistorySerializer
 
         if (!type.IsSubclassOf(typeof(HistEntity)))
         {
-            throw new InvalidOperationException("Cannot deserialize object of type " + type.FullName);
+            throw new InvalidOperationException(
+                "Cannot deserialize object of type " + type.FullName
+            );
         }
 
         var jsonSerializer = SerializationUtils.GetTatuazSerializerSettings();

@@ -6,9 +6,14 @@ namespace Tatuaz.Shared.Pipeline.Factories.Results.Identity;
 
 public class CreateUserResultFactory
 {
-    public static TatuazResult<T> UserAlreadyExists<T>(string? message = null,
-        HttpStatusCode httpStatusCode = HttpStatusCode.BadRequest)
+    public static TatuazResult<T> UserAlreadyExists<T>(
+        string? message = null,
+        HttpStatusCode httpStatusCode = HttpStatusCode.BadRequest
+    )
     {
-        return new TatuazResult<T>(new[] { CreateUserErrorFactory.UserAlreadyExistsError(message) }, httpStatusCode);
+        return new TatuazResult<T>(
+            new[] { CreateUserErrorFactory.UserAlreadyExistsError(message) },
+            httpStatusCode
+        );
     }
 }

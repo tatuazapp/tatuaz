@@ -22,22 +22,32 @@ public static class LandingExtensions
         var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", false, true)
-            .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", true)
+            .AddJsonFile(
+                $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
+                true
+            )
             .AddEnvironmentVariables();
 
         return builder.Build();
     }
 
-    public static IServiceCollection RegisterLandingServices(this IServiceCollection services,
-        IConfiguration configuration)
+    public static IServiceCollection RegisterLandingServices(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
-        services.RegisterSharedInfrastructureServices<MainDbContext>(configuration.GetConnectionString(
-            SharedInfrastructureExtensions
-                .MainDbConnectionStringName));
+        services.RegisterSharedInfrastructureServices<MainDbContext>(
+            configuration.GetConnectionString(
+                SharedInfrastructureExtensions.MainDbConnectionStringName
+            )
+        );
 
         services.AddSingleton<IUserAccessor>(_ => new InternalUserAccessor());
 
-        services.RegisterSharedPipelineServices(configuration, typeof(ListStatsConsumer).Assembly);
+        services.RegisterSharedPipelineServices(
+            configuration,
+            typeof(ListSummaryStatsConsumer).Assembly
+        );
 
         return services;
     }

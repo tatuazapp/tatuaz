@@ -27,7 +27,10 @@
       }
     },
     "lint": {
-      "executor": "@nx-dotnet/core:format"
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "dotnet csharpier apps/Tatuaz.History --check"
+      }
     }
   },
   "tags": []

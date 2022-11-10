@@ -1,19 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+    <PropertyGroup>
 
-    <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
 
-    <ImplicitUsings>disable</ImplicitUsings>
+        <ImplicitUsings>disable</ImplicitUsings>
 
-    <Nullable>enable</Nullable>
+        <Nullable>enable</Nullable>
 
-    <OutputPath>../../dist/libs/Tatuaz.Landing.Queue</OutputPath>
-  </PropertyGroup>
+        <OutputPath>../../dist/libs/Tatuaz.Landing.Queue</OutputPath>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Tatuaz.Gateway.Queue\Tatuaz.Gateway.Queue.csproj"/>
-    <ProjectReference Include="..\Tatuaz.Shared.Pipeline\Tatuaz.Shared.Pipeline.csproj"/>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Tatuaz.Gateway.Queue\Tatuaz.Gateway.Queue.csproj"/>
+        <ProjectReference Include="..\Tatuaz.Shared.Domain.Dtos.Fakers\Tatuaz.Shared.Domain.Dtos.Fakers.csproj"/>
+        <ProjectReference Include="..\Tatuaz.Shared.Pipeline\Tatuaz.Shared.Pipeline.csproj"/>
+    </ItemGroup>
 
 </Project>

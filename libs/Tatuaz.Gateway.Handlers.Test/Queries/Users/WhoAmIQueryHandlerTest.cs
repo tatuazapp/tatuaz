@@ -19,7 +19,9 @@ public class WhoAmIQueryHandlerTest
     private readonly IMapper _mapper;
     private readonly TatuazUserFaker _tatuazUserFaker;
     private readonly UserAccessorMock _userAccessorMock;
-    private readonly Mock<IGenericRepository<TatuazUser, HistTatuazUser, string>> _userRepositoryMock;
+    private readonly Mock<
+        IGenericRepository<TatuazUser, HistTatuazUser, string>
+    > _userRepositoryMock;
 
     public WhoAmIQueryHandlerTest(IMapper mapper)
     {
@@ -31,20 +33,23 @@ public class WhoAmIQueryHandlerTest
 
     public class Handle : WhoAmIQueryHandlerTest
     {
-        public Handle(IMapper mapper) : base(mapper)
-        {
-        }
+        public Handle(IMapper mapper) : base(mapper) { }
 
         [Fact]
         public async Task Should_ReturnUserWhenUserExists()
         {
             var user = _tatuazUserFaker.Generate();
             _userAccessorMock.ReturnUserId(user.Id);
-            _userRepositoryMock.Setup(x => x.GetByIdAsync(user.Id, false, It.IsAny<CancellationToken>()))
+            _userRepositoryMock
+                .Setup(x => x.GetByIdAsync(user.Id, false, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(user);
 
             var query = new WhoAmIQuery();
-            var handler = new WhoAmIQueryHandler(_mapper, _userRepositoryMock.Object, _userAccessorMock.Object);
+            var handler = new WhoAmIQueryHandler(
+                _mapper,
+                _userRepositoryMock.Object,
+                _userAccessorMock.Object
+            );
             var result = await handler.Handle(query, CancellationToken.None).ConfigureAwait(false);
 
             Assert.True(result.Successful);
@@ -58,11 +63,16 @@ public class WhoAmIQueryHandlerTest
         {
             var user = _tatuazUserFaker.Generate();
             _userAccessorMock.ReturnUserId(user.Id);
-            _userRepositoryMock.Setup(x => x.GetByIdAsync(user.Id, false, It.IsAny<CancellationToken>()))
+            _userRepositoryMock
+                .Setup(x => x.GetByIdAsync(user.Id, false, It.IsAny<CancellationToken>()))
                 .ReturnsAsync((TatuazUser?)null);
 
             var query = new WhoAmIQuery();
-            var handler = new WhoAmIQueryHandler(_mapper, _userRepositoryMock.Object, _userAccessorMock.Object);
+            var handler = new WhoAmIQueryHandler(
+                _mapper,
+                _userRepositoryMock.Object,
+                _userAccessorMock.Object
+            );
             var result = await handler.Handle(query, CancellationToken.None).ConfigureAwait(false);
 
             Assert.False(result.Successful);
@@ -76,7 +86,11 @@ public class WhoAmIQueryHandlerTest
             _userAccessorMock.ReturnUserId(null);
 
             var query = new WhoAmIQuery();
-            var handler = new WhoAmIQueryHandler(_mapper, _userRepositoryMock.Object, _userAccessorMock.Object);
+            var handler = new WhoAmIQueryHandler(
+                _mapper,
+                _userRepositoryMock.Object,
+                _userAccessorMock.Object
+            );
             var result = await handler.Handle(query, CancellationToken.None).ConfigureAwait(false);
 
             Assert.False(result.Successful);

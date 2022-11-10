@@ -14,9 +14,7 @@ namespace Tatuaz.Shared.Infrastructure.Test;
 
 public class Startup
 {
-    public void ConfigureHost(IHostBuilder hostBuilder)
-    {
-    }
+    public void ConfigureHost(IHostBuilder hostBuilder) { }
 
     public void ConfigureServices(
         IServiceCollection services,
@@ -33,7 +31,10 @@ public class Startup
         {
             opt.UseNpgsql(
                 config.GetConnectionString("InfrastructureTest"),
-                npgsqlOpt => { npgsqlOpt.UseNodaTime(); }
+                npgsqlOpt =>
+                {
+                    npgsqlOpt.UseNodaTime();
+                }
             );
             opt.EnableDetailedErrors();
             opt.EnableSensitiveDataLogging();

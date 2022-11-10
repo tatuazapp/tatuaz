@@ -4,7 +4,5 @@ namespace Tatuaz.Gateway.Authorization;
 
 public class AuthorizeActiveUserAttribute : AuthorizeAttribute
 {
-    public AuthorizeActiveUserAttribute() : base(ActiveUserRequirement.Name)
-    {
-    }
+    public AuthorizeActiveUserAttribute() : base(ActiveUserRequirement.Name) { }
 }

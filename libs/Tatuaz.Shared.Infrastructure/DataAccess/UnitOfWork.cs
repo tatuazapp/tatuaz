@@ -146,7 +146,12 @@ public class UnitOfWork : IUnitOfWork
             EntityState.Added => HistState.Added,
             EntityState.Modified => HistState.Modified,
             EntityState.Deleted => HistState.Deleted,
-            _ => throw new ArgumentOutOfRangeException(nameof(entityState), entityState, "Invalid entity state")
+            _
+                => throw new ArgumentOutOfRangeException(
+                    nameof(entityState),
+                    entityState,
+                    "Invalid entity state"
+                )
         };
     }
 

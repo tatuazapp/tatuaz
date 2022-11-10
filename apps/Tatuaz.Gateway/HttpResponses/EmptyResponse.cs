@@ -1,5 +1,3 @@
 namespace Tatuaz.Gateway.HttpResponses;
 
-public class EmptyResponse
-{
-}
+public class EmptyResponse { }
