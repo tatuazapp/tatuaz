@@ -102,6 +102,6 @@ jobs:
         run: az aks get-credentials --resource-group tatuaz-test --name ta-aks
       - name: Destroy old pods
         run: |
-          kubectl delete pods  --namespace=tatuaz-test -l name=gateway-pod
-          kubectl delete pods  --namespace=tatuaz-test -l name=history-pod
-          kubectl delete pods  --namespace=tatuaz-test -l name=landing-pod
+          kubectl delete pods  --namespace=tatuaz -l name=gateway-pod
+          kubectl delete pods  --namespace=tatuaz -l name=history-pod
+          kubectl delete pods  --namespace=tatuaz -l name=landing-pod
