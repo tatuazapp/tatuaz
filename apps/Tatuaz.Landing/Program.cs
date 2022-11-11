@@ -9,4 +9,8 @@ builder.Services.RegisterLandingServices(builder.Configuration);
 
 builder.Host.RegisterLandingHost();
 
-builder.Build().Run();
+var app = builder.Build();
+
+app.MapGet("/", () => "I'm alive");
+
+app.Run();

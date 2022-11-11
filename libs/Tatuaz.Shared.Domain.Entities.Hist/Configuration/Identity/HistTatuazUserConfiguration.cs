@@ -12,7 +12,7 @@ public class HistTatuazUserConfiguration : IEntityTypeConfiguration<HistTatuazUs
 
         builder.HasKey(x => x.HistId);
 
-        builder.Property(x => x.Username).HasMaxLength(128);
+        builder.Property(x => x.Username).HasMaxLength(32);
         builder.Property(x => x.Email).HasMaxLength(256);
         builder.Property(x => x.PhoneNumber).HasMaxLength(64);
     }

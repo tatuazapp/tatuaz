@@ -16,7 +16,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "command": "dotnet csharpier libs/Tatuaz.Shared.Domain.Dtos.Fakers --check"
       }

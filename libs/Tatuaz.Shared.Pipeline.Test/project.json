@@ -20,7 +20,7 @@
       "options": {}
     },
     "lint": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "command": "dotnet csharpier libs/Tatuaz.Shared.Pipeline.Test --check"
       }

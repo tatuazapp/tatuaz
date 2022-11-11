@@ -40,4 +40,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapGet("/", () => "I'm alive");
+
 app.Run();
