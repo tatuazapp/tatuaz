@@ -116,7 +116,7 @@ resource "kubernetes_manifest" "k8s_letsencrypt" {
                 "class" = "nginx"
               }
             }
-          },
+          }
         ]
       }
     }
