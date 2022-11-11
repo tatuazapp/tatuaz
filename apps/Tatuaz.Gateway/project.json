@@ -39,7 +39,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "command": "dotnet csharpier apps/Tatuaz.Gateway --check"
       }
