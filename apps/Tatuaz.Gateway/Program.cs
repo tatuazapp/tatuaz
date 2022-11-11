@@ -35,6 +35,8 @@ if (swaggerOpt.Enabled)
 app.UseStaticFiles();
 app.UseRouting();
 
+app.UseCors(GatewayExtensions.TatuazCorsName);
+
 app.UseAuthentication();
 app.UseAuthorization();
 
