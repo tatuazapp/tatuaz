@@ -8,7 +8,7 @@ import Head from "next/head"
 import Link from "next/link"
 import { IntlProvider } from "react-intl"
 import { ThemeProvider } from "styled-components"
-import { useApiInit } from "../api/apiClient"
+import ApiInit from "../components/auth/ApiInit"
 import { currentLocale, messages } from "../i18n"
 import { repositoryName } from "../prismicio"
 import chakraTheme from "../styles/chakra"
@@ -18,8 +18,6 @@ import { theme } from "../styles/theme"
 const queryClient = new QueryClient()
 
 function App({ Component, pageProps }: AppProps) {
-  useApiInit()
-
   return (
     <QueryClientProvider client={queryClient}>
       <IntlProvider locale={currentLocale} messages={messages[currentLocale]}>
@@ -42,6 +40,7 @@ function App({ Component, pageProps }: AppProps) {
                 <Head>
                   <title>Tatuaż App</title>
                 </Head>
+                <ApiInit />
                 <PrismicPreview repositoryName={repositoryName}>
                   <main className="app">
                     <Component {...pageProps} />

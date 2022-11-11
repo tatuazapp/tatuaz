@@ -39,11 +39,50 @@ export interface ErrorResponse {
   success?: boolean
 }
 
+export interface ListArtistStatsDto {
+  /**
+   * ErrorCodes: CountEmpty, CountTooLow, CountTooHigh
+   * @format int32
+   * @minLength 1
+   */
+  count?: number
+}
+
+export interface ListSummaryStatsDto {
+  timePeriod?: SummaryStatTimePeriod
+  /**
+   * ErrorCodes: CountEmpty, CountTooLow, CountTooHigh
+   * @format int32
+   * @minLength 1
+   */
+  count?: number
+}
+
+/** Wrapper used for returning success responses. */
+export interface OkResponseIEnumerableSummaryStatDto {
+  /** Payload of response. */
+  value?: SummaryStatDto[] | null
+  /** Indicates if request was successful. Should be always true for this type of response. */
+  success?: boolean
+}
+
 /** Wrapper used for returning success responses. */
 export interface OkResponseUserDto {
   value?: UserDto
   /** Indicates if request was successful. Should be always true for this type of response. */
   success?: boolean
+}
+
+export interface SummaryStatDto {
+  title?: string
+  content?: string
+  backgroundUrl?: string
+}
+
+export enum SummaryStatTimePeriod {
+  Day = "Day",
+  Week = "Week",
+  Month = "Month",
 }
 
 export interface TatuazError {
@@ -236,7 +275,7 @@ export class HttpClient<SecurityDataType = unknown> {
     baseUrl,
     cancelToken,
     ...params
-  }: FullRequestParams): Promise<HttpResponse<T, E>> => {
+  }: FullRequestParams): Promise<T> => {
     const secureParams =
       ((typeof secure === "boolean" ? secure : this.baseApiParams.secure) &&
         this.securityWorker &&
@@ -293,7 +332,7 @@ export class HttpClient<SecurityDataType = unknown> {
       }
 
       if (!response.ok) throw data
-      return data
+      return data.data
     })
   }
 }
@@ -307,24 +346,75 @@ export class HttpClient<SecurityDataType = unknown> {
 export class Api<
   SecurityDataType extends unknown
 > extends HttpClient<SecurityDataType> {
+  landing = {
+    /**
+     * No description
+     *
+     * @tags Landing
+     * @name ListSummaryStatsCreate
+     * @request POST:/Landing/ListSummaryStats
+     * @secure
+     * @response `200` `OkResponseIEnumerableSummaryStatDto` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `500` `ErrorResponse` Server Error
+     */
+    listSummaryStatsCreate: (
+      data: ListSummaryStatsDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<OkResponseIEnumerableSummaryStatDto, ErrorResponse>({
+        path: `/Landing/ListSummaryStats`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Landing
+     * @name ListArtistStatsCreate
+     * @request POST:/Landing/ListArtistStats
+     * @secure
+     * @response `200` `OkResponseIEnumerableSummaryStatDto` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `500` `ErrorResponse` Server Error
+     */
+    listArtistStatsCreate: (
+      data: ListArtistStatsDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<OkResponseIEnumerableSummaryStatDto, ErrorResponse>({
+        path: `/Landing/ListArtistStats`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+  }
   users = {
     /**
      * No description
      *
      * @tags Users
-     * @name WhoAmIList
+     * @name WhoAmICreate
      * @summary Check what user is logged in
-     * @request GET:/Users/WhoAmI
+     * @request POST:/Users/WhoAmI
      * @secure
      * @response `200` `OkResponseUserDto` Success
      * @response `401` `EmptyResponse` Unauthorized
      * @response `403` `EmptyResponse` Forbidden
      * @response `500` `ErrorResponse` Server Error
      */
-    whoAmIList: (params: RequestParams = {}) =>
+    whoAmICreate: (params: RequestParams = {}) =>
       this.request<OkResponseUserDto, EmptyResponse | ErrorResponse>({
         path: `/Users/WhoAmI`,
-        method: "GET",
+        method: "POST",
         secure: true,
         format: "json",
         ...params,
