@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Tatuaz.Gateway.Queue.Contracts.Landing.ListArtistStats;
@@ -21,6 +22,16 @@ public class ListArtistStatsConsumer
     {
         var faker = new ArtistStatDtoFaker();
         var result = faker.Generate(message.Amount);
+        result = result
+            .Select(
+                x =>
+                    x with
+                    {
+                        BackgroundUrl =
+                            "https://media.vanityfair.com/photos/62d6dfe36b77832a6a80ae46/9:16/w_765,h_1360,c_limit/ryan-gosling-the-gray-man.jpg"
+                    }
+            )
+            .ToList();
 
         return Task.FromResult(CommonResultFactory.Ok<IEnumerable<ArtistStatDto>>(result));
     }
