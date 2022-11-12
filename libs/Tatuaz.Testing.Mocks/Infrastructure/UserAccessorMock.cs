@@ -3,7 +3,7 @@ using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 
 namespace Tatuaz.Testing.Mocks.Infrastructure;
 
-public class UserAccessorMock : Mock<IUserAccessor>
+public class UserAccessorMock : Mock<IUserContext>
 {
     public UserAccessorMock()
     {

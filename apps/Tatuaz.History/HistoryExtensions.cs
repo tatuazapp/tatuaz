@@ -43,7 +43,7 @@ public static class HistoryExtensions
 
         services.AddScoped(typeof(IDumpHistoryService<,>), typeof(DumpHistoryService<,>));
         services.AddScoped(typeof(IHistorySearcherService<,>), typeof(HistorySearcherService<,>));
-        services.AddSingleton<IUserAccessor, HistUserAccessor>();
+        services.AddSingleton<IUserContext, HistUserContext>();
 
         services.RegisterSharedInfrastructureServices<HistDbContext>(
             configuration.GetConnectionString(

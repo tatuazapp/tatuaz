@@ -202,7 +202,7 @@ public static class GatewayExtensions
         services.RegisterSharedPipelineServices(configuration);
 
         services.AddHttpContextAccessor();
-        services.AddSingleton<IUserAccessor, GatewayUserAccessor>();
+        services.AddSingleton<IUserContext, GatewayUserContext>();
 
         services.RegisterGatewayQueueProducers();
 

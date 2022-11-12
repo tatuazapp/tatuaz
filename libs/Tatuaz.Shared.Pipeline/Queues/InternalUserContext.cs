@@ -2,11 +2,11 @@ using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 
 namespace Tatuaz.Shared.Pipeline.Queues;
 
-public class InternalUserAccessor : IUserAccessor
+public class InternalUserContext : IUserContext
 {
-    public InternalUserAccessor() : this("SYSTEM") { }
+    public InternalUserContext() { }
 
-    public InternalUserAccessor(string? currentUserId)
+    public InternalUserContext(string? currentUserId)
     {
         CurrentUserId = currentUserId;
     }

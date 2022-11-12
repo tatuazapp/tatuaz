@@ -3,7 +3,9 @@ using System.Reflection;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline.Configuration;
+using Tatuaz.Shared.Pipeline.Queues;
 
 namespace Tatuaz.Shared.Pipeline;
 
@@ -39,6 +41,7 @@ public static class SharedPipelineExtensions
                 }
             );
         });
+        services.AddScoped<IUserContext, InternalUserContext>();
 
         return services;
     }

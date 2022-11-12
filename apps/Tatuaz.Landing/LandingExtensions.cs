@@ -42,7 +42,7 @@ public static class LandingExtensions
             )
         );
 
-        services.AddSingleton<IUserAccessor>(_ => new InternalUserAccessor());
+        services.AddSingleton<IUserContext>(_ => new InternalUserContext());
 
         services.RegisterSharedPipelineServices(
             configuration,

@@ -4,11 +4,11 @@ using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 
 namespace Tatuaz.Gateway.Infrastructure;
 
-public class GatewayUserAccessor : IUserAccessor
+public class GatewayUserContext : IUserContext
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public GatewayUserAccessor(IHttpContextAccessor httpContextAccessor)
+    public GatewayUserContext(IHttpContextAccessor httpContextAccessor)
     {
         _httpContextAccessor = httpContextAccessor;
     }

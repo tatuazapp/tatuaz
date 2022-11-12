@@ -16,24 +16,27 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway.Handlers.Commands.Users;
 
-public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<UserDto>>
+public class SignUpCommandHandler
+    : IRequestHandler<SignUpCommand, TatuazResult<UserDto>>,
+        IUserContextEnjoyer
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserAccessor _userAccessor;
     private readonly IGenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
+
+    private IUserContext _userContext;
 
     public SignUpCommandHandler(
         IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper,
-        IUserAccessor userAccessor
+        IUserContext userContext
     )
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
-        _userAccessor = userAccessor;
+        _userContext = userContext;
     }
 
     public async Task<TatuazResult<UserDto>> Handle(
@@ -51,7 +54,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
         }
 
         var userId =
-            _userAccessor.CurrentUserId
+            _userContext.CurrentUserId
             ?? throw new InvalidOperationException("User context not available");
 
         if (await _userRepository.ExistsByIdAsync(userId, cancellationToken).ConfigureAwait(false))
@@ -65,5 +68,10 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
         await _unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         return CommonResultFactory.Ok(_mapper.Map<UserDto>(user), HttpStatusCode.Created);
+    }
+
+    public void SetUserContext(IUserContext userContext)
+    {
+        _userContext = userContext;
     }
 }
