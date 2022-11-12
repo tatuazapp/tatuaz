@@ -28,7 +28,7 @@ public class ListArtistStatsConsumer
                     x with
                     {
                         BackgroundUrl =
-                            "https://media.vanityfair.com/photos/62d6dfe36b77832a6a80ae46/9:16/w_765,h_1360,c_limit/ryan-gosling-the-gray-man.jpg"
+                            "https://akns-images.eonline.com/eol_images/Entire_Site/2022528/rs_1200x1200-220628043352-1200-margot-robbie-ryan-gosling-barbie-movie-062822.jpg?fit=around%7C1200:1200&output-quality=90&crop=1200:1200;center,top"
                     }
             )
             .ToList();
