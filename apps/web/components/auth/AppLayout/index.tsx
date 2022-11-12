@@ -1,4 +1,5 @@
 import { FunctionComponent, useState } from "react"
+import useIsMobile from "../../../utils/hooks/useIsMobile"
 import DesktopHeader from "./Header/DesktopHeader"
 import MobileHeader from "./Header/MobileHeader"
 import MobileMenu from "./MobileMenu"
@@ -9,15 +10,15 @@ type AppLayoutProps = {
 }
 
 const AppLayout: FunctionComponent<AppLayoutProps> = ({ children }) => {
-  const mobile = true
+  const { isMobile } = useIsMobile()
 
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
 
   return (
     <>
       <Boxunder>
-        {!mobile && <DesktopHeader />}
-        {mobile && <MobileHeader setIsMenuOpen={setIsMenuOpen} />}
+        {!isMobile && <DesktopHeader />}
+        {isMobile && <MobileHeader setIsMenuOpen={setIsMenuOpen} />}
         {children}
       </Boxunder>
       {isMenuOpen && <MobileMenu setIsMenuOpen={setIsMenuOpen} />}
