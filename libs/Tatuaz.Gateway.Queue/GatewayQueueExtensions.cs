@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Tatuaz.Gateway.Queue.Producers;
 using Tatuaz.Gateway.Queue.Producers.Landing.ListArtistStats;
+using Tatuaz.Gateway.Queue.Producers.Landing.ListSummaryStats;
 
 namespace Tatuaz.Gateway.Queue;
 
