@@ -2,7 +2,7 @@
 
     <PropertyGroup>
 
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
 
         <ImplicitUsings>disable</ImplicitUsings>
 
@@ -12,7 +12,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="NodaTime.Serialization.JsonNet" Version="3.0.0"/>
+        <PackageReference Include="NodaTime.Serialization.JsonNet" Version="3.0.1" />
     </ItemGroup>
 
 </Project>

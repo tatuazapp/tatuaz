@@ -2,7 +2,7 @@
 
     <PropertyGroup>
 
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
 
         <ImplicitUsings>disable</ImplicitUsings>
 
@@ -15,13 +15,13 @@
 
     <ItemGroup>
 
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0"/>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
 
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
 
-        <PackageReference Include="xunit" Version="2.4.2"/>
+        <PackageReference Include="xunit" Version="2.4.2" />
 
-        <PackageReference Include="Xunit.DependencyInjection" Version="8.6.1"/>
+        <PackageReference Include="Xunit.DependencyInjection" Version="8.6.1" />
 
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
 
@@ -31,7 +31,7 @@
 
         </PackageReference>
 
-        <PackageReference Include="coverlet.collector" Version="3.1.2">
+        <PackageReference Include="coverlet.collector" Version="3.2.0">
 
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 
@@ -42,12 +42,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Tatuaz.Gateway.Handlers\Tatuaz.Gateway.Handlers.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Shared.Domain.Dtos.Fakers\Tatuaz.Shared.Domain.Dtos.Fakers.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Shared.Domain.Dtos\Tatuaz.Shared.Domain.Dtos.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities.Fakers\Tatuaz.Shared.Domain.Entities.Fakers.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Testing.Mocks\Tatuaz.Testing.Mocks.csproj"/>
+        <ProjectReference Include="..\Tatuaz.Gateway.Handlers\Tatuaz.Gateway.Handlers.csproj" />
+        <ProjectReference Include="..\Tatuaz.Shared.Domain.Dtos.Fakers\Tatuaz.Shared.Domain.Dtos.Fakers.csproj" />
+        <ProjectReference Include="..\Tatuaz.Shared.Domain.Dtos\Tatuaz.Shared.Domain.Dtos.csproj" />
+        <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities.Fakers\Tatuaz.Shared.Domain.Entities.Fakers.csproj" />
+        <ProjectReference Include="..\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj" />
+        <ProjectReference Include="..\Tatuaz.Testing.Mocks\Tatuaz.Testing.Mocks.csproj" />
     </ItemGroup>
 
 </Project>

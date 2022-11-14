@@ -2,7 +2,7 @@
 
     <PropertyGroup>
 
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
 
         <ImplicitUsings>disable</ImplicitUsings>
 
@@ -12,15 +12,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MassTransit.Abstractions" Version="8.0.7"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0"/>
-        <PackageReference Include="Moq" Version="4.18.2"/>
-        <PackageReference Include="Moq.EntityFrameworkCore" Version="6.0.1.4"/>
+        <PackageReference Include="MassTransit.Abstractions" Version="8.0.8" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+        <PackageReference Include="Moq" Version="4.18.2" />
+        <PackageReference Include="Moq.EntityFrameworkCore" Version="6.0.1.4" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Tatuaz.Gateway.Infrastructure\Tatuaz.Gateway.Infrastructure.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj"/>
+        <ProjectReference Include="..\Tatuaz.Gateway.Infrastructure\Tatuaz.Gateway.Infrastructure.csproj" />
+        <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj" />
     </ItemGroup>
 
 </Project>

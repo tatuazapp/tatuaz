@@ -2,7 +2,7 @@
 
     <PropertyGroup>
 
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
 
         <ImplicitUsings>disable</ImplicitUsings>
 
@@ -12,14 +12,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Tatuaz.History.Infrastructure\Tatuaz.History.Infrastructure.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Shared.Helpers\Tatuaz.Shared.Helpers.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj"/>
+        <ProjectReference Include="..\Tatuaz.History.Infrastructure\Tatuaz.History.Infrastructure.csproj" />
+        <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj" />
+        <ProjectReference Include="..\Tatuaz.Shared.Helpers\Tatuaz.Shared.Helpers.csproj" />
+        <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.7"/>
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.8" />
     </ItemGroup>
 
 </Project>

@@ -8,7 +8,7 @@ RUN mkdir -p /usr/share/dotnet && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
 RUN wget https://dot.net/v1/dotnet-install.sh
 RUN chmod +x dotnet-install.sh
 
-RUN ./dotnet-install.sh -c 6.0 --install-dir /usr/share/dotnet
+RUN ./dotnet-install.sh -c 7.0 --install-dir /usr/share/dotnet
 
 WORKDIR /app
 COPY . .
