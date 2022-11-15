@@ -8,9 +8,7 @@ namespace Tatuaz.Convention.Test;
 
 public class Startup
 {
-    public void ConfigureHost(IHostBuilder hostBuilder)
-    {
-    }
+    public void ConfigureHost(IHostBuilder hostBuilder) { }
 
     public void ConfigureServices(
         IServiceCollection services,
@@ -20,7 +18,5 @@ public class Startup
         services.RegisterSharedInfrastructureServices<MainDbContext>("test");
     }
 
-    public void Configure(IServiceProvider applicationServices)
-    {
-    }
+    public void Configure(IServiceProvider applicationServices) { }
 }

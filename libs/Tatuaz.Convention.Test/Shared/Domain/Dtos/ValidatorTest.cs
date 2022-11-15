@@ -24,9 +24,7 @@ public class ValidatorTest
 
     public class NotEmptyValidators : ValidatorTest
     {
-        public NotEmptyValidators(IServiceProvider serviceProvider) : base(serviceProvider)
-        {
-        }
+        public NotEmptyValidators(IServiceProvider serviceProvider) : base(serviceProvider) { }
 
         [Fact]
         // We decided that you should use LengthValidator with length > 0
@@ -34,10 +32,18 @@ public class ValidatorTest
         public void ShouldNot_HaveNotEmptyValidator()
         {
             var notEmptyValidators = validators
-                .SelectMany(x =>
-                    x.CreateDescriptor().Rules
-                        .Select(y => (y.Components, x.ToString()?.Split(".").Last() + ":" + y.PropertyName))
-                        .Where(q => q.Components.Any(c => c.Validator is INotEmptyValidator)))
+                .SelectMany(
+                    x =>
+                        x.CreateDescriptor()
+                            .Rules.Select(
+                                y =>
+                                    (
+                                        y.Components,
+                                        x.ToString()?.Split(".").Last() + ":" + y.PropertyName
+                                    )
+                            )
+                            .Where(q => q.Components.Any(c => c.Validator is INotEmptyValidator))
+                )
                 .Select(p => p.Item2);
             Assert.Empty(notEmptyValidators);
         }
