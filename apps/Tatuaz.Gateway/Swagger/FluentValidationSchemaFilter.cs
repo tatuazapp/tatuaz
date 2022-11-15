@@ -137,20 +137,4 @@ public class FluentValidationSchemaFilter : ISchemaFilter
 
         return string.Concat(inputString.Substring(0, 1).ToUpper(), inputString.AsSpan(1));
     }
-
-    private static bool IsNumber(object value)
-    {
-        return value
-            is sbyte
-                or byte
-                or short
-                or ushort
-                or int
-                or uint
-                or long
-                or ulong
-                or float
-                or double
-                or decimal;
-    }
 }
