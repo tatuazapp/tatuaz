@@ -9,9 +9,9 @@ public class ListArtistStatsDtoValidator : AbstractValidator<ListArtistStatsDto>
     public ListArtistStatsDtoValidator()
     {
         RuleFor(x => x.Count)
-            .NotEmpty()
-            .WithErrorCode(ListSummaryStatsErrorCodes.CountEmpty)
-            .WithMessage("Count cannot be empty")
+            .NotNull()
+            .WithErrorCode(ListSummaryStatsErrorCodes.CountNull)
+            .WithMessage("Count cannot be null")
             .GreaterThan(0)
             .WithErrorCode(ListSummaryStatsErrorCodes.CountTooLow)
             .WithMessage("Count must be greater than 0")

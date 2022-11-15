@@ -15,10 +15,15 @@ public class CreateUserDtoValidator : AbstractValidator<CreateUserDto>
     )
     {
         RuleFor(x => x.Email)
-            .NotEmpty()
+            .NotNull()
+            .WithErrorCode(CreateUserErrorCodes.EmailNull)
+            .WithMessage("Email cannot be null")
+            .MinimumLength(1)
             .WithErrorCode(CreateUserErrorCodes.EmailEmpty)
+            .WithMessage("Email must not be empty")
             .EmailAddress()
             .WithErrorCode(CreateUserErrorCodes.EmailInvalid)
+            .WithMessage("Email is invalid")
             .MustAsync(
                 async (email, ct) =>
                 {
@@ -30,15 +35,19 @@ public class CreateUserDtoValidator : AbstractValidator<CreateUserDto>
             .WithErrorCode(CreateUserErrorCodes.EmailAlreadyExists)
             .WithMessage("Email already exists")
             .MaximumLength(256)
-            .WithErrorCode(CreateUserErrorCodes.EmailTooLong);
+            .WithErrorCode(CreateUserErrorCodes.EmailTooLong)
+            .WithMessage("Email must not be longer than 256 characters");
 
         RuleFor(x => x.Username)
-            .NotEmpty()
-            .WithErrorCode(CreateUserErrorCodes.UsernameEmpty)
+            .NotNull()
+            .WithErrorCode(CreateUserErrorCodes.UsernameNull)
+            .WithMessage("Username cannot be null")
             .MinimumLength(4)
             .WithErrorCode(CreateUserErrorCodes.UsernameTooShort)
+            .WithMessage("Username must be at least 4 characters long")
             .MaximumLength(32)
             .WithErrorCode(CreateUserErrorCodes.UsernameTooLong)
+            .WithMessage("Username must not be longer than 32 characters")
             .MustAsync(
                 async (username, ct) =>
                 {
