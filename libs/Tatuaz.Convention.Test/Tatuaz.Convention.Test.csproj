@@ -19,6 +19,8 @@
 
         <PackageReference Include="xunit" Version="2.4.2" />
 
+        <PackageReference Include="Xunit.DependencyInjection" Version="8.6.1" />
+
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
 
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -40,6 +42,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Tatuaz.Shared.Domain.Dtos.Fakers\Tatuaz.Shared.Domain.Dtos.Fakers.csproj" />
         <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj" />
+        <ProjectReference Include="..\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

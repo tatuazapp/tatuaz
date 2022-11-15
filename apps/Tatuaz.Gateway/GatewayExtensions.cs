@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text.Json;
@@ -28,7 +29,7 @@ using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Infrastructure;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline;
-using Tatuaz.Shared.Pipeline.Configuration.Options;
+using Tatuaz.Shared.Pipeline.Configuration;
 
 namespace Tatuaz.Gateway;
 
@@ -128,6 +129,8 @@ public static class GatewayExtensions
                     }
                 }
             );
+
+            opt.CustomOperationIds(x => x.RelativePath?.Split("/").Last());
             opt.SchemaFilter<FluentValidationSchemaFilter>();
             opt.SwaggerDoc(
                 "v1",

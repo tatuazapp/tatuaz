@@ -58,20 +58,19 @@ public class FluentValidationSchemaFilter : ISchemaFilter
                     schema.Required.Add(key);
                 }
 
-                if (ruleComponentValidator.GetType().IsAssignableTo(typeof(INotEmptyValidator)))
-                {
-                    schema.Properties[key].MinLength = 1;
-                }
-
                 if (ruleComponentValidator.GetType().IsAssignableTo(typeof(ILengthValidator)))
                 {
                     var lengthValidator = (ILengthValidator)ruleComponentValidator;
+
                     if (lengthValidator.Max > 0)
                     {
                         schema.Properties[key].MaxLength = lengthValidator.Max;
                     }
 
-                    schema.Properties[key].MinLength = lengthValidator.Min;
+                    if (lengthValidator.Min > 0)
+                    {
+                        schema.Properties[key].MinLength = lengthValidator.Min;
+                    }
                 }
 
                 if (
@@ -85,7 +84,36 @@ public class FluentValidationSchemaFilter : ISchemaFilter
                     ).Expression;
                 }
 
-                // Add more validation properties here;
+                if (
+                    ruleComponentValidator.GetType().IsAssignableTo(typeof(IComparisonValidator))
+                    && decimal.TryParse(
+                        ((IComparisonValidator)ruleComponentValidator).ValueToCompare.ToString(),
+                        out var value
+                    )
+                )
+                {
+                    switch (((IComparisonValidator)ruleComponentValidator).Comparison)
+                    {
+                        case Comparison.LessThan:
+                            schema.Properties[key].ExclusiveMaximum = true;
+                            schema.Properties[key].Maximum = value;
+                            break;
+                        case Comparison.LessThanOrEqual:
+                            schema.Properties[key].Maximum = value;
+                            break;
+                        case Comparison.GreaterThan:
+                            schema.Properties[key].ExclusiveMinimum = true;
+                            schema.Properties[key].Minimum = value;
+                            break;
+                        case Comparison.GreaterThanOrEqual:
+                            schema.Properties[key].Minimum = value;
+                            break;
+                        case Comparison.Equal:
+                            schema.Properties[key].Minimum = value;
+                            schema.Properties[key].Maximum = value;
+                            break;
+                    }
+                }
             }
 
             schema.Properties[key].Description = keyErrorCodes.ToString()[

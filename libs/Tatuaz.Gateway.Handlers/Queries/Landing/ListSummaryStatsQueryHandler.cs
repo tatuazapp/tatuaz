@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 using NodaTime;
-using Tatuaz.Gateway.Queue.Contracts;
-using Tatuaz.Gateway.Queue.Producers;
+using Tatuaz.Gateway.Queue.Contracts.Landing.ListSummaryStats;
+using Tatuaz.Gateway.Queue.Producers.Landing.ListSummaryStats;
 using Tatuaz.Gateway.Requests.Queries.Landing;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListSummaryStats;
 using Tatuaz.Shared.Pipeline.Factories.Results;
@@ -60,7 +60,7 @@ public class ListSummaryStatsQueryHandler
                 new ListSummaryStatsOrder(
                     from,
                     _clock.GetCurrentInstant(),
-                    request.ListSummaryStatsDto.Count
+                    request.ListSummaryStatsDto.Count.Value
                 ),
                 cancellationToken
             )

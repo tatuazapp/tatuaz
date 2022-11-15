@@ -3,7 +3,7 @@ using System.Reflection;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Tatuaz.Shared.Pipeline.Configuration.Options;
+using Tatuaz.Shared.Pipeline.Configuration;
 
 namespace Tatuaz.Shared.Pipeline;
 

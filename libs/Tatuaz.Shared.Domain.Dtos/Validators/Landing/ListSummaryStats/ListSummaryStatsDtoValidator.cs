@@ -9,17 +9,17 @@ public class ListSummaryStatsDtoValidator : AbstractValidator<ListSummaryStatsDt
     public ListSummaryStatsDtoValidator()
     {
         RuleFor(x => x.TimePeriod)
-            .NotEmpty()
-            .WithErrorCode(ListSummaryStatsErrorCodes.TimePeriodEmpty)
-            .WithMessage("TimePeriod must be not empty")
+            .NotNull()
+            .WithErrorCode(ListSummaryStatsErrorCodes.TimePeriodNull)
+            .WithMessage("TimePeriod cannot be null")
             .IsInEnum()
             .WithErrorCode(ListSummaryStatsErrorCodes.TimePeriodInvalid)
             .WithErrorCode("TimePeriod must be valid enum");
 
         RuleFor(x => x.Count)
-            .NotEmpty()
-            .WithErrorCode(ListSummaryStatsErrorCodes.CountEmpty)
-            .WithMessage("Count cannot be empty")
+            .NotNull()
+            .WithErrorCode(ListSummaryStatsErrorCodes.CountNull)
+            .WithMessage("Count cannot be null")
             .GreaterThan(0)
             .WithErrorCode(ListSummaryStatsErrorCodes.CountTooLow)
             .WithMessage("Count must be greater than 0")
