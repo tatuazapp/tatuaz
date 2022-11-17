@@ -78,9 +78,39 @@ jobs:
           tags: ${{ secrets.ACR_ENDPOINT }}/landing:latest
           cache-from: type=registry,ref=${{ secrets.ACR_ENDPOINT }}/landing:buildcache
           cache-to: type=registry,ref=${{ secrets.ACR_ENDPOINT }}/landing:buildcache,mode=max
+  build-push-dashboard:
+    name: Build and push dashboard image
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Log into registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ secrets.ACR_ENDPOINT }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build & Push
+        uses: docker/build-push-action@v3
+        with:
+          context: ./
+          file: apps/Tatuaz.Dashboard/Dockerfile
+          push: true
+          tags: ${{ secrets.ACR_ENDPOINT }}/dashboard:latest
+          cache-from: type=registry,ref=${{ secrets.ACR_ENDPOINT }}/dashboard:buildcache
+          cache-to: type=registry,ref=${{ secrets.ACR_ENDPOINT }}/dashboard:buildcache,mode=max
   destroy-all-pods:
     name: Destroy all pods with old images
-    needs: [build-push-gateway, build-push-history, build-push-landing]
+    needs:
+      [
+        build-push-gateway,
+        build-push-history,
+        build-push-landing,
+        build-push-dashboard,
+      ]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -104,3 +134,4 @@ jobs:
           kubectl delete pods  --namespace=tatuaz -l name=gateway-pod
           kubectl delete pods  --namespace=tatuaz -l name=history-pod
           kubectl delete pods  --namespace=tatuaz -l name=landing-pod
+          kubectl delete pods  --namespace=tatuaz -l name=dashboard-pod

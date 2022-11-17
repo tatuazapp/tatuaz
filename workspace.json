@@ -3,6 +3,10 @@
   "version": 2,
   "projects": {
     "convention-test": "libs/Tatuaz.Convention.Test",
+    "dashboard": "apps/Tatuaz.Dashboard",
+    "dashboard-queue": "libs/Tatuaz.Dashboard.Queue",
+    "dashboard-queue-test": "libs/Tatuaz.Dashboard.Queue.Test",
+    "dashboard-test": "apps/Tatuaz.Dashboard.Test",
     "gateway": "apps/Tatuaz.Gateway",
     "gateway-handlers": "libs/Tatuaz.Gateway.Handlers",
     "gateway-handlers-test": "libs/Tatuaz.Gateway.Handlers.Test",

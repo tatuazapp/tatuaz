@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  
+  <PropertyGroup>
+    
+    <TargetFramework>net7.0</TargetFramework>
+    
+    <Nullable>enable</Nullable>
+    
+    <ImplicitUsings>disable</ImplicitUsings>
+    
+    <OutputPath>../../dist/apps/Tatuaz.Dashboard</OutputPath>
+    
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
+    
+    <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
+    
+    <PackageReference Include="Serilog.Enrichers.MassTransit" Version="1.1.0" />
+    
+    <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
+    
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\libs\Tatuaz.Dashboard.Queue\Tatuaz.Dashboard.Queue.csproj" />
+    <ProjectReference Include="..\..\libs\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj" />
+    <ProjectReference Include="..\..\libs\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\libs\Tatuaz.Shared.Pipeline\Tatuaz.Shared.Pipeline.csproj" />
+  </ItemGroup>
+  
+</Project>

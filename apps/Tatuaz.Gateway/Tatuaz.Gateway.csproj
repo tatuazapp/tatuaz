@@ -11,6 +11,8 @@
         <OutputPath>../../dist/apps/Tatuaz.Gateway</OutputPath>
 
         <DocumentationFile>Tatuaz.Gateway.xml</DocumentationFile>
+        
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 
     </PropertyGroup>
 
