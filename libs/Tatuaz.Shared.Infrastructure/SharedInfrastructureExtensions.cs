@@ -25,6 +25,7 @@ public static class SharedInfrastructureExtensions
                     npgsqlOpt.EnableRetryOnFailure(5);
                     npgsqlOpt.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
                     npgsqlOpt.UseNodaTime();
+                    npgsqlOpt.UseNetTopologySuite();
                 }
             );
             opt.UseSnakeCaseNamingConvention();

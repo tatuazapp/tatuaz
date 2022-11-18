@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Tatuaz.Shared.Infrastructure.DataAccess;
 
@@ -20,7 +21,86 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.General.City", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("country");
+
+                    b.Property<Point>("Location")
+                        .IsRequired()
+                        .HasColumnType("geography (point)")
+                        .HasColumnName("location");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("name");
+
+                    b.Property<Guid>("TimeZoneId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("time_zone_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_cities");
+
+                    b.HasIndex("Location")
+                        .IsUnique()
+                        .HasDatabaseName("ix_cities_location");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ix_cities_name");
+
+                    b.HasIndex("TimeZoneId")
+                        .HasDatabaseName("ix_cities_time_zone_id");
+
+                    b.ToTable("cities", "general");
+                });
+
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.General.TimeZone", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("name");
+
+                    b.Property<int>("OffsetFromUtc")
+                        .HasColumnType("integer")
+                        .HasColumnName("offset_from_utc");
+
+                    b.HasKey("Id")
+                        .HasName("pk_time_zones");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ix_time_zones_name");
+
+                    b.ToTable("time_zones", "general");
+                });
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazRole", b =>
                 {
@@ -96,6 +176,18 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                         .HasDatabaseName("ix_tatuaz_user_roles_tatuaz_user_id");
 
                     b.ToTable("tatuaz_user_roles", "identity");
+                });
+
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.General.City", b =>
+                {
+                    b.HasOne("Tatuaz.Shared.Domain.Entities.Models.General.TimeZone", "TimeZone")
+                        .WithMany()
+                        .HasForeignKey("TimeZoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_cities_time_zone_time_zone_id");
+
+                    b.Navigation("TimeZone");
                 });
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUserRole", b =>

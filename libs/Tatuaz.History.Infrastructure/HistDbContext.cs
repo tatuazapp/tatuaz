@@ -25,5 +25,6 @@ public class HistDbContext : DbContext
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(typeof(HistEntity<>).Assembly);
         builder.HasPostgresEnum<HistState>();
+        builder.HasPostgresExtension("postgis");
     }
 }
