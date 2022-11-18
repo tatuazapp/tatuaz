@@ -13,6 +13,7 @@ namespace Tatuaz.History.DataAccess.Test.Services;
 public class HistorySearcherServiceTest
 {
     private static readonly Guid SampleGuid1 = Guid.Parse("AE070011-E390-4D68-8BF5-CA34C7DE02A6");
+    private static readonly Guid SampleGuid2 = Guid.Parse("AE070011-E390-4D68-8BF5-CA34C7DE02A5");
     private readonly HistDbContextMock _dbContextMock;
     private readonly HistorySearcherService<TestHistEntity, Guid> _historySearcherService;
 
@@ -29,6 +30,12 @@ public class HistorySearcherServiceTest
     private static Instant DateModified => Instant.FromUtc(2020, 3, 1, 0, 0, 0);
 
     private static Instant DateDeleted => Instant.FromUtc(2020, 5, 1, 0, 0, 0);
+
+    private static Instant DateAdded2 => Instant.FromUtc(2020, 2, 1, 0, 0, 0);
+
+    private static Instant DateModified2 => Instant.FromUtc(2020, 4, 1, 0, 0, 0);
+
+    private static Instant DateDeleted2 => Instant.FromUtc(2020, 6, 1, 0, 0, 0);
 
     private static IEnumerable<TestHistEntity> SampleDataWithAddedModifiedDeleted()
     {
@@ -54,6 +61,34 @@ public class HistorySearcherServiceTest
                 Name = "Test3",
                 HistState = HistState.Deleted,
                 HistDumpedAt = DateDeleted
+            }
+        };
+    }
+
+    private static IEnumerable<TestHistEntity> SampleDataWithAddedModifiedDeleted2()
+    {
+        return new List<TestHistEntity>
+        {
+            new()
+            {
+                Id = SampleGuid2,
+                Name = "Test4",
+                HistState = HistState.Added,
+                HistDumpedAt = DateAdded2
+            },
+            new()
+            {
+                Id = SampleGuid2,
+                Name = "Test5",
+                HistState = HistState.Modified,
+                HistDumpedAt = DateModified2
+            },
+            new()
+            {
+                Id = SampleGuid2,
+                Name = "Test6",
+                HistState = HistState.Deleted,
+                HistDumpedAt = DateDeleted2
             }
         };
     }
@@ -266,6 +301,28 @@ public class HistorySearcherServiceTest
         }
 
         [Fact]
+        public async Task Should_ReturnFalse_WhenDateBeforeAddedProvided2()
+        {
+            // Arrange
+            var sampleData = SampleDataWithAddedModifiedDeleted().ToList();
+            _dbContextMock.TestHistEntities.AddRange(sampleData);
+
+            var sampleData2 = SampleDataWithAddedModifiedDeleted2().ToList();
+            _dbContextMock.TestHistEntities.AddRange(sampleData2);
+
+            // Act
+            var result = await _historySearcherService
+                .ExistsByPredicateAsync(
+                    x => x.Id == SampleGuid1 || x.Id == SampleGuid2,
+                    DateAdded.Minus(Duration.FromMilliseconds(1))
+                )
+                .ConfigureAwait(false);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
         public async Task Should_ReturnTrue_WhenDateAfterAddedAndBeforeModifiedProvided()
         {
             // Arrange
@@ -276,6 +333,28 @@ public class HistorySearcherServiceTest
             var result = await _historySearcherService
                 .ExistsByPredicateAsync(
                     x => x.Id == SampleGuid1,
+                    DateAdded.Plus(Duration.FromMilliseconds(1))
+                )
+                .ConfigureAwait(false);
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public async Task Should_ReturnTrue_WhenDateAfterAddedAndBeforeModifiedProvided2()
+        {
+            // Arrange
+            var sampleData = SampleDataWithAddedModifiedDeleted().ToList();
+            _dbContextMock.TestHistEntities.AddRange(sampleData);
+
+            var sampleData2 = SampleDataWithAddedModifiedDeleted2().ToList();
+            _dbContextMock.TestHistEntities.AddRange(sampleData2);
+
+            // Act
+            var result = await _historySearcherService
+                .ExistsByPredicateAsync(
+                    x => x.Id == SampleGuid1 || x.Id == SampleGuid2,
                     DateAdded.Plus(Duration.FromMilliseconds(1))
                 )
                 .ConfigureAwait(false);
@@ -304,6 +383,28 @@ public class HistorySearcherServiceTest
         }
 
         [Fact]
+        public async Task Should_ReturnTrue_WhenDateAfterModifiedAndBeforeDeletedProvided2()
+        {
+            // Arrange
+            var sampleData = SampleDataWithAddedModifiedDeleted().ToList();
+            _dbContextMock.TestHistEntities.AddRange(sampleData);
+
+            var sampleData2 = SampleDataWithAddedModifiedDeleted2().ToList();
+            _dbContextMock.TestHistEntities.AddRange(sampleData2);
+
+            // Act
+            var result = await _historySearcherService
+                .ExistsByPredicateAsync(
+                    x => x.Id == SampleGuid1 || x.Id == SampleGuid2,
+                    DateDeleted.Minus(Duration.FromMilliseconds(1))
+                )
+                .ConfigureAwait(false);
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
         public async Task Should_ReturnFalse_WhenDateAfterDeletedProvided()
         {
             // Arrange
@@ -313,7 +414,7 @@ public class HistorySearcherServiceTest
             // Act
             var result = await _historySearcherService
                 .ExistsByPredicateAsync(
-                    x => x.Id == sampleData[2].Id,
+                    x => x.Id == SampleGuid1,
                     DateDeleted.Plus(Duration.FromMilliseconds(1))
                 )
                 .ConfigureAwait(false);
@@ -322,7 +423,27 @@ public class HistorySearcherServiceTest
             Assert.False(result);
         }
 
-        // TODO: Add tests for predicate matching multiple different entities
+        [Fact]
+        public async Task Should_ReturnFalse_WhenDateAfterDeletedProvided2()
+        {
+            // Arrange
+            var sampleData = SampleDataWithAddedModifiedDeleted().ToList();
+            _dbContextMock.TestHistEntities.AddRange(sampleData);
+
+            var sampleData2 = SampleDataWithAddedModifiedDeleted2().ToList();
+            _dbContextMock.TestHistEntities.AddRange(sampleData2);
+
+            // Act
+            var result = await _historySearcherService
+                .ExistsByPredicateAsync(
+                    x => x.Id == SampleGuid1 || x.Id == SampleGuid2,
+                    DateDeleted2.Plus(Duration.FromMilliseconds(1))
+                )
+                .ConfigureAwait(false);
+
+            // Assert
+            Assert.False(result);
+        }
     }
 
     public class CountByPredicateAsync : HistorySearcherServiceTest
