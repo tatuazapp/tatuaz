@@ -7,7 +7,7 @@ using Tatuaz.Shared.Domain.Entities.Models.Common;
 
 namespace Tatuaz.Shared.Domain.Entities.Models.General;
 
-public class City : Entity<HistCity, Guid>
+public class City : Entity<HistCity, Guid>, IEntity
 {
     public string Name { get; set; } = default!;
     public virtual TimeZone TimeZone { get; set; } = default!;

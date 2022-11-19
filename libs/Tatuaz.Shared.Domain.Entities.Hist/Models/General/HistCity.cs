@@ -4,7 +4,7 @@ using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
 namespace Tatuaz.Shared.Domain.Entities.Hist.Models.General;
 
-public class HistCity : HistEntity<Guid>
+public class HistCity : HistEntity<Guid>, IHistEntity
 {
     public string Name { get; set; } = default!;
     public Guid TimeZoneId { get; set; }

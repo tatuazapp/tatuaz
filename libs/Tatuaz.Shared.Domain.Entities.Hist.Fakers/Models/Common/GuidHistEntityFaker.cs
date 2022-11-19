@@ -1,11 +1,13 @@
 using System;
 using Bogus;
 using NodaTime.Extensions;
+using Tatuaz.Shared.Domain.Entities.Hist.Fakers.Models.Attributes;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
 namespace Tatuaz.Shared.Domain.Entities.Hist.Fakers.Models.Common;
 
-public sealed class GuidHistEntityFaker : Faker<HistEntity<Guid>>
+[TestIgnoreHisteEntityFaker]
+public sealed class GuidHistEntityFaker : Faker<HistEntity<Guid>>, IHistEntityFaker
 {
     public GuidHistEntityFaker()
     {

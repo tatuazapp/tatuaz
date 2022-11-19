@@ -12,11 +12,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Bogus" Version="34.0.2"/>
+        <PackageReference Include="Bogus" Version="34.0.2" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj"/>
+        <ProjectReference Include="..\Tatuaz.Shared.Domain.Entities\Tatuaz.Shared.Domain.Entities.csproj" />
     </ItemGroup>
 
 </Project>

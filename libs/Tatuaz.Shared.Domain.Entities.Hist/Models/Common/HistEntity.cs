@@ -4,14 +4,14 @@ using Tatuaz.Shared.Domain.Entities.Hist.Models.Attributes;
 
 namespace Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
-[BaseHistEntity]
-public class HistEntity<TId> : HistEntity where TId : notnull
+[BaseHistEntity, TestIgnoreHistEntity]
+public class HistEntity<TId> : HistEntity, IHistEntity where TId : notnull
 {
     public TId Id { get; set; } = default!;
 }
 
-[BaseHistEntity]
-public class HistEntity
+[BaseHistEntity, TestIgnoreHistEntity]
+public class HistEntity : IHistEntity
 {
     public Guid HistId { get; set; }
     public HistState HistState { get; set; }

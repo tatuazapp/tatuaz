@@ -6,7 +6,7 @@ using Tatuaz.Shared.Domain.Entities.Models.Common;
 
 namespace Tatuaz.Shared.Domain.Entities.Models.General;
 
-public class TimeZone : Entity<HistTimeZone, Guid>
+public class TimeZone : Entity<HistTimeZone, Guid>, IEntity
 {
     public string Name { get; set; } = default!;
     public int OffsetFromUtc { get; set; }

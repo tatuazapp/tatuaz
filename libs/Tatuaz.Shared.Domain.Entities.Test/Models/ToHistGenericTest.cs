@@ -17,15 +17,9 @@ public class ToHistGenericTest
     [Fact]
     public void Should_CorrectlyConvertToHistEntity_ForAllEntities()
     {
-        var entityTypes = typeof(IHistDumpableEntity).Assembly
-            .GetTypes()
-            .Where(
-                x =>
-                    typeof(IHistDumpableEntity).IsAssignableFrom(x)
-                    && typeof(IHistDumpableEntity) != x
-                    && x.GetCustomAttribute(typeof(BaseEntityAttribute)) == null
-            )
-            .ToList();
+        var entityTypes = EntityHelpers
+            .GetTestableEntityTypes()
+            .Where(x => x.IsAssignableTo(typeof(IHistDumpableEntity)));
         var fakeClock = new FakeClock(Instant.FromUtc(2021, 1, 1, 0, 0));
 
         Assert.All(
