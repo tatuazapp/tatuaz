@@ -22,7 +22,7 @@ public class FullSpecificationTest
     private readonly DbContext _dbContext;
     private readonly SendEndpointProviderMock _sendEndpointProviderMock;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly UserAccessorMock _userAccessorMock;
+    private readonly UserContextMock _userContextMock;
 
     public FullSpecificationTest(
         DbContext dbContext,
@@ -31,13 +31,13 @@ public class FullSpecificationTest
     )
     {
         _sendEndpointProviderMock = new SendEndpointProviderMock();
-        _userAccessorMock = new UserAccessorMock();
+        _userContextMock = new UserContextMock();
         _dbContext = dbContext;
         _authorRepository = authorRepository;
         _clock = clock;
         _unitOfWork = new UnitOfWork(
             _dbContext,
-            _userAccessorMock.Object,
+            _userContextMock.Object,
             _clock,
             _sendEndpointProviderMock.Object
         );

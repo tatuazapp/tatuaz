@@ -19,7 +19,7 @@ public class SignUpCommandHandlerTest
     private readonly GatewayDbContextMock _dbContextMock;
     private readonly IMapper _mapper;
     private readonly UnitOfWorkMock _unitOfWorkMock;
-    private readonly UserAccessorMock _userAccessorMock;
+    private readonly UserContextMock _userContextMock;
     private readonly Mock<
         IGenericRepository<TatuazUser, HistTatuazUser, string>
     > _userRepositoryMock;
@@ -27,7 +27,7 @@ public class SignUpCommandHandlerTest
     public SignUpCommandHandlerTest(IMapper mapper)
     {
         _mapper = mapper;
-        _userAccessorMock = new UserAccessorMock();
+        _userContextMock = new UserContextMock();
         _unitOfWorkMock = new UnitOfWorkMock();
         _createUserDtoFaker = new CreateUserDtoFaker();
         _dbContextMock = new GatewayDbContextMock();
@@ -45,7 +45,7 @@ public class SignUpCommandHandlerTest
                 _userRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
-                _userAccessorMock.Object
+                _userContextMock.Object
             );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
@@ -70,7 +70,7 @@ public class SignUpCommandHandlerTest
                 _userRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
-                _userAccessorMock.Object
+                _userContextMock.Object
             );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
@@ -90,7 +90,7 @@ public class SignUpCommandHandlerTest
                 _userRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
-                _userAccessorMock.Object
+                _userContextMock.Object
             );
             var createUserDto = _createUserDtoFaker.Generate();
             createUserDto = createUserDto with { Email = "invalidEmail" };
@@ -111,7 +111,7 @@ public class SignUpCommandHandlerTest
                 _userRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
-                _userAccessorMock.Object
+                _userContextMock.Object
             );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
@@ -130,7 +130,7 @@ public class SignUpCommandHandlerTest
                 _userRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
-                _userAccessorMock.Object
+                _userContextMock.Object
             );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
@@ -146,7 +146,7 @@ public class SignUpCommandHandlerTest
                 _userRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
-                _userAccessorMock.Object
+                _userContextMock.Object
             );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
@@ -168,7 +168,7 @@ public class SignUpCommandHandlerTest
                 _userRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
-                _userAccessorMock.Object
+                _userContextMock.Object
             );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
