@@ -12,21 +12,23 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway.Handlers.Queries.Users;
 
-public class WhoAmIQueryHandler : IRequestHandler<WhoAmIQuery, TatuazResult<UserDto>>
+public class WhoAmIQueryHandler
+    : IRequestHandler<WhoAmIQuery, TatuazResult<UserDto>>,
+        IUserContextEnjoyer
 {
     private readonly IMapper _mapper;
-    private readonly IUserAccessor _userAccessor;
     private readonly IGenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
+    private IUserContext _userContext;
 
     public WhoAmIQueryHandler(
         IMapper mapper,
         IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository,
-        IUserAccessor userAccessor
+        IUserContext userContext
     )
     {
         _mapper = mapper;
         _userRepository = userRepository;
-        _userAccessor = userAccessor;
+        _userContext = userContext;
     }
 
     public async Task<TatuazResult<UserDto>> Handle(
@@ -36,7 +38,7 @@ public class WhoAmIQueryHandler : IRequestHandler<WhoAmIQuery, TatuazResult<User
     {
         var user = await _userRepository
             .GetByIdAsync(
-                _userAccessor.CurrentUserId ?? string.Empty,
+                _userContext.CurrentUserId ?? string.Empty,
                 cancellationToken: cancellationToken
             )
             .ConfigureAwait(false);
@@ -45,5 +47,10 @@ public class WhoAmIQueryHandler : IRequestHandler<WhoAmIQuery, TatuazResult<User
             // Authorization challenge should catch this
             CommonResultFactory.InternalError<UserDto>()
             : CommonResultFactory.Ok(_mapper.Map<UserDto>(user));
+    }
+
+    public void SetUserContext(IUserContext userContext)
+    {
+        _userContext = userContext;
     }
 }

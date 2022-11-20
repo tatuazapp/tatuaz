@@ -18,7 +18,7 @@ public class WhoAmIQueryHandlerTest
 {
     private readonly IMapper _mapper;
     private readonly TatuazUserFaker _tatuazUserFaker;
-    private readonly UserAccessorMock _userAccessorMock;
+    private readonly UserContextMock _userContextMock;
     private readonly Mock<
         IGenericRepository<TatuazUser, HistTatuazUser, string>
     > _userRepositoryMock;
@@ -27,7 +27,7 @@ public class WhoAmIQueryHandlerTest
     {
         _mapper = mapper;
         _userRepositoryMock = new Mock<IGenericRepository<TatuazUser, HistTatuazUser, string>>();
-        _userAccessorMock = new UserAccessorMock();
+        _userContextMock = new UserContextMock();
         _tatuazUserFaker = new TatuazUserFaker();
     }
 
@@ -39,7 +39,7 @@ public class WhoAmIQueryHandlerTest
         public async Task Should_ReturnUserWhenUserExists()
         {
             var user = _tatuazUserFaker.Generate();
-            _userAccessorMock.ReturnUserId(user.Id);
+            _userContextMock.ReturnUserId(user.Id);
             _userRepositoryMock
                 .Setup(x => x.GetByIdAsync(user.Id, false, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(user);
@@ -48,7 +48,7 @@ public class WhoAmIQueryHandlerTest
             var handler = new WhoAmIQueryHandler(
                 _mapper,
                 _userRepositoryMock.Object,
-                _userAccessorMock.Object
+                _userContextMock.Object
             );
             var result = await handler.Handle(query, CancellationToken.None).ConfigureAwait(false);
 
@@ -62,7 +62,7 @@ public class WhoAmIQueryHandlerTest
         public async Task Should_ReturnErrorWhenUserDoesntExist()
         {
             var user = _tatuazUserFaker.Generate();
-            _userAccessorMock.ReturnUserId(user.Id);
+            _userContextMock.ReturnUserId(user.Id);
             _userRepositoryMock
                 .Setup(x => x.GetByIdAsync(user.Id, false, It.IsAny<CancellationToken>()))
                 .ReturnsAsync((TatuazUser?)null);
@@ -71,7 +71,7 @@ public class WhoAmIQueryHandlerTest
             var handler = new WhoAmIQueryHandler(
                 _mapper,
                 _userRepositoryMock.Object,
-                _userAccessorMock.Object
+                _userContextMock.Object
             );
             var result = await handler.Handle(query, CancellationToken.None).ConfigureAwait(false);
 
@@ -81,15 +81,15 @@ public class WhoAmIQueryHandlerTest
         }
 
         [Fact]
-        public async Task Should_ReturnErrorWhenUserAccessorReturnsNull()
+        public async Task Should_ReturnErrorWhenUserContextReturnsNull()
         {
-            _userAccessorMock.ReturnUserId(null);
+            _userContextMock.ReturnUserId(null);
 
             var query = new WhoAmIQuery();
             var handler = new WhoAmIQueryHandler(
                 _mapper,
                 _userRepositoryMock.Object,
-                _userAccessorMock.Object
+                _userContextMock.Object
             );
             var result = await handler.Handle(query, CancellationToken.None).ConfigureAwait(false);
 

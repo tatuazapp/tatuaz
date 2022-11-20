@@ -25,17 +25,17 @@ public class UnitOfWorkTest
     private readonly SendEndpointProviderMock _sendEndpointProviderMock;
     private readonly TimeSpan _testPrecision = TimeSpan.FromMilliseconds(10);
     private readonly IUnitOfWork _unitOfWork;
-    private readonly UserAccessorMock _userAccessorMock;
+    private readonly UserContextMock _userContextMock;
 
     public UnitOfWorkTest(DbContext dbContext, IClock clock)
     {
         _sendEndpointProviderMock = new SendEndpointProviderMock();
-        _userAccessorMock = new UserAccessorMock();
+        _userContextMock = new UserContextMock();
         _clock = clock;
         _dbContext = dbContext;
         _unitOfWork = new UnitOfWork(
             _dbContext,
-            _userAccessorMock.Object,
+            _userContextMock.Object,
             _clock,
             _sendEndpointProviderMock.Object
         );
@@ -137,7 +137,7 @@ public class UnitOfWorkTest
         public async Task Should_AddUserContextToInsertedElement()
         {
             var userId = Guid.NewGuid().ToString();
-            _userAccessorMock.ReturnUserId(userId);
+            _userContextMock.ReturnUserId(userId);
             var author = AuthorFaker.Generate();
 
             _dbContext.Add(author);
@@ -169,7 +169,7 @@ public class UnitOfWorkTest
             var userIdModify = Guid.NewGuid().ToString();
             var author = AuthorFaker.Generate();
 
-            _userAccessorMock.ReturnUserId(userIdCreate);
+            _userContextMock.ReturnUserId(userIdCreate);
             _dbContext.Add(author);
             var changes1 = await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
             var toChange = await _dbContext
@@ -179,7 +179,7 @@ public class UnitOfWorkTest
 
             ((FakeClock)_clock).Advance(Duration.FromMilliseconds(200));
 
-            _userAccessorMock.ReturnUserId(userIdModify);
+            _userContextMock.ReturnUserId(userIdModify);
 
             toChange.FirstName = "Adam";
             var changes2 = await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
@@ -655,7 +655,7 @@ public class UnitOfWorkTest
         public async Task Should_AddUserContextToInsertedElement()
         {
             var userId = Guid.NewGuid().ToString();
-            _userAccessorMock.ReturnUserId(userId);
+            _userContextMock.ReturnUserId(userId);
             var author = AuthorFaker.Generate();
 
             var changes = 0;
@@ -691,7 +691,7 @@ public class UnitOfWorkTest
         {
             var userIdCreate = Guid.NewGuid().ToString();
             var userIdModify = Guid.NewGuid().ToString();
-            _userAccessorMock.ReturnUserId(userIdCreate);
+            _userContextMock.ReturnUserId(userIdCreate);
             var author = AuthorFaker.Generate();
 
             var changes1 = 0;
@@ -709,7 +709,7 @@ public class UnitOfWorkTest
 
             ((FakeClock)_clock).Advance(Duration.FromMilliseconds(200));
 
-            _userAccessorMock.ReturnUserId(userIdModify);
+            _userContextMock.ReturnUserId(userIdModify);
 
             var changes2 = 0;
             await _unitOfWork

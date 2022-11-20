@@ -7,20 +7,21 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Shared.Pipeline.Queues;
 
-public class TatuazProducerBase<TRequest, TData> where TRequest : TatuazMessage
+public class TatuazProducerBase<TRequest, TData> : IUserContextEnjoyer
+    where TRequest : TatuazMessage
 {
     private readonly ILogger _logger;
     private readonly IRequestClient<TRequest> _requestClient;
-    private readonly IUserAccessor _userAccessor;
+    private IUserContext _userContext;
 
     public TatuazProducerBase(
         IRequestClient<TRequest> requestClient,
-        IUserAccessor userAccessor,
+        IUserContext userContext,
         ILogger logger
     )
     {
         _requestClient = requestClient;
-        _userAccessor = userAccessor;
+        _userContext = userContext;
         _logger = logger;
     }
 
@@ -34,11 +35,16 @@ public class TatuazProducerBase<TRequest, TData> where TRequest : TatuazMessage
             message,
             GetType().Name
         );
-        message = message with { UserId = _userAccessor.CurrentUserId };
+        message = message with { UserId = _userContext.CurrentUserId };
         return (
             await _requestClient
                 .GetResponse<TatuazResult<TData>>(message, cancellationToken)
                 .ConfigureAwait(false)
         ).Message;
+    }
+
+    public void SetUserContext(IUserContext userContext)
+    {
+        _userContext = userContext;
     }
 }

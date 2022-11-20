@@ -6,15 +6,15 @@ using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 
 namespace Tatuaz.Gateway.Authorization;
 
-public class ActiveUserHandler : AuthorizationHandler<ActiveUserRequirement>
+public class ActiveUserHandler : AuthorizationHandler<ActiveUserRequirement>, IUserContextEnjoyer
 {
     private readonly IMediator _mediator;
-    private readonly IUserAccessor _userAccessor;
+    private IUserContext _userContext;
 
-    public ActiveUserHandler(IMediator mediator, IUserAccessor userAccessor)
+    public ActiveUserHandler(IMediator mediator, IUserContext userContext)
     {
         _mediator = mediator;
-        _userAccessor = userAccessor;
+        _userContext = userContext;
     }
 
     protected override async Task HandleRequirementAsync(
@@ -22,14 +22,14 @@ public class ActiveUserHandler : AuthorizationHandler<ActiveUserRequirement>
         ActiveUserRequirement requirement
     )
     {
-        if (_userAccessor.CurrentUserId == null)
+        if (_userContext.CurrentUserId == null)
         {
             context.Fail();
             return;
         }
 
         var userExists = await _mediator
-            .Send(new UserExistsQuery(_userAccessor.CurrentUserId))
+            .Send(new UserExistsQuery(_userContext.CurrentUserId))
             .ConfigureAwait(false);
 
         if (userExists)
@@ -40,5 +40,10 @@ public class ActiveUserHandler : AuthorizationHandler<ActiveUserRequirement>
         {
             context.Fail();
         }
+    }
+
+    public void SetUserContext(IUserContext userContext)
+    {
+        _userContext = userContext;
     }
 }

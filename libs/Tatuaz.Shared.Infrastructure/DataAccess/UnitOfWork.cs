@@ -17,24 +17,24 @@ using static System.GC;
 
 namespace Tatuaz.Shared.Infrastructure.DataAccess;
 
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWork : IUnitOfWork, IUserContextEnjoyer
 {
     private readonly IClock _clock;
     private readonly List<HistEntity> _histEntitiesToDump;
     private readonly ISendEndpointProvider _sendEndpointProvider;
-    private readonly IUserAccessor _userAccessor;
+    private IUserContext _userContext;
     private IDbContextTransaction? _currentTransaction;
     private DbContext _dbContext;
 
     public UnitOfWork(
         DbContext dbContext,
-        IUserAccessor userAccessor,
+        IUserContext userContext,
         IClock clock,
         ISendEndpointProvider sendEndpointProvider
     )
     {
         _dbContext = dbContext;
-        _userAccessor = userAccessor;
+        _userContext = userContext;
         _clock = clock;
         _sendEndpointProvider = sendEndpointProvider;
         _currentTransaction = null;
@@ -158,7 +158,7 @@ public class UnitOfWork : IUnitOfWork
     private void UpdateUserContext()
     {
         var auditableEntries = _dbContext.ChangeTracker.Entries<IAuditableEntity>().ToList();
-        var userId = _userAccessor.CurrentUserId;
+        var userId = _userContext.CurrentUserId;
         if (userId == null)
         {
             throw new ArgumentNullException(nameof(userId), "User id can't be null");
@@ -173,5 +173,10 @@ public class UnitOfWork : IUnitOfWork
         {
             entry.Entity.UpdateModificationData(userId, _clock);
         }
+    }
+
+    public void SetUserContext(IUserContext userContext)
+    {
+        _userContext = userContext;
     }
 }

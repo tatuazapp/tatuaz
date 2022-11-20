@@ -16,11 +16,11 @@ namespace Tatuaz.Gateway.Test.Authorization;
 public class ActiveUserHandlerTest
 {
     private readonly Mock<IMediator> _mediatorMock;
-    private readonly UserAccessorMock _userAccessorMock;
+    private readonly UserContextMock _userContextMock;
 
     public ActiveUserHandlerTest()
     {
-        _userAccessorMock = new UserAccessorMock();
+        _userContextMock = new UserContextMock();
         _mediatorMock = new Mock<IMediator>();
     }
 
@@ -29,8 +29,8 @@ public class ActiveUserHandlerTest
         [Fact]
         public async Task Should_FailWithoutCallingMediatorWhenUserIdIsNull()
         {
-            _userAccessorMock.ReturnUserId(null);
-            var handler = new ActiveUserHandler(_mediatorMock.Object, _userAccessorMock.Object);
+            _userContextMock.ReturnUserId(null);
+            var handler = new ActiveUserHandler(_mediatorMock.Object, _userContextMock.Object);
             var claimsPrincipal = new GenericPrincipal(
                 new ClaimsIdentity(Array.Empty<Claim>()),
                 null
@@ -52,11 +52,11 @@ public class ActiveUserHandlerTest
         [Fact]
         public async Task Should_FailWhenUserDoesntExist()
         {
-            _userAccessorMock.ReturnUserId("1");
+            _userContextMock.ReturnUserId("1");
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<UserExistsQuery>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(false);
-            var handler = new ActiveUserHandler(_mediatorMock.Object, _userAccessorMock.Object);
+            var handler = new ActiveUserHandler(_mediatorMock.Object, _userContextMock.Object);
             var claimsPrincipal = new GenericPrincipal(
                 new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, "1") }),
                 null
@@ -78,11 +78,11 @@ public class ActiveUserHandlerTest
         [Fact]
         public async Task Should_SucceedWhenUserExists()
         {
-            _userAccessorMock.ReturnUserId("1");
+            _userContextMock.ReturnUserId("1");
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<UserExistsQuery>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(true);
-            var handler = new ActiveUserHandler(_mediatorMock.Object, _userAccessorMock.Object);
+            var handler = new ActiveUserHandler(_mediatorMock.Object, _userContextMock.Object);
             var claimsPrincipal = new GenericPrincipal(
                 new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, "1") }),
                 null

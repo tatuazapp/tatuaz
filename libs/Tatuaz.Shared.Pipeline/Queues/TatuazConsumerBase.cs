@@ -1,7 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Threading.Tasks;
 using MassTransit;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline.Factories.Errors;
@@ -13,16 +17,19 @@ public abstract class TatuazConsumerBase<TMessage, TData> : IConsumer<TMessage>
     where TMessage : TatuazMessage
 {
     private readonly ILogger _logger;
+    protected IUserContext? UserContext { get; private set; }
 
     public TatuazConsumerBase(ILogger logger)
     {
         _logger = logger;
     }
 
-    protected IUserAccessor UserAccessor { get; private set; }
+    protected abstract Task<TatuazResult<TData>> ConsumeMessage(TMessage message);
 
     public async Task Consume(ConsumeContext<TMessage> context)
     {
+        UserContext = new InternalUserContext(context.Message.UserId);
+        SetUserContext(UserContext);
         _logger.LogInformation(
             "Received message {MessageId} of type {MessageType} in {ClassName}",
             context.MessageId,
@@ -31,7 +38,6 @@ public abstract class TatuazConsumerBase<TMessage, TData> : IConsumer<TMessage>
         );
         try
         {
-            UserAccessor = new InternalUserAccessor(context.Message.UserId);
             await context
                 .RespondAsync(await ConsumeMessage(context.Message).ConfigureAwait(false))
                 .ConfigureAwait(false);
@@ -52,8 +58,6 @@ public abstract class TatuazConsumerBase<TMessage, TData> : IConsumer<TMessage>
         }
     }
 
-    protected abstract Task<TatuazResult<TData>> ConsumeMessage(TMessage message);
-
     protected virtual Task<(TatuazError[] errors, HttpStatusCode httpStatusCode)> HandleException(
         ConsumeContext<TMessage> context,
         Exception exception
@@ -62,5 +66,28 @@ public abstract class TatuazConsumerBase<TMessage, TData> : IConsumer<TMessage>
         return Task.FromResult(
             (new[] { CommonErrorFactory.InternalError() }, HttpStatusCode.InternalServerError)
         );
+    }
+
+    private void SetUserContext(IUserContext userContext)
+    {
+        const BindingFlags bindingFlags =
+            BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic;
+        var fields = GetType().GetFields(bindingFlags);
+        foreach (var field in fields)
+        {
+            if (field.GetValue(this) is IUserContextEnjoyer userContextEnjoyer)
+            {
+                userContextEnjoyer.SetUserContext(userContext);
+            }
+        }
+
+        var properties = GetType().GetProperties(bindingFlags);
+        foreach (var property in properties)
+        {
+            if (property.GetValue(this) is IUserContextEnjoyer userContextEnjoyer)
+            {
+                userContextEnjoyer.SetUserContext(userContext);
+            }
+        }
     }
 }
