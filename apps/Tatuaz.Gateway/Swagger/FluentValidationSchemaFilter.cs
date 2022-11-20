@@ -56,6 +56,7 @@ public class FluentValidationSchemaFilter : ISchemaFilter
                 if (ruleComponentValidator.GetType().IsAssignableTo(typeof(INotNullValidator)))
                 {
                     schema.Required.Add(key);
+                    schema.Properties[key].Nullable = false;
                 }
 
                 if (ruleComponentValidator.GetType().IsAssignableTo(typeof(ILengthValidator)))
