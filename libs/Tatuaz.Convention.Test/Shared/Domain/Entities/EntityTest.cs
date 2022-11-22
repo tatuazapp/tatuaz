@@ -37,7 +37,7 @@ public class EntityTest
     public class HistIntegration : EntityTest
     {
         [Fact]
-        public void Should_HistCounterpartsExistWithCorrectName()
+        public void Should_HaveHistCounterparts_WithCorrectName()
         {
             foreach (var entityType in _entities)
             {
@@ -115,7 +115,7 @@ public class EntityTest
     public class EntityFakers : EntityTest
     {
         [Fact]
-        public void AllEntitiesHaveFakers()
+        public void Should_HaveFakers_ForEachEntity()
         {
             var entitiesWithoutFakers = _entities
                 .Where(
@@ -131,7 +131,7 @@ public class EntityTest
         }
 
         [Fact]
-        public void AllHistEntitiesHaveFakers()
+        public void Should_HaveFakers_ForEachHistEntity()
         {
             var histEntitiesWithoutFakers = _histEntities
                 .Where(

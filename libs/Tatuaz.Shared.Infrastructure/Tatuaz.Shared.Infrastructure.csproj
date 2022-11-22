@@ -25,9 +25,10 @@
 
     <ItemGroup>
       <None Remove="Migrations\20221118201629_InitialMigration.sql" />
-      <EmbeddedResource Include="Migrations\20221118201629_InitialMigration.sql">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Migrations" />
     </ItemGroup>
 
 </Project>

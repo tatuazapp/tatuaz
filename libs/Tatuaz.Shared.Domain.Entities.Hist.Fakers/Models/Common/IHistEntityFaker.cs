@@ -2,5 +2,5 @@
 
 namespace Tatuaz.Shared.Domain.Entities.Hist.Fakers.Models.Common;
 
-[TestIgnoreHisteEntityFaker]
+[TestIgnoreHistEntityFaker]
 public interface IHistEntityFaker { }

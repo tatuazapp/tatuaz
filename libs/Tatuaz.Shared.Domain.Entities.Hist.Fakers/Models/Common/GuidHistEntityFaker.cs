@@ -6,7 +6,7 @@ using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
 namespace Tatuaz.Shared.Domain.Entities.Hist.Fakers.Models.Common;
 
-[TestIgnoreHisteEntityFaker]
+[TestIgnoreHistEntityFaker]
 public sealed class GuidHistEntityFaker : Faker<HistEntity<Guid>>, IHistEntityFaker
 {
     public GuidHistEntityFaker()

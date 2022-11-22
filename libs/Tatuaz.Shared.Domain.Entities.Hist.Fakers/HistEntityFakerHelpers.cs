@@ -16,7 +16,7 @@ public static class HistEntityFakerHelpers
             .Where(
                 x =>
                     x.IsAssignableTo(typeof(IHistEntityFaker))
-                    && x.GetCustomAttribute(typeof(TestIgnoreHisteEntityFakerAttribute)) == null
+                    && x.GetCustomAttribute(typeof(TestIgnoreHistEntityFakerAttribute)) == null
             )
             .ToList();
     }

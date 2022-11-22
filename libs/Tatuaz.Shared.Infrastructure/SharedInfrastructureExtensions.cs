@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NodaTime;
+using Npgsql;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
 
@@ -16,10 +18,12 @@ public static class SharedInfrastructureExtensions
         string connectionString
     ) where TDbContext : DbContext
     {
+        var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
+        dataSourceBuilder.MapEnum<HistState>();
         services.AddDbContext<TDbContext>(opt =>
         {
             opt.UseNpgsql(
-                connectionString,
+                dataSourceBuilder.Build(),
                 npgsqlOpt =>
                 {
                     npgsqlOpt.EnableRetryOnFailure(5);

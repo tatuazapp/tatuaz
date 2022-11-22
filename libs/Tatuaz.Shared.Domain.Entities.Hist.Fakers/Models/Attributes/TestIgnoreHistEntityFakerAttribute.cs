@@ -7,4 +7,4 @@ namespace Tatuaz.Shared.Domain.Entities.Hist.Fakers.Models.Attributes;
     AllowMultiple = true,
     Inherited = false
 )]
-public class TestIgnoreHisteEntityFakerAttribute : Attribute { }
+public class TestIgnoreHistEntityFakerAttribute : Attribute { }

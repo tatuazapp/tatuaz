@@ -7,11 +7,6 @@ namespace Tatuaz.History.DataAccess;
 
 public class HistDbContext : DbContext
 {
-    static HistDbContext()
-    {
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<HistState>();
-    }
-
     public HistDbContext(DbContextOptions<HistDbContext> options) : base(options) { }
 
     public HistDbContext() { }
