@@ -38,6 +38,8 @@
     "shared-domain-entities-hist": "libs/Tatuaz.Shared.Domain.Entities.Hist",
     "shared-domain-entities-hist-fakers": "libs/Tatuaz.Shared.Domain.Entities.Hist.Fakers",
     "shared-domain-entities-test": "libs/Tatuaz.Shared.Domain.Entities.Test",
+    "shared-services": "libs/Tatuaz.Shared.Services",
+    "shared-services-test": "libs/Tatuaz.Shared.Services.Test",
     "shared-helpers": "libs/Tatuaz.Shared.Helpers",
     "shared-infrastructure": "libs/Tatuaz.Shared.Infrastructure",
     "shared-infrastructure-abstractions": "libs/Tatuaz.Shared.Infrastructure.Abstractions",
