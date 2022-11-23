@@ -3,7 +3,7 @@ using Tatuaz.Landing;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.RegisterConfiguration();
+builder.Configuration.RegisterLandingConfiguration();
 
 builder.Services.RegisterLandingServices(builder.Configuration);
 

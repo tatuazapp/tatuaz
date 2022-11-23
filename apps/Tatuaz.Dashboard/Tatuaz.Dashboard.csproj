@@ -28,10 +28,15 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\libs\Tatuaz.Dashboard.Queue\Tatuaz.Dashboard.Queue.csproj" />
-    <ProjectReference Include="..\..\libs\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj" />
     <ProjectReference Include="..\..\libs\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj" />
     <ProjectReference Include="..\..\libs\Tatuaz.Shared.Pipeline\Tatuaz.Shared.Pipeline.csproj" />
   </ItemGroup>

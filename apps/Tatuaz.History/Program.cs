@@ -3,7 +3,7 @@ using Tatuaz.History;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.RegisterConfiguration();
+builder.Configuration.RegisterHistoryConfiguration();
 
 builder.Services.RegisterHistoryServices(builder.Configuration);
 

@@ -17,7 +17,7 @@ namespace Tatuaz.Dashboard;
 
 public static class DashboardExtensions
 {
-    public static IConfiguration RegisterConfiguration(this IConfiguration configuration)
+    public static IConfiguration RegisterDashboardConfiguration(this IConfiguration configuration)
     {
         var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -31,7 +31,7 @@ public static class DashboardExtensions
         return builder.Build();
     }
 
-    public static IServiceCollection RegisterLandingServices(
+    public static IServiceCollection RegisterDashboardServices(
         this IServiceCollection services,
         IConfiguration configuration
     )
@@ -42,14 +42,14 @@ public static class DashboardExtensions
             )
         );
 
-        services.AddSingleton<IUserAccessor>(_ => new InternalUserAccessor());
+        services.AddSingleton<IUserContext, InternalUserContext>();
 
         services.RegisterSharedPipelineServices(configuration, typeof(TmpConsumer).Assembly);
 
         return services;
     }
 
-    public static ConfigureHostBuilder RegisterLandingHost(this ConfigureHostBuilder host)
+    public static ConfigureHostBuilder RegisterDashboardHost(this ConfigureHostBuilder host)
     {
         host.UseSerilog(
             (context, services, loggerConfiguration) =>
@@ -66,7 +66,7 @@ public static class DashboardExtensions
                 {
                     x.File(
                         outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                        path: "logs/landing.log",
+                        path: "logs/dashboard.log",
                         rollingInterval: RollingInterval.Day,
                         levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug)
                     );
@@ -76,7 +76,7 @@ public static class DashboardExtensions
                 {
                     x.File(
                         outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                        path: "logs/landing_error.log",
+                        path: "logs/dashboard_error.log",
                         rollingInterval: RollingInterval.Day,
                         restrictedToMinimumLevel: LogEventLevel.Error
                     );

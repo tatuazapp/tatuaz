@@ -17,7 +17,7 @@ namespace Tatuaz.History;
 
 public static class HistoryExtensions
 {
-    public static IConfiguration RegisterConfiguration(this IConfiguration configuration)
+    public static IConfiguration RegisterHistoryConfiguration(this IConfiguration configuration)
     {
         var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())

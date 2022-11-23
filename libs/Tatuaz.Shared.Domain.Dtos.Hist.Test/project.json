@@ -7,8 +7,7 @@
       "executor": "@nx-dotnet/core:build",
       "outputs": ["dist/libs/Tatuaz.Shared.Domain.Dtos.Hist.Test"],
       "options": {
-        "configuration": "Debug",
-        "noDependencies": true
+        "configuration": "Debug"
       },
       "configurations": {
         "production": {

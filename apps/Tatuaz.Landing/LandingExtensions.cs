@@ -17,7 +17,7 @@ namespace Tatuaz.Landing;
 
 public static class LandingExtensions
 {
-    public static IConfiguration RegisterConfiguration(this IConfiguration configuration)
+    public static IConfiguration RegisterLandingConfiguration(this IConfiguration configuration)
     {
         var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -42,7 +42,7 @@ public static class LandingExtensions
             )
         );
 
-        services.AddSingleton<IUserContext>(_ => new InternalUserContext());
+        services.AddSingleton<IUserContext, InternalUserContext>();
 
         services.RegisterSharedPipelineServices(
             configuration,

@@ -24,8 +24,7 @@
       "defaultConfiguration": "production",
       "options": {
         "configuration": "Debug",
-        "launch-profile": "Production",
-        "noDependencies": true
+        "launch-profile": "Production"
       },
       "configurations": {
         "development": {

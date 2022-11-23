@@ -3,11 +3,11 @@ using Tatuaz.Dashboard;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.RegisterConfiguration();
+builder.Configuration.RegisterDashboardConfiguration();
 
-builder.Services.RegisterLandingServices(builder.Configuration);
+builder.Services.RegisterDashboardServices(builder.Configuration);
 
-builder.Host.RegisterLandingHost();
+builder.Host.RegisterDashboardHost();
 
 var app = builder.Build();
 
