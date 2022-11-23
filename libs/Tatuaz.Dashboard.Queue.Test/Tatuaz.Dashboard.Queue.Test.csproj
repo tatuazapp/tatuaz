@@ -15,7 +15,7 @@
   
   <ItemGroup>
     
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
     
     <PackageReference Include="xunit" Version="2.4.2" />
     
@@ -38,7 +38,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Tatuaz.Dashboard.Queue\Tatuaz.TatuazDashboardQueue.csproj" />
+    <ProjectReference Include="..\Tatuaz.Dashboard.Queue\Tatuaz.Dashboard.Queue.csproj" />
   </ItemGroup>
   
 </Project>
