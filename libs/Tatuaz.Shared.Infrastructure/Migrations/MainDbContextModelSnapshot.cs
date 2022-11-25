@@ -20,6 +20,7 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazRole", b =>

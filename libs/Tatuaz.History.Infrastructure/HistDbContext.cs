@@ -7,11 +7,6 @@ namespace Tatuaz.History.DataAccess;
 
 public class HistDbContext : DbContext
 {
-    static HistDbContext()
-    {
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<HistState>();
-    }
-
     public HistDbContext(DbContextOptions<HistDbContext> options) : base(options) { }
 
     public HistDbContext() { }
@@ -25,5 +20,6 @@ public class HistDbContext : DbContext
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(typeof(HistEntity<>).Assembly);
         builder.HasPostgresEnum<HistState>();
+        builder.HasPostgresExtension("postgis");
     }
 }

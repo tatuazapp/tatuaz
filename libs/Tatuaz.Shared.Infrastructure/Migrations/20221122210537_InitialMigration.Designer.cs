@@ -12,7 +12,7 @@ using Tatuaz.Shared.Infrastructure.DataAccess;
 namespace Tatuaz.Shared.Infrastructure.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20221111123438_InitialMigration")]
+    [Migration("20221122210537_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -23,6 +23,7 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazRole", b =>

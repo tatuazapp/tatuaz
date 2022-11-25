@@ -13,6 +13,8 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
         {
             migrationBuilder.EnsureSchema(name: "identity");
 
+            migrationBuilder.AlterDatabase().Annotation("Npgsql:PostgresExtension:postgis", ",,");
+
             migrationBuilder.CreateTable(
                 name: "tatuaz_roles",
                 schema: "identity",

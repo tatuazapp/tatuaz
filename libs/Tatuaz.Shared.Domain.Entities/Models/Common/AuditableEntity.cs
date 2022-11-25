@@ -4,8 +4,11 @@ using Tatuaz.Shared.Domain.Entities.Models.Attributes;
 
 namespace Tatuaz.Shared.Domain.Entities.Models.Common;
 
-[BaseEntity]
-public abstract class AuditableEntity<THistEntity, TId> : Entity<THistEntity, TId>, IAuditableEntity
+[BaseEntity, TestIgnoreEntity]
+public abstract class AuditableEntity<THistEntity, TId>
+    : Entity<THistEntity, TId>,
+        IAuditableEntity,
+        IEntity
     where THistEntity : HistAuditableEntity<TId>, new()
     where TId : notnull
 {

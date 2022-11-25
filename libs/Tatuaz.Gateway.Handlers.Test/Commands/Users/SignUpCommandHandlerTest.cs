@@ -4,7 +4,7 @@ using AutoMapper;
 using Moq;
 using Tatuaz.Gateway.Handlers.Commands.Users;
 using Tatuaz.Gateway.Requests.Commands.Users;
-using Tatuaz.Shared.Domain.Dtos.Fakers.Identity;
+using Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;

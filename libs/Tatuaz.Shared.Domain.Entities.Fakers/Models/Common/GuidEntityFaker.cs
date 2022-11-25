@@ -1,11 +1,13 @@
 using System;
 using Bogus;
+using Tatuaz.Shared.Domain.Entities.Fakers.Models.Attributes;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Tatuaz.Shared.Domain.Entities.Models.Common;
 
 namespace Tatuaz.Shared.Domain.Entities.Fakers.Models.Common;
 
-public sealed class GuidEntityFaker : Faker<Entity<HistEntity<Guid>, Guid>>
+[TestIgnoreEntityFaker]
+public sealed class GuidEntityFaker : Faker<Entity<HistEntity<Guid>, Guid>>, IEntityFaker
 {
     public GuidEntityFaker()
     {

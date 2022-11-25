@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Tatuaz.Gateway.Queue.Contracts.Landing.ListArtistStats;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListArtistStats;
-using Tatuaz.Shared.Domain.Dtos.Fakers.Landing.ListArtistStats;
+using Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Landing.ListArtistStats;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Messages;
 using Tatuaz.Shared.Pipeline.Queues;

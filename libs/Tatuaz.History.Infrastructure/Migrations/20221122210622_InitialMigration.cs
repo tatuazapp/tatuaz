@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 using NodaTime;
-using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
 #nullable disable
 
@@ -13,15 +12,16 @@ namespace Tatuaz.History.DataAccess.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(name: "H_Identity");
+            migrationBuilder.EnsureSchema(name: "H_identity");
 
             migrationBuilder
                 .AlterDatabase()
-                .Annotation("Npgsql:Enum:hist_state", "added,modified,deleted");
+                .Annotation("Npgsql:Enum:hist_state", "added,modified,deleted")
+                .Annotation("Npgsql:PostgresExtension:postgis", ",,");
 
             migrationBuilder.CreateTable(
                 name: "H_tatuaz_roles",
-                schema: "H_Identity",
+                schema: "H_identity",
                 columns: table =>
                     new
                     {
@@ -31,9 +31,9 @@ namespace Tatuaz.History.DataAccess.Migrations
                             maxLength: 128,
                             nullable: false
                         ),
-                        histstate = table.Column<HistState>(
+                        histstate = table.Column<int>(
                             name: "hist_state",
-                            type: "hist_state",
+                            type: "integer",
                             nullable: false
                         ),
                         histdumpedat = table.Column<Instant>(
@@ -51,7 +51,7 @@ namespace Tatuaz.History.DataAccess.Migrations
 
             migrationBuilder.CreateTable(
                 name: "H_tatuaz_user_roles",
-                schema: "H_Identity",
+                schema: "H_identity",
                 columns: table =>
                     new
                     {
@@ -66,9 +66,9 @@ namespace Tatuaz.History.DataAccess.Migrations
                             type: "uuid",
                             nullable: false
                         ),
-                        histstate = table.Column<HistState>(
+                        histstate = table.Column<int>(
                             name: "hist_state",
-                            type: "hist_state",
+                            type: "integer",
                             nullable: false
                         ),
                         histdumpedat = table.Column<Instant>(
@@ -86,7 +86,7 @@ namespace Tatuaz.History.DataAccess.Migrations
 
             migrationBuilder.CreateTable(
                 name: "H_tatuaz_users",
-                schema: "H_Identity",
+                schema: "H_identity",
                 columns: table =>
                     new
                     {
@@ -107,9 +107,9 @@ namespace Tatuaz.History.DataAccess.Migrations
                             maxLength: 64,
                             nullable: true
                         ),
-                        histstate = table.Column<HistState>(
+                        histstate = table.Column<int>(
                             name: "hist_state",
-                            type: "hist_state",
+                            type: "integer",
                             nullable: false
                         ),
                         histdumpedat = table.Column<Instant>(
@@ -129,11 +129,11 @@ namespace Tatuaz.History.DataAccess.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(name: "H_tatuaz_roles", schema: "H_Identity");
+            migrationBuilder.DropTable(name: "H_tatuaz_roles", schema: "H_identity");
 
-            migrationBuilder.DropTable(name: "H_tatuaz_user_roles", schema: "H_Identity");
+            migrationBuilder.DropTable(name: "H_tatuaz_user_roles", schema: "H_identity");
 
-            migrationBuilder.DropTable(name: "H_tatuaz_users", schema: "H_Identity");
+            migrationBuilder.DropTable(name: "H_tatuaz_users", schema: "H_identity");
         }
     }
 }

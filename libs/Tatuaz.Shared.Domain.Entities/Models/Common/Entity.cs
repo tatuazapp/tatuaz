@@ -5,8 +5,8 @@ using Tatuaz.Shared.Domain.Entities.Models.Attributes;
 
 namespace Tatuaz.Shared.Domain.Entities.Models.Common;
 
-[BaseEntity]
-public abstract class Entity<THistEntity, TId> : IHistDumpableEntity
+[BaseEntity, TestIgnoreEntity]
+public abstract class Entity<THistEntity, TId> : IHistDumpableEntity, IEntity
     where THistEntity : HistEntity<TId>, new()
     where TId : notnull
 {

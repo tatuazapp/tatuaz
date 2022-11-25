@@ -3,7 +3,7 @@ using Tatuaz.Shared.Domain.Entities.Hist.Models.Attributes;
 
 namespace Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
-[BaseHistEntity]
+[BaseHistEntity, TestIgnoreHistEntity]
 public class HistAuditableEntity<TId> : HistEntity<TId> where TId : notnull
 {
     public string ModifiedBy { get; set; } = default!;

@@ -1,9 +1,10 @@
 using Bogus;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListArtistStats;
+using Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Common;
 
-namespace Tatuaz.Shared.Domain.Dtos.Fakers.Landing.ListArtistStats;
+namespace Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Landing.ListArtistStats;
 
-public class ArtistStatDtoFaker : Faker<ArtistStatDto>
+public class ArtistStatDtoFaker : Faker<ArtistStatDto>, IDtoFaker
 {
     public ArtistStatDtoFaker()
     {

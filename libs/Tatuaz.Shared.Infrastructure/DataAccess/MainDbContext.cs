@@ -19,5 +19,6 @@ public class MainDbContext : DbContext
     {
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(typeof(Entity<,>).Assembly);
+        builder.HasPostgresExtension("postgis");
     }
 }

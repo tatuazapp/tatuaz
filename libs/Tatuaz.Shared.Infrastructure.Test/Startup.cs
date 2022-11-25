@@ -34,6 +34,7 @@ public class Startup
                 npgsqlOpt =>
                 {
                     npgsqlOpt.UseNodaTime();
+                    npgsqlOpt.UseNetTopologySuite();
                 }
             );
             opt.EnableDetailedErrors();

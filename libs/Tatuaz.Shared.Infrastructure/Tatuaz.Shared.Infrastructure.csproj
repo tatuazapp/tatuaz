@@ -23,4 +23,12 @@
         <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Migrations\20221118201629_InitialMigration.sql" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Migrations" />
+    </ItemGroup>
+
 </Project>

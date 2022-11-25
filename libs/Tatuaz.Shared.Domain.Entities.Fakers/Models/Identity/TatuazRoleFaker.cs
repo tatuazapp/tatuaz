@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using Bogus;
+using Tatuaz.Shared.Domain.Entities.Fakers.Models.Common;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 
 namespace Tatuaz.Shared.Domain.Entities.Fakers.Models.Identity;
 
-public sealed class TatuazRoleFaker : Faker<TatuazRole>
+public sealed class TatuazRoleFaker : Faker<TatuazRole>, IEntityFaker
 {
     public TatuazRoleFaker()
     {

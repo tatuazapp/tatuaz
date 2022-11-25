@@ -61,7 +61,7 @@ resource "kubernetes_deployment" "k8s_postgres" {
 
       spec {
         container {
-          image             = "postgres:14"
+          image             = "postgis/postgis:15-master"
           name              = "postgres"
           image_pull_policy = "IfNotPresent"
 

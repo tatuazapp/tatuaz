@@ -1,13 +1,16 @@
 using System;
 using Bogus;
 using NodaTime.Extensions;
+using Tatuaz.Shared.Domain.Entities.Fakers.Models.Attributes;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Tatuaz.Shared.Domain.Entities.Models.Common;
 
 namespace Tatuaz.Shared.Domain.Entities.Fakers.Models.Common;
 
+[TestIgnoreEntityFaker]
 public sealed class StringAuditableEntityFaker
-    : Faker<AuditableEntity<HistAuditableEntity<string>, string>>
+    : Faker<AuditableEntity<HistAuditableEntity<string>, string>>,
+        IEntityFaker
 {
     public StringAuditableEntityFaker()
     {

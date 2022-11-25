@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Tatuaz.History.DataAccess;
-using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
 #nullable disable
 
@@ -23,6 +22,7 @@ namespace Tatuaz.History.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "hist_state", new[] { "added", "modified", "deleted" });
+            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Identity.HistTatuazRole", b =>
@@ -36,8 +36,8 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("hist_dumped_at");
 
-                    b.Property<HistState>("HistState")
-                        .HasColumnType("hist_state")
+                    b.Property<int>("HistState")
+                        .HasColumnType("integer")
                         .HasColumnName("hist_state");
 
                     b.Property<Guid>("Id")
@@ -53,7 +53,7 @@ namespace Tatuaz.History.DataAccess.Migrations
                     b.HasKey("HistId")
                         .HasName("pk_h_tatuaz_roles");
 
-                    b.ToTable("H_tatuaz_roles", "H_Identity");
+                    b.ToTable("H_tatuaz_roles", "H_identity");
                 });
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Identity.HistTatuazUser", b =>
@@ -73,8 +73,8 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("hist_dumped_at");
 
-                    b.Property<HistState>("HistState")
-                        .HasColumnType("hist_state")
+                    b.Property<int>("HistState")
+                        .HasColumnType("integer")
                         .HasColumnName("hist_state");
 
                     b.Property<string>("Id")
@@ -95,7 +95,7 @@ namespace Tatuaz.History.DataAccess.Migrations
                     b.HasKey("HistId")
                         .HasName("pk_h_tatuaz_users");
 
-                    b.ToTable("H_tatuaz_users", "H_Identity");
+                    b.ToTable("H_tatuaz_users", "H_identity");
                 });
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Identity.HistTatuazUserRole", b =>
@@ -109,8 +109,8 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("hist_dumped_at");
 
-                    b.Property<HistState>("HistState")
-                        .HasColumnType("hist_state")
+                    b.Property<int>("HistState")
+                        .HasColumnType("integer")
                         .HasColumnName("hist_state");
 
                     b.Property<Guid>("Id")
@@ -129,7 +129,7 @@ namespace Tatuaz.History.DataAccess.Migrations
                     b.HasKey("HistId")
                         .HasName("pk_h_tatuaz_user_roles");
 
-                    b.ToTable("H_tatuaz_user_roles", "H_Identity");
+                    b.ToTable("H_tatuaz_user_roles", "H_identity");
                 });
 #pragma warning restore 612, 618
         }
