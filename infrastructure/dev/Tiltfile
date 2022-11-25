@@ -21,6 +21,13 @@ local_resource(
     ignore=['../../apps/Tatuaz.Landing/obj']
 )
 
+local_resource(
+    'build-dashboard',
+    'dotnet publish -c Debug -o out/dashboard ../../apps/Tatuaz.Dashboard',
+    deps=['../../apps/Tatuaz.Dashboard'],
+    ignore=['../../apps/Tatuaz.Dashboard/obj']
+)
+
 docker_build_with_restart(
     'gateway',
     'out/gateway',
@@ -51,16 +58,28 @@ docker_build_with_restart(
     ],
 )
 
+docker_build_with_restart(
+    'dashboard',
+    'out/dashboard',
+    entrypoint=['dotnet', 'Tatuaz.Dashboard.dll'],
+    dockerfile='../../apps/Tatuaz.Dashboard/Dockerfile.debug',
+    live_update=[
+        sync('out/dashboard', '/app/out'),
+    ],
+)
+
 k8s_yaml([
     'kubernetes/deploys/gateway.yaml',
     'kubernetes/deploys/history.yaml',
     'kubernetes/deploys/landing.yaml',
+    'kubernetes/deploys/dashboard.yaml',
     'kubernetes/deploys/postgresql.yaml',
     'kubernetes/deploys/rabbitmq.yaml',
     'kubernetes/configMaps/auth-config-map.yaml',
     'kubernetes/configMaps/gateway-config-map.yaml',
     'kubernetes/configMaps/history-config-map.yaml',
     'kubernetes/configMaps/landing-config-map.yaml',
+    'kubernetes/configMaps/dashboard-config-map.yaml',
     'kubernetes/configMaps/postgresql-config-map.yaml',
     'kubernetes/configMaps/rabbitmq-config-map.yaml',
     'kubernetes/configMaps/swagger-config-map.yaml',
@@ -76,5 +95,6 @@ k8s_yaml([
 k8s_resource('gateway', port_forwards='8080:80', labels='backend', resource_deps=['build-gateway'])
 k8s_resource('history', labels='backend', resource_deps=['build-history'])
 k8s_resource('landing', labels='backend', resource_deps=['build-landing'])
+k8s_resource('dashboard', labels='backend', resource_deps=['build-dashboard'])
 k8s_resource('rabbitmq', port_forwards=['15672:15672'], labels='queue')
 k8s_resource('postgresql', port_forwards='5432:5432', labels='postgres')

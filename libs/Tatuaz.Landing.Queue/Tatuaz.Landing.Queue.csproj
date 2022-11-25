@@ -12,9 +12,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Tatuaz.Gateway.Queue\Tatuaz.Gateway.Queue.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Shared.Domain.Dtos.Fakers\Tatuaz.Shared.Domain.Dtos.Fakers.csproj"/>
-        <ProjectReference Include="..\Tatuaz.Shared.Pipeline\Tatuaz.Shared.Pipeline.csproj"/>
+        <ProjectReference Include="..\Tatuaz.Gateway.Queue\Tatuaz.Gateway.Queue.csproj" />
+        <ProjectReference Include="..\Tatuaz.Shared.Domain.Dtos.Fakers\Tatuaz.Shared.Domain.Dtos.Fakers.csproj" />
+        <ProjectReference Include="..\Tatuaz.Shared.Pipeline\Tatuaz.Shared.Pipeline.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,11 +1,12 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "Tatuaz.Dashboard.Queue.Test",
   "projectType": "library",
-  "sourceRoot": "libs/Tatuaz.Shared.Domain.Dtos.Hist.Test",
+  "sourceRoot": "libs/Tatuaz.Dashboard.Queue.Test",
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["dist/libs/Tatuaz.Shared.Domain.Dtos.Hist.Test"],
+      "outputs": ["dist/libs/Tatuaz.Dashboard.Queue.Test"],
       "options": {
         "configuration": "Debug"
       },
@@ -22,7 +23,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "dotnet csharpier libs/Tatuaz.Shared.Domain.Dtos.Hist.Test --check"
+        "command": "dotnet csharpier libs/Tatuaz.Dashboard.Queue.Test --check"
       }
     }
   },

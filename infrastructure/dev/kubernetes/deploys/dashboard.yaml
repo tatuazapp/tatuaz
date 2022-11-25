@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dashboard
+  namespace: tatuaz-dev
+spec:
+  selector:
+    matchLabels:
+      app: dashboard
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dashboard
+    spec:
+      containers:
+        - name: dashboard
+          image: dashboard
+          command: ["npx", "nx", "run", "dashboard:serve"]
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: dashboard-config-map
+            - configMapRef:
+                name: rabbitmq-config-map

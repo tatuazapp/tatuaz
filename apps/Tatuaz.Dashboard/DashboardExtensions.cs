@@ -6,18 +6,18 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-using Tatuaz.History.DataAccess;
-using Tatuaz.History.DataAccess.Services;
-using Tatuaz.History.Queue.Consumers.Common;
+using Tatuaz.Dashboard.Queue.Consumers;
 using Tatuaz.Shared.Infrastructure;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using Tatuaz.Shared.Infrastructure.DataAccess;
 using Tatuaz.Shared.Pipeline;
+using Tatuaz.Shared.Pipeline.Queues;
 
-namespace Tatuaz.History;
+namespace Tatuaz.Dashboard;
 
-public static class HistoryExtensions
+public static class DashboardExtensions
 {
-    public static IConfiguration RegisterHistoryConfiguration(this IConfiguration configuration)
+    public static IConfiguration RegisterDashboardConfiguration(this IConfiguration configuration)
     {
         var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -31,29 +31,25 @@ public static class HistoryExtensions
         return builder.Build();
     }
 
-    public static IServiceCollection RegisterHistoryServices(
+    public static IServiceCollection RegisterDashboardServices(
         this IServiceCollection services,
         IConfiguration configuration
     )
     {
-        services.RegisterSharedPipelineServices(
-            configuration,
-            typeof(DumpHistoryConsumer).Assembly
-        );
-
-        services.AddScoped(typeof(IDumpHistoryService<,>), typeof(DumpHistoryService<,>));
-        services.AddScoped(typeof(IHistorySearcherService<,>), typeof(HistorySearcherService<,>));
-        services.AddSingleton<IUserContext, HistUserContext>();
-
-        services.RegisterSharedInfrastructureServices<HistDbContext>(
+        services.RegisterSharedInfrastructureServices<MainDbContext>(
             configuration.GetConnectionString(
-                SharedInfrastructureExtensions.HistDbConnectionStringName
+                SharedInfrastructureExtensions.MainDbConnectionStringName
             )
         );
+
+        services.AddSingleton<IUserContext, InternalUserContext>();
+
+        services.RegisterSharedPipelineServices(configuration, typeof(TmpConsumer).Assembly);
+
         return services;
     }
 
-    public static ConfigureHostBuilder RegisterHistoryHost(this ConfigureHostBuilder host)
+    public static ConfigureHostBuilder RegisterDashboardHost(this ConfigureHostBuilder host)
     {
         host.UseSerilog(
             (context, services, loggerConfiguration) =>
@@ -70,7 +66,7 @@ public static class HistoryExtensions
                 {
                     x.File(
                         outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                        path: "logs/history.log",
+                        path: "logs/dashboard.log",
                         rollingInterval: RollingInterval.Day,
                         levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug)
                     );
@@ -80,7 +76,7 @@ public static class HistoryExtensions
                 {
                     x.File(
                         outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                        path: "logs/history_error.log",
+                        path: "logs/dashboard_error.log",
                         rollingInterval: RollingInterval.Day,
                         restrictedToMinimumLevel: LogEventLevel.Error
                     );

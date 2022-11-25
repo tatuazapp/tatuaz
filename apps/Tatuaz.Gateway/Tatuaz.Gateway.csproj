@@ -11,6 +11,8 @@
         <OutputPath>../../dist/apps/Tatuaz.Gateway</OutputPath>
 
         <DocumentationFile>Tatuaz.Gateway.xml</DocumentationFile>
+        
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 
     </PropertyGroup>
 
@@ -23,7 +25,6 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0" />
-        <PackageReference Include="RestSharp" Version="108.0.3-alpha.0.5" />
         <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
         <PackageReference Include="Serilog.Enrichers.MassTransit" Version="1.1.0" />
         <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
