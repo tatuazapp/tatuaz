@@ -38,6 +38,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\Tatuaz.Shared.Helpers\Tatuaz.Shared.Helpers.csproj" />
     <ProjectReference Include="..\Tatuaz.Shared.Services\Tatuaz.Shared.Services.csproj" />
   </ItemGroup>
 </Project>
