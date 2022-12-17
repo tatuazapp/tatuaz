@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NodaTime;
-using Tatuaz.Shared.Infrastructure;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
 
@@ -37,6 +36,7 @@ public class Startup
         services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
         services.AddScoped(typeof(IGenericRepository<,,>), typeof(GenericRepository<,,>));
         services.AddScoped<IClock>(_ => SystemClock.Instance);
+        services.AddAutoMapper(typeof(Startup));
     }
 
     public void Configure(IServiceProvider applicationServices) { }

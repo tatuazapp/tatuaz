@@ -43,6 +43,7 @@ public class Startup
         });
         services.AddScoped<DbContext, BooksDbContext>();
         services.AddScoped<IClock>(_ => new FakeClock(Instant.FromUtc(2021, 1, 1, 0, 0)));
+        services.AddAutoMapper(typeof(Startup));
 
         services.RegisterQueuesMocks();
     }

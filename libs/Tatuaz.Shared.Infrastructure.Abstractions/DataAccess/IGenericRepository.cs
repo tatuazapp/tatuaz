@@ -25,6 +25,9 @@ public interface IGenericRepository<TEntity, THistEntity, in TId> : IDisposable
         CancellationToken cancellationToken = default
     );
 
+    Task<TDto?> GetByIdAsync<TDto>(TId id, CancellationToken cancellationToken = default)
+        where TDto : class;
+
     Task<TEntity?> GetByIdAsync(
         TId id,
         Instant asOf,
@@ -40,6 +43,11 @@ public interface IGenericRepository<TEntity, THistEntity, in TId> : IDisposable
         CancellationToken cancellationToken = default
     );
 
+    Task<IEnumerable<TDto>> GetBySpecificationAsync<TDto>(
+        ISpecification<TEntity> specification,
+        CancellationToken cancellationToken = default
+    ) where TDto : class;
+
     Task<IEnumerable<TEntity>> GetBySpecificationAsync(
         ISpecification<TEntity> specification,
         Instant asOf,
@@ -51,6 +59,12 @@ public interface IGenericRepository<TEntity, THistEntity, in TId> : IDisposable
         PagedParams pagedParams,
         CancellationToken cancellationToken = default
     );
+
+    Task<PagedData<TDto>> GetBySpecificationWithPagingAsync<TDto>(
+        ISpecification<TEntity> specification,
+        PagedParams pagedParams,
+        CancellationToken cancellationToken = default
+    ) where TDto : class;
 
     Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(
         ISpecification<TEntity> specification,

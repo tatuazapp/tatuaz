@@ -1,9 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Tatuaz.Gateway.Queue.Contracts;
 using Tatuaz.Gateway.Queue.Contracts.Landing.ListSummaryStats;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListSummaryStats;
 using Tatuaz.Shared.Pipeline.Factories.Results;

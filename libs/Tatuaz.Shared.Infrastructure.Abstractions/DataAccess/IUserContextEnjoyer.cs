@@ -1,4 +1,4 @@
-﻿namespace Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+namespace Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 
 /// <summary>
 /// Every class that uses IUserContext from DI resolution should implement this interface.
