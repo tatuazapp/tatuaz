@@ -4,12 +4,12 @@ namespace Tatuaz.Shared.Helpers;
 
 public static class StreamHelpers
 {
-    public static byte[] FullyReadStream(this Stream strean)
+    public static byte[] FullyReadStream(this Stream stream)
     {
         var buffer = new byte[16 * 1024];
         using MemoryStream ms = new MemoryStream();
         int read;
-        while ((read = strean.Read(buffer, 0, buffer.Length)) > 0)
+        while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
         {
             ms.Write(buffer, 0, read);
         }

@@ -5,7 +5,6 @@ using Microsoft.Extensions.Options;
 using Tatuaz.Shared.Helpers;
 using Tatuaz.Shared.Services.Common;
 using Tatuaz.Shared.Services.Options;
-using Xunit;
 
 namespace Tatuaz.Shared.Services.Test.Fixtures;
 
