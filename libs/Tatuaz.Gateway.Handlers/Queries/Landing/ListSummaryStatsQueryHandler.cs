@@ -60,7 +60,7 @@ public class ListSummaryStatsQueryHandler
                 new ListSummaryStatsOrder(
                     from,
                     _clock.GetCurrentInstant(),
-                    request.ListSummaryStatsDto.Count.Value
+                    request.ListSummaryStatsDto.Count!.Value
                 ),
                 cancellationToken
             )

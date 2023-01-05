@@ -7,17 +7,32 @@ using Tatuaz.Shared.Pipeline.Factories.Results;
 
 namespace Tatuaz.Gateway.Middleware;
 
+/// <summary>
+/// Main middleware for handling exceptions. This application does not use
+/// exception based error handling, so every exception will result in a 500
+/// and a generic error message.
+/// </summary>
 public class ExceptionMiddleware
 {
     private readonly ILogger<ExceptionMiddleware> _logger;
     private readonly RequestDelegate _next;
 
+    /// <summary>
+    /// Default controller
+    /// </summary>
+    /// <param name="next"></param>
+    /// <param name="logger"></param>
     public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
     {
         _logger = logger;
         _next = next;
     }
 
+    /// <summary>
+    /// Try to execute rest of the pipeline. If an exception is thrown, handle it.
+    /// Every exception at this point is a internal server error.
+    /// </summary>
+    /// <param name="httpContext"></param>
     public async Task InvokeAsync(HttpContext httpContext)
     {
         try

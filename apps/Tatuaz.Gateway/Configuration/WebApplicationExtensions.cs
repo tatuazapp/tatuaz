@@ -5,8 +5,16 @@ using Tatuaz.Gateway.Middleware;
 
 namespace Tatuaz.Gateway.Configuration;
 
+/// <summary>
+/// Extensions for gateway web application configuration
+/// </summary>
 public static class WebApplicationExtensions
 {
+    /// <summary>
+    /// Configures gateway request pipeline
+    /// </summary>
+    /// <param name="app"></param>
+    /// <returns></returns>
     public static WebApplication ConfigurePipeline(this WebApplication app)
     {
         app.UseMiddleware<ExceptionMiddleware>();

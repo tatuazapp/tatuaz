@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -48,7 +49,7 @@ public static class HistoryExtensions
         services.RegisterSharedInfrastructureServices<HistDbContext>(
             configuration.GetConnectionString(
                 SharedInfrastructureExtensions.HistDbConnectionStringName
-            )
+            ) ?? throw new Exception("Connection string not found")
         );
         return services;
     }
@@ -62,7 +63,8 @@ public static class HistoryExtensions
                     x =>
                         x.Console(
                             outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                            levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug)
+                            levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
+                            formatProvider: new CultureInfo("en-US")
                         )
                 );
 
@@ -72,7 +74,8 @@ public static class HistoryExtensions
                         outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
                         path: "logs/history.log",
                         rollingInterval: RollingInterval.Day,
-                        levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug)
+                        levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
+                        formatProvider: new CultureInfo("en-US")
                     );
                 });
 
@@ -82,7 +85,8 @@ public static class HistoryExtensions
                         outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
                         path: "logs/history_error.log",
                         rollingInterval: RollingInterval.Day,
-                        restrictedToMinimumLevel: LogEventLevel.Error
+                        restrictedToMinimumLevel: LogEventLevel.Error,
+                        formatProvider: new CultureInfo("en-US")
                     );
                 });
 

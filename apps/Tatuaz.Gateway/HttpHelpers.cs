@@ -3,6 +3,9 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway;
 
+/// <summary>
+/// Helper methods related to http requests
+/// </summary>
 public static class HttpHelpers
 {
     /// <summary>

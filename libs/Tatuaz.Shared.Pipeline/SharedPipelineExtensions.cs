@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Reflection;
 using MassTransit;
@@ -48,6 +49,7 @@ public static class SharedPipelineExtensions
 
     public static RabbitMqOpt GetRabbitMqOpt(this IConfiguration configuration)
     {
-        return configuration.GetSection(RabbitMqOpt.SectionName).Get<RabbitMqOpt>();
+        return configuration.GetSection(RabbitMqOpt.SectionName).Get<RabbitMqOpt>()
+            ?? throw new Exception("RabbitMq configuration is missing");
     }
 }

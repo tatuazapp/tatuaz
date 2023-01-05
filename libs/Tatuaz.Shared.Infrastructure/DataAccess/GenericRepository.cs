@@ -66,7 +66,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
             .ConfigureAwait(false);
     }
 
-    public async Task<TEntity?> GetByIdAsync(
+    public Task<TEntity?> GetByIdAsync(
         TId id,
         Instant asOf,
         CancellationToken cancellationToken = default
@@ -84,7 +84,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
             .ConfigureAwait(false);
     }
 
-    public async Task<bool> ExistsByIdAsync(
+    public Task<bool> ExistsByIdAsync(
         TId id,
         Instant asOf,
         CancellationToken cancellationToken = default
@@ -105,7 +105,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
             .ConfigureAwait(false);
     }
 
-    public async Task<IEnumerable<TEntity>> GetBySpecificationAsync(
+    public Task<IEnumerable<TEntity>> GetBySpecificationAsync(
         ISpecification<TEntity> specification,
         Instant asOf,
         CancellationToken cancellationToken = default
@@ -143,7 +143,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
         );
     }
 
-    public async Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(
+    public Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(
         ISpecification<TEntity> specification,
         PagedParams pagedParams,
         Instant asOf,
@@ -165,7 +165,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
             .ConfigureAwait(false);
     }
 
-    public async Task<bool> ExistsByPredicateAsync(
+    public Task<bool> ExistsByPredicateAsync(
         Expression<Func<TEntity, bool>> predicate,
         Instant asOf,
         CancellationToken cancellationToken = default
@@ -186,7 +186,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
             .ConfigureAwait(false);
     }
 
-    public async Task<long> CountByPredicateAsync(
+    public Task<long> CountByPredicateAsync(
         Expression<Func<TEntity, bool>> predicate,
         Instant asOf,
         CancellationToken cancellationToken = default

@@ -11,8 +11,12 @@ using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 
 namespace Tatuaz.Gateway.Controllers;
 
+/// <summary>
+/// Controller for user related operations
+/// </summary>
 public class UsersController : TatuazControllerBase
 {
+    /// <inheritdoc />
     public UsersController(IMediator mediator) : base(mediator) { }
 
     /// <summary>

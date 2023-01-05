@@ -283,7 +283,7 @@ public class GenericRepositoryTest
         ) : base(dbContext, authorRepository) { }
 
         [Fact]
-        public async Task Should_CreateEntity()
+        public void Should_CreateEntity()
         {
             var author = AuthorFaker.Generate();
 
