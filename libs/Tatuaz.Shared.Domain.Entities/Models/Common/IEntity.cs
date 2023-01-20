@@ -1,4 +1,4 @@
-﻿using Tatuaz.Shared.Domain.Entities.Models.Attributes;
+using Tatuaz.Shared.Domain.Entities.Models.Attributes;
 
 namespace Tatuaz.Shared.Domain.Entities.Models.Common;
 

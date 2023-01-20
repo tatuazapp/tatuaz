@@ -1,12 +1,10 @@
 using System;
 using System.Linq;
-using System.Reflection;
 using Bogus;
 using NodaTime;
 using NodaTime.Testing;
 using Tatuaz.Shared.Domain.Entities.Fakers.Models.Common;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
-using Tatuaz.Shared.Domain.Entities.Models.Attributes;
 using Tatuaz.Shared.Domain.Entities.Models.Common;
 using Xunit;
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Attributes;
 
