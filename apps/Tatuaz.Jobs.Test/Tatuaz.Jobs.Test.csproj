@@ -10,7 +10,9 @@
     
     <IsPackable>false</IsPackable>
     
-    <OutputPath>../../dist/libs/Tatuaz.Dashboard.Queue.Test</OutputPath>
+    <OutputPath>../../dist/apps/Tatuaz.Jobs.Test</OutputPath>
+    
+    <RootNamespace>Tatuaz.Jobs.Test</RootNamespace>
   </PropertyGroup>
   
   <ItemGroup>
@@ -27,7 +29,7 @@
       
     </PackageReference>
     
-    <PackageReference Include="coverlet.collector" Version="3.2.0">
+    <PackageReference Include="coverlet.collector" Version="3.1.2">
       
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       
@@ -38,7 +40,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Tatuaz.Dashboard.Queue\Tatuaz.Dashboard.Queue.csproj" />
+    <ProjectReference Include="..\Tatuaz.Jobs\Tatuaz.Jobs.csproj" />
   </ItemGroup>
-  
+
 </Project>

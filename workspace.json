@@ -51,6 +51,8 @@
     "ui": "libs/ui",
     "utils": "libs/utils",
     "web": "apps/web",
-    "web-e2e": "apps/web-e2e"
+    "web-e2e": "apps/web-e2e",
+    "Tatuaz.Jobs": "apps/Tatuaz.Jobs",
+    "Tatuaz.Jobs.Test": "apps/Tatuaz.Jobs.Test"
   }
 }
