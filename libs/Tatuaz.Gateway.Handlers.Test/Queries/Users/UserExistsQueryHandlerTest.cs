@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
@@ -33,7 +34,12 @@ public class UserExistsQueryHandlerTest
                         typeof(IGenericRepository<TatuazUser, HistTatuazUser, string>)
                     )
             )
-            .Returns(new GenericRepository<TatuazUser, HistTatuazUser, string>(_dbContext));
+            .Returns(
+                new GenericRepository<TatuazUser, HistTatuazUser, string>(
+                    _dbContext,
+                    new Mock<IMapper>().Object
+                )
+            );
         _serviceScopeFactoryMock.Setup(x => x.CreateScope()).Returns(serviceScopeMock.Object);
         _tatuazUserFaker = new TatuazUserFaker();
     }

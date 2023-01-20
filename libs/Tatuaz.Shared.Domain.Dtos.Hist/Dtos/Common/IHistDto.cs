@@ -1,4 +1,4 @@
-﻿using Tatuaz.Shared.Domain.Dtos.Hist.Dtos.Attributes;
+using Tatuaz.Shared.Domain.Dtos.Hist.Dtos.Attributes;
 
 namespace Tatuaz.Shared.Domain.Dtos.Hist.Dtos.Common;
 

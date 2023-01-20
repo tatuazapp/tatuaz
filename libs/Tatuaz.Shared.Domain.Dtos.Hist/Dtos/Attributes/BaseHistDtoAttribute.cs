@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Tatuaz.Shared.Domain.Dtos.Hist.Dtos.Attributes;
 

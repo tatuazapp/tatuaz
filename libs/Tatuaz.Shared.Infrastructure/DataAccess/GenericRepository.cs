@@ -4,6 +4,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
@@ -21,10 +23,12 @@ public class GenericRepository<TEntity, THistEntity, TId>
     where TId : notnull
 {
     private DbContext _dbContext;
+    private readonly IMapper _mapper;
 
-    public GenericRepository(DbContext dbContext)
+    public GenericRepository(DbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -66,7 +70,21 @@ public class GenericRepository<TEntity, THistEntity, TId>
             .ConfigureAwait(false);
     }
 
-    public Task<TEntity?> GetByIdAsync(
+    public async Task<TDto?> GetByIdAsync<TDto>(
+        TId id,
+        CancellationToken cancellationToken = default
+    ) where TDto : class
+    {
+        var result = await _dbContext
+            .Set<TEntity>()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken)
+            .ConfigureAwait(false);
+
+        return result is null ? null : _mapper.Map<TDto>(result);
+    }
+
+    public async Task<TEntity?> GetByIdAsync(
         TId id,
         Instant asOf,
         CancellationToken cancellationToken = default
@@ -105,7 +123,19 @@ public class GenericRepository<TEntity, THistEntity, TId>
             .ConfigureAwait(false);
     }
 
-    public Task<IEnumerable<TEntity>> GetBySpecificationAsync(
+    public async Task<IEnumerable<TDto>> GetBySpecificationAsync<TDto>(
+        ISpecification<TEntity> specification,
+        CancellationToken cancellationToken = default
+    ) where TDto : class
+    {
+        return await specification
+            .Apply(_dbContext.Set<TEntity>())
+            .ProjectTo<TDto>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    public async Task<IEnumerable<TEntity>> GetBySpecificationAsync(
         ISpecification<TEntity> specification,
         Instant asOf,
         CancellationToken cancellationToken = default
@@ -143,7 +173,36 @@ public class GenericRepository<TEntity, THistEntity, TId>
         );
     }
 
-    public Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(
+    public async Task<PagedData<TDto>> GetBySpecificationWithPagingAsync<TDto>(
+        ISpecification<TEntity> specification,
+        PagedParams pagedParams,
+        CancellationToken cancellationToken = default
+    ) where TDto : class
+    {
+        var baseQuery = specification.Apply(_dbContext.Set<TEntity>());
+        var toSkip = (pagedParams.PageNumber - 1) * pagedParams.PageSize;
+
+        var data = await baseQuery
+            .Skip(toSkip)
+            .Take(pagedParams.PageSize)
+            .ProjectTo<TDto>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken)
+            .ConfigureAwait(false);
+
+        var count = await baseQuery.CountAsync(cancellationToken).ConfigureAwait(false);
+
+        var totalPages = (int)Math.Ceiling(count / (float)pagedParams.PageSize);
+
+        return new PagedData<TDto>(
+            data,
+            pagedParams.PageSize,
+            pagedParams.PageSize,
+            totalPages,
+            count
+        );
+    }
+
+    public async Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(
         ISpecification<TEntity> specification,
         PagedParams pagedParams,
         Instant asOf,

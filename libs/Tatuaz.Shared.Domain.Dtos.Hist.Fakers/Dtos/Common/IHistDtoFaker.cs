@@ -1,4 +1,4 @@
-﻿using Tatuaz.Shared.Domain.Dtos.Hist.Fakers.Dtos.Attributes;
+using Tatuaz.Shared.Domain.Dtos.Hist.Fakers.Dtos.Attributes;
 
 namespace Tatuaz.Shared.Domain.Dtos.Hist.Fakers.Dtos.Common;
 

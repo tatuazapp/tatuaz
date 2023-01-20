@@ -6,6 +6,7 @@ using Moq;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 using Tatuaz.Shared.Infrastructure.Abstractions.Specification;
+using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Dtos;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Fakers;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.HistModels;
 using Tatuaz.Shared.Infrastructure.Test.Database.Simple.Models;
@@ -112,6 +113,22 @@ public class GenericRepositoryTest
             Assert.Equal(author.LastName, updatedAuthor.LastName);
             Assert.Equal(0, changes);
         }
+
+        [Fact]
+        public async Task Should_ReturnSavedEntityWithMapping()
+        {
+            var author = AuthorFaker.Generate();
+            await _dbContext.AddAsync(author).ConfigureAwait(false);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+
+            var result = await _authorRepository
+                .GetByIdAsync<AuthorDto>(author.Id)
+                .ConfigureAwait(false);
+
+            Assert.NotNull(result);
+            Assert.Equal(author.FirstName, result.FirstName);
+            Assert.Equal(author.LastName, result.LastName);
+        }
     }
 
     public class ExistsByIdAsyncTest : GenericRepositoryTest
@@ -173,6 +190,29 @@ public class GenericRepositoryTest
             Assert.Single(result);
             Assert.Equal(author1.FirstName, result.First().FirstName);
         }
+
+        [Fact]
+        public async Task Should_ReturnEntityWithMapping()
+        {
+            var author1 = AuthorFaker.Generate();
+            var author2 = AuthorFaker.Generate();
+            await _dbContext.AddRangeAsync(author1, author2).ConfigureAwait(false);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+            var specMock = new Mock<ISpecification<Author>>();
+            specMock
+                .Setup(x => x.Apply(It.IsAny<IQueryable<Author>>()))
+                .Returns<IQueryable<Author>>(q => q.Where(x => x.Id == author1.Id));
+
+            var result = (
+                await _authorRepository
+                    .GetBySpecificationAsync<AuthorDto>(specMock.Object)
+                    .ConfigureAwait(false)
+            ).ToList();
+
+            Assert.NotNull(result);
+            Assert.Single(result);
+            Assert.Equal(author1.FirstName, result.First().FirstName);
+        }
     }
 
     public class GetBySpecificationWithPagingAsyncTest : GenericRepositoryTest
@@ -196,6 +236,34 @@ public class GenericRepositoryTest
 
             var result = await _authorRepository
                 .GetBySpecificationWithPagingAsync(specMock.Object, new PagedParams(1, 1))
+                .ConfigureAwait(false);
+
+            Assert.NotNull(result);
+            Assert.Single(result.Data);
+            Assert.Equal(author1.FirstName, result.Data.First().FirstName);
+            Assert.Equal(1, result.PageNumber);
+            Assert.Equal(1, result.PageSize);
+            Assert.Equal(1, result.TotalPages);
+            Assert.Equal(1, result.TotalCount);
+        }
+
+        [Fact]
+        public async Task Should_ReturnEntityWithPagingAndMapping()
+        {
+            var author1 = AuthorFaker.Generate();
+            var author2 = AuthorFaker.Generate();
+            await _dbContext.AddRangeAsync(author1, author2).ConfigureAwait(false);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+            var specMock = new Mock<ISpecification<Author>>();
+            specMock
+                .Setup(x => x.Apply(It.IsAny<IQueryable<Author>>()))
+                .Returns<IQueryable<Author>>(q => q.Where(x => x.Id == author1.Id));
+
+            var result = await _authorRepository
+                .GetBySpecificationWithPagingAsync<AuthorDto>(
+                    specMock.Object,
+                    new PagedParams(1, 1)
+                )
                 .ConfigureAwait(false);
 
             Assert.NotNull(result);

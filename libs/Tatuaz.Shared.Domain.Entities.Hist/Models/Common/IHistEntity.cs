@@ -1,4 +1,4 @@
-﻿using Tatuaz.Shared.Domain.Entities.Hist.Models.Attributes;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Attributes;
 
 namespace Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
