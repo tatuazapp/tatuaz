@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -33,11 +34,22 @@ using Tatuaz.Shared.Pipeline.Configuration;
 
 namespace Tatuaz.Gateway;
 
+/// <summary>
+/// Extensions for configuring gateway services and host
+/// </summary>
 public static class GatewayExtensions
 {
+    /// <summary>
+    /// Cors policy name
+    /// </summary>
     public static string TatuazCorsName => "AllowAll";
 
-    public static ConfigureHostBuilder RegisterGatewatHost(this ConfigureHostBuilder host)
+    /// <summary>
+    /// Configure gateway host
+    /// </summary>
+    /// <param name="host"></param>
+    /// <returns></returns>
+    public static ConfigureHostBuilder RegisterGatewayHost(this ConfigureHostBuilder host)
     {
         host.UseSerilog(
             (context, services, loggerConfiguration) =>
@@ -46,7 +58,8 @@ public static class GatewayExtensions
                     x =>
                         x.Console(
                             outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                            levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug)
+                            levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
+                            formatProvider: new CultureInfo("en-US")
                         )
                 );
 
@@ -56,7 +69,8 @@ public static class GatewayExtensions
                         outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
                         path: "logs/gateway.log",
                         rollingInterval: RollingInterval.Day,
-                        levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug)
+                        levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
+                        formatProvider: new CultureInfo("en-US")
                     );
                 });
 
@@ -66,7 +80,8 @@ public static class GatewayExtensions
                         outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
                         path: "logs/gateway_error.log",
                         rollingInterval: RollingInterval.Day,
-                        restrictedToMinimumLevel: LogEventLevel.Error
+                        restrictedToMinimumLevel: LogEventLevel.Error,
+                        formatProvider: new CultureInfo("en-US")
                     );
                 });
 
@@ -78,6 +93,13 @@ public static class GatewayExtensions
         return host;
     }
 
+    /// <summary>
+    /// Configure gateway services
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static IServiceCollection RegisterGatewayServices(
         this IServiceCollection services,
         IConfiguration configuration
@@ -192,7 +214,7 @@ public static class GatewayExtensions
         services.RegisterSharedInfrastructureServices<GatewayDbContext>(
             configuration.GetConnectionString(
                 SharedInfrastructureExtensions.MainDbConnectionStringName
-            )
+            ) ?? throw new Exception("Connection string not found")
         );
 
         services.RegisterGatewayHandlersServices();
@@ -209,13 +231,27 @@ public static class GatewayExtensions
         return services;
     }
 
+    /// <summary>
+    /// Read auth0 options from configuration
+    /// </summary>
+    /// <param name="configuration"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static AuthOpt GetAuthOpt(this IConfiguration configuration)
     {
-        return configuration.GetSection(AuthOpt.SectionName).Get<AuthOpt>();
+        return configuration.GetSection(AuthOpt.SectionName).Get<AuthOpt>()
+            ?? throw new Exception("Auth options not found");
     }
 
+    /// <summary>
+    /// Read swagger options from configuration
+    /// </summary>
+    /// <param name="configuration"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static SwaggerOpt GetSwaggerOpt(this IConfiguration configuration)
     {
-        return configuration.GetSection(SwaggerOpt.SectionName).Get<SwaggerOpt>();
+        return configuration.GetSection(SwaggerOpt.SectionName).Get<SwaggerOpt>()
+            ?? throw new Exception("Swagger options not found");
     }
 }

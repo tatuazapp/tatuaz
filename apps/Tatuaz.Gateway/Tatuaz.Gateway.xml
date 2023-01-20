@@ -4,6 +4,53 @@
         <name>Tatuaz.Gateway</name>
     </assembly>
     <members>
+        <member name="T:Tatuaz.Gateway.Authorization.ActiveUserHandler">
+            <summary>
+            Authorization handler for checking if user exists in database meaning he got through onboarding
+            </summary>
+        </member>
+        <member name="M:Tatuaz.Gateway.Authorization.ActiveUserHandler.#ctor(MediatR.IMediator,Tatuaz.Shared.Infrastructure.Abstractions.DataAccess.IUserContext)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="mediator">From DI</param>
+            <param name="userContext">From DI</param>
+        </member>
+        <member name="M:Tatuaz.Gateway.Authorization.ActiveUserHandler.HandleRequirementAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext,Tatuaz.Gateway.Authorization.ActiveUserRequirement)">
+            <summary>
+            Check if user exists in database
+            </summary>
+            <param name="context"></param>
+            <param name="requirement"></param>
+        </member>
+        <member name="M:Tatuaz.Gateway.Authorization.ActiveUserHandler.SetUserContext(Tatuaz.Shared.Infrastructure.Abstractions.DataAccess.IUserContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tatuaz.Gateway.Authorization.ActiveUserRequirement">
+            <summary>
+            Represents a requirement that user went through onboarding.
+            </summary>
+        </member>
+        <member name="F:Tatuaz.Gateway.Authorization.ActiveUserRequirement.Name">
+            <summary>
+            Name of the requirement.
+            </summary>
+        </member>
+        <member name="T:Tatuaz.Gateway.Authorization.AuthorizeActiveUserAttribute">
+            <summary>
+            Attribute to mark a controller as requiring user that went through onboarding.
+            </summary>
+        </member>
+        <member name="M:Tatuaz.Gateway.Authorization.AuthorizeActiveUserAttribute.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="T:Tatuaz.Gateway.Configuration.AuthOpt">
+            <summary>
+            Represents auth0 configuration.
+            </summary>
+        </member>
         <member name="F:Tatuaz.Gateway.Configuration.AuthOpt.SectionName">
             <summary>
                 Name of section this corresponds to in appsettings.json
@@ -24,6 +71,11 @@
                 Auth0 domain
             </summary>
         </member>
+        <member name="T:Tatuaz.Gateway.Configuration.SwaggerOpt">
+            <summary>
+            Represents gateway swagger configuration.
+            </summary>
+        </member>
         <member name="F:Tatuaz.Gateway.Configuration.SwaggerOpt.SectionName">
             <summary>
                 Name of section this corresponds to in appsettings.json
@@ -33,6 +85,92 @@
             <summary>
                 Is swagger enabled
             </summary>
+        </member>
+        <member name="P:Tatuaz.Gateway.Configuration.SwaggerOpt.Route">
+            <summary>
+            Route prefix for swagger
+            </summary>
+        </member>
+        <member name="P:Tatuaz.Gateway.Configuration.SwaggerOpt.Name">
+            <summary>
+             Name of the API
+            </summary>
+        </member>
+        <member name="P:Tatuaz.Gateway.Configuration.SwaggerOpt.Title">
+            <summary>
+            Swagger title
+            </summary>
+        </member>
+        <member name="P:Tatuaz.Gateway.Configuration.SwaggerOpt.Theme">
+            <summary>
+            Optional theme added via custom css
+            </summary>
+        </member>
+        <member name="T:Tatuaz.Gateway.Configuration.WebApplicationExtensions">
+            <summary>
+            Extensions for gateway web application configuration
+            </summary>
+        </member>
+        <member name="M:Tatuaz.Gateway.Configuration.WebApplicationExtensions.ConfigurePipeline(Microsoft.AspNetCore.Builder.WebApplication)">
+            <summary>
+            Configures gateway request pipeline
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tatuaz.Gateway.Controllers.LandingController">
+            <summary>
+            Controlling receiving requests for landing page
+            </summary>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.LandingController.#ctor(MediatR.IMediator)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.LandingController.ListSummaryStats(Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListSummaryStats.ListSummaryStatsDto)">
+            <summary>
+            Get summary stats for landing page
+            </summary>
+            <param name="listSummaryStatsDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.LandingController.ListArtistStats(Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListArtistStats.ListArtistStatsDto)">
+            <summary>
+            Get artist stats for landing page
+            </summary>
+            <param name="listArtistStatsDto"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tatuaz.Gateway.Controllers.TatuazControllerBase">
+            <summary>
+            Base controller for all controllers
+            </summary>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.TatuazControllerBase.#ctor(MediatR.IMediator)">
+            <summary>
+            Constructor receiving the mediator from DI
+            </summary>
+            <param name="mediator"></param>
+        </member>
+        <member name="P:Tatuaz.Gateway.Controllers.TatuazControllerBase.Mediator">
+            <summary>
+            Used to communicate with handlers
+            </summary>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.TatuazControllerBase.ResultToActionResult``1(Tatuaz.Shared.Pipeline.Messages.TatuazResult{``0})">
+            <summary>
+            Wrapper for mapping TatuazResult to IActionResult
+            </summary>
+            <param name="result"></param>
+            <typeparam name="TData"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:Tatuaz.Gateway.Controllers.UsersController">
+            <summary>
+            Controller for user related operations
+            </summary>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.UsersController.#ctor(MediatR.IMediator)">
+            <inheritdoc />
         </member>
         <member name="M:Tatuaz.Gateway.Controllers.UsersController.WhoAmI">
             <summary>
@@ -45,6 +183,53 @@
                 Register user
             </summary>
             <returns>UserDto</returns>
+        </member>
+        <member name="T:Tatuaz.Gateway.GatewayExtensions">
+            <summary>
+            Extensions for configuring gateway services and host
+            </summary>
+        </member>
+        <member name="P:Tatuaz.Gateway.GatewayExtensions.TatuazCorsName">
+            <summary>
+            Cors policy name
+            </summary>
+        </member>
+        <member name="M:Tatuaz.Gateway.GatewayExtensions.RegisterGatewayHost(Microsoft.AspNetCore.Builder.ConfigureHostBuilder)">
+            <summary>
+            Configure gateway host
+            </summary>
+            <param name="host"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.GatewayExtensions.RegisterGatewayServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Configure gateway services
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:Tatuaz.Gateway.GatewayExtensions.GetAuthOpt(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Read auth0 options from configuration
+            </summary>
+            <param name="configuration"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:Tatuaz.Gateway.GatewayExtensions.GetSwaggerOpt(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Read swagger options from configuration
+            </summary>
+            <param name="configuration"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="T:Tatuaz.Gateway.HttpHelpers">
+            <summary>
+            Helper methods related to http requests
+            </summary>
         </member>
         <member name="M:Tatuaz.Gateway.HttpHelpers.ToOkObject``1(Tatuaz.Shared.Pipeline.Messages.TatuazResult{``0})">
             <summary>
@@ -60,6 +245,11 @@
             </summary>
             <param name="errors"></param>
             <returns></returns>
+        </member>
+        <member name="T:Tatuaz.Gateway.HttpResponses.EmptyResponse">
+            <summary>
+            Response for marking codes that do not return any data.
+            </summary>
         </member>
         <member name="T:Tatuaz.Gateway.HttpResponses.ErrorResponse">
             <summary>
@@ -102,6 +292,47 @@
         </member>
         <member name="P:Tatuaz.Gateway.HttpResponses.OkResponse`1.Success">
             <summary>Indicates if request was successful. Should be always true for this type of response.</summary>
+        </member>
+        <member name="T:Tatuaz.Gateway.Middleware.ExceptionMiddleware">
+            <summary>
+            Main middleware for handling exceptions. This application does not use
+            exception based error handling, so every exception will result in a 500
+            and a generic error message.
+            </summary>
+        </member>
+        <member name="M:Tatuaz.Gateway.Middleware.ExceptionMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{Tatuaz.Gateway.Middleware.ExceptionMiddleware})">
+            <summary>
+            Default controller
+            </summary>
+            <param name="next"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:Tatuaz.Gateway.Middleware.ExceptionMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Try to execute rest of the pipeline. If an exception is thrown, handle it.
+            Every exception at this point is a internal server error.
+            </summary>
+            <param name="httpContext"></param>
+        </member>
+        <member name="T:Tatuaz.Gateway.Swagger.FluentValidationSchemaFilter">
+            <summary>
+            Schema filter used to correctly display validation checks in swagger
+            </summary>
+        </member>
+        <member name="M:Tatuaz.Gateway.Swagger.FluentValidationSchemaFilter.#ctor(System.IServiceProvider)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="serviceProvider"></param>
+        </member>
+        <member name="M:Tatuaz.Gateway.Swagger.FluentValidationSchemaFilter.Apply(Microsoft.OpenApi.Models.OpenApiSchema,Swashbuckle.AspNetCore.SwaggerGen.SchemaFilterContext)">
+            <summary>
+            Apply the filter to the schema - mark required fields and add validation rules.
+            Only not null validator results in required flag.
+            </summary>
+            <param name="schema"></param>
+            <param name="context"></param>
+            <exception cref="T:System.InvalidOperationException"></exception>
         </member>
     </members>
 </doc>

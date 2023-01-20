@@ -44,7 +44,7 @@ public class CreateUserDtoValidatorTest
         public async Task Should_ReturnInvalidWhenUserEmailAlreadyExists()
         {
             var createUserDto = _createUserDtoFaker.Generate();
-            _dbContextMock.TatuazUsers.Add(new TatuazUser { Email = createUserDto.Email });
+            _dbContextMock.TatuazUsers.Add(new TatuazUser { Email = createUserDto.Email! });
             var validator = new CreateUserDtoValidator(_userRepository);
 
             var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
@@ -56,7 +56,7 @@ public class CreateUserDtoValidatorTest
         public async Task Should_ReturnInvalidWhenUserUsernameAlreadyExists()
         {
             var createUserDto = _createUserDtoFaker.Generate();
-            _dbContextMock.TatuazUsers.Add(new TatuazUser { Username = createUserDto.Username });
+            _dbContextMock.TatuazUsers.Add(new TatuazUser { Username = createUserDto.Username! });
             var validator = new CreateUserDtoValidator(_userRepository);
 
             var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);

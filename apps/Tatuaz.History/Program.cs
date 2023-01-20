@@ -14,3 +14,5 @@ var app = builder.Build();
 app.MapGet("/", () => "I'm alive");
 
 app.Run();
+
+internal sealed partial class Program { }

@@ -10,10 +10,19 @@ using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListSummaryStats;
 
 namespace Tatuaz.Gateway.Controllers;
 
+/// <summary>
+/// Controlling receiving requests for landing page
+/// </summary>
 public class LandingController : TatuazControllerBase
 {
+    /// <inheritdoc />
     public LandingController(IMediator mediator) : base(mediator) { }
 
+    /// <summary>
+    /// Get summary stats for landing page
+    /// </summary>
+    /// <param name="listSummaryStatsDto"></param>
+    /// <returns></returns>
     [HttpPost("[action]")]
     [Produces("application/json")]
     [Consumes("application/json")]
@@ -31,6 +40,11 @@ public class LandingController : TatuazControllerBase
         );
     }
 
+    /// <summary>
+    /// Get artist stats for landing page
+    /// </summary>
+    /// <param name="listArtistStatsDto"></param>
+    /// <returns></returns>
     [HttpPost("[action]")]
     [Produces("application/json")]
     [Consumes("application/json")]

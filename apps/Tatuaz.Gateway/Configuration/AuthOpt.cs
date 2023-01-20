@@ -1,5 +1,8 @@
 namespace Tatuaz.Gateway.Configuration;
 
+/// <summary>
+/// Represents auth0 configuration.
+/// </summary>
 public class AuthOpt
 {
     /// <summary>

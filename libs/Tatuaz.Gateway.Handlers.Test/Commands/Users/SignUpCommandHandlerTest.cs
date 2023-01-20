@@ -56,7 +56,7 @@ public class SignUpCommandHandlerTest
             var userDto = result.Value;
             Assert.True(result.Successful);
             Assert.NotNull(userDto);
-            Assert.Equal(userDto.Email, createUserDto.Email.ToLower());
+            Assert.Equal(userDto.Email, createUserDto.Email!.ToLower());
             Assert.Equal(userDto.Username, createUserDto.Username);
         }
 

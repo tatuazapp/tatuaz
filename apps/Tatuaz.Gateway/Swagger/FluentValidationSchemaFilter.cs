@@ -10,15 +10,29 @@ using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 
 namespace Tatuaz.Gateway.Swagger;
 
+/// <summary>
+/// Schema filter used to correctly display validation checks in swagger
+/// </summary>
 public class FluentValidationSchemaFilter : ISchemaFilter
 {
     private readonly IServiceProvider _serviceProvider;
 
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    /// <param name="serviceProvider"></param>
     public FluentValidationSchemaFilter(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
     }
 
+    /// <summary>
+    /// Apply the filter to the schema - mark required fields and add validation rules.
+    /// Only not null validator results in required flag.
+    /// </summary>
+    /// <param name="schema"></param>
+    /// <param name="context"></param>
+    /// <exception cref="InvalidOperationException"></exception>
     public void Apply(OpenApiSchema schema, SchemaFilterContext context)
     {
         var abstractValidatorType = typeof(AbstractValidator<>).MakeGenericType(context.Type);

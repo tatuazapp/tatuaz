@@ -16,7 +16,7 @@ public class ListSummaryStatsConsumer
 {
     public ListSummaryStatsConsumer(ILogger<ListSummaryStatsConsumer> logger) : base(logger) { }
 
-    protected override async Task<TatuazResult<IEnumerable<SummaryStatDto>>> ConsumeMessage(
+    protected override Task<TatuazResult<IEnumerable<SummaryStatDto>>> ConsumeMessage(
         ListSummaryStatsOrder message
     )
     {
@@ -27,15 +27,15 @@ public class ListSummaryStatsConsumer
                 "190 cm",
                 "https://dziendobry.tvn.pl/cdn-zdjecie-tqwcdx-fot-dieter-meryl-getty-images-5227704/alternates/FOUR_THREE_1280"
             ),
-            new("Ryby stracone przez wędkarzy", "1 000 000", null),
+            new("Ryby stracone przez wędkarzy", "1 000 000", string.Empty),
             new(
                 "Największy wędkarz na świecie",
                 "1,90 m",
                 "https://wedkarskiswiat.pl/wp-content/uploads/2019/09/najwiekszy-karp-swiata-730x530.jpg"
             ),
-            new("Kłótnie na łowisku", "69000", null),
-            new("Najlepsze przynęty", "robaki, krewetki", null),
-            new("Wędkarze zjedzeni przez sumy", "12", null),
+            new("Kłótnie na łowisku", "69000", string.Empty),
+            new("Najlepsze przynęty", "robaki, krewetki", string.Empty),
+            new("Wędkarze zjedzeni przez sumy", "12", string.Empty),
             new(
                 "Minuty walki z rybami",
                 "1 000 000",
@@ -58,6 +58,8 @@ public class ListSummaryStatsConsumer
             )
         };
 
-        return CommonResultFactory.Ok(stats.OrderBy(_ => Guid.NewGuid()).Take(message.Amount));
+        return Task.FromResult(
+            CommonResultFactory.Ok(stats.OrderBy(_ => Guid.NewGuid()).Take(message.Amount))
+        );
     }
 }

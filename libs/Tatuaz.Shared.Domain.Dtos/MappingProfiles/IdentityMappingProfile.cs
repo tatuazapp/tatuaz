@@ -10,7 +10,7 @@ public class IdentityMappingProfile : Profile
     {
         CreateMap<TatuazUser, UserDto>();
         CreateMap<CreateUserDto, TatuazUser>()
-            .ForMember(x => x.Email, opt => opt.MapFrom(q => q.Email.ToLower()));
+            .ForMember(x => x.Email, opt => opt.MapFrom(q => q.Email!.ToLower()));
         CreateMap<TatuazUser, CreateUserDto>();
     }
 }

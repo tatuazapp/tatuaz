@@ -45,7 +45,7 @@ public class ListArtistStatsQueryHandler
 
         var result = await _listArtistStatsProducer
             .Send(
-                new ListArtistStatsOrder(request.ListArtistStatDto.Count.Value),
+                new ListArtistStatsOrder(request.ListArtistStatDto.Count!.Value),
                 cancellationToken
             )
             .ConfigureAwait(false);

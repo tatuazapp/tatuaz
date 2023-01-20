@@ -102,7 +102,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
             .ConfigureAwait(false);
     }
 
-    public async Task<bool> ExistsByIdAsync(
+    public Task<bool> ExistsByIdAsync(
         TId id,
         Instant asOf,
         CancellationToken cancellationToken = default
@@ -224,7 +224,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
             .ConfigureAwait(false);
     }
 
-    public async Task<bool> ExistsByPredicateAsync(
+    public Task<bool> ExistsByPredicateAsync(
         Expression<Func<TEntity, bool>> predicate,
         Instant asOf,
         CancellationToken cancellationToken = default
@@ -245,7 +245,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
             .ConfigureAwait(false);
     }
 
-    public async Task<long> CountByPredicateAsync(
+    public Task<long> CountByPredicateAsync(
         Expression<Func<TEntity, bool>> predicate,
         Instant asOf,
         CancellationToken cancellationToken = default

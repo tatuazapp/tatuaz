@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.RegisterGatewayServices(builder.Configuration);
 
-builder.Host.RegisterGatewatHost();
+builder.Host.RegisterGatewayHost();
 
 var swaggerOpt = builder.Configuration.GetSwaggerOpt();
 
@@ -45,3 +45,5 @@ app.MapControllers();
 app.MapGet("/", () => "I'm alive");
 
 app.Run();
+
+internal sealed partial class Program { }
