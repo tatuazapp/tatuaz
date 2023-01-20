@@ -44,6 +44,8 @@
     "shared-infrastructure-test": "libs/Tatuaz.Shared.Infrastructure.Test",
     "shared-pipeline": "libs/Tatuaz.Shared.Pipeline",
     "shared-pipeline-test": "libs/Tatuaz.Shared.Pipeline.Test",
+    "shared-services": "libs/Tatuaz.Shared.Services",
+    "shared-services-test": "libs/Tatuaz.Shared.Services.Test",
     "testing-helpers": "libs/Tatuaz.Testing.Helpers",
     "testing-mocks": "libs/Tatuaz.Testing.Mocks",
     "ui": "libs/ui",
