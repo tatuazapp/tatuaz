@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -39,7 +40,7 @@ public static class JobsExtensions
         services.RegisterSharedInfrastructureServices<MainDbContext>(
             configuration.GetConnectionString(
                 SharedInfrastructureExtensions.MainDbConnectionStringName
-            )
+            ) ?? throw new Exception("Connection string not found")
         );
 
         services.AddSingleton<IUserContext, InternalUserContext>();
@@ -58,7 +59,8 @@ public static class JobsExtensions
                     x =>
                         x.Console(
                             outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                            levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug)
+                            levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
+                            formatProvider: new CultureInfo("en-US")
                         )
                 );
 
@@ -68,7 +70,8 @@ public static class JobsExtensions
                         outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
                         path: "logs/Jobs.log",
                         rollingInterval: RollingInterval.Day,
-                        levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug)
+                        levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
+                        formatProvider: new CultureInfo("en-US")
                     );
                 });
 
@@ -78,7 +81,8 @@ public static class JobsExtensions
                         outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
                         path: "logs/Jobs_error.log",
                         rollingInterval: RollingInterval.Day,
-                        restrictedToMinimumLevel: LogEventLevel.Error
+                        restrictedToMinimumLevel: LogEventLevel.Error,
+                        formatProvider: new CultureInfo("en-US")
                     );
                 });
 
