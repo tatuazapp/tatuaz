@@ -17,8 +17,6 @@ spec:
         - name: history
           image: history
           command: ["npx", "nx", "run", "history:serve"]
-          ports:
-            - containerPort: 80
           envFrom:
             - configMapRef:
                 name: history-config-map

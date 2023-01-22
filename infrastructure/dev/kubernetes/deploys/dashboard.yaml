@@ -17,8 +17,6 @@ spec:
         - name: dashboard
           image: dashboard
           command: ["npx", "nx", "run", "dashboard:serve"]
-          ports:
-            - containerPort: 80
           envFrom:
             - configMapRef:
                 name: dashboard-config-map

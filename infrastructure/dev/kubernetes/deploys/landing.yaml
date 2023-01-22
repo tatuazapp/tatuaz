@@ -17,8 +17,6 @@ spec:
         - name: landing
           image: landing
           command: ["npx", "nx", "run", "landing:serve"]
-          ports:
-            - containerPort: 80
           envFrom:
             - configMapRef:
                 name: landing-config-map
