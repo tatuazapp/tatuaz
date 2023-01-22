@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scheduler
+  namespace: tatuaz-dev
+spec:
+  selector:
+    matchLabels:
+      app: scheduler
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: scheduler
+    spec:
+      containers:
+        - name: scheduler
+          image: scheduler
+          command: ["npx", "nx", "run", "scheduler:serve"]
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: scheduler-config-map
+            - configMapRef:
+                name: rabbitmq-config-map

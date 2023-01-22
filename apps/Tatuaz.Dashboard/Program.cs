@@ -15,4 +15,7 @@ app.MapGet("/", () => "I'm alive");
 
 app.Run();
 
-internal sealed partial class Program { }
+namespace Tatuaz.Dashboard
+{
+    internal sealed partial class Program { }
+}

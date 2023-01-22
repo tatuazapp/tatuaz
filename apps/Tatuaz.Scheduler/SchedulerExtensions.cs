@@ -2,8 +2,10 @@
 using System.Globalization;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -13,12 +15,13 @@ using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
 using Tatuaz.Shared.Pipeline;
 using Tatuaz.Shared.Pipeline.Queues;
+using Tatuaz.TatuazSchedulerJobs;
 
-namespace Tatuaz.Jobs;
+namespace Tatuaz.Scheduler;
 
-public static class JobsExtensions
+public static class SchedulerExtensions
 {
-    public static IConfiguration RegisterJobsConfiguration(this IConfiguration configuration)
+    public static IConfiguration RegisterSchedulerConfiguration(this IConfiguration configuration)
     {
         var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -32,7 +35,7 @@ public static class JobsExtensions
         return builder.Build();
     }
 
-    public static IServiceCollection RegisterJobsServices(
+    public static IServiceCollection RegisterSchedulerServices(
         this IServiceCollection services,
         IConfiguration configuration
     )
@@ -47,10 +50,33 @@ public static class JobsExtensions
 
         services.RegisterSharedPipelineServices(configuration, typeof(TmpConsumer).Assembly);
 
+        services.AddQuartz(opt =>
+        {
+            opt.UseMicrosoftDependencyInjectionJobFactory();
+
+            opt.AddJob<TestJob>(jobOpt => jobOpt.WithIdentity(TestJob.Key));
+
+            opt.AddTrigger(
+                triggerOpt =>
+                    triggerOpt
+                        .ForJob(TestJob.Key)
+                        .WithSimpleSchedule(
+                            scheduleOpt => scheduleOpt.WithIntervalInSeconds(5).RepeatForever()
+                        )
+            );
+
+            opt.UseInMemoryStore();
+        });
+
+        services.AddQuartzHostedService(opt =>
+        {
+            opt.AwaitApplicationStarted = true;
+        });
+
         return services;
     }
 
-    public static ConfigureHostBuilder RegisterJobsHost(this ConfigureHostBuilder host)
+    public static ConfigureHostBuilder RegisterSchedulerHost(this ConfigureHostBuilder host)
     {
         host.UseSerilog(
             (context, services, loggerConfiguration) =>
@@ -68,7 +94,7 @@ public static class JobsExtensions
                 {
                     x.File(
                         outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                        path: "logs/Jobs.log",
+                        path: "logs/Scheduler.log",
                         rollingInterval: RollingInterval.Day,
                         levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
                         formatProvider: new CultureInfo("en-US")
@@ -79,7 +105,7 @@ public static class JobsExtensions
                 {
                     x.File(
                         outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                        path: "logs/Jobs_error.log",
+                        path: "logs/Scheduler_error.log",
                         rollingInterval: RollingInterval.Day,
                         restrictedToMinimumLevel: LogEventLevel.Error,
                         formatProvider: new CultureInfo("en-US")

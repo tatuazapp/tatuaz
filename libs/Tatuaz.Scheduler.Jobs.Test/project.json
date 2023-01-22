@@ -1,11 +1,11 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "application",
-  "sourceRoot": "apps/Tatuaz.Jobs.Test",
+  "projectType": "library",
+  "sourceRoot": "libs/Tatuaz.Scheduler.Jobs.Test",
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["{workspaceRoot}/dist/apps/Tatuaz.Jobs.Test"],
+      "outputs": ["dist/libs/Tatuaz.Scheduler.Jobs.Test"],
       "options": {
         "configuration": "Debug"
       },
@@ -22,7 +22,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "dotnet csharpier apps/Tatuaz.Jobs.Test --check"
+        "command": "dotnet csharpier libs/Tatuaz.Scheduler.Jobs.Test --check"
       }
     }
   },
