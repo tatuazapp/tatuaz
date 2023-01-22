@@ -10,12 +10,14 @@
     
     <IsPackable>false</IsPackable>
     
-    <OutputPath>../../dist/libs/Tatuaz.Dashboard.Queue.Test</OutputPath>
+    <OutputPath>../../dist/libs/Tatuaz.Scheduler.Jobs.Test</OutputPath>
+    
+    <RootNamespace>Tatuaz.TatuazSchedulerJobs.Test</RootNamespace>
   </PropertyGroup>
   
   <ItemGroup>
     
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
     
     <PackageReference Include="xunit" Version="2.4.2" />
     
@@ -27,7 +29,7 @@
       
     </PackageReference>
     
-    <PackageReference Include="coverlet.collector" Version="3.2.0">
+    <PackageReference Include="coverlet.collector" Version="3.1.2">
       
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       
@@ -38,7 +40,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Tatuaz.Dashboard.Queue\Tatuaz.Dashboard.Queue.csproj" />
+    <ProjectReference Include="..\Tatuaz.Scheduler.Jobs\Tatuaz.Scheduler.Jobs.csproj" />
   </ItemGroup>
   
 </Project>
