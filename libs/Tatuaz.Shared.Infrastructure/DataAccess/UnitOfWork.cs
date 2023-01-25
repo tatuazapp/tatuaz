@@ -13,16 +13,17 @@ using Tatuaz.History.Queue.Util;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Tatuaz.Shared.Domain.Entities.Models.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using Tatuaz.Shared.Pipeline.Exceptions;
 using static System.GC;
 
 namespace Tatuaz.Shared.Infrastructure.DataAccess;
 
-public class UnitOfWork : IUnitOfWork, IUserContextEnjoyer
+public class UnitOfWork : IUnitOfWork
 {
     private readonly IClock _clock;
     private readonly List<HistEntity> _histEntitiesToDump;
     private readonly ISendEndpointProvider _sendEndpointProvider;
-    private IUserContext _userContext;
+    private readonly IUserContext _userContext;
     private IDbContextTransaction? _currentTransaction;
     private DbContext _dbContext;
 
@@ -120,7 +121,7 @@ public class UnitOfWork : IUnitOfWork, IUserContextEnjoyer
         if (dumpHistoryOrders.Any())
         {
             var endpoint = await _sendEndpointProvider
-                .GetSendEndpoint(HistoryQueueConstants.DumpQueueUri)
+                .GetSendEndpoint(HistoryQueueConstants.DumpHistoryQueueUri)
                 .ConfigureAwait(false);
 
             await Task.WhenAll(dumpHistoryOrders.Select(x => endpoint.Send(x, cancellationToken)))
@@ -136,7 +137,7 @@ public class UnitOfWork : IUnitOfWork, IUserContextEnjoyer
             .Entries<IHistDumpableEntity>()
             .Where(x => x.State is EntityState.Added or EntityState.Modified or EntityState.Deleted)
             .Select(x => x.Entity.ToHistEntity(_clock, HistStateFromEntityState(x.State)))
-            .ToImmutableArray();
+            .ToArray();
     }
 
     private static HistState HistStateFromEntityState(EntityState entityState)
@@ -158,11 +159,7 @@ public class UnitOfWork : IUnitOfWork, IUserContextEnjoyer
     private void UpdateUserContext()
     {
         var auditableEntries = _dbContext.ChangeTracker.Entries<IAuditableEntity>().ToList();
-        var userId = _userContext.CurrentUserId;
-        if (userId == null)
-        {
-            throw new ArgumentNullException(nameof(userId), "User id can't be null");
-        }
+        var userId = _userContext.CurrentUserEmail ?? throw new UserContextMissingException();
 
         foreach (var entry in auditableEntries.Where(x => x.State == EntityState.Added))
         {
@@ -173,10 +170,5 @@ public class UnitOfWork : IUnitOfWork, IUserContextEnjoyer
         {
             entry.Entity.UpdateModificationData(userId, _clock);
         }
-    }
-
-    public void SetUserContext(IUserContext userContext)
-    {
-        _userContext = userContext;
     }
 }

@@ -4,5 +4,5 @@ namespace Tatuaz.History.DataAccess;
 
 public class HistUserContext : IUserContext
 {
-    public string? CurrentUserId => "Hist-microservice";
+    public string? CurrentUserEmail { get; set; } = "HistMicroservice@tatuaz.app";
 }

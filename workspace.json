@@ -4,6 +4,8 @@
   "projects": {
     "convention-test": "libs/Tatuaz.Convention.Test",
     "dashboard": "apps/Tatuaz.Dashboard",
+    "dashboard-emails": "libs/Tatuaz.Dashboard.Emails",
+    "dashboard-emails-test": "libs/Tatuaz.Dashboard.Emails.Test",
     "dashboard-queue": "libs/Tatuaz.Dashboard.Queue",
     "dashboard-queue-test": "libs/Tatuaz.Dashboard.Queue.Test",
     "dashboard-test": "apps/Tatuaz.Dashboard.Test",

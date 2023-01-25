@@ -41,19 +41,7 @@ public class CreateUserDtoValidatorTest
         }
 
         [Fact]
-        public async Task Should_ReturnInvalidWhenUserEmailAlreadyExists()
-        {
-            var createUserDto = _createUserDtoFaker.Generate();
-            _dbContextMock.TatuazUsers.Add(new TatuazUser { Email = createUserDto.Email! });
-            var validator = new CreateUserDtoValidator(_userRepository);
-
-            var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
-            Assert.False(result.IsValid);
-            Assert.Equal("EmailAlreadyExists", result.Errors.First().ErrorCode);
-        }
-
-        [Fact]
-        public async Task Should_ReturnInvalidWhenUserUsernameAlreadyExists()
+        public async Task Should_ReturnInvalidWhenUserUsernameAlreadyInUse()
         {
             var createUserDto = _createUserDtoFaker.Generate();
             _dbContextMock.TatuazUsers.Add(new TatuazUser { Username = createUserDto.Username! });
@@ -61,43 +49,7 @@ public class CreateUserDtoValidatorTest
 
             var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
             Assert.False(result.IsValid);
-            Assert.Equal("UsernameAlreadyExists", result.Errors.First().ErrorCode);
-        }
-
-        [Fact]
-        public async Task Should_ReturnInvalidWhenEmailIsEmpty()
-        {
-            var createUserDto = _createUserDtoFaker.Generate();
-            createUserDto = createUserDto with { Email = string.Empty };
-            var validator = new CreateUserDtoValidator(_userRepository);
-
-            var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
-            Assert.False(result.IsValid);
-            Assert.Equal("EmailEmpty", result.Errors.First().ErrorCode);
-        }
-
-        [Fact]
-        public async Task Should_ReturnInvalidWhenEmailIsInvalid()
-        {
-            var createUserDto = _createUserDtoFaker.Generate();
-            createUserDto = createUserDto with { Email = "invalidEmail" };
-            var validator = new CreateUserDtoValidator(_userRepository);
-
-            var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
-            Assert.False(result.IsValid);
-            Assert.Equal("EmailInvalid", result.Errors.First().ErrorCode);
-        }
-
-        [Fact]
-        public async Task Should_ReturnInvalidWhenEmailTooLong()
-        {
-            var createUserDto = _createUserDtoFaker.Generate();
-            createUserDto = createUserDto with { Email = new string('a', 247) + "@gmail.com" };
-            var validator = new CreateUserDtoValidator(_userRepository);
-
-            var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
-            Assert.False(result.IsValid);
-            Assert.Equal("EmailTooLong", result.Errors.First().ErrorCode);
+            Assert.Equal("UsernameAlreadyInUse", result.Errors.First().ErrorCode);
         }
 
         [Fact]
@@ -122,18 +74,6 @@ public class CreateUserDtoValidatorTest
             var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
             Assert.False(result.IsValid);
             Assert.Equal("UsernameTooShort", result.Errors.First().ErrorCode);
-        }
-
-        [Fact]
-        public async Task Should_ReturnInvalidWhenPhoneNumberInvalid()
-        {
-            var createUserDto = _createUserDtoFaker.Generate();
-            createUserDto = createUserDto with { PhoneNumber = "invalidPhoneNumber" };
-            var validator = new CreateUserDtoValidator(_userRepository);
-
-            var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
-            Assert.False(result.IsValid);
-            Assert.Equal("PhoneNumberInvalid", result.Errors.First().ErrorCode);
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MassTransit;
 using Microsoft.Extensions.Logging;
 using Tatuaz.Gateway.Queue.Contracts.Landing.ListSummaryStats;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListSummaryStats;
@@ -17,7 +18,7 @@ public class ListSummaryStatsConsumer
     public ListSummaryStatsConsumer(ILogger<ListSummaryStatsConsumer> logger) : base(logger) { }
 
     protected override Task<TatuazResult<IEnumerable<SummaryStatDto>>> ConsumeMessage(
-        ListSummaryStatsOrder message
+        ConsumeContext<ListSummaryStatsOrder> context
     )
     {
         var stats = new List<SummaryStatDto>
@@ -59,7 +60,7 @@ public class ListSummaryStatsConsumer
         };
 
         return Task.FromResult(
-            CommonResultFactory.Ok(stats.OrderBy(_ => Guid.NewGuid()).Take(message.Amount))
+            CommonResultFactory.Ok(stats.OrderBy(_ => Guid.NewGuid()).Take(context.Message.Amount))
         );
     }
 }

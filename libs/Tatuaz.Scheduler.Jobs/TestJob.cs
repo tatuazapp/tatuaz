@@ -15,8 +15,9 @@ public class TestJob : IJob
         _logger = logger;
     }
 
-    public async Task Execute(IJobExecutionContext context)
+    public Task Execute(IJobExecutionContext context)
     {
         _logger.LogInformation("Running TestJob");
+        return Task.CompletedTask;
     }
 }

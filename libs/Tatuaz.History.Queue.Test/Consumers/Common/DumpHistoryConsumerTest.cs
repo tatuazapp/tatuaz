@@ -31,7 +31,7 @@ public class DumpHistoryConsumerTest
             .AddMassTransitTestHarness(cfg =>
             {
                 cfg.AddConsumer<DumpHistoryConsumer>()
-                    .Endpoint(e => e.Name = HistoryQueueConstants.DumpQueueName);
+                    .Endpoint(e => e.Name = HistoryQueueConstants.DumpHistoryQueueName);
             })
             .AddScoped(_ => _loggerMock.Object)
             .AddScoped(_ => _dumpHistoryServiceMock.Object)
@@ -73,7 +73,7 @@ public class DumpHistoryConsumerTest
                 HistState = HistState.Added
             };
             var sentEndpoint = await harness.Bus
-                .GetSendEndpoint(HistoryQueueConstants.DumpQueueUri)
+                .GetSendEndpoint(HistoryQueueConstants.DumpHistoryQueueUri)
                 .ConfigureAwait(false);
 
             await sentEndpoint
@@ -107,7 +107,7 @@ public class DumpHistoryConsumerTest
                 HistState = HistState.Added
             };
             var sentEndpoint = await harness.Bus
-                .GetSendEndpoint(HistoryQueueConstants.DumpQueueUri)
+                .GetSendEndpoint(HistoryQueueConstants.DumpHistoryQueueUri)
                 .ConfigureAwait(false);
 
             await sentEndpoint

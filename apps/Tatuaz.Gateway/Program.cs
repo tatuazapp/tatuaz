@@ -1,3 +1,4 @@
+#pragma warning disable CA1852
 using Microsoft.AspNetCore.Builder;
 using Serilog;
 using Tatuaz.Gateway;

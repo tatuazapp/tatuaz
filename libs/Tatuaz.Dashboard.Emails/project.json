@@ -1,0 +1,27 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "Tatuaz.Dashboard.Emails",
+  "projectType": "library",
+  "sourceRoot": "libs/Tatuaz.Dashboard.Emails",
+  "targets": {
+    "build": {
+      "executor": "@nx-dotnet/core:build",
+      "outputs": ["dist/libs/Tatuaz.Dashboard.Emails"],
+      "options": {
+        "configuration": "Debug"
+      },
+      "configurations": {
+        "production": {
+          "configuration": "Release"
+        }
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotnet csharpier libs/Tatuaz.Dashboard.Emails --check"
+      }
+    }
+  },
+  "tags": []
+}

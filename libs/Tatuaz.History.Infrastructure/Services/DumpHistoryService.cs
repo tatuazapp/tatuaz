@@ -30,18 +30,6 @@ public class DumpHistoryService<THistEntity, TId> : IDumpHistoryService<THistEnt
     )
     {
         var emptyHistId = entity.HistId == Guid.Empty;
-        switch (entity.HistState)
-        {
-            case HistState.Added:
-                await ValidateNotYetDumpedAsync(entity, cancellationToken).ConfigureAwait(false);
-                break;
-            case HistState.Modified
-            or HistState.Deleted:
-                await ValidateAlreadyDumpedAsync(entity, cancellationToken).ConfigureAwait(false);
-                break;
-            default:
-                throw new HistException("Invalid HistState");
-        }
 
         _histDbContext.Add(entity);
         await _histDbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
@@ -50,49 +38,11 @@ public class DumpHistoryService<THistEntity, TId> : IDumpHistoryService<THistEnt
         {
             _logger.LogWarning(
                 "HistId for entity with Id: {Id} was empty. Generated new one: {HistId}",
-                entity.Id,
-                entity.HistId
+                entity.Id.ToString(),
+                entity.HistId.ToString()
             );
         }
 
         return entity.HistId;
-    }
-
-    private async Task ValidateAlreadyDumpedAsync(
-        THistEntity entity,
-        CancellationToken cancellationToken = default
-    )
-    {
-        if (
-            !await _histDbContext
-                .Set<THistEntity>()
-                .AnyAsync(
-                    x => x.HistState == HistState.Added && entity.Id.Equals(x.Id),
-                    cancellationToken
-                )
-                .ConfigureAwait(false)
-        )
-        {
-            throw new HistException("Entity does not exist in history yet.");
-        }
-    }
-
-    private async Task ValidateNotYetDumpedAsync(
-        THistEntity entity,
-        CancellationToken cancellationToken = default
-    )
-    {
-        if (
-            await _histDbContext
-                .Set<THistEntity>()
-                .AnyAsync(
-                    x => x.HistState == HistState.Added && entity.Id.Equals(x.Id),
-                    cancellationToken
-                )
-                .ConfigureAwait(false)
-        )
-        {
-            throw new HistException("Entity already exists in history");
-        }
     }
 }

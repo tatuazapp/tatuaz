@@ -7,7 +7,7 @@ using Tatuaz.Shared.Domain.Entities.Models.Common;
 
 namespace Tatuaz.Shared.Domain.Entities.Models.Identity;
 
-public class TatuazRole : Entity<HistTatuazRole, Guid>, IEntity
+public class TatuazRole : Entity<HistTatuazRole, Guid>
 {
     public string Name { get; set; } = default!;
     public virtual IEnumerable<TatuazUserRole> TatuazUserRoles { get; set; } = default!;

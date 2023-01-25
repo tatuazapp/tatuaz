@@ -2,14 +2,12 @@
 using System.Globalization;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-using Tatuaz.Dashboard.Queue.Consumers;
 using Tatuaz.Shared.Infrastructure;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
@@ -46,9 +44,7 @@ public static class SchedulerExtensions
             ) ?? throw new Exception("Connection string not found")
         );
 
-        services.AddSingleton<IUserContext, InternalUserContext>();
-
-        services.RegisterSharedPipelineServices(configuration, typeof(TmpConsumer).Assembly);
+        services.RegisterSharedPipelineServices(configuration);
 
         services.AddQuartz(opt =>
         {

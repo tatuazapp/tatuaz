@@ -10,21 +10,19 @@ using Tatuaz.Shared.Domain.Dtos.Validators.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using Tatuaz.Shared.Pipeline.Exceptions;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Factories.Results.Identity;
 using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway.Handlers.Commands.Users;
 
-public class SignUpCommandHandler
-    : IRequestHandler<SignUpCommand, TatuazResult<UserDto>>,
-        IUserContextEnjoyer
+public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<UserDto>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IGenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
-
-    private IUserContext _userContext;
+    private readonly IUserContext _userContext;
 
     public SignUpCommandHandler(
         IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository,
@@ -53,9 +51,7 @@ public class SignUpCommandHandler
             return CommonResultFactory.ValidationError<UserDto>(validationResult);
         }
 
-        var userId =
-            _userContext.CurrentUserId
-            ?? throw new InvalidOperationException("User context not available");
+        var userId = _userContext.CurrentUserEmail ?? throw new UserContextMissingException();
 
         if (await _userRepository.ExistsByIdAsync(userId, cancellationToken).ConfigureAwait(false))
         {
@@ -68,10 +64,5 @@ public class SignUpCommandHandler
         await _unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         return CommonResultFactory.Ok(_mapper.Map<UserDto>(user), HttpStatusCode.Created);
-    }
-
-    public void SetUserContext(IUserContext userContext)
-    {
-        _userContext = userContext;
     }
 }

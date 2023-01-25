@@ -31,6 +31,7 @@ using Tatuaz.Shared.Infrastructure;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline;
 using Tatuaz.Shared.Pipeline.Configuration;
+using Tatuaz.Shared.Pipeline.Filters;
 
 namespace Tatuaz.Gateway;
 
@@ -110,7 +111,10 @@ public static class GatewayExtensions
         services.Configure<RabbitMqOpt>(configuration.GetSection(RabbitMqOpt.SectionName));
 
         services
-            .AddControllers()
+            .AddControllers(opt =>
+            {
+                opt.Filters.Add<UserContextActionFilter>();
+            })
             .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
@@ -224,7 +228,7 @@ public static class GatewayExtensions
         services.RegisterSharedPipelineServices(configuration);
 
         services.AddHttpContextAccessor();
-        services.AddSingleton<IUserContext, GatewayUserContext>();
+        services.AddSingleton<IUserContext, UserContext>();
 
         services.RegisterGatewayQueueProducers();
 

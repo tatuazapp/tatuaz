@@ -8,6 +8,7 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using Tatuaz.Landing.Queue.Consumers;
+using Tatuaz.Shared.Domain.Dtos;
 using Tatuaz.Shared.Infrastructure;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
@@ -43,11 +44,11 @@ public static class LandingExtensions
             ) ?? throw new Exception("Connection string not found")
         );
 
-        services.AddSingleton<IUserContext, InternalUserContext>();
+        services.RegisterSharedDomainDtosServices();
 
         services.RegisterSharedPipelineServices(
             configuration,
-            typeof(ListSummaryStatsConsumer).Assembly
+            new[] { typeof(ListSummaryStatsConsumer).Assembly }
         );
 
         return services;

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using NodaTime;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Tatuaz.Shared.Infrastructure.DataAccess;
 
@@ -17,11 +18,60 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "7.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.General.EmailInfo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("EmailType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("email_type");
+
+                    b.Property<string>("Error")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("error");
+
+                    b.Property<Guid>("ObjectId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("object_id");
+
+                    b.Property<Instant>("OrderedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ordered_at");
+
+                    b.Property<string>("RecipientEmail")
+                        .IsRequired()
+                        .HasMaxLength(320)
+                        .HasColumnType("character varying(320)")
+                        .HasColumnName("recipient_email");
+
+                    b.Property<int>("RetryCount")
+                        .HasColumnType("integer")
+                        .HasColumnName("retry_count");
+
+                    b.Property<Instant?>("SentAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("sent_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_email_info");
+
+                    b.HasIndex("RecipientEmail")
+                        .HasDatabaseName("ix_email_info_recipient_email");
+
+                    b.ToTable("email_info", "general");
+                });
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazRole", b =>
                 {
@@ -45,19 +95,9 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text")
+                        .HasMaxLength(320)
+                        .HasColumnType("character varying(320)")
                         .HasColumnName("id");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("email");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(16)
-                        .HasColumnType("character varying(16)")
-                        .HasColumnName("phone_number");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -78,46 +118,47 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<Guid>("TatuazRoleId")
+                    b.Property<Guid>("RoleId")
                         .HasColumnType("uuid")
-                        .HasColumnName("tatuaz_role_id");
+                        .HasColumnName("role_id");
 
-                    b.Property<string>("TatuazUserId")
+                    b.Property<string>("UserEmail")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("tatuaz_user_id");
+                        .HasMaxLength(320)
+                        .HasColumnType("character varying(320)")
+                        .HasColumnName("user_email");
 
                     b.HasKey("Id")
                         .HasName("pk_tatuaz_user_roles");
 
-                    b.HasIndex("TatuazRoleId")
-                        .HasDatabaseName("ix_tatuaz_user_roles_tatuaz_role_id");
+                    b.HasIndex("RoleId")
+                        .HasDatabaseName("ix_tatuaz_user_roles_role_id");
 
-                    b.HasIndex("TatuazUserId")
-                        .HasDatabaseName("ix_tatuaz_user_roles_tatuaz_user_id");
+                    b.HasIndex("UserEmail")
+                        .HasDatabaseName("ix_tatuaz_user_roles_user_email");
 
                     b.ToTable("tatuaz_user_roles", "identity");
                 });
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUserRole", b =>
                 {
-                    b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazRole", "TatuazRole")
+                    b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazRole", "Role")
                         .WithMany("TatuazUserRoles")
-                        .HasForeignKey("TatuazRoleId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_tatuaz_user_roles_tatuaz_roles_tatuaz_role_id");
 
-                    b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", "TatuazUser")
-                        .WithMany("TatuazUserRoles")
-                        .HasForeignKey("TatuazUserId")
+                    b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserEmail")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_tatuaz_user_roles_tatuaz_users_tatuaz_user_id");
 
-                    b.Navigation("TatuazRole");
+                    b.Navigation("Role");
 
-                    b.Navigation("TatuazUser");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazRole", b =>
@@ -127,7 +168,7 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", b =>
                 {
-                    b.Navigation("TatuazUserRoles");
+                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

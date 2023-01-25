@@ -13,7 +13,6 @@ public class ListArtistStatsProducer
 {
     public ListArtistStatsProducer(
         IRequestClient<ListArtistStatsOrder> requestClient,
-        IUserContext userContext,
         ILogger<ListArtistStatsProducer> logger
-    ) : base(requestClient, userContext, logger) { }
+    ) : base(requestClient, logger) { }
 }

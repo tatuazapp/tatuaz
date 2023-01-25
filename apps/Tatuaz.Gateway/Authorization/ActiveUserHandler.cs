@@ -9,10 +9,10 @@ namespace Tatuaz.Gateway.Authorization;
 /// <summary>
 /// Authorization handler for checking if user exists in database meaning he got through onboarding
 /// </summary>
-public class ActiveUserHandler : AuthorizationHandler<ActiveUserRequirement>, IUserContextEnjoyer
+public class ActiveUserHandler : AuthorizationHandler<ActiveUserRequirement>
 {
     private readonly IMediator _mediator;
-    private IUserContext _userContext;
+    private readonly IUserContext _userContext;
 
     /// <summary>
     /// Default constructor
@@ -35,14 +35,14 @@ public class ActiveUserHandler : AuthorizationHandler<ActiveUserRequirement>, IU
         ActiveUserRequirement requirement
     )
     {
-        if (_userContext.CurrentUserId == null)
+        if (_userContext.CurrentUserEmail == null)
         {
             context.Fail();
             return;
         }
 
         var userExists = await _mediator
-            .Send(new UserExistsQuery(_userContext.CurrentUserId))
+            .Send(new UserExistsQuery(_userContext.CurrentUserEmail))
             .ConfigureAwait(false);
 
         if (userExists)
@@ -53,11 +53,5 @@ public class ActiveUserHandler : AuthorizationHandler<ActiveUserRequirement>, IU
         {
             context.Fail();
         }
-    }
-
-    /// <inheritdoc />
-    public void SetUserContext(IUserContext userContext)
-    {
-        _userContext = userContext;
     }
 }

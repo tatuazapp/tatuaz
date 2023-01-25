@@ -16,7 +16,6 @@ namespace Tatuaz.Gateway.Handlers.Test.Commands.Users;
 public class SignUpCommandHandlerTest
 {
     private readonly CreateUserDtoFaker _createUserDtoFaker;
-    private readonly GatewayDbContextMock _dbContextMock;
     private readonly IMapper _mapper;
     private readonly UnitOfWorkMock _unitOfWorkMock;
     private readonly UserContextMock _userContextMock;
@@ -30,7 +29,7 @@ public class SignUpCommandHandlerTest
         _userContextMock = new UserContextMock();
         _unitOfWorkMock = new UnitOfWorkMock();
         _createUserDtoFaker = new CreateUserDtoFaker();
-        _dbContextMock = new GatewayDbContextMock();
+        new GatewayDbContextMock();
         _userRepositoryMock = new Mock<IGenericRepository<TatuazUser, HistTatuazUser, string>>();
     }
 
@@ -56,7 +55,6 @@ public class SignUpCommandHandlerTest
             var userDto = result.Value;
             Assert.True(result.Successful);
             Assert.NotNull(userDto);
-            Assert.Equal(userDto.Email, createUserDto.Email!.ToLower());
             Assert.Equal(userDto.Username, createUserDto.Username);
         }
 
@@ -93,7 +91,11 @@ public class SignUpCommandHandlerTest
                 _userContextMock.Object
             );
             var createUserDto = _createUserDtoFaker.Generate();
-            createUserDto = createUserDto with { Email = "invalidEmail" };
+            createUserDto = createUserDto with
+            {
+                Username =
+                    "Very very long invalid email. You may ask why I have made it so long but it's just for testing purposes so chill."
+            };
             var command = new SignUpCommand(createUserDto);
 
             var result = await commandHandler
@@ -101,7 +103,7 @@ public class SignUpCommandHandlerTest
                 .ConfigureAwait(false);
             Assert.False(result.Successful);
             Assert.Single(result.Errors);
-            Assert.Equal("EmailInvalid", result.Errors[0].Code);
+            Assert.Equal("UsernameTooLong", result.Errors[0].Code);
         }
 
         [Fact]

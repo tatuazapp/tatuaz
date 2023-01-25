@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\libs\Tatuaz.Dashboard.Queue\Tatuaz.Dashboard.Queue.csproj" />
+    <ProjectReference Include="..\..\libs\Tatuaz.Shared.Domain.Dtos\Tatuaz.Shared.Domain.Dtos.csproj" />
     <ProjectReference Include="..\..\libs\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj" />
     <ProjectReference Include="..\..\libs\Tatuaz.Shared.Pipeline\Tatuaz.Shared.Pipeline.csproj" />
   </ItemGroup>

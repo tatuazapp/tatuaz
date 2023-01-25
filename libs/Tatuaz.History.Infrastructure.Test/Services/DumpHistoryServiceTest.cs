@@ -49,7 +49,7 @@ public class DumpHistoryServiceTest
                 x => x.SaveChangesAsync(It.IsAny<CancellationToken>()),
                 Times.Once
             );
-            histDbContextMock.Verify(x => x.Set<TestHistEntity>(), Times.Once);
+            histDbContextMock.Verify(x => x.Set<TestHistEntity>(), Times.Never);
         }
 
         [Fact]
@@ -97,7 +97,7 @@ public class DumpHistoryServiceTest
                 x => x.SaveChangesAsync(It.IsAny<CancellationToken>()),
                 Times.Once
             );
-            histDbContextMock.Verify(x => x.Set<TestHistEntity>(), Times.Once);
+            histDbContextMock.Verify(x => x.Set<TestHistEntity>(), Times.Never);
         }
 
         [Fact]
@@ -145,93 +145,7 @@ public class DumpHistoryServiceTest
                 x => x.SaveChangesAsync(It.IsAny<CancellationToken>()),
                 Times.Once
             );
-            histDbContextMock.Verify(x => x.Set<TestHistEntity>(), Times.Once);
-        }
-
-        [Fact]
-        public async Task Should_Throw_WhenStateAddedAndOneEntityInDb()
-        {
-            var histDbContextMock = new HistDbContextMock();
-            var dumpHistoryService = new DumpHistoryService<TestHistEntity, Guid>(
-                histDbContextMock.Object,
-                NullLogger<DumpHistoryService<TestHistEntity, Guid>>.Instance
-            );
-
-            var toDump = new TestHistEntity
-            {
-                Id = Guid.Parse("3AAAFB34-1C52-4B89-A863-F8840002DCAE"),
-                HistId = Guid.Parse("C43F5099-CAB5-4469-9914-BE686FD45E40"),
-                HistDumpedAt = Instant.FromUtc(2001, 1, 1, 0, 0),
-                HistState = HistState.Added,
-                Name = "Test"
-            };
-
-            var existing = new TestHistEntity
-            {
-                Id = Guid.Parse("3AAAFB34-1C52-4B89-A863-F8840002DCAE"),
-                HistId = Guid.Parse("C43F5099-CAB5-4469-9914-BE686AD45E40"),
-                HistDumpedAt = Instant.FromUtc(2000, 1, 1, 0, 0),
-                HistState = HistState.Added,
-                Name = "Test"
-            };
-
-            histDbContextMock.TestHistEntities.Add(existing);
-
-            await Assert
-                .ThrowsAsync<HistException>(
-                    async () => await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false)
-                )
-                .ConfigureAwait(false);
-        }
-
-        [Fact]
-        public async Task Should_Throw_WhenStateModifiedAndNothingInDb()
-        {
-            var histDbContextMock = new HistDbContextMock();
-            var dumpHistoryService = new DumpHistoryService<TestHistEntity, Guid>(
-                histDbContextMock.Object,
-                NullLogger<DumpHistoryService<TestHistEntity, Guid>>.Instance
-            );
-
-            var toDump = new TestHistEntity
-            {
-                Id = Guid.Parse("3AAAFB34-1C52-4B89-A863-F8840002DCAE"),
-                HistId = Guid.Parse("C43F5099-CAB5-4469-9914-BE686FD45E40"),
-                HistDumpedAt = Instant.FromUtc(2001, 1, 1, 0, 0),
-                HistState = HistState.Modified,
-                Name = "Test"
-            };
-
-            await Assert
-                .ThrowsAsync<HistException>(
-                    async () => await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false)
-                )
-                .ConfigureAwait(false);
-        }
-
-        [Fact]
-        public async Task Should_Throw_WhenStateDeletedAndNothingInDb()
-        {
-            var histDbContextMock = new HistDbContextMock();
-            var dumpHistoryService = new DumpHistoryService<TestHistEntity, Guid>(
-                histDbContextMock.Object,
-                NullLogger<DumpHistoryService<TestHistEntity, Guid>>.Instance
-            );
-
-            var toDump = new TestHistEntity
-            {
-                Id = Guid.Parse("3AAAFB34-1C52-4B89-A863-F8840002DCAE"),
-                HistId = Guid.Parse("C43F5099-CAB5-4469-9914-BE686FD45E40"),
-                HistDumpedAt = Instant.FromUtc(2001, 1, 1, 0, 0),
-                HistState = HistState.Deleted,
-                Name = "Test"
-            };
-
-            await Assert
-                .ThrowsAsync<HistException>(
-                    async () => await dumpHistoryService.DumpAsync(toDump).ConfigureAwait(false)
-                )
-                .ConfigureAwait(false);
+            histDbContextMock.Verify(x => x.Set<TestHistEntity>(), Times.Never);
         }
     }
 }

@@ -7,18 +7,17 @@ using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using Tatuaz.Shared.Pipeline.Exceptions;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway.Handlers.Queries.Users;
 
-public class WhoAmIQueryHandler
-    : IRequestHandler<WhoAmIQuery, TatuazResult<UserDto>>,
-        IUserContextEnjoyer
+public class WhoAmIQueryHandler : IRequestHandler<WhoAmIQuery, TatuazResult<UserDto>>
 {
     private readonly IMapper _mapper;
     private readonly IGenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
-    private IUserContext _userContext;
+    private readonly IUserContext _userContext;
 
     public WhoAmIQueryHandler(
         IMapper mapper,
@@ -38,7 +37,7 @@ public class WhoAmIQueryHandler
     {
         var user = await _userRepository
             .GetByIdAsync(
-                _userContext.CurrentUserId ?? string.Empty,
+                _userContext.CurrentUserEmail ?? throw new UserContextMissingException(),
                 cancellationToken: cancellationToken
             )
             .ConfigureAwait(false);
@@ -47,10 +46,5 @@ public class WhoAmIQueryHandler
             // Authorization challenge should catch this
             CommonResultFactory.InternalError<UserDto>()
             : CommonResultFactory.Ok(_mapper.Map<UserDto>(user));
-    }
-
-    public void SetUserContext(IUserContext userContext)
-    {
-        _userContext = userContext;
     }
 }
