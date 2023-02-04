@@ -15,12 +15,16 @@ public class UserContextActionFilter : IActionFilter
 
     public void OnActionExecuting(ActionExecutingContext context)
     {
-        if (context.HttpContext.User.Identity is { IsAuthenticated: true })
+        if (context.HttpContext.User.Identity is not { IsAuthenticated: true })
         {
-            _userContext.CurrentUserEmail = context.HttpContext.User
-                .FindFirst(ClaimTypes.Email)
-                ?.Value;
+            return;
         }
+
+        _userContext.CurrentUserEmail = context.HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+
+        _userContext.CurrentUserAuth0Id = context.HttpContext.User
+            .FindFirst(ClaimTypes.NameIdentifier)
+            ?.Value;
     }
 
     public void OnActionExecuted(ActionExecutedContext context) { }

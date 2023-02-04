@@ -18,6 +18,9 @@ public class UserContextSendFilter<T> : IFilter<SendContext<T>> where T : class
         if (_userContext.CurrentUserEmail != null)
             context.Headers.Set("CurrentUserEmail", _userContext.CurrentUserEmail);
 
+        if (_userContext.CurrentUserAuth0Id != null)
+            context.Headers.Set("CurrentUserAuth0Id", _userContext.CurrentUserAuth0Id);
+
         return next.Send(context);
     }
 

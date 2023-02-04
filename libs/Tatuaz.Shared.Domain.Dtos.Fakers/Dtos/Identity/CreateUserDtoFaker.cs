@@ -8,6 +8,6 @@ public sealed class CreateUserDtoFaker : Faker<CreateUserDto>, IDtoFaker
 {
     public CreateUserDtoFaker()
     {
-        CustomInstantiator(f => new CreateUserDto(f.Internet.UserName()));
+        CustomInstantiator(f => new CreateUserDto(f.Random.Guid().ToString("N")));
     }
 }

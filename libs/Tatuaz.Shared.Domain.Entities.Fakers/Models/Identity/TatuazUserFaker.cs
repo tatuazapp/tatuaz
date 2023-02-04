@@ -12,6 +12,7 @@ public sealed class TatuazUserFaker : Faker<TatuazUser>, IEntityFaker
         StrictMode(true);
         RuleFor(x => x.Id, f => f.Internet.Email());
         RuleFor(x => x.Username, f => f.Internet.UserName());
+        RuleFor(x => x.Auth0Id, f => f.Random.Guid().ToString());
         RuleFor(x => x.UserRoles, _ => new List<TatuazUserRole>());
     }
 }

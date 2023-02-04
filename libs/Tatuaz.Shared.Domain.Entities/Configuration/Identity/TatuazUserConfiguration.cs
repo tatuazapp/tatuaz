@@ -14,6 +14,8 @@ public class TatuazUserConfiguration : IEntityTypeConfiguration<TatuazUser>
 
         builder.Property(x => x.Username).HasMaxLength(32);
 
+        builder.Property(x => x.Auth0Id).HasMaxLength(128);
+
         builder
             .HasMany(x => x.UserRoles)
             .WithOne(x => x.User)

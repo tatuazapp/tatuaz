@@ -75,5 +75,17 @@ public class CreateUserDtoValidatorTest
             Assert.False(result.IsValid);
             Assert.Equal("UsernameTooShort", result.Errors.First().ErrorCode);
         }
+
+        [Fact]
+        public async Task Should_ReturnInvalidWhenUsernameContainsInvalidCharacters()
+        {
+            var createUserDto = _createUserDtoFaker.Generate();
+            createUserDto = createUserDto with { Username = "a b as as " };
+            var validator = new CreateUserDtoValidator(_userRepository);
+
+            var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
+            Assert.False(result.IsValid);
+            Assert.Equal("UsernameInvalidCharacters", result.Errors.First().ErrorCode);
+        }
     }
 }

@@ -24,8 +24,9 @@ public class UserExistsQueryHandler : IRequestHandler<UserExistsQuery, bool>
         var userRepository = scope.ServiceProvider.GetRequiredService<
             IGenericRepository<TatuazUser, HistTatuazUser, string>
         >();
-        return await userRepository
-            .ExistsByIdAsync(request.UserEmail, cancellationToken)
+        var user = await userRepository
+            .GetByIdAsync(request.Email, cancellationToken: cancellationToken)
             .ConfigureAwait(false);
+        return user != null && user.Auth0Id == request.Auth0Id;
     }
 }

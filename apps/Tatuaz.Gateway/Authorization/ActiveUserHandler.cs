@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -12,17 +14,15 @@ namespace Tatuaz.Gateway.Authorization;
 public class ActiveUserHandler : AuthorizationHandler<ActiveUserRequirement>
 {
     private readonly IMediator _mediator;
-    private readonly IUserContext _userContext;
 
     /// <summary>
     /// Default constructor
     /// </summary>
     /// <param name="mediator">From DI</param>
     /// <param name="userContext">From DI</param>
-    public ActiveUserHandler(IMediator mediator, IUserContext userContext)
+    public ActiveUserHandler(IMediator mediator)
     {
         _mediator = mediator;
-        _userContext = userContext;
     }
 
     /// <summary>
@@ -35,14 +35,16 @@ public class ActiveUserHandler : AuthorizationHandler<ActiveUserRequirement>
         ActiveUserRequirement requirement
     )
     {
-        if (_userContext.CurrentUserEmail == null)
+        var userEmail = context.User.FindFirst(ClaimTypes.Email)?.Value;
+        var userAuth0Id = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userEmail == null || userAuth0Id == null)
         {
             context.Fail();
             return;
         }
 
         var userExists = await _mediator
-            .Send(new UserExistsQuery(_userContext.CurrentUserEmail))
+            .Send(new UserExistsQuery(userEmail, userAuth0Id))
             .ConfigureAwait(false);
 
         if (userExists)

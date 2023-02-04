@@ -16,6 +16,7 @@ public class UserContextConsumeFilter<T> : IFilter<ConsumeContext<T>> where T : 
     public Task Send(ConsumeContext<T> context, IPipe<ConsumeContext<T>> next)
     {
         _userContext.CurrentUserEmail = context.Headers.Get<string>("CurrentUserEmail");
+        _userContext.CurrentUserAuth0Id = context.Headers.Get<string>("CurrentUserAuth0Id");
 
         return next.Send(context);
     }

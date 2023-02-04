@@ -27,12 +27,11 @@ public class ActiveUserHandlerTest
     public class HandleAsync : ActiveUserHandlerTest
     {
         [Fact]
-        public async Task Should_FailWithoutCallingMediatorWhenUserIdIsNull()
+        public async Task Should_FailWithoutCallingMediatorWhenEmailIsNull()
         {
-            _userContextMock.ReturnUserId(null);
-            var handler = new ActiveUserHandler(_mediatorMock.Object, _userContextMock.Object);
+            var handler = new ActiveUserHandler(_mediatorMock.Object);
             var claimsPrincipal = new GenericPrincipal(
-                new ClaimsIdentity(Array.Empty<Claim>()),
+                new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.NameIdentifier, "1") }),
                 null
             );
             var context = new AuthorizationHandlerContext(
@@ -50,15 +49,11 @@ public class ActiveUserHandlerTest
         }
 
         [Fact]
-        public async Task Should_FailWhenUserDoesntExist()
+        public async Task Should_FailWithoutCallingMediatorWhenIdIsNull()
         {
-            _userContextMock.ReturnUserId("1");
-            _mediatorMock
-                .Setup(m => m.Send(It.IsAny<UserExistsQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(false);
-            var handler = new ActiveUserHandler(_mediatorMock.Object, _userContextMock.Object);
+            var handler = new ActiveUserHandler(_mediatorMock.Object);
             var claimsPrincipal = new GenericPrincipal(
-                new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, "1") }),
+                new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.Email, "1") }),
                 null
             );
             var context = new AuthorizationHandlerContext(
@@ -71,20 +66,22 @@ public class ActiveUserHandlerTest
             Assert.False(context.HasSucceeded);
             _mediatorMock.Verify(
                 m => m.Send(It.IsAny<UserExistsQuery>(), It.IsAny<CancellationToken>()),
-                Times.Once
+                Times.Never
             );
         }
 
         [Fact]
         public async Task Should_SucceedWhenUserExists()
         {
-            _userContextMock.ReturnUserId("1");
-            _mediatorMock
-                .Setup(m => m.Send(It.IsAny<UserExistsQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(true);
-            var handler = new ActiveUserHandler(_mediatorMock.Object, _userContextMock.Object);
+            var handler = new ActiveUserHandler(_mediatorMock.Object);
             var claimsPrincipal = new GenericPrincipal(
-                new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, "1") }),
+                new ClaimsIdentity(
+                    new Claim[]
+                    {
+                        new Claim(ClaimTypes.Email, "1"),
+                        new Claim(ClaimTypes.NameIdentifier, "1")
+                    }
+                ),
                 null
             );
             var context = new AuthorizationHandlerContext(
@@ -92,6 +89,9 @@ public class ActiveUserHandlerTest
                 claimsPrincipal,
                 null
             );
+            _mediatorMock
+                .Setup(m => m.Send(It.IsAny<UserExistsQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(true);
             await handler.HandleAsync(context).ConfigureAwait(false);
 
             Assert.True(context.HasSucceeded);
