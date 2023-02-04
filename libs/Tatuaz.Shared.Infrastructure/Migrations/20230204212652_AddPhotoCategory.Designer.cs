@@ -2,35 +2,37 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Tatuaz.History.DataAccess;
+using Tatuaz.Shared.Infrastructure.DataAccess;
 
 #nullable disable
 
-namespace Tatuaz.History.DataAccess.Migrations
+namespace Tatuaz.Shared.Infrastructure.Migrations
 {
-    [DbContext(typeof(HistDbContext))]
-    partial class HistDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(MainDbContext))]
+    [Migration("20230204212652_AddPhotoCategory")]
+    partial class AddPhotoCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "hist_state", new[] { "added", "modified", "deleted" });
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.General.HistEmailInfo", b =>
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.General.EmailInfo", b =>
                 {
-                    b.Property<Guid>("HistId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("hist_id");
+                        .HasColumnName("id");
 
                     b.Property<string>("EmailType")
                         .IsRequired()
@@ -42,18 +44,6 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)")
                         .HasColumnName("error");
-
-                    b.Property<Instant>("HistDumpedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("hist_dumped_at");
-
-                    b.Property<int>("HistState")
-                        .HasColumnType("integer")
-                        .HasColumnName("hist_state");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
 
                     b.Property<Guid>("ObjectId")
                         .HasColumnType("uuid")
@@ -77,28 +67,19 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("sent_at");
 
-                    b.HasKey("HistId")
-                        .HasName("pk_h_email_info");
+                    b.HasKey("Id")
+                        .HasName("pk_email_info");
 
-                    b.ToTable("H_email_info", "H_general");
+                    b.HasIndex("RecipientEmail")
+                        .HasDatabaseName("ix_email_info_recipient_email");
+
+                    b.ToTable("email_info", "general");
                 });
 
-            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Identity.HistTatuazRole", b =>
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazRole", b =>
                 {
-                    b.Property<Guid>("HistId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("hist_id");
-
-                    b.Property<Instant>("HistDumpedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("hist_dumped_at");
-
-                    b.Property<int>("HistState")
-                        .HasColumnType("integer")
-                        .HasColumnName("hist_state");
-
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
@@ -108,18 +89,18 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("character varying(128)")
                         .HasColumnName("name");
 
-                    b.HasKey("HistId")
-                        .HasName("pk_h_tatuaz_roles");
+                    b.HasKey("Id")
+                        .HasName("pk_tatuaz_roles");
 
-                    b.ToTable("H_tatuaz_roles", "H_identity");
+                    b.ToTable("tatuaz_roles", "identity");
                 });
 
-            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Identity.HistTatuazUser", b =>
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", b =>
                 {
-                    b.Property<Guid>("HistId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("hist_id");
+                    b.Property<string>("Id")
+                        .HasMaxLength(320)
+                        .HasColumnType("character varying(320)")
+                        .HasColumnName("id");
 
                     b.Property<string>("Auth0Id")
                         .IsRequired()
@@ -127,47 +108,22 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("character varying(128)")
                         .HasColumnName("auth0id");
 
-                    b.Property<Instant>("HistDumpedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("hist_dumped_at");
-
-                    b.Property<int>("HistState")
-                        .HasColumnType("integer")
-                        .HasColumnName("hist_state");
-
-                    b.Property<string>("Id")
-                        .HasMaxLength(320)
-                        .HasColumnType("character varying(320)")
-                        .HasColumnName("id");
-
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("character varying(32)")
                         .HasColumnName("username");
 
-                    b.HasKey("HistId")
-                        .HasName("pk_h_tatuaz_users");
+                    b.HasKey("Id")
+                        .HasName("pk_tatuaz_users");
 
-                    b.ToTable("H_tatuaz_users", "H_identity");
+                    b.ToTable("tatuaz_users", "identity");
                 });
 
-            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Identity.HistTatuazUserRole", b =>
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUserRole", b =>
                 {
-                    b.Property<Guid>("HistId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("hist_id");
-
-                    b.Property<Instant>("HistDumpedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("hist_dumped_at");
-
-                    b.Property<int>("HistState")
-                        .HasColumnType("integer")
-                        .HasColumnName("hist_state");
-
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
@@ -181,30 +137,26 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("character varying(320)")
                         .HasColumnName("user_email");
 
-                    b.HasKey("HistId")
-                        .HasName("pk_h_tatuaz_user_roles");
+                    b.HasKey("Id")
+                        .HasName("pk_tatuaz_user_roles");
 
-                    b.ToTable("H_tatuaz_user_roles", "H_identity");
+                    b.HasIndex("RoleId")
+                        .HasDatabaseName("ix_tatuaz_user_roles_role_id");
+
+                    b.HasIndex("UserEmail")
+                        .HasDatabaseName("ix_tatuaz_user_roles_user_email");
+
+                    b.ToTable("tatuaz_user_roles", "identity");
                 });
 
-            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Photo.HistPhotoCategory", b =>
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Photo.PhotoCategory", b =>
                 {
-                    b.Property<Guid>("HistId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("hist_id");
-
-                    b.Property<Instant>("HistDumpedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("hist_dumped_at");
-
-                    b.Property<int>("HistState")
-                        .HasColumnType("integer")
-                        .HasColumnName("hist_state");
-
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -226,10 +178,41 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("type");
 
-                    b.HasKey("HistId")
-                        .HasName("pk_h_photo_categories");
+                    b.HasKey("Id")
+                        .HasName("pk_photo_categories");
 
-                    b.ToTable("H_photo_categories", "H_photo");
+                    b.ToTable("photo_categories", "photo");
+                });
+
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUserRole", b =>
+                {
+                    b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazRole", "Role")
+                        .WithMany("TatuazUserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_tatuaz_user_roles_tatuaz_roles_tatuaz_role_id");
+
+                    b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserEmail")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_tatuaz_user_roles_tatuaz_users_tatuaz_user_id");
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazRole", b =>
+                {
+                    b.Navigation("TatuazUserRoles");
+                });
+
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", b =>
+                {
+                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

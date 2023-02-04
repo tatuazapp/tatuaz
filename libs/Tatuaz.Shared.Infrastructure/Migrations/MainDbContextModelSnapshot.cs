@@ -146,6 +146,41 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                     b.ToTable("tatuaz_user_roles", "identity");
                 });
 
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Photo.PhotoCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("image_url");
+
+                    b.Property<int>("Popularity")
+                        .HasColumnType("integer")
+                        .HasColumnName("popularity");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("title");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
+                        .HasColumnName("type");
+
+                    b.HasKey("Id")
+                        .HasName("pk_photo_categories");
+
+                    b.ToTable("photo_categories", "photo");
+                });
+
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUserRole", b =>
                 {
                     b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazRole", "Role")

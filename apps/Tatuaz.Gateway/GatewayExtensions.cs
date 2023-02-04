@@ -32,6 +32,7 @@ using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline;
 using Tatuaz.Shared.Pipeline.Configuration;
 using Tatuaz.Shared.Pipeline.Filters;
+using Tatuaz.Shared.Pipeline.UserContext;
 
 namespace Tatuaz.Gateway;
 

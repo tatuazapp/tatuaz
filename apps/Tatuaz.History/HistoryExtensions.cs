@@ -15,6 +15,7 @@ using Tatuaz.History.Queue.Consumers.Common;
 using Tatuaz.Shared.Infrastructure;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline;
+using Tatuaz.Shared.Pipeline.UserContext;
 
 namespace Tatuaz.History;
 

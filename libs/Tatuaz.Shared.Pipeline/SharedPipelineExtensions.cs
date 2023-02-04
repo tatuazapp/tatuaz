@@ -4,11 +4,11 @@ using System.Reflection;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Tatuaz.Gateway.Infrastructure;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline.Configuration;
 using Tatuaz.Shared.Pipeline.Filters;
 using Tatuaz.Shared.Pipeline.Queues;
+using Tatuaz.Shared.Pipeline.UserContext;
 
 namespace Tatuaz.Shared.Pipeline;
 
@@ -50,7 +50,7 @@ public static class SharedPipelineExtensions
             );
         });
         services.AddScoped<UserContextActionFilter>();
-        services.AddScoped<IUserContext, UserContext>();
+        services.AddScoped<IUserContext, UserContext.UserContext>();
 
         return services;
     }

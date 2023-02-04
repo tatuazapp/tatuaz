@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using MassTransit;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using Tatuaz.Shared.Pipeline.UserContext;
 
 namespace Tatuaz.Shared.Pipeline.Filters;
 
