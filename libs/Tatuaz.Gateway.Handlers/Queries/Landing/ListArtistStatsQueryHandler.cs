@@ -8,6 +8,8 @@ using Tatuaz.Gateway.Queue.Contracts.Landing.ListArtistStats;
 using Tatuaz.Gateway.Queue.Producers.Landing.ListArtistStats;
 using Tatuaz.Gateway.Requests.Queries.Landing;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListArtistStats;
+using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using Tatuaz.Shared.Pipeline.Exceptions;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Messages;
 

@@ -1,9 +1,11 @@
 using System;
+using System.Diagnostics;
 using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.Extensions.Logging;
+using Tatuaz.Shared.Helpers;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline.Factories.Errors;
 using Tatuaz.Shared.Pipeline.Messages;
@@ -11,39 +13,36 @@ using Tatuaz.Shared.Pipeline.Messages;
 namespace Tatuaz.Shared.Pipeline.Queues;
 
 public abstract class TatuazConsumerBase<TMessage, TData> : IConsumer<TMessage>
-    where TMessage : TatuazMessage
+    where TMessage : class
 {
     private readonly ILogger _logger;
-    protected IUserContext? UserContext { get; private set; }
 
     public TatuazConsumerBase(ILogger logger)
     {
         _logger = logger;
     }
 
-    protected abstract Task<TatuazResult<TData>> ConsumeMessage(TMessage message);
+    protected abstract Task<TatuazResult<TData>> ConsumeMessage(ConsumeContext<TMessage> context);
 
     public async Task Consume(ConsumeContext<TMessage> context)
     {
-        UserContext = new InternalUserContext(context.Message.UserId);
-        SetUserContext(UserContext);
         _logger.LogInformation(
             "Received message {MessageId} of type {MessageType} in {ClassName}",
-            context.MessageId,
+            context.MessageId.ToString(),
             typeof(TMessage).Name,
             GetType().Name
         );
         try
         {
             await context
-                .RespondAsync(await ConsumeMessage(context.Message).ConfigureAwait(false))
+                .RespondAsync(await ConsumeMessage(context).ConfigureAwait(false))
                 .ConfigureAwait(false);
         }
         catch (Exception exception)
         {
             _logger.LogError(
                 "Error while processing message {MessageId} of type {MessageType}: {Exception}",
-                context.MessageId,
+                context.MessageId.ToString(),
                 typeof(TMessage).Name,
                 exception
             );
@@ -63,28 +62,5 @@ public abstract class TatuazConsumerBase<TMessage, TData> : IConsumer<TMessage>
         return Task.FromResult(
             (new[] { CommonErrorFactory.InternalError() }, HttpStatusCode.InternalServerError)
         );
-    }
-
-    private void SetUserContext(IUserContext userContext)
-    {
-        const BindingFlags bindingFlags =
-            BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic;
-        var fields = GetType().GetFields(bindingFlags);
-        foreach (var field in fields)
-        {
-            if (field.GetValue(this) is IUserContextEnjoyer userContextEnjoyer)
-            {
-                userContextEnjoyer.SetUserContext(userContext);
-            }
-        }
-
-        var properties = GetType().GetProperties(bindingFlags);
-        foreach (var property in properties)
-        {
-            if (property.GetValue(this) is IUserContextEnjoyer userContextEnjoyer)
-            {
-                userContextEnjoyer.SetUserContext(userContext);
-            }
-        }
     }
 }

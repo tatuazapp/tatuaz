@@ -9,6 +9,7 @@ using Tatuaz.Shared.Domain.Entities.Fakers.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using Tatuaz.Shared.Pipeline.Exceptions;
 using Tatuaz.Testing.Mocks.Infrastructure;
 using Xunit;
 
@@ -54,7 +55,7 @@ public class WhoAmIQueryHandlerTest
 
             Assert.True(result.Successful);
             Assert.NotNull(result.Value);
-            Assert.Equal(user.Email, result.Value.Email);
+            Assert.Equal(user.Id, result.Value.Email);
             Assert.Equal(user.Username, result.Value.Username);
         }
 
@@ -81,7 +82,7 @@ public class WhoAmIQueryHandlerTest
         }
 
         [Fact]
-        public async Task Should_ReturnErrorWhenUserContextReturnsNull()
+        public async Task Should_ThrowWhenUserContextReturnsNull()
         {
             _userContextMock.ReturnUserId(null);
 
@@ -91,11 +92,9 @@ public class WhoAmIQueryHandlerTest
                 _userRepositoryMock.Object,
                 _userContextMock.Object
             );
-            var result = await handler.Handle(query, CancellationToken.None).ConfigureAwait(false);
+            var action = () => handler.Handle(query, CancellationToken.None);
 
-            Assert.False(result.Successful);
-            Assert.Null(result.Value);
-            Assert.Equal("InternalError", result.Errors.First().Code);
+            await Assert.ThrowsAsync<UserContextMissingException>(action).ConfigureAwait(false);
         }
     }
 }

@@ -14,10 +14,12 @@
     <ItemGroup>
         <PackageReference Include="FluentValidation" Version="11.4.0" />
         <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.10" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.2" />
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Tatuaz.Shared.Helpers\Tatuaz.Shared.Helpers.csproj" />
         <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj" />
     </ItemGroup>
 

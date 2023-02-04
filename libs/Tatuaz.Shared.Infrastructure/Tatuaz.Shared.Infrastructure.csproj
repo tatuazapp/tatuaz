@@ -22,6 +22,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Tatuaz.History.Queue\Tatuaz.History.Queue.csproj" />
         <ProjectReference Include="..\Tatuaz.Shared.Infrastructure.Abstractions\Tatuaz.Shared.Infrastructure.Abstractions.csproj" />
+        <ProjectReference Include="..\Tatuaz.Shared.Pipeline\Tatuaz.Shared.Pipeline.csproj" />
     </ItemGroup>
 
     <ItemGroup>

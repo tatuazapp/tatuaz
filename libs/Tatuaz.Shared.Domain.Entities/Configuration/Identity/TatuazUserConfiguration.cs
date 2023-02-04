@@ -10,14 +10,14 @@ public class TatuazUserConfiguration : IEntityTypeConfiguration<TatuazUser>
     {
         builder.ToTable("tatuaz_users", TatuazIdentityConstants.SchemaName);
 
+        builder.Property(x => x.Id).HasMaxLength(320);
+
         builder.Property(x => x.Username).HasMaxLength(32);
-        builder.Property(x => x.Email).HasMaxLength(256);
-        builder.Property(x => x.PhoneNumber).HasMaxLength(16);
 
         builder
-            .HasMany(x => x.TatuazUserRoles)
-            .WithOne(x => x.TatuazUser)
-            .HasForeignKey(x => x.TatuazUserId)
+            .HasMany(x => x.UserRoles)
+            .WithOne(x => x.User)
+            .HasForeignKey(x => x.UserEmail)
             .HasConstraintName("fk_tatuaz_user_roles_tatuaz_users_tatuaz_user_id");
     }
 }

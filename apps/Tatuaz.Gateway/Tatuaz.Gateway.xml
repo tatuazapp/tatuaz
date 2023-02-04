@@ -23,9 +23,6 @@
             <param name="context"></param>
             <param name="requirement"></param>
         </member>
-        <member name="M:Tatuaz.Gateway.Authorization.ActiveUserHandler.SetUserContext(Tatuaz.Shared.Infrastructure.Abstractions.DataAccess.IUserContext)">
-            <inheritdoc />
-        </member>
         <member name="T:Tatuaz.Gateway.Authorization.ActiveUserRequirement">
             <summary>
             Represents a requirement that user went through onboarding.

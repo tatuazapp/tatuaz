@@ -1,14 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using NodaTime;
 using Tatuaz.Gateway.Queue.Contracts.Landing.ListSummaryStats;
 using Tatuaz.Gateway.Queue.Producers.Landing.ListSummaryStats;
 using Tatuaz.Gateway.Requests.Queries.Landing;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListSummaryStats;
+using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using Tatuaz.Shared.Pipeline.Exceptions;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Messages;
 

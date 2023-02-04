@@ -7,12 +7,12 @@ public class UserContextMock : Mock<IUserContext>
 {
     public UserContextMock()
     {
-        Setup(x => x.CurrentUserId).Returns("1");
+        Setup(x => x.CurrentUserEmail).Returns("1");
     }
 
     public UserContextMock ReturnUserId(string? userId)
     {
-        Setup(x => x.CurrentUserId).Returns(userId);
+        Setup(x => x.CurrentUserEmail).Returns(userId);
         return this;
     }
 }

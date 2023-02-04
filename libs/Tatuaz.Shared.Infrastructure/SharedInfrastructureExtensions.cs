@@ -19,6 +19,7 @@ public static class SharedInfrastructureExtensions
     ) where TDbContext : DbContext
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
+        dataSourceBuilder.UseNodaTime();
         dataSourceBuilder.MapEnum<HistState>();
         services.AddDbContext<TDbContext>(opt =>
         {

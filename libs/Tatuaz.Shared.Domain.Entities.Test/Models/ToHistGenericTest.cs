@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Bogus;
 using NodaTime;
 using NodaTime.Testing;
@@ -56,19 +58,19 @@ public class ToHistGenericTest
                     deletedHistEntity.HistDumpedAt.ToDateTimeUtc(),
                     TimeSpan.FromMilliseconds(10)
                 );
-                Assert.True(
+                Assert.Empty(
                     EntityContainsHistPropertiesAndTheyMatch(
                         (IHistDumpableEntity)entity,
                         addedHistEntity
                     )
                 );
-                Assert.True(
+                Assert.Empty(
                     EntityContainsHistPropertiesAndTheyMatch(
                         (IHistDumpableEntity)entity,
                         modifiedHistEntity
                     )
                 );
-                Assert.True(
+                Assert.Empty(
                     EntityContainsHistPropertiesAndTheyMatch(
                         (IHistDumpableEntity)entity,
                         deletedHistEntity
@@ -91,7 +93,7 @@ public class ToHistGenericTest
         return ((dynamic)faker!).Generate();
     }
 
-    private static bool EntityContainsHistPropertiesAndTheyMatch(
+    private static IEnumerable<PropertyInfo> EntityContainsHistPropertiesAndTheyMatch(
         IHistDumpableEntity entity,
         HistEntity histEntity
     )
@@ -107,23 +109,15 @@ public class ToHistGenericTest
             )
             .ToList();
         var entityProperties = entity.GetType().GetProperties().ToList();
-        var match = true;
-        foreach (
-            var histEntityProperty in histEntityProperties.Where(
-                histEntityProperty =>
-                    !histEntityProperty
-                        .GetValue(histEntity)!
-                        .Equals(
-                            entityProperties
-                                .FirstOrDefault(x => x.Name == histEntityProperty.Name)
-                                ?.GetValue(entity)
-                        )
-            )
-        )
-        {
-            match = false;
-        }
-
-        return match;
+        return histEntityProperties.Where(
+            histEntityProperty =>
+                !histEntityProperty
+                    .GetValue(histEntity)
+                    ?.Equals(
+                        entityProperties
+                            .FirstOrDefault(x => x.Name == histEntityProperty.Name)
+                            ?.GetValue(entity)
+                    ) == true
+        );
     }
 }

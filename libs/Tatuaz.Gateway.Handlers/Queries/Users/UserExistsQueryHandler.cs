@@ -25,7 +25,7 @@ public class UserExistsQueryHandler : IRequestHandler<UserExistsQuery, bool>
             IGenericRepository<TatuazUser, HistTatuazUser, string>
         >();
         return await userRepository
-            .ExistsByIdAsync(request.UserId, cancellationToken)
+            .ExistsByIdAsync(request.UserEmail, cancellationToken)
             .ConfigureAwait(false);
     }
 }

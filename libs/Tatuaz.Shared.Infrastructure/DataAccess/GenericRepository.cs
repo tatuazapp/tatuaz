@@ -84,7 +84,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
         return result is null ? null : _mapper.Map<TDto>(result);
     }
 
-    public async Task<TEntity?> GetByIdAsync(
+    public Task<TEntity?> GetByIdAsync(
         TId id,
         Instant asOf,
         CancellationToken cancellationToken = default
@@ -135,7 +135,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
             .ConfigureAwait(false);
     }
 
-    public async Task<IEnumerable<TEntity>> GetBySpecificationAsync(
+    public Task<IEnumerable<TEntity>> GetBySpecificationAsync(
         ISpecification<TEntity> specification,
         Instant asOf,
         CancellationToken cancellationToken = default
@@ -202,7 +202,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
         );
     }
 
-    public async Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(
+    public Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(
         ISpecification<TEntity> specification,
         PagedParams pagedParams,
         Instant asOf,

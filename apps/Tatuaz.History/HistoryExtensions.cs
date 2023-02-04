@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,7 @@ using Serilog.Core;
 using Serilog.Events;
 using Tatuaz.History.DataAccess;
 using Tatuaz.History.DataAccess.Services;
+using Tatuaz.History.Queue;
 using Tatuaz.History.Queue.Consumers.Common;
 using Tatuaz.Shared.Infrastructure;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
@@ -39,7 +41,7 @@ public static class HistoryExtensions
     {
         services.RegisterSharedPipelineServices(
             configuration,
-            typeof(DumpHistoryConsumer).Assembly
+            new[] { typeof(DumpHistoryConsumer).Assembly }
         );
 
         services.AddScoped(typeof(IDumpHistoryService<,>), typeof(DumpHistoryService<,>));

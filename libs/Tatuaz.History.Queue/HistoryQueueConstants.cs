@@ -4,6 +4,6 @@ namespace Tatuaz.History.Queue;
 
 public static class HistoryQueueConstants
 {
-    public const string DumpQueueName = "DumpHistory";
-    public static readonly Uri DumpQueueUri = new($"queue:{DumpQueueName}");
+    public const string DumpHistoryQueueName = "DumpHistory";
+    public static readonly Uri DumpHistoryQueueUri = new($"queue:{DumpHistoryQueueName}");
 }

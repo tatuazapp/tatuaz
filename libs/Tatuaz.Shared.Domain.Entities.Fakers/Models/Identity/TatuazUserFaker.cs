@@ -10,10 +10,8 @@ public sealed class TatuazUserFaker : Faker<TatuazUser>, IEntityFaker
     public TatuazUserFaker()
     {
         StrictMode(true);
-        RuleFor(x => x.Id, f => f.Random.Hash(20));
+        RuleFor(x => x.Id, f => f.Internet.Email());
         RuleFor(x => x.Username, f => f.Internet.UserName());
-        RuleFor(x => x.Email, f => f.Internet.Email());
-        RuleFor(x => x.PhoneNumber, f => f.Phone.PhoneNumber());
-        RuleFor(x => x.TatuazUserRoles, f => new List<TatuazUserRole>());
+        RuleFor(x => x.UserRoles, _ => new List<TatuazUserRole>());
     }
 }

@@ -8,9 +8,8 @@ public class IdentityMappingProfile : Profile
 {
     public IdentityMappingProfile()
     {
-        CreateMap<TatuazUser, UserDto>();
-        CreateMap<CreateUserDto, TatuazUser>()
-            .ForMember(x => x.Email, opt => opt.MapFrom(q => q.Email!.ToLower()));
+        CreateMap<TatuazUser, UserDto>().ConstructUsing(x => new UserDto(x.Username, x.Id));
+        CreateMap<CreateUserDto, TatuazUser>();
         CreateMap<TatuazUser, CreateUserDto>();
     }
 }

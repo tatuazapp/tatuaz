@@ -16,15 +16,15 @@ public sealed class HistTatuazUserRoleFaker : Faker<HistTatuazUserRole>, IHistEn
         RuleFor(x => x.HistState, f => f.PickRandom<HistState>());
         RuleFor(x => x.HistDumpedAt, f => f.Date.Past().ToUniversalTime().ToInstant());
         RuleFor(x => x.Id, f => f.Random.Guid());
-        RuleFor(x => x.TatuazUserId, f => f.Random.Hash(20));
-        RuleFor(x => x.TatuazRoleId, f => f.Random.Guid());
+        RuleFor(x => x.UserEmail, f => f.Internet.Email());
+        RuleFor(x => x.RoleId, f => f.Random.Guid());
     }
 
     public HistTatuazUserRole FromUserIdAndRoleId(string tatuazUserId, Guid tatuazRoleId)
     {
         var generated = Generate();
-        generated.TatuazUserId = tatuazUserId;
-        generated.TatuazRoleId = tatuazRoleId;
+        generated.UserEmail = tatuazUserId;
+        generated.RoleId = tatuazRoleId;
         return generated;
     }
 }

@@ -9,5 +9,7 @@ public class TatuazUserRoleConfiguration : IEntityTypeConfiguration<TatuazUserRo
     public void Configure(EntityTypeBuilder<TatuazUserRole> builder)
     {
         builder.ToTable("tatuaz_user_roles", TatuazIdentityConstants.SchemaName);
+
+        builder.Property(x => x.UserEmail).HasMaxLength(320);
     }
 }

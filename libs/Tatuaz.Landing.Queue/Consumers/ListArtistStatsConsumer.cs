@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MassTransit;
 using Microsoft.Extensions.Logging;
 using Tatuaz.Gateway.Queue.Contracts.Landing.ListArtistStats;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListArtistStats;
 using Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Landing.ListArtistStats;
+using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Messages;
 using Tatuaz.Shared.Pipeline.Queues;
@@ -14,14 +16,22 @@ namespace Tatuaz.Landing.Queue.Consumers;
 public class ListArtistStatsConsumer
     : TatuazConsumerBase<ListArtistStatsOrder, IEnumerable<ArtistStatDto>>
 {
-    public ListArtistStatsConsumer(ILogger<ListArtistStatsConsumer> logger) : base(logger) { }
+    private readonly IUserContext _userContext;
+
+    public ListArtistStatsConsumer(
+        ILogger<ListArtistStatsConsumer> logger,
+        IUserContext userContext
+    ) : base(logger)
+    {
+        _userContext = userContext;
+    }
 
     protected override Task<TatuazResult<IEnumerable<ArtistStatDto>>> ConsumeMessage(
-        ListArtistStatsOrder message
+        ConsumeContext<ListArtistStatsOrder> context
     )
     {
         var faker = new ArtistStatDtoFaker();
-        var result = faker.Generate(message.Amount);
+        var result = faker.Generate(context.Message.Amount);
         result = result
             .Select(
                 x =>

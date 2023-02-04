@@ -11,27 +11,27 @@ public sealed class TatuazUserRoleFaker : Faker<TatuazUserRole>, IEntityFaker
     {
         StrictMode(true);
         RuleFor(x => x.Id, f => f.Random.Guid());
-        RuleFor(x => x.TatuazUserId, f => f.Random.Hash(20));
-        RuleFor(x => x.TatuazUser, f => null!);
-        RuleFor(x => x.TatuazRoleId, f => f.Random.Guid());
-        RuleFor(x => x.TatuazRole, f => null!);
+        RuleFor(x => x.UserEmail, f => f.Internet.Email());
+        RuleFor(x => x.User, f => null!);
+        RuleFor(x => x.RoleId, f => f.Random.Guid());
+        RuleFor(x => x.Role, f => null!);
     }
 
     public TatuazUserRole FromUserIdAndRoleId(string tatuazUserId, Guid tatuazRoleId)
     {
         var generated = Generate();
-        generated.TatuazUserId = tatuazUserId;
-        generated.TatuazRoleId = tatuazRoleId;
+        generated.UserEmail = tatuazUserId;
+        generated.RoleId = tatuazRoleId;
         return generated;
     }
 
     public TatuazUserRole FromUserAndRole(TatuazUser tatuazUser, TatuazRole tatuazRole)
     {
         var generated = Generate();
-        generated.TatuazUser = tatuazUser;
-        generated.TatuazUserId = tatuazUser.Id;
-        generated.TatuazRole = tatuazRole;
-        generated.TatuazRoleId = tatuazRole.Id;
+        generated.User = tatuazUser;
+        generated.UserEmail = tatuazUser.Id;
+        generated.Role = tatuazRole;
+        generated.RoleId = tatuazRole.Id;
         return generated;
     }
 }

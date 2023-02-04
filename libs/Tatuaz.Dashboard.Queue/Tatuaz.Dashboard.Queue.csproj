@@ -11,4 +11,14 @@
     <OutputPath>../../dist/libs/Tatuaz.Dashboard.Queue</OutputPath>
   </PropertyGroup>
   
+  <ItemGroup>
+    <ProjectReference Include="..\Tatuaz.Dashboard.Emails\Tatuaz.Dashboard.Emails.csproj" />
+    <ProjectReference Include="..\Tatuaz.Shared.Pipeline\Tatuaz.Shared.Pipeline.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.0.11" />
+    <PackageReference Include="NodaTime" Version="3.1.6" />
+  </ItemGroup>
+  
 </Project>

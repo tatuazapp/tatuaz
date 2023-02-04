@@ -13,7 +13,6 @@ public class ListSummaryStatsProducer
 {
     public ListSummaryStatsProducer(
         IRequestClient<ListSummaryStatsOrder> requestClient,
-        IUserContext userContext,
         ILogger<ListSummaryStatsProducer> logger
-    ) : base(requestClient, userContext, logger) { }
+    ) : base(requestClient, logger) { }
 }

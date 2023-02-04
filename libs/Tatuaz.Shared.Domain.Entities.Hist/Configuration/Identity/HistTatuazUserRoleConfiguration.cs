@@ -11,5 +11,7 @@ public class HistTatuazUserRoleConfiguration : IEntityTypeConfiguration<HistTatu
         builder.ToTable("H_tatuaz_user_roles", HistTatuazIdentityConstants.SchemaName);
 
         builder.HasKey(x => x.HistId);
+
+        builder.Property(x => x.UserEmail).HasMaxLength(320);
     }
 }
