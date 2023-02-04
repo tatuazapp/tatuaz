@@ -9,7 +9,7 @@
             Authorization handler for checking if user exists in database meaning he got through onboarding
             </summary>
         </member>
-        <member name="M:Tatuaz.Gateway.Authorization.ActiveUserHandler.#ctor(MediatR.IMediator,Tatuaz.Shared.Infrastructure.Abstractions.DataAccess.IUserContext)">
+        <member name="M:Tatuaz.Gateway.Authorization.ActiveUserHandler.#ctor(MediatR.IMediator)">
             <summary>
             Default constructor
             </summary>
@@ -102,18 +102,6 @@
             <summary>
             Optional theme added via custom css
             </summary>
-        </member>
-        <member name="T:Tatuaz.Gateway.Configuration.WebApplicationExtensions">
-            <summary>
-            Extensions for gateway web application configuration
-            </summary>
-        </member>
-        <member name="M:Tatuaz.Gateway.Configuration.WebApplicationExtensions.ConfigurePipeline(Microsoft.AspNetCore.Builder.WebApplication)">
-            <summary>
-            Configures gateway request pipeline
-            </summary>
-            <param name="app"></param>
-            <returns></returns>
         </member>
         <member name="T:Tatuaz.Gateway.Controllers.LandingController">
             <summary>

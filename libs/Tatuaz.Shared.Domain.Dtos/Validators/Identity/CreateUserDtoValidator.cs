@@ -33,6 +33,9 @@ public class CreateUserDtoValidator : AbstractValidator<CreateUserDto>
                 }
             )
             .WithErrorCode(CreateUserErrorCodes.UsernameAlreadyInUse)
-            .WithMessage("Username already in use");
+            .WithMessage("Username already in use")
+            .Matches("^[a-zA-Z0-9_]*$")
+            .WithErrorCode(CreateUserErrorCodes.UsernameInvalidCharacters)
+            .WithMessage("Username can only contain letters, numbers and underscores");
     }
 }

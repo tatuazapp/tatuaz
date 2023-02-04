@@ -213,6 +213,7 @@ public static class GatewayExtensions
                 policy => policy.AddRequirements(new ActiveUserRequirement())
             );
         });
+
         services.AddSingleton<IAuthorizationHandler, ActiveUserHandler>();
 
         services.RegisterSharedInfrastructureServices<GatewayDbContext>(

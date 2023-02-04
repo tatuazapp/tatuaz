@@ -5,6 +5,7 @@ using Moq;
 using Tatuaz.Gateway.Handlers.Commands.Users;
 using Tatuaz.Gateway.Requests.Commands.Users;
 using Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Identity;
+using Tatuaz.Shared.Domain.Dtos.Validators.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
@@ -29,7 +30,6 @@ public class SignUpCommandHandlerTest
         _userContextMock = new UserContextMock();
         _unitOfWorkMock = new UnitOfWorkMock();
         _createUserDtoFaker = new CreateUserDtoFaker();
-        new GatewayDbContextMock();
         _userRepositoryMock = new Mock<IGenericRepository<TatuazUser, HistTatuazUser, string>>();
     }
 
@@ -40,11 +40,16 @@ public class SignUpCommandHandlerTest
         [Fact]
         public async Task Should_ReturnUserWhenCorrectCommandProvided()
         {
+            _userRepositoryMock
+                .Setup(x => x.ExistsByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(false));
+
             var commandHandler = new SignUpCommandHandler(
                 _userRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
-                _userContextMock.Object
+                _userContextMock.Object,
+                new CreateUserDtoValidator(_userRepositoryMock.Object)
             );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
@@ -64,11 +69,13 @@ public class SignUpCommandHandlerTest
             _userRepositoryMock
                 .Setup(x => x.ExistsByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(true));
+
             var commandHandler = new SignUpCommandHandler(
                 _userRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
-                _userContextMock.Object
+                _userContextMock.Object,
+                new CreateUserDtoValidator(_userRepositoryMock.Object)
             );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
@@ -88,7 +95,8 @@ public class SignUpCommandHandlerTest
                 _userRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
-                _userContextMock.Object
+                _userContextMock.Object,
+                new CreateUserDtoValidator(_userRepositoryMock.Object)
             );
             var createUserDto = _createUserDtoFaker.Generate();
             createUserDto = createUserDto with
@@ -102,7 +110,7 @@ public class SignUpCommandHandlerTest
                 .Handle(command, CancellationToken.None)
                 .ConfigureAwait(false);
             Assert.False(result.Successful);
-            Assert.Single(result.Errors);
+            Assert.Equal(2, result.Errors.Length);
             Assert.Equal("UsernameTooLong", result.Errors[0].Code);
         }
 
@@ -113,7 +121,8 @@ public class SignUpCommandHandlerTest
                 _userRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
-                _userContextMock.Object
+                _userContextMock.Object,
+                new CreateUserDtoValidator(_userRepositoryMock.Object)
             );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
@@ -128,11 +137,16 @@ public class SignUpCommandHandlerTest
         [Fact]
         public async Task Should_CallUserRepositoryCreate()
         {
+            _userRepositoryMock
+                .Setup(x => x.ExistsByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(false));
+
             var commandHandler = new SignUpCommandHandler(
                 _userRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
-                _userContextMock.Object
+                _userContextMock.Object,
+                new CreateUserDtoValidator(_userRepositoryMock.Object)
             );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
@@ -144,11 +158,16 @@ public class SignUpCommandHandlerTest
         [Fact]
         public async Task Should_CallUnitOfWorkSaveChangesAsyncOnSuccess()
         {
+            _userRepositoryMock
+                .Setup(x => x.ExistsByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(false));
+
             var commandHandler = new SignUpCommandHandler(
                 _userRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
-                _userContextMock.Object
+                _userContextMock.Object,
+                new CreateUserDtoValidator(_userRepositoryMock.Object)
             );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
@@ -170,7 +189,8 @@ public class SignUpCommandHandlerTest
                 _userRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
-                _userContextMock.Object
+                _userContextMock.Object,
+                new CreateUserDtoValidator(_userRepositoryMock.Object)
             );
             var createUserDto = _createUserDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);

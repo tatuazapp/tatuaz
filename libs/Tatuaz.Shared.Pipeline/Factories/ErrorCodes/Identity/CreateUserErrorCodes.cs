@@ -8,4 +8,5 @@ public class CreateUserErrorCodes
     public const string UsernameTooShort = "UsernameTooShort";
     public const string UsernameTooLong = "UsernameTooLong";
     public const string UsernameAlreadyInUse = "UsernameAlreadyInUse";
+    public static string UsernameInvalidCharacters = "UsernameInvalidCharacters";
 }

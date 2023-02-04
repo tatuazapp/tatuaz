@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Tatuaz.Gateway.Requests.Commands.Users;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
@@ -23,18 +24,21 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
     private readonly IUnitOfWork _unitOfWork;
     private readonly IGenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
     private readonly IUserContext _userContext;
+    private readonly IValidator<CreateUserDto> _validator;
 
     public SignUpCommandHandler(
         IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper,
-        IUserContext userContext
+        IUserContext userContext,
+        IValidator<CreateUserDto> validator
     )
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _userContext = userContext;
+        _validator = validator;
     }
 
     public async Task<TatuazResult<UserDto>> Handle(
@@ -42,7 +46,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
         CancellationToken cancellationToken
     )
     {
-        var validationResult = await new CreateUserDtoValidator(_userRepository)
+        var validationResult = await _validator
             .ValidateAsync(request.CreateUserDto, cancellationToken)
             .ConfigureAwait(false);
 
@@ -51,15 +55,20 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
             return CommonResultFactory.ValidationError<UserDto>(validationResult);
         }
 
-        var userId = _userContext.CurrentUserEmail ?? throw new UserContextMissingException();
+        var userEmail = _userContext.CurrentUserEmail ?? throw new UserContextMissingException();
 
-        if (await _userRepository.ExistsByIdAsync(userId, cancellationToken).ConfigureAwait(false))
+        if (
+            await _userRepository
+                .ExistsByIdAsync(userEmail, cancellationToken)
+                .ConfigureAwait(false)
+        )
         {
             return CreateUserResultFactory.UserAlreadyExists<UserDto>();
         }
 
         var user = _mapper.Map<TatuazUser>(request.CreateUserDto);
-        user.Id = userId;
+        user.Id = userEmail;
+        user.Auth0Id = _userContext.CurrentUserAuth0Id ?? throw new UserContextMissingException();
         _userRepository.Create(user);
         await _unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
