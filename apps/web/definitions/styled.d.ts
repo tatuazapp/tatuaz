@@ -4,7 +4,8 @@ declare module "styled-components" {
   type Colors = {
     primary: string
     secondary: string
-    photoCard: string
+    background1: string
+    background2: string
   }
 
   type Radius = {

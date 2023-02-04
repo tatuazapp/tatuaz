@@ -1,11 +1,13 @@
+import { createTheme } from "styled-breakpoints"
 import { DefaultTheme } from "styled-components"
 import { rem } from "./utils"
 
 export const theme: DefaultTheme = {
   colors: {
-    primary: "#fff",
-    secondary: "#1E1E1E",
-    photoCard: "#19191E",
+    primary: "#D5FF40",
+    secondary: "#FFF",
+    background1: "#151515",
+    background2: "#2B2B2B",
   },
 
   radius: {
@@ -45,3 +47,10 @@ export const theme: DefaultTheme = {
     card: "61.62deg, rgba(130, 33, 50, 0.6) 0%, rgba(191, 34, 62, 0.425) 40.63%, rgba(130, 33, 50, 0) 100%",
   },
 }
+
+export const themeWithBreakpoints = createTheme({
+  sm: "576px",
+  md: "768px",
+  lg: "992px",
+  xl: "1200px",
+} as const)

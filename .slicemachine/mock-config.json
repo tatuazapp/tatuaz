@@ -3,7 +3,8 @@
     "TextBlock": {}
   },
   "_cts": {
-    "test": {}
+    "test": {},
+    "homepageIntro": {}
   },
   "apps/web/slices": {
     "TextBlock": {
@@ -32,6 +33,24 @@
       "default": {
         "primary": {},
         "items": {}
+      }
+    },
+    "HomepageIntro": {
+      "default": {
+        "primary": {
+          "TitleFirstLine": {
+            "config": {
+              "patternType": "PARAGRAPH",
+              "blocks": 1
+            }
+          },
+          "TitleSecondLine": {
+            "config": {
+              "patternType": "HEADING",
+              "blocks": 1
+            }
+          }
+        }
       }
     }
   }

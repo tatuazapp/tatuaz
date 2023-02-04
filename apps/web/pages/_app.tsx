@@ -13,15 +13,20 @@ import { currentLocale, messages } from "../i18n"
 import { repositoryName } from "../prismicio"
 import chakraTheme from "../styles/chakra"
 import "../styles/global.css"
-import { theme } from "../styles/theme"
+import { theme, themeWithBreakpoints } from "../styles/theme"
 
 const queryClient = new QueryClient()
+
+const themeMerged = {
+  ...theme,
+  ...themeWithBreakpoints,
+}
 
 function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <IntlProvider locale={currentLocale} messages={messages[currentLocale]}>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={themeMerged}>
           <ChakraProvider theme={chakraTheme}>
             <PrismicProvider
               internalLinkComponent={({ href, ...props }) => (

@@ -7,9 +7,9 @@ export const TopBar = styled.div`
   justify-content: space-between;
 
   min-height: ${rem(110)};
-  padding: ${({ theme }) => theme.space.large};
+  padding: ${({ theme }) => `${theme.space.xlarge} ${theme.space.xxxlarge}`};
 
   color: black;
 
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: transparent;
 `

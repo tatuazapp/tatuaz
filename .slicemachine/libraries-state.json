@@ -1,6 +1,95 @@
 {
   "apps/web/slices": {
     "components": {
+      "homepage_intro": {
+        "library": "apps/web/slices",
+        "id": "homepage_intro",
+        "name": "HomepageIntro",
+        "description": "HomepageIntro",
+        "model": {
+          "id": "homepage_intro",
+          "type": "SharedSlice",
+          "name": "HomepageIntro",
+          "description": "HomepageIntro",
+          "variations": [
+            {
+              "id": "default",
+              "name": "Default",
+              "docURL": "...",
+              "version": "sktwi1xtmkfgx8626",
+              "description": "HomepageIntro",
+              "primary": {
+                "TitleFirstLine": {
+                  "type": "StructuredText",
+                  "config": {
+                    "label": "TitleFirstLine",
+                    "placeholder": "",
+                    "allowTargetBlank": true,
+                    "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+                  }
+                },
+                "TitleSecondLine": {
+                  "type": "StructuredText",
+                  "config": {
+                    "label": "TitleSecondLine",
+                    "placeholder": "This is where it all begins...",
+                    "allowTargetBlank": true,
+                    "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+                  }
+                },
+                "description": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "paragraph",
+                    "label": "Description",
+                    "placeholder": "A nice description of your feature"
+                  }
+                }
+              },
+              "items": {},
+              "imageUrl": "https://images.prismic.io/slice-machine/621a5ec4-0387-4bc5-9860-2dd46cbc07cd_default_ss.png?auto=compress,format"
+            }
+          ]
+        },
+        "mocks": {
+          "default": {
+            "variation": "default",
+            "version": "sktwi1xtmkfgx8626",
+            "items": [
+              {}
+            ],
+            "primary": {
+              "TitleFirstLine": [
+                {
+                  "type": "paragraph",
+                  "text": "Magna cupidatat incididunt et in sunt reprehenderit duis cupidatat laborum non quis. Incididunt aliquip aute exercitation exercitation. Est amet in occaecat commodo excepteur est velit consectetur sit exercitation exercitation ea enim.",
+                  "spans": []
+                }
+              ],
+              "TitleSecondLine": [
+                {
+                  "type": "heading1",
+                  "text": "Score",
+                  "spans": []
+                }
+              ],
+              "description": [
+                {
+                  "type": "paragraph",
+                  "text": "Elit reprehenderit irure aute mollit reprehenderit id ex nulla proident fugiat dolor consectetur sit ullamco dolore.",
+                  "spans": []
+                }
+              ]
+            },
+            "slice_type": "homepage_intro"
+          }
+        },
+        "meta": {
+          "fileName": "index",
+          "extension": "tsx"
+        },
+        "screenshotPaths": {}
+      },
       "image": {
         "library": "apps/web/slices",
         "id": "image",
@@ -37,7 +126,9 @@
           "default": {
             "variation": "default",
             "version": "sktwi1xtmkfgx8626",
-            "items": [{}],
+            "items": [
+              {}
+            ],
             "primary": {
               "image": {
                 "dimensions": {
@@ -109,7 +200,9 @@
           "default": {
             "variation": "default",
             "version": "sktwi1xtmkfgx8626",
-            "items": [{}],
+            "items": [
+              {}
+            ],
             "primary": {
               "title": [
                 {
