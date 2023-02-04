@@ -1,4 +1,4 @@
-namespace Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+namespace Tatuaz.Shared.Pipeline.UserContext;
 
 public interface IUserContext
 {

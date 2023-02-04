@@ -111,13 +111,40 @@ public class ToHistGenericTest
         var entityProperties = entity.GetType().GetProperties().ToList();
         return histEntityProperties.Where(
             histEntityProperty =>
-                !histEntityProperty
-                    .GetValue(histEntity)
-                    ?.Equals(
-                        entityProperties
-                            .FirstOrDefault(x => x.Name == histEntityProperty.Name)
-                            ?.GetValue(entity)
-                    ) == true
+                !PropertiesMatch(histEntityProperty, entity, histEntity, entityProperties)
         );
+    }
+
+    private static bool PropertiesMatch(
+        PropertyInfo histEntityProperty,
+        IHistDumpableEntity entity,
+        HistEntity histEntity,
+        IEnumerable<PropertyInfo> entityProperties
+    )
+    {
+        // accept enum counterparts compared by int value
+        if (histEntityProperty.PropertyType.IsEnum)
+        {
+            return histEntityProperty.GetValue(histEntity) as int?
+                == entityProperties
+                    .FirstOrDefault(
+                        x =>
+                            x.Name == histEntityProperty.Name
+                            || "Hist" + x.Name == histEntityProperty.Name
+                    )
+                    ?.GetValue(entity) as int?;
+        }
+
+        return histEntityProperty
+                .GetValue(histEntity)
+                ?.Equals(
+                    entityProperties
+                        .FirstOrDefault(
+                            x =>
+                                x.Name == histEntityProperty.Name
+                                || "Hist" + x.Name == histEntityProperty.Name
+                        )
+                        ?.GetValue(entity)
+                ) == true;
     }
 }

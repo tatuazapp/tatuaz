@@ -19,7 +19,6 @@ public class ActiveUserHandler : AuthorizationHandler<ActiveUserRequirement>
     /// Default constructor
     /// </summary>
     /// <param name="mediator">From DI</param>
-    /// <param name="userContext">From DI</param>
     public ActiveUserHandler(IMediator mediator)
     {
         _mediator = mediator;

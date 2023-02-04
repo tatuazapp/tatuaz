@@ -1,5 +1,6 @@
 using Moq;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using Tatuaz.Shared.Pipeline.UserContext;
 
 namespace Tatuaz.Testing.Mocks.Infrastructure;
 

@@ -14,6 +14,7 @@ using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Tatuaz.Shared.Domain.Entities.Models.Common;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline.Exceptions;
+using Tatuaz.Shared.Pipeline.UserContext;
 using static System.GC;
 
 namespace Tatuaz.Shared.Infrastructure.DataAccess;

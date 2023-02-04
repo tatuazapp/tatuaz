@@ -10,6 +10,7 @@ using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline.Exceptions;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Messages;
+using Tatuaz.Shared.Pipeline.UserContext;
 
 namespace Tatuaz.Gateway.Handlers.Queries.Users;
 

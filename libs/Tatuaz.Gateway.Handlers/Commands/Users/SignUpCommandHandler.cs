@@ -15,6 +15,7 @@ using Tatuaz.Shared.Pipeline.Exceptions;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Factories.Results.Identity;
 using Tatuaz.Shared.Pipeline.Messages;
+using Tatuaz.Shared.Pipeline.UserContext;
 
 namespace Tatuaz.Gateway.Handlers.Commands.Users;
 

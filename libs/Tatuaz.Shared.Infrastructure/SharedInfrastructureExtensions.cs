@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using NodaTime;
 using Npgsql;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Photo;
+using Tatuaz.Shared.Domain.Entities.Models.Photo;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
 
@@ -21,6 +23,8 @@ public static class SharedInfrastructureExtensions
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
         dataSourceBuilder.UseNodaTime();
         dataSourceBuilder.MapEnum<HistState>();
+        dataSourceBuilder.MapEnum<PhotoCategoryType>();
+        dataSourceBuilder.MapEnum<HistPhotoCategoryType>();
         services.AddDbContext<TDbContext>(opt =>
         {
             opt.UseNpgsql(

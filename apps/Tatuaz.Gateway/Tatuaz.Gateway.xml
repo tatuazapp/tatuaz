@@ -14,7 +14,6 @@
             Default constructor
             </summary>
             <param name="mediator">From DI</param>
-            <param name="userContext">From DI</param>
         </member>
         <member name="M:Tatuaz.Gateway.Authorization.ActiveUserHandler.HandleRequirementAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext,Tatuaz.Gateway.Authorization.ActiveUserRequirement)">
             <summary>

@@ -1,4 +1,5 @@
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using Tatuaz.Shared.Pipeline.UserContext;
 
 namespace Tatuaz.History.DataAccess;
 

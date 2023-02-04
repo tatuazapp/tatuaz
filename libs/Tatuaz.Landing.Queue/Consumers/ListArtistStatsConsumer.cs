@@ -10,6 +10,7 @@ using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Messages;
 using Tatuaz.Shared.Pipeline.Queues;
+using Tatuaz.Shared.Pipeline.UserContext;
 
 namespace Tatuaz.Landing.Queue.Consumers;
 
