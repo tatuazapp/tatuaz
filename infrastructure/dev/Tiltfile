@@ -15,13 +15,6 @@ local_resource(
 )
 
 local_resource(
-    'build-landing',
-    'dotnet publish -c Debug -o out/landing ../../apps/Tatuaz.Landing',
-    deps=['../../apps/Tatuaz.Landing'],
-    ignore=['../../apps/Tatuaz.Landing/obj']
-)
-
-local_resource(
     'build-dashboard',
     'dotnet publish -c Debug -o out/dashboard ../../apps/Tatuaz.Dashboard',
     deps=['../../apps/Tatuaz.Dashboard'],
@@ -57,16 +50,6 @@ docker_build_with_restart(
 )
 
 docker_build_with_restart(
-    'landing',
-    'out/landing',
-    entrypoint=['dotnet', 'Tatuaz.Landing.dll'],
-    dockerfile='../../apps/Tatuaz.Landing/Dockerfile.debug',
-    live_update=[
-        sync('out/landing', '/app/out'),
-    ],
-)
-
-docker_build_with_restart(
     'dashboard',
     'out/dashboard',
     entrypoint=['dotnet', 'Tatuaz.Dashboard.dll'],
@@ -89,7 +72,6 @@ docker_build_with_restart(
 k8s_yaml([
     'kubernetes/deploys/gateway.yaml',
     'kubernetes/deploys/history.yaml',
-    'kubernetes/deploys/landing.yaml',
     'kubernetes/deploys/dashboard.yaml',
     'kubernetes/deploys/scheduler.yaml',
     'kubernetes/deploys/postgresql.yaml',
@@ -97,7 +79,6 @@ k8s_yaml([
     'kubernetes/configMaps/auth-config-map.yaml',
     'kubernetes/configMaps/gateway-config-map.yaml',
     'kubernetes/configMaps/history-config-map.yaml',
-    'kubernetes/configMaps/landing-config-map.yaml',
     'kubernetes/configMaps/dashboard-config-map.yaml',
     'kubernetes/configMaps/scheduler-config-map.yaml',
     'kubernetes/configMaps/postgresql-config-map.yaml',
@@ -114,7 +95,6 @@ k8s_yaml([
 
 k8s_resource('gateway', port_forwards='8080:80', labels='backend', resource_deps=['build-gateway'])
 k8s_resource('history', labels='backend', resource_deps=['build-history'])
-k8s_resource('landing', labels='backend', resource_deps=['build-landing'])
 k8s_resource('dashboard', labels='backend', resource_deps=['build-dashboard'])
 k8s_resource('scheduler', labels='backend', resource_deps=['build-scheduler'])
 k8s_resource('rabbitmq', port_forwards=['15672:15672'], labels='queue')

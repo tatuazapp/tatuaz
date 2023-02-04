@@ -5,6 +5,7 @@ using FluentValidation;
 using FluentValidation.Validators;
 using Microsoft.Extensions.DependencyInjection;
 using Tatuaz.Shared.Domain.Dtos.Validators.Identity;
+using Tatuaz.Shared.Domain.Dtos.Validators.Identity.User;
 using Xunit;
 
 namespace Tatuaz.Convention.Test.Shared.Domain.Dtos;

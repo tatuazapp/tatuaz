@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
 
 namespace Tatuaz.Shared.Domain.Dtos;
 

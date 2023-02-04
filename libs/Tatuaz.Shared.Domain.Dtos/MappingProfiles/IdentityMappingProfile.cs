@@ -1,5 +1,6 @@
 using AutoMapper;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 
 namespace Tatuaz.Shared.Domain.Dtos.MappingProfiles;

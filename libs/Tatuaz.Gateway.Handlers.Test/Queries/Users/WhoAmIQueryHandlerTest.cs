@@ -3,8 +3,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Moq;
-using Tatuaz.Gateway.Handlers.Queries.Users;
-using Tatuaz.Gateway.Requests.Queries.Users;
+using Tatuaz.Gateway.Handlers.Queries.Identity;
+using Tatuaz.Gateway.Requests.Queries.Identity;
 using Tatuaz.Shared.Domain.Entities.Fakers.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
@@ -45,8 +45,8 @@ public class WhoAmIQueryHandlerTest
                 .Setup(x => x.GetByIdAsync(user.Id, false, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(user);
 
-            var query = new WhoAmIQuery();
-            var handler = new WhoAmIQueryHandler(
+            var query = new MeQuery();
+            var handler = new MeQueryHandler(
                 _mapper,
                 _userRepositoryMock.Object,
                 _userContextMock.Object
@@ -68,8 +68,8 @@ public class WhoAmIQueryHandlerTest
                 .Setup(x => x.GetByIdAsync(user.Id, false, It.IsAny<CancellationToken>()))
                 .ReturnsAsync((TatuazUser?)null);
 
-            var query = new WhoAmIQuery();
-            var handler = new WhoAmIQueryHandler(
+            var query = new MeQuery();
+            var handler = new MeQueryHandler(
                 _mapper,
                 _userRepositoryMock.Object,
                 _userContextMock.Object
@@ -86,8 +86,8 @@ public class WhoAmIQueryHandlerTest
         {
             _userContextMock.ReturnUserId(null);
 
-            var query = new WhoAmIQuery();
-            var handler = new WhoAmIQueryHandler(
+            var query = new MeQuery();
+            var handler = new MeQueryHandler(
                 _mapper,
                 _userRepositoryMock.Object,
                 _userContextMock.Object

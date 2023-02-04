@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Tatuaz.Gateway.Requests.Queries.Users;
+using Tatuaz.Gateway.Requests.Queries.Identity;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 
 namespace Tatuaz.Gateway.Authorization;

@@ -13,12 +13,18 @@
   
   <ItemGroup>
     <ProjectReference Include="..\Tatuaz.Dashboard.Emails\Tatuaz.Dashboard.Emails.csproj" />
+    <ProjectReference Include="..\Tatuaz.Shared.Domain.Dtos\Tatuaz.Shared.Domain.Dtos.csproj" />
+    <ProjectReference Include="..\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj" />
     <ProjectReference Include="..\Tatuaz.Shared.Pipeline\Tatuaz.Shared.Pipeline.csproj" />
   </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="MassTransit" Version="8.0.11" />
     <PackageReference Include="NodaTime" Version="3.1.6" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Producers" />
   </ItemGroup>
   
 </Project>

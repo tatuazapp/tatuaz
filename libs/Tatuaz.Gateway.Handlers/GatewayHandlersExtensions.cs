@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Tatuaz.Gateway.Handlers.Queries.Users;
-using Tatuaz.Gateway.Requests.Queries.Users;
+using Tatuaz.Gateway.Handlers.Queries.Identity;
+using Tatuaz.Gateway.Requests.Queries.Identity;
 
 namespace Tatuaz.Gateway.Handlers;
 
@@ -11,7 +11,7 @@ public static class GatewayHandlersExtensions
         this IServiceCollection services
     )
     {
-        services.AddMediatR(typeof(WhoAmIQuery).Assembly, typeof(WhoAmIQueryHandler).Assembly);
+        services.AddMediatR(typeof(MeQuery).Assembly, typeof(MeQueryHandler).Assembly);
         return services;
     }
 }
