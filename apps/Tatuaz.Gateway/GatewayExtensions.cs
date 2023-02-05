@@ -7,11 +7,15 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using Azure.Storage.Blobs.Models;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -19,6 +23,12 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
+using SixLabors.ImageSharp.Web.Caching.Azure;
+using SixLabors.ImageSharp.Web.Commands;
+using SixLabors.ImageSharp.Web.DependencyInjection;
+using SixLabors.ImageSharp.Web.Processors;
+using SixLabors.ImageSharp.Web.Providers.Azure;
+using SixLabors.ImageSharp.Web.Resolvers.Azure;
 using Tatuaz.Dashboard.Queue;
 using Tatuaz.Gateway.Authorization;
 using Tatuaz.Gateway.Configuration;
@@ -109,6 +119,7 @@ public static class GatewayExtensions
         services.Configure<SwaggerOpt>(configuration.GetSection(SwaggerOpt.SectionName));
         services.Configure<AuthOpt>(configuration.GetSection(AuthOpt.SectionName));
         services.Configure<RabbitMqOpt>(configuration.GetSection(RabbitMqOpt.SectionName));
+        services.Configure<BlobOpt>(configuration.GetSection(BlobOpt.SectionName));
 
         services
             .AddControllers(opt =>
@@ -222,6 +233,56 @@ public static class GatewayExtensions
             ) ?? throw new Exception("Connection string not found")
         );
 
+        services
+            .AddImageSharp(opt =>
+            {
+                opt.OnParseCommandsAsync = c =>
+                {
+                    if (c.Commands.Count == 0)
+                    {
+                        return Task.CompletedTask;
+                    }
+
+                    var width = c.Parser.ParseValue<uint>(
+                        c.Commands.GetValueOrDefault(ResizeWebProcessor.Width),
+                        c.Culture
+                    );
+
+                    var height = c.Parser.ParseValue<uint>(
+                        c.Commands.GetValueOrDefault(ResizeWebProcessor.Height),
+                        c.Culture
+                    );
+
+                    if (width > 4000)
+                        c.Commands.Remove(ResizeWebProcessor.Width);
+                    if (height > 4000)
+                        c.Commands.Remove(ResizeWebProcessor.Height);
+
+                    return Task.CompletedTask;
+                };
+            })
+            .ClearProviders()
+            .AddProvider<AzureBlobStorageImageProvider>()
+            .SetCache<AzureBlobStorageCache>()
+            .Configure<AzureBlobStorageImageProviderOptions>(opt =>
+            {
+                opt.BlobContainers.Add(
+                    new AzureBlobContainerClientOptions()
+                    {
+                        ConnectionString = GetBlobOpt(configuration).ConnectionString,
+                        ContainerName = GetBlobOpt(configuration).ImagesContainerName
+                    }
+                );
+            })
+            .Configure<AzureBlobStorageCacheOptions>(opt =>
+            {
+                opt.ConnectionString = GetBlobOpt(configuration).ConnectionString;
+                opt.ContainerName = GetBlobOpt(configuration).ImagesCacheContainerName;
+
+                AzureBlobStorageCache.CreateIfNotExists(opt, PublicAccessType.None);
+            })
+            .RemoveProcessor<BackgroundColorWebProcessor>();
+
         services.RegisterGatewayHandlersServices();
 
         services.RegisterSharedDomainDtosServices();
@@ -258,5 +319,11 @@ public static class GatewayExtensions
     {
         return configuration.GetSection(SwaggerOpt.SectionName).Get<SwaggerOpt>()
             ?? throw new Exception("Swagger options not found");
+    }
+
+    public static BlobOpt GetBlobOpt(this IConfiguration configuration)
+    {
+        return configuration.GetSection(BlobOpt.SectionName).Get<BlobOpt>()
+            ?? throw new Exception("Blob options not found");
     }
 }

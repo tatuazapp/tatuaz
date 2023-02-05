@@ -1,6 +1,7 @@
 #pragma warning disable CA1852
 using Microsoft.AspNetCore.Builder;
 using Serilog;
+using SixLabors.ImageSharp.Web.DependencyInjection;
 using Tatuaz.Gateway;
 using Tatuaz.Gateway.Middleware;
 
@@ -32,7 +33,7 @@ if (swaggerOpt.Enabled)
         }
     });
 }
-
+app.UseImageSharp();
 app.UseStaticFiles();
 app.UseRouting();
 
