@@ -87,7 +87,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
                 _ =>
                 {
                     _userRepository.Create(user);
-                    foreach (var photoCategoryId in request.SignUpDto.PhotoCategoryIds)
+                    foreach (var photoCategoryId in request.SignUpDto.PhotoCategoryIds!)
                     {
                         var userPhotoCategory = new UserPhotoCategory
                         {

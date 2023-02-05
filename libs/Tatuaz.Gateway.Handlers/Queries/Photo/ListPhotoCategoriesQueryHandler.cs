@@ -47,8 +47,8 @@ public class ListPhotoCategoriesQueryHandler
         return await _listPhotoCategoriesProducer
             .Send(
                 new ListPhotoCategoriesOrder(
-                    request.ListPhotoCategoriesDto.PageNumber,
-                    request.ListPhotoCategoriesDto.PageSize
+                    request.ListPhotoCategoriesDto.PageNumber.Value,
+                    request.ListPhotoCategoriesDto.PageSize.Value
                 ),
                 cancellationToken
             )

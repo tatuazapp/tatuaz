@@ -13,4 +13,5 @@ public class CreateUserErrorCodes
     public static string PhotoCategoryIdsTooMany = "PhotoCategoryIdsTooMany";
     public static string PhotoCategoryIdsInvalid = "PhotoCategoryIdsInvalid";
     public static string PhotoCategoryIdsDuplicate = "PhotoCategoryIdsDuplicate";
+    public static string PhotoCategoryIdsNull = "PhotoCategoryIdsNull";
 }

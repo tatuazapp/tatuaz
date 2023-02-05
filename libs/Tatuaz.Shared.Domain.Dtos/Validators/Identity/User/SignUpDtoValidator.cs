@@ -42,6 +42,9 @@ public class SignUpDtoValidator : AbstractValidator<SignUpDto>
             .WithMessage("Username can only contain letters, numbers and underscores");
 
         RuleFor(x => x.PhotoCategoryIds)
+            .NotNull()
+            .WithErrorCode(CreateUserErrorCodes.PhotoCategoryIdsNull)
+            .WithMessage("Photo categories cannot be null")
             .Must(x => x.Length >= 3)
             .WithErrorCode(CreateUserErrorCodes.PhotoCategoryIdsTooFew)
             .WithMessage("At least 3 photo categories must be selected")
