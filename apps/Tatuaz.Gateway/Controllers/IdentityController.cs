@@ -50,10 +50,10 @@ public class IdentityController : TatuazControllerBase
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Forbidden)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
-    public async Task<IActionResult> SignUp([FromBody] CreateUserDto createUserDto)
+    public async Task<IActionResult> SignUp([FromBody] SignUpDto signUpDto)
     {
         return ResultToActionResult(
-            await Mediator.Send(new SignUpCommand(createUserDto)).ConfigureAwait(false)
+            await Mediator.Send(new SignUpCommand(signUpDto)).ConfigureAwait(false)
         );
     }
 }

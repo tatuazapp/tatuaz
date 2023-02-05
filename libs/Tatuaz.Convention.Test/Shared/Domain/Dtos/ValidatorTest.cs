@@ -16,7 +16,7 @@ public class ValidatorTest
 
     public ValidatorTest(IServiceProvider serviceProvider)
     {
-        validators = typeof(CreateUserDtoValidator).Assembly
+        validators = typeof(SignUpDtoValidator).Assembly
             .GetTypes()
             .Where(x => x.IsClass && !x.IsAbstract && x.IsAssignableTo(typeof(IValidator)))
             .Select(x => (IValidator)ActivatorUtilities.CreateInstance(serviceProvider, x))

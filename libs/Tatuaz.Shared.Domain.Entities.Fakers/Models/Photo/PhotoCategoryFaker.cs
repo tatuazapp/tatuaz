@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Bogus;
 using Tatuaz.Shared.Domain.Entities.Fakers.Models.Common;
@@ -15,5 +16,6 @@ public sealed class PhotoCategoryFaker : Faker<PhotoCategory>, IEntityFaker
         RuleFor(x => x.Type, f => f.PickRandom<PhotoCategoryType>());
         RuleFor(x => x.ImageUrl, f => f.Internet.Url());
         RuleFor(x => x.Popularity, f => f.Random.Int(0, 100));
+        RuleFor(x => x.UserPhotoCategories, _ => new List<UserPhotoCategory>());
     }
 }

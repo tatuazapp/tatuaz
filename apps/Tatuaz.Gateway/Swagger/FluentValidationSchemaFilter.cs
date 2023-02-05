@@ -37,7 +37,7 @@ public class FluentValidationSchemaFilter : ISchemaFilter
     public void Apply(OpenApiSchema schema, SchemaFilterContext context)
     {
         var abstractValidatorType = typeof(AbstractValidator<>).MakeGenericType(context.Type);
-        var validatorType = new[] { typeof(CreateUserDto).Assembly }
+        var validatorType = new[] { typeof(SignUpDto).Assembly }
             .SelectMany(x => x.GetTypes())
             .FirstOrDefault(x => x.IsSubclassOf(abstractValidatorType));
         if (validatorType == null)

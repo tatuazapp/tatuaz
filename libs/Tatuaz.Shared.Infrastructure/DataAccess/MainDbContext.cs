@@ -14,15 +14,16 @@ public class MainDbContext : DbContext
     public MainDbContext() { }
 
     // identity
-    public DbSet<TatuazUser> TatuazUsers { get; set; } = default!;
-    public DbSet<TatuazRole> TatuazRoles { get; set; } = default!;
-    public DbSet<TatuazUserRole> TatuazUserRoles { get; set; } = default!;
+    public virtual DbSet<TatuazUser> TatuazUsers { get; set; } = default!;
+    public virtual DbSet<TatuazRole> TatuazRoles { get; set; } = default!;
+    public virtual DbSet<TatuazUserRole> TatuazUserRoles { get; set; } = default!;
 
     // general
-    public DbSet<EmailInfo> EmailInfos { get; set; } = default!;
+    public virtual DbSet<EmailInfo> EmailInfos { get; set; } = default!;
 
     // photos
-    public DbSet<PhotoCategory> PhotoCategories { get; set; } = default!;
+    public virtual DbSet<PhotoCategory> PhotoCategories { get; set; } = default!;
+    public virtual DbSet<UserPhotoCategory> UserPhotoCategories { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

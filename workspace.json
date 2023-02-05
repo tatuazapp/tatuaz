@@ -12,8 +12,6 @@
     "gateway": "apps/Tatuaz.Gateway",
     "gateway-handlers": "libs/Tatuaz.Gateway.Handlers",
     "gateway-handlers-test": "libs/Tatuaz.Gateway.Handlers.Test",
-    "gateway-infrastructure": "libs/Tatuaz.Gateway.Infrastructure",
-    "gateway-infrastructure-test": "libs/Tatuaz.Gateway.Infrastructure.Test",
     "gateway-requests": "libs/Tatuaz.Gateway.Requests",
     "gateway-requests-test": "libs/Tatuaz.Gateway.Requests.Test",
     "gateway-test": "apps/Tatuaz.Gateway.Test",

@@ -116,7 +116,7 @@
             </summary>
             <returns>UserDto</returns>
         </member>
-        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.SignUp(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User.CreateUserDto)">
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.SignUp(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User.SignUpDto)">
             <summary>
                 Register user
             </summary>

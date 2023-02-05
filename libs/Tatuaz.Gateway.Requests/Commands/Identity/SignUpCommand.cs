@@ -4,4 +4,4 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway.Requests.Commands.Identity;
 
-public record SignUpCommand(CreateUserDto CreateUserDto) : IRequest<TatuazResult<UserDto>>;
+public record SignUpCommand(SignUpDto SignUpDto) : IRequest<TatuazResult<UserDto>>;

@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,7 +8,9 @@ using MediatR;
 using Tatuaz.Gateway.Requests.Commands.Identity;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
+using Tatuaz.Shared.Domain.Entities.Hist.Models.Photo;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
+using Tatuaz.Shared.Domain.Entities.Models.Photo;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline.Exceptions;
 using Tatuaz.Shared.Pipeline.Factories.Results;
@@ -22,18 +25,29 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IGenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
+    private readonly IGenericRepository<
+        UserPhotoCategory,
+        HistUserPhotoCategory,
+        Guid
+    > _userPhotoCategoryRepository;
     private readonly IUserContext _userContext;
-    private readonly IValidator<CreateUserDto> _validator;
+    private readonly IValidator<SignUpDto> _validator;
 
     public SignUpCommandHandler(
         IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository,
+        IGenericRepository<
+            UserPhotoCategory,
+            HistUserPhotoCategory,
+            Guid
+        > userPhotoCategoryRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper,
         IUserContext userContext,
-        IValidator<CreateUserDto> validator
+        IValidator<SignUpDto> validator
     )
     {
         _userRepository = userRepository;
+        _userPhotoCategoryRepository = userPhotoCategoryRepository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _userContext = userContext;
@@ -46,7 +60,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
     )
     {
         var validationResult = await _validator
-            .ValidateAsync(request.CreateUserDto, cancellationToken)
+            .ValidateAsync(request.SignUpDto, cancellationToken)
             .ConfigureAwait(false);
 
         if (!validationResult.IsValid)
@@ -65,11 +79,30 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
             return CreateUserResultFactory.UserAlreadyExists<UserDto>();
         }
 
-        var user = _mapper.Map<TatuazUser>(request.CreateUserDto);
+        var user = _mapper.Map<TatuazUser>(request.SignUpDto);
         user.Id = userEmail;
         user.Auth0Id = _userContext.CurrentUserAuth0Id ?? throw new UserContextMissingException();
-        _userRepository.Create(user);
-        await _unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await _unitOfWork
+            .RunInTransactionAsync(
+                _ =>
+                {
+                    _userRepository.Create(user);
+                    foreach (var photoCategoryId in request.SignUpDto.PhotoCategoryIds)
+                    {
+                        var userPhotoCategory = new UserPhotoCategory
+                        {
+                            UserId = user.Id,
+                            PhotoCategoryId = photoCategoryId
+                        };
+                        _userPhotoCategoryRepository.Create(userPhotoCategory);
+                    }
+
+                    return Task.CompletedTask;
+                },
+                e => throw e,
+                cancellationToken
+            )
+            .ConfigureAwait(false);
 
         return CommonResultFactory.Ok(_mapper.Map<UserDto>(user), HttpStatusCode.Created);
     }

@@ -12,8 +12,8 @@ public class Startup
 {
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddAutoMapper(typeof(CreateUserDto).Assembly);
+        services.AddAutoMapper(typeof(SignUpDto).Assembly);
         services.AddScoped(typeof(IGenericRepository<,,>), typeof(GenericRepository<,,>));
-        services.AddScoped<DbContext>(_ => new GatewayDbContextMock().Object);
+        services.AddScoped<DbContext>(_ => new MainDbContextMock().Object);
     }
 }

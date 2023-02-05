@@ -31,7 +31,6 @@ public static class SharedInfrastructureExtensions
                 dataSourceBuilder.Build(),
                 npgsqlOpt =>
                 {
-                    npgsqlOpt.EnableRetryOnFailure(5);
                     npgsqlOpt.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
                     npgsqlOpt.UseNodaTime();
                     npgsqlOpt.UseNetTopologySuite();

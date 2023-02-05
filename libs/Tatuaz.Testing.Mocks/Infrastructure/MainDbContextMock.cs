@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using Moq;
 using Moq.EntityFrameworkCore;
-using Tatuaz.Gateway.Infrastructure;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
+using Tatuaz.Shared.Infrastructure.DataAccess;
 
 namespace Tatuaz.Testing.Mocks.Infrastructure;
 
-public class GatewayDbContextMock : Mock<GatewayDbContext>
+public class MainDbContextMock : Mock<MainDbContext>
 {
-    public GatewayDbContextMock()
+    public MainDbContextMock()
     {
         TatuazUsers = new List<TatuazUser>();
         TatuazRoles = new List<TatuazRole>();

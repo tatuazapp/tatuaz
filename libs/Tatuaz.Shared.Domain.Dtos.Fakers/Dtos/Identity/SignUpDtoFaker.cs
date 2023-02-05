@@ -5,10 +5,10 @@ using Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Common;
 
 namespace Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Identity;
 
-public sealed class CreateUserDtoFaker : Faker<CreateUserDto>, IDtoFaker
+public sealed class SignUpDtoFaker : Faker<SignUpDto>, IDtoFaker
 {
-    public CreateUserDtoFaker()
+    public SignUpDtoFaker()
     {
-        CustomInstantiator(f => new CreateUserDto(f.Random.Guid().ToString("N")));
+        CustomInstantiator(f => new SignUpDto(f.Random.Guid().ToString("N"), new[] { 1, 2, 3 }));
     }
 }

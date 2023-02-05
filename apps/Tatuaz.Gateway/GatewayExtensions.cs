@@ -23,11 +23,11 @@ using Tatuaz.Dashboard.Queue;
 using Tatuaz.Gateway.Authorization;
 using Tatuaz.Gateway.Configuration;
 using Tatuaz.Gateway.Handlers;
-using Tatuaz.Gateway.Infrastructure;
 using Tatuaz.Gateway.Swagger;
 using Tatuaz.Shared.Domain.Dtos;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
 using Tatuaz.Shared.Infrastructure;
+using Tatuaz.Shared.Infrastructure.DataAccess;
 using Tatuaz.Shared.Pipeline;
 using Tatuaz.Shared.Pipeline.Configuration;
 using Tatuaz.Shared.Pipeline.Filters;
@@ -174,7 +174,7 @@ public static class GatewayExtensions
             opt.CustomSchemaIds(type => type.ShortDisplayName().Replace('<', '_').Replace(">", ""));
         });
 
-        services.AddValidatorsFromAssemblies(new[] { typeof(CreateUserDto).Assembly });
+        services.AddValidatorsFromAssemblies(new[] { typeof(SignUpDto).Assembly });
 
         services.AddCors(options =>
         {
@@ -216,7 +216,7 @@ public static class GatewayExtensions
 
         services.AddSingleton<IAuthorizationHandler, ActiveUserHandler>();
 
-        services.RegisterSharedInfrastructureServices<GatewayDbContext>(
+        services.RegisterSharedInfrastructureServices<MainDbContext>(
             configuration.GetConnectionString(
                 SharedInfrastructureExtensions.MainDbConnectionStringName
             ) ?? throw new Exception("Connection string not found")
