@@ -23,4 +23,9 @@ public class PhotoCategory : Entity<HistPhotoCategory, int>
         histEntity.Popularity = Popularity;
         return histEntity;
     }
+
+    public void IncrementPopularity()
+    {
+        Popularity++;
+    }
 }

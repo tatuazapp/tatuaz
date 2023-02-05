@@ -2,7 +2,7 @@ namespace Tatuaz.Shared.Domain.Dtos.Dtos.Photo.PhotoCategory;
 
 public enum PhotoCategoryTypeDto
 {
-    Style,
-    Motive,
-    BodyPart
+    Style = 0,
+    Motive = 1,
+    BodyPart = 2
 }

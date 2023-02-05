@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using Tatuaz.Shared.Domain.Entities.Hist.Models.Photo;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Photo;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
+using Tatuaz.Shared.Infrastructure.Specification;
 using Tatuaz.Shared.Pipeline.Exceptions;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Factories.Results.Identity;
@@ -30,6 +32,11 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
         HistUserPhotoCategory,
         Guid
     > _userPhotoCategoryRepository;
+    private readonly IGenericRepository<
+        PhotoCategory,
+        HistPhotoCategory,
+        int
+    > _photoCategoryRepository;
     private readonly IUserContext _userContext;
     private readonly IValidator<SignUpDto> _validator;
 
@@ -40,6 +47,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
             HistUserPhotoCategory,
             Guid
         > userPhotoCategoryRepository,
+        IGenericRepository<PhotoCategory, HistPhotoCategory, int> photoCategoryRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper,
         IUserContext userContext,
@@ -48,6 +56,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
     {
         _userRepository = userRepository;
         _userPhotoCategoryRepository = userPhotoCategoryRepository;
+        _photoCategoryRepository = photoCategoryRepository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _userContext = userContext;
@@ -84,9 +93,19 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
         user.Auth0Id = _userContext.CurrentUserAuth0Id ?? throw new UserContextMissingException();
         await _unitOfWork
             .RunInTransactionAsync(
-                _ =>
+                async _ =>
                 {
                     _userRepository.Create(user);
+                    var spec = new FullSpecification<PhotoCategory>();
+                    spec.AddFilter(x => request.SignUpDto.PhotoCategoryIds!.Contains(x.Id));
+                    spec.TrackingStrategy = TrackingStrategy.Tracking;
+                    var photoCategories = await _photoCategoryRepository
+                        .GetBySpecificationAsync(spec, cancellationToken)
+                        .ConfigureAwait(false);
+
+                    foreach (var photoCategory in photoCategories)
+                        photoCategory.IncrementPopularity();
+
                     foreach (var photoCategoryId in request.SignUpDto.PhotoCategoryIds!)
                     {
                         var userPhotoCategory = new UserPhotoCategory
@@ -96,8 +115,6 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
                         };
                         _userPhotoCategoryRepository.Create(userPhotoCategory);
                     }
-
-                    return Task.CompletedTask;
                 },
                 e => throw e,
                 cancellationToken

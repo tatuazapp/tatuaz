@@ -65,6 +65,7 @@ public class SignUpCommandHandlerTest
             var commandHandler = new SignUpCommandHandler(
                 _userRepositoryMock.Object,
                 _userPhotoCategoryRepositoryMock.Object,
+                _photoCategoryRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
                 _userContextMock.Object,
@@ -99,6 +100,7 @@ public class SignUpCommandHandlerTest
             var commandHandler = new SignUpCommandHandler(
                 _userRepositoryMock.Object,
                 _userPhotoCategoryRepositoryMock.Object,
+                _photoCategoryRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
                 _userContextMock.Object,
@@ -128,6 +130,7 @@ public class SignUpCommandHandlerTest
             var commandHandler = new SignUpCommandHandler(
                 _userRepositoryMock.Object,
                 _userPhotoCategoryRepositoryMock.Object,
+                _photoCategoryRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
                 _userContextMock.Object,
@@ -162,6 +165,7 @@ public class SignUpCommandHandlerTest
             var commandHandler = new SignUpCommandHandler(
                 _userRepositoryMock.Object,
                 _userPhotoCategoryRepositoryMock.Object,
+                _photoCategoryRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
                 _userContextMock.Object,
@@ -194,6 +198,7 @@ public class SignUpCommandHandlerTest
             var commandHandler = new SignUpCommandHandler(
                 _userRepositoryMock.Object,
                 _userPhotoCategoryRepositoryMock.Object,
+                _photoCategoryRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
                 _userContextMock.Object,
@@ -226,6 +231,7 @@ public class SignUpCommandHandlerTest
             var commandHandler = new SignUpCommandHandler(
                 _userRepositoryMock.Object,
                 _userPhotoCategoryRepositoryMock.Object,
+                _photoCategoryRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
                 _userContextMock.Object,
