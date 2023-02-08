@@ -1,6 +1,7 @@
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react"
 import { FunctionComponent } from "react"
 import { HomepageIntroSlice } from "../../types.generated"
+import { FindArtistButton } from "./FindArtistButton"
 import {
   HomepageIntroWrapper,
   TitleSecondLineWrapper,
@@ -40,6 +41,7 @@ const HomepageIntro: FunctionComponent<HomepageIntroProps> = ({ slice }) => (
         <PrismicRichText field={slice.primary.description} />
       )}
     </DescriptionWrapper>
+    <FindArtistButton />
   </HomepageIntroWrapper>
 )
 

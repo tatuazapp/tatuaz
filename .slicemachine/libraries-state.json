@@ -1,6 +1,80 @@
 {
   "apps/web/slices": {
     "components": {
+      "artist_section_header": {
+        "library": "apps/web/slices",
+        "id": "artist_section_header",
+        "name": "ArtistSectionHeader",
+        "description": "ArtistSectionHeader",
+        "model": {
+          "id": "artist_section_header",
+          "type": "SharedSlice",
+          "name": "ArtistSectionHeader",
+          "description": "ArtistSectionHeader",
+          "variations": [
+            {
+              "id": "default",
+              "name": "Default",
+              "docURL": "...",
+              "version": "sktwi1xtmkfgx8626",
+              "description": "ArtistSectionHeader",
+              "primary": {
+                "ArtistSectionHeaderFirstLine": {
+                  "type": "StructuredText",
+                  "config": {
+                    "label": "ArtistSectionHeaderFirstLine",
+                    "placeholder": "This is where it all begins...",
+                    "allowTargetBlank": true,
+                    "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+                  }
+                },
+                "ArtistSectionHeaderSecondLine": {
+                  "type": "StructuredText",
+                  "config": {
+                    "label": "ArtistSectionHeaderSecondLine",
+                    "placeholder": "A nice description of your feature",
+                    "allowTargetBlank": true,
+                    "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+                  }
+                }
+              },
+              "items": {},
+              "imageUrl": "https://images.prismic.io/slice-machine/621a5ec4-0387-4bc5-9860-2dd46cbc07cd_default_ss.png?auto=compress,format"
+            }
+          ]
+        },
+        "mocks": {
+          "default": {
+            "variation": "default",
+            "version": "sktwi1xtmkfgx8626",
+            "items": [
+              {}
+            ],
+            "primary": {
+              "ArtistSectionHeaderFirstLine": [
+                {
+                  "type": "paragraph",
+                  "text": "Commodo sit duis culpa cupidatat enim ut exercitation sunt. Officia dolor irure magna reprehenderit et qui consequat.",
+                  "spans": []
+                }
+              ],
+              "ArtistSectionHeaderSecondLine": [
+                {
+                  "type": "paragraph",
+                  "text": "Ad adipisicing et non aliqua nisi eiusmod sunt tempor laborum. Minim officia non quis nisi consequat id amet ipsum labore sint labore in.",
+                  "spans": []
+                }
+              ]
+            },
+            "slice_type": "artist_section_header"
+          }
+        },
+        "meta": {
+          "fileName": "index",
+          "extension": "tsx"
+        },
+        "screenshotPaths": {}
+      },
       "homepage_intro": {
         "library": "apps/web/slices",
         "id": "homepage_intro",
@@ -149,7 +223,7 @@
         },
         "screenshotPaths": {
           "default": {
-            "path": "/home/lopogo59/Studia/tatuaz/.slicemachine/assets/apps/web/slices/Image/default/preview.png",
+            "path": "/Users/nikodemwojcik/Desktop/tatuaz/.slicemachine/assets/apps/web/slices/Image/default/preview.png",
             "width": 800,
             "height": 444
           }
@@ -228,7 +302,7 @@
         },
         "screenshotPaths": {
           "default": {
-            "path": "/home/lopogo59/Studia/tatuaz/.slicemachine/assets/apps/web/slices/TextBlock/default/preview.png",
+            "path": "/Users/nikodemwojcik/Desktop/tatuaz/.slicemachine/assets/apps/web/slices/TextBlock/default/preview.png",
             "width": 800,
             "height": 96
           }

@@ -8,9 +8,11 @@ export const theme: DefaultTheme = {
     secondary: "#FFF",
     background1: "#151515",
     background2: "#2B2B2B",
+    background3: "#494949",
   },
 
   radius: {
+    xxxxsmall: "2px",
     xxxsmall: "4px",
     xxsmall: "8px",
     xsmall: "12px",
@@ -20,8 +22,10 @@ export const theme: DefaultTheme = {
     xlarge: "32px",
     xxlarge: "48px",
     xxxlarge: "64px",
+    xxxxlarge: "80px",
   },
   space: {
+    xxxxsmall: "2px",
     xxxsmall: "4px",
     xxsmall: "8px",
     xsmall: "12px",
@@ -31,8 +35,10 @@ export const theme: DefaultTheme = {
     xlarge: "32px",
     xxlarge: "48px",
     xxxlarge: "64px",
+    xxxxlarge: "80px",
   },
   sizes: {
+    xxxxsmall: rem(2),
     xxxsmall: rem(4),
     xxsmall: rem(8),
     xsmall: rem(12),
@@ -42,6 +48,7 @@ export const theme: DefaultTheme = {
     xlarge: rem(32),
     xxlarge: rem(48),
     xxxlarge: rem(64),
+    xxxxlarge: rem(80),
   },
   gradients: {
     card: "61.62deg, rgba(130, 33, 50, 0.6) 0%, rgba(191, 34, 62, 0.425) 40.63%, rgba(130, 33, 50, 0) 100%",

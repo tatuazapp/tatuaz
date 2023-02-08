@@ -35,7 +35,7 @@ interface HomepageIntroDocumentData {
  * Slice for *HomepageIntro → Slice Zone*
  *
  */
-type HomepageIntroDocumentDataSlicesSlice = HomepageIntroSlice;
+type HomepageIntroDocumentDataSlicesSlice = HomepageIntroSlice | ArtistSectionHeaderSlice;
 /**
  * HomepageIntro document from Prismic
  *
@@ -76,6 +76,55 @@ type TestDocumentDataSlicesSlice = TextBlockSlice | ImageSlice;
  */
 export type TestDocument<Lang extends string = string> = prismicT.PrismicDocumentWithoutUID<Simplify<TestDocumentData>, "test", Lang>;
 export type AllDocumentTypes = HomepageIntroDocument | TestDocument;
+/**
+ * Primary content in ArtistSectionHeader → Primary
+ *
+ */
+interface ArtistSectionHeaderSliceDefaultPrimary {
+    /**
+     * ArtistSectionHeaderFirstLine field in *ArtistSectionHeader → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: This is where it all begins...
+     * - **API ID Path**: artist_section_header.primary.ArtistSectionHeaderFirstLine
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    ArtistSectionHeaderFirstLine: prismicT.RichTextField;
+    /**
+     * ArtistSectionHeaderSecondLine field in *ArtistSectionHeader → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: A nice description of your feature
+     * - **API ID Path**: artist_section_header.primary.ArtistSectionHeaderSecondLine
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    ArtistSectionHeaderSecondLine: prismicT.RichTextField;
+}
+/**
+ * Default variation for ArtistSectionHeader Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `ArtistSectionHeader`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ArtistSectionHeaderSliceDefault = prismicT.SharedSliceVariation<"default", Simplify<ArtistSectionHeaderSliceDefaultPrimary>, never>;
+/**
+ * Slice variation for *ArtistSectionHeader*
+ *
+ */
+type ArtistSectionHeaderSliceVariation = ArtistSectionHeaderSliceDefault;
+/**
+ * ArtistSectionHeader Shared Slice
+ *
+ * - **API ID**: `artist_section_header`
+ * - **Description**: `ArtistSectionHeader`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ArtistSectionHeaderSlice = prismicT.SharedSlice<"artist_section_header", ArtistSectionHeaderSliceVariation>;
 /**
  * Primary content in HomepageIntro → Primary
  *
@@ -228,6 +277,6 @@ declare module "@prismicio/client" {
         (repositoryNameOrEndpoint: string, options?: prismic.ClientConfig): prismic.Client<AllDocumentTypes>;
     }
     namespace Content {
-        export type { HomepageIntroDocumentData, HomepageIntroDocumentDataSlicesSlice, HomepageIntroDocument, TestDocumentData, TestDocumentDataSlicesSlice, TestDocument, AllDocumentTypes, HomepageIntroSliceDefaultPrimary, HomepageIntroSliceDefault, HomepageIntroSliceVariation, HomepageIntroSlice, ImageSliceDefaultPrimary, ImageSliceDefault, ImageSliceVariation, ImageSlice, TextBlockSliceDefaultPrimary, TextBlockSliceDefault, TextBlockSliceVariation, TextBlockSlice };
+        export type { HomepageIntroDocumentData, HomepageIntroDocumentDataSlicesSlice, HomepageIntroDocument, TestDocumentData, TestDocumentDataSlicesSlice, TestDocument, AllDocumentTypes, ArtistSectionHeaderSliceDefaultPrimary, ArtistSectionHeaderSliceDefault, ArtistSectionHeaderSliceVariation, ArtistSectionHeaderSlice, HomepageIntroSliceDefaultPrimary, HomepageIntroSliceDefault, HomepageIntroSliceVariation, HomepageIntroSlice, ImageSliceDefaultPrimary, ImageSliceDefault, ImageSliceVariation, ImageSlice, TextBlockSliceDefaultPrimary, TextBlockSliceDefault, TextBlockSliceVariation, TextBlockSlice };
     }
 }

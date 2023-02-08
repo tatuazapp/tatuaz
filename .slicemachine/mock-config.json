@@ -52,6 +52,24 @@
           }
         }
       }
+    },
+    "ArtistSectionHeader": {
+      "default": {
+        "primary": {
+          "ArtistSectionHeaderFirstLine": {
+            "config": {
+              "patternType": "PARAGRAPH",
+              "blocks": 1
+            }
+          },
+          "ArtistSectionHeaderSecondLine": {
+            "config": {
+              "patternType": "PARAGRAPH",
+              "blocks": 1
+            }
+          }
+        }
+      }
     }
   }
 }

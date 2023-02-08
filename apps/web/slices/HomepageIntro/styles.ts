@@ -1,70 +1,83 @@
+import { down } from "styled-breakpoints"
 import styled from "styled-components"
 // import { rem } from "../../styles/utils"
 
-// export const ValueContainer = styled.div<{ length: number }>`
-//   width: 80%;
-//   margin-bottom: ${({ length, theme }) =>
-//     length < 10
-//       ? theme.space.medium
-//       : length > 16
-//       ? "0px"
-//       : theme.space.xxsmall};
-
-//   font-size: ${({ length }) =>
-//     length < 10 ? rem(34) : length > 26 ? rem(22) : rem(28)};
-//   font-weight: 700;
-//   line-height: ${rem(32)};
-//   color: ${({ theme }) => theme.colors.primary};
-//   text-align: center;
-// `
-
-export const HomepageIntroWrapper = styled.section`
+export const HomepageIntroWrapper = styled.div`
+  min-width: 300px;
   max-width: 600px;
-  margin: 4em auto;
-  color: #ffffff;
-  text-align: justify;
+  color: ${({ theme }) => theme.colors.secondary};
 `
-export const TitleWrapper = styled.span`
-  color: #ffffff;
-  padding-bottom: ${({ theme }) => theme.space.small};
+export const TitleWrapper = styled.div`
+  width: 100%;
 `
 export const TitleFirstLineWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+  ${down("md")} {
+    margin-bottom: ${({ theme }) => theme.sizes.medium};
+  }
 `
-export const TitleFirstLineTitleWrapper = styled.span`
-  width: 60%;
+export const TitleFirstLineTitleWrapper = styled.div`
+  padding-right: ${({ theme }) => theme.sizes.small};
   font-size: ${({ theme }) => theme.sizes.xxlarge};
-  color: ${({ theme }) => theme.colors.secondary};
+  line-height: ${({ theme }) => theme.sizes.xxlarge};
+
+  ${down("md")} {
+    font-size: ${({ theme }) => theme.sizes.xlarge};
+    line-height: ${({ theme }) => theme.sizes.large};
+  }
+
+  ${down("sm")} {
+    font-size: ${({ theme }) => theme.sizes.xlarge};
+    line-height: ${({ theme }) => theme.sizes.large};
+  }
 `
 
 export const Slider = styled.div`
-  width: 40%;
   display: flex;
+  flex: 1;
   align-items: center;
+  /* vertical-align: middle; */
+  min-width: 20%;
+
+  ${down("sm")} {
+    display: none;
+  }
 `
 
-export const SliderTrack = styled.span`
+export const SliderTrack = styled.div`
   width: 100%;
-  height: ${({ theme }) => theme.sizes.xxxsmall};
+  height: ${({ theme }) => theme.sizes.xxxxsmall};
   background-color: ${({ theme }) => theme.colors.primary};
 `
 
-export const SliderThumb = styled.span`
+export const SliderThumb = styled.div`
   display: inline-block;
 
-  width: ${({ theme }) => theme.sizes.small};
-  height: ${({ theme }) => theme.sizes.small};
+  width: ${({ theme }) => theme.sizes.xsmall};
+  height: ${({ theme }) => theme.sizes.xsmall};
 
   background-color: ${({ theme }) => theme.colors.primary};
   border-radius: 50%;
 `
 
-export const TitleSecondLineWrapper = styled.span`
-  text-align: justify;
+export const TitleSecondLineWrapper = styled.div`
   font-size: ${({ theme }) => theme.sizes.xxlarge};
-  color: ${({ theme }) => theme.colors.secondary};
+  line-height: ${({ theme }) => theme.sizes.xxxlarge};
+
+  ${down("md")} {
+    font-size: ${({ theme }) => theme.sizes.xlarge};
+    line-height: ${({ theme }) => theme.sizes.large};
+  }
+
+  ${down("sm")} {
+    font-size: ${({ theme }) => theme.sizes.xlarge};
+    line-height: ${({ theme }) => theme.sizes.large};
+  }
 `
 
-export const DescriptionWrapper = styled.span``
+export const DescriptionWrapper = styled.div`
+  margin-top: ${({ theme }) => theme.sizes.large};
+  margin-bottom: ${({ theme }) => theme.sizes.large};
+  text-align: justify;
+`

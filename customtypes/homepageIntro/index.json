@@ -21,6 +21,9 @@
           "choices": {
             "homepage_intro": {
               "type": "SharedSlice"
+            },
+            "artist_section_header": {
+              "type": "SharedSlice"
             }
           }
         }

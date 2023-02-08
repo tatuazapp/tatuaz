@@ -1,4 +1,5 @@
 import { FunctionComponent } from "react"
+import Footer from "./Footer"
 import Header from "./Header"
 
 type AppLayoutProps = {
@@ -9,6 +10,7 @@ const AppLayout: FunctionComponent<AppLayoutProps> = ({ children }) => (
   <>
     <Header />
     {children}
+    <Footer />
   </>
 )
 export default AppLayout
