@@ -277,7 +277,7 @@ public static class GatewayExtensions
                 opt.ConnectionString = GetBlobOpt(configuration).ConnectionString;
                 opt.ContainerName = GetBlobOpt(configuration).ImagesCacheContainerName;
 
-                AzureBlobStorageCache.CreateIfNotExists(opt, PublicAccessType.None);
+                AzureBlobStorageCache.CreateIfNotExists(opt, PublicAccessType.BlobContainer);
             })
             .AddProvider<AzureBlobStorageImageProvider>()
             .SetCache<AzureBlobStorageCache>()

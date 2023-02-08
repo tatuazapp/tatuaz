@@ -8,7 +8,8 @@ using Tatuaz.Shared.Infrastructure.Abstractions.Specification;
 
 namespace Tatuaz.Shared.Infrastructure.Specification;
 
-public class FullSpecification<TEntity> : ISpecification<TEntity> where TEntity : class
+public class FullSpecification<TEntity> : ISpecification<TEntity>
+    where TEntity : class
 {
     private readonly List<Func<IQueryable<TEntity>, IQueryable<TEntity>>> _customs;
     private readonly List<Expression<Func<TEntity, bool>>> _filteringPredicates;

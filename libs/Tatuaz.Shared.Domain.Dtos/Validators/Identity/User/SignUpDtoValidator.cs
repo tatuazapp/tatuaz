@@ -45,17 +45,19 @@ public class SignUpDtoValidator : AbstractValidator<SignUpDto>
             .NotNull()
             .WithErrorCode(CreateUserErrorCodes.PhotoCategoryIdsNull)
             .WithMessage("Photo categories cannot be null")
-            .Must(x => x.Length >= 3)
+            .Must(x => x?.Length >= 3)
+            .When(x => x.PhotoCategoryIds != null)
             .WithErrorCode(CreateUserErrorCodes.PhotoCategoryIdsTooFew)
             .WithMessage("At least 3 photo categories must be selected")
-            .Must(x => x.Length <= 20)
+            .Must(x => x?.Length <= 20)
+            .When(x => x.PhotoCategoryIds != null)
             .WithErrorCode(CreateUserErrorCodes.PhotoCategoryIdsTooMany)
             .WithMessage("At most 20 photo categories can be selected")
             .MustAsync(
                 async (photoCategoryIds, ct) =>
                 {
                     var valid = true;
-                    foreach (var photoCategoryId in photoCategoryIds)
+                    foreach (var photoCategoryId in photoCategoryIds!)
                     {
                         if (
                             await photoCategoryRepository
@@ -73,9 +75,11 @@ public class SignUpDtoValidator : AbstractValidator<SignUpDto>
                     return valid;
                 }
             )
+            .When(x => x.PhotoCategoryIds != null)
             .WithErrorCode(CreateUserErrorCodes.PhotoCategoryIdsInvalid)
             .WithMessage("One or more photo categories are invalid")
-            .Must(x => x.Length == x.Distinct().Count())
+            .Must(x => x?.Length == x?.Distinct().Count())
+            .When(x => x.PhotoCategoryIds != null)
             .WithErrorCode(CreateUserErrorCodes.PhotoCategoryIdsDuplicate)
             .WithMessage("Photo categories must not contain duplicates");
     }

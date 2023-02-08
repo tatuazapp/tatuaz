@@ -76,7 +76,6 @@ k8s_yaml([
     'kubernetes/deploys/scheduler.yaml',
     'kubernetes/deploys/postgresql.yaml',
     'kubernetes/deploys/rabbitmq.yaml',
-    'kubernetes/deploys/azurite.yaml',
     'kubernetes/configMaps/auth-config-map.yaml',
     'kubernetes/configMaps/gateway-config-map.yaml',
     'kubernetes/configMaps/history-config-map.yaml',
@@ -91,7 +90,6 @@ k8s_yaml([
     'kubernetes/volumes/rabbitmq-volume.yaml',
     'kubernetes/services/rabbitmq-service.yaml',
     'kubernetes/services/postgresql-service.yaml',
-    'kubernetes/services/azurite-service.yaml',
     'kubernetes/tatuaz-dev-namespace.yaml',
 ])
 
@@ -101,4 +99,3 @@ k8s_resource('dashboard', labels='backend', resource_deps=['build-dashboard'])
 k8s_resource('scheduler', labels='backend', resource_deps=['build-scheduler'])
 k8s_resource('rabbitmq', port_forwards='15672:15672', labels='queue')
 k8s_resource('postgresql', port_forwards='5432:5432', labels='postgres')
-k8s_resource('azurite', port_forwards='10000:10000', labels='storage')

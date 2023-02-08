@@ -10,5 +10,6 @@ public class AuthorizeActiveUserAttribute : AuthorizeAttribute
     /// <summary>
     /// Default constructor.
     /// </summary>
-    public AuthorizeActiveUserAttribute() : base(ActiveUserRequirement.Name) { }
+    public AuthorizeActiveUserAttribute()
+        : base(ActiveUserRequirement.Name) { }
 }
