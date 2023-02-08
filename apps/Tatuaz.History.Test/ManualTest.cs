@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MassTransit;
 using Tatuaz.Dashboard.Emails;
 using Tatuaz.Dashboard.Queue;
-using Tatuaz.Dashboard.Queue.Contacts.Emails;
+using Tatuaz.Dashboard.Queue.Contracts.Emails;
 using Xunit;
 
 namespace Tatuaz.History.Test;

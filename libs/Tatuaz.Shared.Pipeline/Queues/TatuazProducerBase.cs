@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MassTransit;
@@ -30,9 +31,9 @@ public class TatuazProducerBase<TRequest, TData> where TRequest : class
             GetType().Name
         );
         return (
-            await _requestClient
-                .GetResponse<TatuazResult<TData>>(message, cancellationToken)
-                .ConfigureAwait(false)
-        ).Message;
+                await _requestClient
+                    .GetResponse<TatuazResult<TData>>(message, cancellationToken)
+                    .ConfigureAwait(false)
+            ).Message ?? throw new NullReferenceException();
     }
 }

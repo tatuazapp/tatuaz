@@ -166,7 +166,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
 
         return new PagedData<TEntity>(
             data,
-            pagedParams.PageSize,
+            pagedParams.PageNumber,
             pagedParams.PageSize,
             totalPages,
             count
@@ -195,7 +195,7 @@ public class GenericRepository<TEntity, THistEntity, TId>
 
         return new PagedData<TDto>(
             data,
-            pagedParams.PageSize,
+            pagedParams.PageNumber,
             pagedParams.PageSize,
             totalPages,
             count

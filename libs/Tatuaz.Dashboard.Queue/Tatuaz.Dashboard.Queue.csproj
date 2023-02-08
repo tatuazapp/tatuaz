@@ -13,6 +13,8 @@
   
   <ItemGroup>
     <ProjectReference Include="..\Tatuaz.Dashboard.Emails\Tatuaz.Dashboard.Emails.csproj" />
+    <ProjectReference Include="..\Tatuaz.Shared.Domain.Dtos\Tatuaz.Shared.Domain.Dtos.csproj" />
+    <ProjectReference Include="..\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj" />
     <ProjectReference Include="..\Tatuaz.Shared.Pipeline\Tatuaz.Shared.Pipeline.csproj" />
   </ItemGroup>
   

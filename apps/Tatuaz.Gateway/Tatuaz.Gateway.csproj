@@ -18,7 +18,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\libs\Tatuaz.Gateway.Handlers\Tatuaz.Gateway.Handlers.csproj" />
-        <ProjectReference Include="..\..\libs\Tatuaz.Gateway.Infrastructure\Tatuaz.Gateway.Infrastructure.csproj" />
         <ProjectReference Include="..\..\libs\Tatuaz.Gateway.Requests\Tatuaz.Gateway.Requests.csproj" />
         <ProjectReference Include="..\..\libs\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj" />
     </ItemGroup>

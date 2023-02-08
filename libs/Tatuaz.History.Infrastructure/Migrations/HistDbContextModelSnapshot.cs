@@ -231,6 +231,41 @@ namespace Tatuaz.History.DataAccess.Migrations
 
                     b.ToTable("H_photo_categories", "H_photo");
                 });
+
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Photo.HistUserPhotoCategory", b =>
+                {
+                    b.Property<Guid>("HistId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("hist_id");
+
+                    b.Property<Instant>("HistDumpedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("hist_dumped_at");
+
+                    b.Property<int>("HistState")
+                        .HasColumnType("integer")
+                        .HasColumnName("hist_state");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<int>("PhotoCategoryId")
+                        .HasColumnType("integer")
+                        .HasColumnName("photo_category_id");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(320)
+                        .HasColumnType("character varying(320)")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("HistId")
+                        .HasName("pk_h_user_photo_categories");
+
+                    b.ToTable("H_user_photo_categories", "H_photo");
+                });
 #pragma warning restore 612, 618
         }
     }

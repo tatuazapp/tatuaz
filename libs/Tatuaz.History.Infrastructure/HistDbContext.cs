@@ -22,6 +22,7 @@ public class HistDbContext : DbContext
 
     // photos
     public DbSet<HistPhotoCategory> HPhotoCategories { get; set; } = default!;
+    public virtual DbSet<HistUserPhotoCategory> HUserPhotoCategories { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

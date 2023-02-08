@@ -17,20 +17,21 @@ public class FullSpecification<TEntity> : ISpecification<TEntity> where TEntity 
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>
     > _includes;
 
-    private readonly List<Expression<Func<TEntity, object>>> _orderingPredicates;
+    private readonly List<(
+        Expression<Func<TEntity, object>> Predicate,
+        OrderDirection OrderDirection
+    )> _orderingPredicates;
 
     public FullSpecification()
     {
         TrackingStrategy = TrackingStrategy.NoTracking;
-        OrderDirection = OrderDirection.Ascending;
         _filteringPredicates = new List<Expression<Func<TEntity, bool>>>();
-        _orderingPredicates = new List<Expression<Func<TEntity, object>>>();
+        _orderingPredicates = new List<(Expression<Func<TEntity, object>>, OrderDirection)>();
         _includes = new List<Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>>();
         _customs = new List<Func<IQueryable<TEntity>, IQueryable<TEntity>>>();
     }
 
     public TrackingStrategy TrackingStrategy { get; set; }
-    public OrderDirection OrderDirection { get; set; }
 
     public IQueryable<TEntity> Apply(IQueryable<TEntity> query)
     {
@@ -48,9 +49,12 @@ public class FullSpecification<TEntity> : ISpecification<TEntity> where TEntity 
         return this;
     }
 
-    public FullSpecification<TEntity> AddOrder(Expression<Func<TEntity, object>> predicate)
+    public FullSpecification<TEntity> AddOrder(
+        Expression<Func<TEntity, object>> predicate,
+        OrderDirection direction = OrderDirection.Ascending
+    )
     {
-        _orderingPredicates.Add(predicate);
+        _orderingPredicates.Add((predicate, direction));
         return this;
     }
 
@@ -98,16 +102,18 @@ public class FullSpecification<TEntity> : ISpecification<TEntity> where TEntity 
         if (_orderingPredicates.Any())
         {
             query =
-                OrderDirection == OrderDirection.Ascending
-                    ? query.OrderBy(_orderingPredicates[0])
-                    : query.OrderByDescending(_orderingPredicates[0]);
+                _orderingPredicates[0].OrderDirection == OrderDirection.Ascending
+                    ? query.OrderBy(_orderingPredicates[0].Predicate)
+                    : query.OrderByDescending(_orderingPredicates[0].Predicate);
             for (var i = 1; i < _orderingPredicates.Count; i++)
             {
                 query =
-                    OrderDirection == OrderDirection.Ascending
-                        ? ((IOrderedQueryable<TEntity>)query).ThenBy(_orderingPredicates[i])
+                    _orderingPredicates[i].OrderDirection == OrderDirection.Ascending
+                        ? ((IOrderedQueryable<TEntity>)query).ThenBy(
+                            _orderingPredicates[i].Predicate
+                        )
                         : ((IOrderedQueryable<TEntity>)query).ThenByDescending(
-                            _orderingPredicates[i]
+                            _orderingPredicates[i].Predicate
                         );
             }
         }

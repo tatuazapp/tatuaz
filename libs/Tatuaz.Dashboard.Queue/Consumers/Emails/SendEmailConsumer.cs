@@ -4,7 +4,7 @@ using MassTransit;
 using Microsoft.Extensions.Logging;
 using NodaTime;
 using Tatuaz.Dashboard.Emails;
-using Tatuaz.Dashboard.Queue.Contacts.Emails;
+using Tatuaz.Dashboard.Queue.Contracts.Emails;
 using Tatuaz.Shared.Pipeline.Queues;
 
 namespace Tatuaz.Dashboard.Queue.Consumers.Emails;

@@ -5,6 +5,7 @@ using FluentValidation;
 using FluentValidation.Validators;
 using Microsoft.Extensions.DependencyInjection;
 using Tatuaz.Shared.Domain.Dtos.Validators.Identity;
+using Tatuaz.Shared.Domain.Dtos.Validators.Identity.User;
 using Xunit;
 
 namespace Tatuaz.Convention.Test.Shared.Domain.Dtos;
@@ -15,7 +16,7 @@ public class ValidatorTest
 
     public ValidatorTest(IServiceProvider serviceProvider)
     {
-        validators = typeof(CreateUserDtoValidator).Assembly
+        validators = typeof(SignUpDtoValidator).Assembly
             .GetTypes()
             .Where(x => x.IsClass && !x.IsAbstract && x.IsAssignableTo(typeof(IValidator)))
             .Select(x => (IValidator)ActivatorUtilities.CreateInstance(serviceProvider, x))

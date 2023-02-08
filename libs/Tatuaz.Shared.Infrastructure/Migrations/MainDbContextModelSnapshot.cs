@@ -181,6 +181,35 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                     b.ToTable("photo_categories", "photo");
                 });
 
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Photo.UserPhotoCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<int>("PhotoCategoryId")
+                        .HasColumnType("integer")
+                        .HasColumnName("photo_category_id");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(320)
+                        .HasColumnType("character varying(320)")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_user_photo_categories");
+
+                    b.HasIndex("PhotoCategoryId")
+                        .HasDatabaseName("ix_user_photo_categories_photo_category_id");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_user_photo_categories_user_id");
+
+                    b.ToTable("user_photo_categories", "photo");
+                });
+
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUserRole", b =>
                 {
                     b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazRole", "Role")
@@ -202,6 +231,27 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Photo.UserPhotoCategory", b =>
+                {
+                    b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Photo.PhotoCategory", "PhotoCategory")
+                        .WithMany("UserPhotoCategories")
+                        .HasForeignKey("PhotoCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_user_photo_categories_photo_categories_photo_category_id");
+
+                    b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", "User")
+                        .WithMany("UserPhotoCategories")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_user_photo_categories_tatuaz_users_user_id");
+
+                    b.Navigation("PhotoCategory");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazRole", b =>
                 {
                     b.Navigation("TatuazUserRoles");
@@ -209,7 +259,14 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", b =>
                 {
+                    b.Navigation("UserPhotoCategories");
+
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Photo.PhotoCategory", b =>
+                {
+                    b.Navigation("UserPhotoCategories");
                 });
 #pragma warning restore 612, 618
         }

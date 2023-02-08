@@ -99,6 +99,7 @@ public class UnitOfWork : IUnitOfWork
             UpdateUserContext();
             await action(cancellationToken).ConfigureAwait(false);
             _histEntitiesToDump.AddRange(GetDumpHistoryOrders());
+            await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             await _currentTransaction.CommitAsync(cancellationToken).ConfigureAwait(false);
             await DumpHistoryChanges(cancellationToken).ConfigureAwait(false);
         }

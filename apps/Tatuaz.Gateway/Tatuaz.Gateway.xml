@@ -102,27 +102,36 @@
             Optional theme added via custom css
             </summary>
         </member>
-        <member name="T:Tatuaz.Gateway.Controllers.LandingController">
+        <member name="T:Tatuaz.Gateway.Controllers.IdentityController">
             <summary>
-            Controlling receiving requests for landing page
+            Controller for user related operations
             </summary>
         </member>
-        <member name="M:Tatuaz.Gateway.Controllers.LandingController.#ctor(MediatR.IMediator)">
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.#ctor(MediatR.IMediator)">
             <inheritdoc />
         </member>
-        <member name="M:Tatuaz.Gateway.Controllers.LandingController.ListSummaryStats(Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListSummaryStats.ListSummaryStatsDto)">
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.Me">
             <summary>
-            Get summary stats for landing page
+                Check what user is logged in
             </summary>
-            <param name="listSummaryStatsDto"></param>
-            <returns></returns>
+            <returns>UserDto</returns>
         </member>
-        <member name="M:Tatuaz.Gateway.Controllers.LandingController.ListArtistStats(Tatuaz.Shared.Domain.Dtos.Dtos.Landing.ListArtistStats.ListArtistStatsDto)">
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.SignUp(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User.SignUpDto)">
             <summary>
-            Get artist stats for landing page
+                Register user
             </summary>
-            <param name="listArtistStatsDto"></param>
-            <returns></returns>
+            <returns>UserDto</returns>
+        </member>
+        <member name="T:Tatuaz.Gateway.Controllers.PhotoController">
+            <summary>
+            Controller for photo categories
+            </summary>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.PhotoController.#ctor(MediatR.IMediator)">
+            <summary>
+            Constructor receiving the mediator from DI
+            </summary>
+            <param name="mediator"></param>
         </member>
         <member name="T:Tatuaz.Gateway.Controllers.TatuazControllerBase">
             <summary>
@@ -147,26 +156,6 @@
             <param name="result"></param>
             <typeparam name="TData"></typeparam>
             <returns></returns>
-        </member>
-        <member name="T:Tatuaz.Gateway.Controllers.UsersController">
-            <summary>
-            Controller for user related operations
-            </summary>
-        </member>
-        <member name="M:Tatuaz.Gateway.Controllers.UsersController.#ctor(MediatR.IMediator)">
-            <inheritdoc />
-        </member>
-        <member name="M:Tatuaz.Gateway.Controllers.UsersController.WhoAmI">
-            <summary>
-                Check what user is logged in
-            </summary>
-            <returns>UserDto</returns>
-        </member>
-        <member name="M:Tatuaz.Gateway.Controllers.UsersController.SignUp(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.CreateUserDto)">
-            <summary>
-                Register user
-            </summary>
-            <returns>UserDto</returns>
         </member>
         <member name="T:Tatuaz.Gateway.GatewayExtensions">
             <summary>

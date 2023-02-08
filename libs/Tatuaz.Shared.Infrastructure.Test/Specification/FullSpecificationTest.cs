@@ -186,7 +186,7 @@ public class FullSpecificationTest
             _dbContext.AddRange(authors);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var spec = new FullSpecification<Author> { OrderDirection = OrderDirection.Ascending };
+            var spec = new FullSpecification<Author>();
             spec.AddOrder(x => x.FirstName);
             spec.AddFilter(x => authors.Contains(x));
 
@@ -208,8 +208,8 @@ public class FullSpecificationTest
             _dbContext.AddRange(authors);
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
-            var spec = new FullSpecification<Author> { OrderDirection = OrderDirection.Descending };
-            spec.AddOrder(x => x.FirstName);
+            var spec = new FullSpecification<Author>();
+            spec.AddOrder(x => x.FirstName, OrderDirection.Descending);
             spec.AddFilter(x => authors.Contains(x));
 
             var actual = await _authorRepository

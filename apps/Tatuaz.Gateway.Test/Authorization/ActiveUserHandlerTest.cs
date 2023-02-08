@@ -7,7 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Moq;
 using Tatuaz.Gateway.Authorization;
-using Tatuaz.Gateway.Requests.Queries.Users;
+using Tatuaz.Gateway.Requests.Queries.Identity;
 using Tatuaz.Testing.Mocks.Infrastructure;
 using Xunit;
 
