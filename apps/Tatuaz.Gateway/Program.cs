@@ -1,4 +1,5 @@
 #pragma warning disable CA1852
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Serilog;
 using SixLabors.ImageSharp.Web.DependencyInjection;

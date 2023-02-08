@@ -8,3 +8,6 @@ metadata:
 data:
   ASPNETCORE_ENVIRONMENT: Development # Change to Production to run release build
   ConnectionStrings__TatuazMainDb: Server=postgresql-service.tatuaz-dev.svc.cluster.local;Port=5432;Database=TatuazMainDb;User Id=postgres;Password=password;
+  Blob__ConnectionString: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite-service.tatuaz-dev.svc.cluster.local:10000/devstoreaccount1;
+  Blob__ImagesContainerName: tatuaz-images
+  Blob__ImagesCacheContainerName: tatuaz-images-cache

@@ -262,8 +262,6 @@ public static class GatewayExtensions
                 };
             })
             .ClearProviders()
-            .AddProvider<AzureBlobStorageImageProvider>()
-            .SetCache<AzureBlobStorageCache>()
             .Configure<AzureBlobStorageImageProviderOptions>(opt =>
             {
                 opt.BlobContainers.Add(
@@ -281,6 +279,8 @@ public static class GatewayExtensions
 
                 AzureBlobStorageCache.CreateIfNotExists(opt, PublicAccessType.None);
             })
+            .AddProvider<AzureBlobStorageImageProvider>()
+            .SetCache<AzureBlobStorageCache>()
             .RemoveProcessor<BackgroundColorWebProcessor>();
 
         services.RegisterGatewayHandlersServices();
