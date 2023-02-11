@@ -34,7 +34,8 @@ public class GenericRepositoryTest
         public GetByIdAsyncTest(
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, authorRepository) { }
+        )
+            : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnSavedEntity()
@@ -136,7 +137,8 @@ public class GenericRepositoryTest
         public ExistsByIdAsyncTest(
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, authorRepository) { }
+        )
+            : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnTrueOnExistingEntity()
@@ -166,7 +168,8 @@ public class GenericRepositoryTest
         public GetBySpecificationAsyncTest(
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, authorRepository) { }
+        )
+            : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnEntity()
@@ -220,7 +223,8 @@ public class GenericRepositoryTest
         public GetBySpecificationWithPagingAsyncTest(
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, authorRepository) { }
+        )
+            : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnEntityWithPaging()
@@ -281,7 +285,8 @@ public class GenericRepositoryTest
         public ExistsByPredicateAsyncTest(
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, authorRepository) { }
+        )
+            : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnTrueOnExistingEntity()
@@ -314,7 +319,8 @@ public class GenericRepositoryTest
         public CountByPredicateAsyncTest(
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, authorRepository) { }
+        )
+            : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_ReturnCount()
@@ -348,7 +354,8 @@ public class GenericRepositoryTest
         public CreateAsyncTest(
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, authorRepository) { }
+        )
+            : base(dbContext, authorRepository) { }
 
         [Fact]
         public void Should_CreateEntity()
@@ -367,7 +374,8 @@ public class GenericRepositoryTest
         public DeleteAsyncTest(
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository
-        ) : base(dbContext, authorRepository) { }
+        )
+            : base(dbContext, authorRepository) { }
 
         [Fact]
         public async Task Should_DeleteEntity()

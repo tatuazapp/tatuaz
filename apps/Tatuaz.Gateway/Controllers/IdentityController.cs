@@ -18,7 +18,8 @@ namespace Tatuaz.Gateway.Controllers;
 public class IdentityController : TatuazControllerBase
 {
     /// <inheritdoc />
-    public IdentityController(IMediator mediator) : base(mediator) { }
+    public IdentityController(IMediator mediator)
+        : base(mediator) { }
 
     /// <summary>
     ///     Check what user is logged in

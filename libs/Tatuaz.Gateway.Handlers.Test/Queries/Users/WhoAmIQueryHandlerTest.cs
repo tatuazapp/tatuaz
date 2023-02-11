@@ -34,7 +34,8 @@ public class WhoAmIQueryHandlerTest
 
     public class Handle : WhoAmIQueryHandlerTest
     {
-        public Handle(IMapper mapper) : base(mapper) { }
+        public Handle(IMapper mapper)
+            : base(mapper) { }
 
         [Fact]
         public async Task Should_ReturnUserWhenUserExists()

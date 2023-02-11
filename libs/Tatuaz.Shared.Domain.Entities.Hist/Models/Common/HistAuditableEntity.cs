@@ -4,7 +4,8 @@ using Tatuaz.Shared.Domain.Entities.Hist.Models.Attributes;
 namespace Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
 [BaseHistEntity, TestIgnoreHistEntity]
-public class HistAuditableEntity<TId> : HistEntity<TId> where TId : notnull
+public class HistAuditableEntity<TId> : HistEntity<TId>
+    where TId : notnull
 {
     public string ModifiedBy { get; set; } = default!;
     public Instant ModifiedAt { get; set; }

@@ -21,6 +21,7 @@ public class ManualTest
     [Fact]
     public async Task Test()
     {
+        return; // comment this line to run the test
         var sendEndpoint = await _sendEndpointProvider
             .GetSendEndpoint(DashboardQueueConstants.SendEmailQueueUri)
             .ConfigureAwait(false);

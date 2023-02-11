@@ -46,7 +46,8 @@ public class UserExistsQueryHandlerTest
 
     public class Handle : UserExistsQueryHandlerTest
     {
-        public Handle(DbContext dbContext) : base(dbContext) { }
+        public Handle(DbContext dbContext)
+            : base(dbContext) { }
 
         [Fact]
         public async Task Should_Return_True_When_User_Exists()

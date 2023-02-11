@@ -43,7 +43,7 @@ public class DumpHistoryConsumerTest
         public string Name { get; set; } = default!;
     }
 
-    public class TestHistEntity2 : HistEntity
+    public class TestHistEntity2 : HistEntity<int>
     {
         public string Name { get; set; } = default!;
     }
