@@ -4,6 +4,7 @@ using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Quartz;
 using Serilog;
 using Serilog.Core;
@@ -19,20 +20,6 @@ namespace Tatuaz.Scheduler;
 
 public static class SchedulerExtensions
 {
-    public static IConfiguration RegisterSchedulerConfiguration(this IConfiguration configuration)
-    {
-        var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", false, true)
-            .AddJsonFile(
-                $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
-                true
-            )
-            .AddEnvironmentVariables();
-
-        return builder.Build();
-    }
-
     public static IServiceCollection RegisterSchedulerServices(
         this IServiceCollection services,
         IConfiguration configuration
@@ -72,7 +59,7 @@ public static class SchedulerExtensions
         return services;
     }
 
-    public static ConfigureHostBuilder RegisterSchedulerHost(this ConfigureHostBuilder host)
+    public static IHostBuilder RegisterSchedulerHost(this IHostBuilder host)
     {
         host.UseSerilog(
             (context, services, loggerConfiguration) =>

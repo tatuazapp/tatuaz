@@ -4,6 +4,5 @@ namespace Tatuaz.Shared.Pipeline.Exceptions;
 
 public class UserContextMissingException : Exception
 {
-    public UserContextMissingException()
-        : base("User context is missing") { }
+    public UserContextMissingException() : base("User context is missing") { }
 }

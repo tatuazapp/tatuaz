@@ -25,8 +25,7 @@ public class ValidatorTest
 
     public class NotEmptyValidators : ValidatorTest
     {
-        public NotEmptyValidators(IServiceProvider serviceProvider)
-            : base(serviceProvider) { }
+        public NotEmptyValidators(IServiceProvider serviceProvider) : base(serviceProvider) { }
 
         [Fact]
         // We decided that you should use LengthValidator with length > 0

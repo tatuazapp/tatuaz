@@ -5,8 +5,7 @@ using Tatuaz.Shared.Pipeline.UserContext;
 
 namespace Tatuaz.Shared.Pipeline.Filters;
 
-public class UserContextConsumeFilter<T> : IFilter<ConsumeContext<T>>
-    where T : class
+public class UserContextConsumeFilter<T> : IFilter<ConsumeContext<T>> where T : class
 {
     private readonly IUserContext _userContext;
 

@@ -49,8 +49,7 @@ public class SignUpCommandHandlerTest
 
     public class Handle : SignUpCommandHandlerTest
     {
-        public Handle(IMapper mapper)
-            : base(mapper) { }
+        public Handle(IMapper mapper) : base(mapper) { }
 
         [Fact]
         public async Task Should_ReturnUserWhenCorrectCommandProvided()

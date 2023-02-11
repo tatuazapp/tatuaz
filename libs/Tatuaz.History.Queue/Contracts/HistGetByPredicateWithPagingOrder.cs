@@ -12,8 +12,7 @@ public record HistGetByPredicateWithPagingOrder<TEntity, TId>(
     Func<IEnumerable<TEntity>, IOrderedEnumerable<TEntity>> OrderBy,
     PagedParams PagedParams,
     Instant AsOf
-)
-    where TEntity : class;
+) where TEntity : class;
 
 public record HistGetByPredicateWithPagingResult<TEntity, TId>(PagedData<TEntity> PagedData)
     where TEntity : class;

@@ -5,6 +5,7 @@ using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -21,20 +22,6 @@ namespace Tatuaz.History;
 
 public static class HistoryExtensions
 {
-    public static IConfiguration RegisterHistoryConfiguration(this IConfiguration configuration)
-    {
-        var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", false, true)
-            .AddJsonFile(
-                $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
-                true
-            )
-            .AddEnvironmentVariables();
-
-        return builder.Build();
-    }
-
     public static IServiceCollection RegisterHistoryServices(
         this IServiceCollection services,
         IConfiguration configuration
@@ -57,7 +44,7 @@ public static class HistoryExtensions
         return services;
     }
 
-    public static ConfigureHostBuilder RegisterHistoryHost(this ConfigureHostBuilder host)
+    public static IHostBuilder RegisterHistoryHost(this IHostBuilder host)
     {
         host.UseSerilog(
             (context, services, loggerConfiguration) =>
