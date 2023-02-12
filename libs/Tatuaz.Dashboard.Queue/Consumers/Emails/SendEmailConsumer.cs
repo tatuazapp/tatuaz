@@ -19,8 +19,7 @@ public class SendEmailConsumer : TatuazConsumerBaseWithoutResponse<SendEmailOrde
         ILogger<SendEmailConsumer> logger,
         IEmailHandlerFactory emailHandlerFactory,
         IClock clock
-    )
-        : base(logger)
+    ) : base(logger)
     {
         _logger = logger;
         _emailHandlerFactory = emailHandlerFactory;

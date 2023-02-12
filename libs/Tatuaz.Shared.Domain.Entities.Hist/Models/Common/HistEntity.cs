@@ -5,8 +5,7 @@ using Tatuaz.Shared.Domain.Entities.Hist.Models.Attributes;
 namespace Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
 [BaseHistEntity, TestIgnoreHistEntity]
-public class HistEntity<TId> : HistEntity, IHistEntity
-    where TId : notnull
+public class HistEntity<TId> : HistEntity, IHistEntity where TId : notnull
 {
     public TId Id { get; set; } = default!;
 }

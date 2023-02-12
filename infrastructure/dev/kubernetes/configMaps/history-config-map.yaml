@@ -6,5 +6,5 @@ metadata:
   labels:
     app: history
 data:
-  ASPNETCORE_ENVIRONMENT: Development # Change to Production to run release build
-  ConnectionStrings__TatuazMainDb: Server=postgresql-service.tatuaz-dev.svc.cluster.local;Port=5432;Database=TatuazHistDb;User Id=postgres;Password=password;
+  DOTNET_ENVIRONMENT: Development # Change to Production to run release build
+  ConnectionStrings__TatuazHistDb: Server=postgresql-service.tatuaz-dev.svc.cluster.local;Port=5432;Database=TatuazHistDb;User Id=postgres;Password=password;

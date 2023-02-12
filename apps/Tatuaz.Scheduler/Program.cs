@@ -1,12 +1,16 @@
 #pragma warning disable CA1852
-using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
 using Tatuaz.Scheduler;
 
-var builder = WebApplication.CreateBuilder();
+var builder = Host.CreateDefaultBuilder(args);
 
-builder.Configuration.RegisterSchedulerConfiguration();
-builder.Services.RegisterSchedulerServices(builder.Configuration);
-builder.Host.RegisterSchedulerHost();
+builder.ConfigureServices(
+    (host, services) =>
+    {
+        services.RegisterSchedulerServices(host.Configuration);
+    }
+);
 
-var app = builder.Build();
-app.Run();
+builder.RegisterSchedulerHost();
+
+builder.Build().Run();

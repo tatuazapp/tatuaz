@@ -27,8 +27,7 @@ public class ListPhotoCategoriesConsumer
     public ListPhotoCategoriesConsumer(
         ILogger<ListPhotoCategoriesConsumer> logger,
         IGenericRepository<PhotoCategory, HistPhotoCategory, int> photoCategoryRepository
-    )
-        : base(logger)
+    ) : base(logger)
     {
         _photoCategoryRepository = photoCategoryRepository;
     }

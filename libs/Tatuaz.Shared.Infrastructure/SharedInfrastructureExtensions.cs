@@ -1,5 +1,7 @@
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NodaTime;
 using Npgsql;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
@@ -18,8 +20,7 @@ public static class SharedInfrastructureExtensions
     public static IServiceCollection RegisterSharedInfrastructureServices<TDbContext>(
         this IServiceCollection services,
         string connectionString
-    )
-        where TDbContext : DbContext
+    ) where TDbContext : DbContext
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
         dataSourceBuilder.UseNodaTime();
@@ -46,5 +47,16 @@ public static class SharedInfrastructureExtensions
         services.AddScoped<IClock>(_ => SystemClock.Instance);
 
         return services;
+    }
+
+    public static async Task MigrateDatabaseInDevelopmentAsync(this IHost host)
+    {
+        if (!host.Services.GetRequiredService<IHostEnvironment>().IsDevelopment())
+        {
+            return;
+        }
+        using var scope = host.Services.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<DbContext>();
+        await dbContext.Database.MigrateAsync().ConfigureAwait(false);
     }
 }

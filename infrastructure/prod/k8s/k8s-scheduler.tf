@@ -31,24 +31,11 @@
           name              = "scheduler"
           image             = "tatuazmainacr.azurecr.io/scheduler:latest"
           image_pull_policy = "Always"
-          port {
-            container_port = 80
-          }
 
           env_from {
             secret_ref {
               name = kubernetes_secret.k8s_scheduler.metadata[0].name
             }
-          }
-
-          liveness_probe {
-            http_get {
-              path = "/"
-              port = 80
-            }
-
-            initial_delay_seconds = 15
-            period_seconds        = 15
           }
         }
       }

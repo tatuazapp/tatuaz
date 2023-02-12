@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -28,20 +29,6 @@ namespace Tatuaz.Dashboard;
 
 public static class DashboardExtensions
 {
-    public static IConfiguration RegisterDashboardConfiguration(this IConfiguration configuration)
-    {
-        var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", false, true)
-            .AddJsonFile(
-                $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
-                true
-            )
-            .AddEnvironmentVariables();
-
-        return builder.Build();
-    }
-
     public static IServiceCollection RegisterDashboardServices(
         this IServiceCollection services,
         IConfiguration configuration
@@ -97,7 +84,7 @@ public static class DashboardExtensions
         return services;
     }
 
-    public static ConfigureHostBuilder RegisterDashboardHost(this ConfigureHostBuilder host)
+    public static IHostBuilder RegisterDashboardHost(this IHostBuilder host)
     {
         host.UseSerilog(
             (context, services, loggerConfiguration) =>

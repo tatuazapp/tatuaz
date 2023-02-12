@@ -1,18 +1,22 @@
 #pragma warning disable CA1852
-using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
 using Tatuaz.Dashboard;
+using Tatuaz.Shared.Infrastructure;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = Host.CreateDefaultBuilder(args);
 
-builder.Configuration.RegisterDashboardConfiguration();
+builder.ConfigureServices(
+    (host, services) =>
+    {
+        services.RegisterDashboardServices(host.Configuration);
+    }
+);
 
-builder.Services.RegisterDashboardServices(builder.Configuration);
-
-builder.Host.RegisterDashboardHost();
+builder.RegisterDashboardHost();
 
 var app = builder.Build();
 
-app.MapGet("/", () => "I'm alive");
+await app.MigrateDatabaseInDevelopmentAsync().ConfigureAwait(false);
 
 app.Run();
 

@@ -20,17 +20,13 @@ public class PhotoController : TatuazControllerBase
     /// Constructor receiving the mediator from DI
     /// </summary>
     /// <param name="mediator"></param>
-    public PhotoController(IMediator mediator)
-        : base(mediator) { }
+    public PhotoController(IMediator mediator) : base(mediator) { }
 
     [HttpPost("[action]")]
     [Authorize]
     [Produces("application/json")]
     [Consumes("application/json")]
-    [ProducesResponseType(
-        typeof(OkResponse<PagedData<PhotoCategoryDto>>),
-        (int)HttpStatusCode.Created
-    )]
+    [ProducesResponseType(typeof(OkResponse<PagedData<PhotoCategoryDto>>), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
