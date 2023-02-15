@@ -15,9 +15,7 @@ resource "azurerm_kubernetes_cluster" "az_aks" {
     tags                = var.az_tags
     enable_auto_scaling = false
   }
-
-  service_principal {
-    client_id     = var.az_creds.client_id
-    client_secret = var.az_creds.client_secret
+  identity {
+    type = "SystemAssigned"
   }
 }

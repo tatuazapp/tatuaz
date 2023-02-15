@@ -56,7 +56,7 @@ resource "helm_release" "k8s_cert_manager" {
   name       = "ta-cert-manager"
   repository = "https://charts.jetstack.io"
   chart      = "cert-manager"
-  version    = "1.10.0"
+  version    = "1.11.0"
   namespace  = kubernetes_namespace.k8s_ns.metadata[0].name
 
   set {
@@ -71,7 +71,7 @@ resource "helm_release" "k8s_cert_manager" {
 
   set {
     name  = "image.tag"
-    value = "v1.10.0"
+    value = "v1.11.0"
   }
 
   set {
@@ -81,7 +81,7 @@ resource "helm_release" "k8s_cert_manager" {
 
   set {
     name  = "webhook.image.tag"
-    value = "v1.10.0"
+    value = "v1.11.0"
   }
 
   set {
@@ -91,10 +91,11 @@ resource "helm_release" "k8s_cert_manager" {
 
   set {
     name  = "cainjector.image.tag"
-    value = "v1.10.0"
+    value = "v1.11.0"
   }
 }
 
+# comment this on first run
 resource "kubernetes_manifest" "k8s_letsencrypt" {
   manifest = {
     "apiVersion" = "cert-manager.io/v1"
