@@ -43,7 +43,8 @@ public class UnitOfWorkTest
 
     public class SaveChangesAsyncTest : UnitOfWorkTest
     {
-        public SaveChangesAsyncTest(DbContext dbContext, IClock clock) : base(dbContext, clock) { }
+        public SaveChangesAsyncTest(DbContext dbContext, IClock clock)
+            : base(dbContext, clock) { }
 
         [Fact]
         public async Task Should_SaveInsertedElement()
@@ -479,8 +480,8 @@ public class UnitOfWorkTest
 
     public class RunInTransactionAsyncTest : UnitOfWorkTest
     {
-        public RunInTransactionAsyncTest(DbContext dbContext, IClock clock) : base(dbContext, clock)
-        { }
+        public RunInTransactionAsyncTest(DbContext dbContext, IClock clock)
+            : base(dbContext, clock) { }
 
         [Fact]
         public async Task Should_SaveInsertedElement()

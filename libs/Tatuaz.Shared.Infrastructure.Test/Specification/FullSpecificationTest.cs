@@ -49,7 +49,8 @@ public class FullSpecificationTest
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository,
             IClock clock
-        ) : base(dbContext, authorRepository, clock) { }
+        )
+            : base(dbContext, authorRepository, clock) { }
 
         [Fact]
         public async Task Should_ReturnEntityWithTracking()
@@ -150,7 +151,8 @@ public class FullSpecificationTest
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository,
             IClock clock
-        ) : base(dbContext, authorRepository, clock) { }
+        )
+            : base(dbContext, authorRepository, clock) { }
 
         [Fact]
         public async Task Should_ReturnEntityWithFilter()
@@ -176,7 +178,8 @@ public class FullSpecificationTest
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository,
             IClock clock
-        ) : base(dbContext, authorRepository, clock) { }
+        )
+            : base(dbContext, authorRepository, clock) { }
 
         [Fact]
         public async Task Should_ReturnEntityWithAscendingOrder()
@@ -229,7 +232,8 @@ public class FullSpecificationTest
             DbContext dbContext,
             IGenericRepository<Author, HistAuthor, Guid> authorRepository,
             IClock clock
-        ) : base(dbContext, authorRepository, clock) { }
+        )
+            : base(dbContext, authorRepository, clock) { }
 
         [Fact]
         public async Task Should_ReturnEntityWithInclude()

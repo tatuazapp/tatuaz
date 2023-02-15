@@ -14,6 +14,6 @@ public class HistPhotoCategoryConfiguration : IEntityTypeConfiguration<HistPhoto
 
         builder.Property(x => x.Title).HasMaxLength(64);
 
-        builder.Property(x => x.ImageUrl).HasMaxLength(256);
+        builder.Property(x => x.ImageUri).HasMaxLength(256);
     }
 }

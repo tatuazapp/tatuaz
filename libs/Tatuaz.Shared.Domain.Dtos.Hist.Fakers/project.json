@@ -18,7 +18,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "dotnet csharpier libs/Tatuaz.Shared.Domain.Dtos.Hist.Fakers --check"
+        "command": "dotnet-csharpier libs/Tatuaz.Shared.Domain.Dtos.Hist.Fakers --check"
       }
     }
   },

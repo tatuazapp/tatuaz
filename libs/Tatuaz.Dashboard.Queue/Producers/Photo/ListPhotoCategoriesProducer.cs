@@ -13,5 +13,6 @@ public class ListPhotoCategoriesProducer
     public ListPhotoCategoriesProducer(
         IRequestClient<ListPhotoCategoriesOrder> requestClient,
         ILogger<ListPhotoCategoriesProducer> logger
-    ) : base(requestClient, logger) { }
+    )
+        : base(requestClient, logger) { }
 }

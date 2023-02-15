@@ -5,7 +5,8 @@ using Tatuaz.Shared.Pipeline.UserContext;
 
 namespace Tatuaz.Shared.Pipeline.Filters;
 
-public class UserContextSendFilter<T> : IFilter<SendContext<T>> where T : class
+public class UserContextSendFilter<T> : IFilter<SendContext<T>>
+    where T : class
 {
     private readonly IUserContext _userContext;
 

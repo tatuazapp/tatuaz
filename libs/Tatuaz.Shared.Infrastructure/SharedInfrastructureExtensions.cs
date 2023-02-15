@@ -20,7 +20,8 @@ public static class SharedInfrastructureExtensions
     public static IServiceCollection RegisterSharedInfrastructureServices<TDbContext>(
         this IServiceCollection services,
         string connectionString
-    ) where TDbContext : DbContext
+    )
+        where TDbContext : DbContext
     {
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
         dataSourceBuilder.UseNodaTime();

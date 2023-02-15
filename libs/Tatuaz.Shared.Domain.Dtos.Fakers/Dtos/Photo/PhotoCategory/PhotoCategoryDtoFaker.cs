@@ -8,11 +8,15 @@ public sealed class PhotoCategoryDtoFaker : Faker<PhotoCategoryDto>, IDtoFaker
 {
     public PhotoCategoryDtoFaker()
     {
-        StrictMode(true);
-        RuleFor(x => x.Id, f => f.Random.Int(1, 100));
-        RuleFor(x => x.Title, f => f.Lorem.Word());
-        RuleFor(x => x.Type, f => f.PickRandom<PhotoCategoryTypeDto>());
-        RuleFor(x => x.ImageUrl, f => f.Internet.Url());
-        RuleFor(x => x.Popularity, f => f.Random.Int(1, 100));
+        CustomInstantiator(
+            f =>
+                new PhotoCategoryDto(
+                    f.Random.Int(1, 100),
+                    f.Lorem.Word(),
+                    f.PickRandom<PhotoCategoryTypeDto>(),
+                    f.Internet.Url(),
+                    f.Random.Int(1, 100)
+                )
+        );
     }
 }

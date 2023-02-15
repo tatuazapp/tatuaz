@@ -10,7 +10,7 @@ public class PhotoCategory : Entity<HistPhotoCategory, int>
 {
     public string Title { get; set; } = default!;
     public PhotoCategoryType Type { get; set; }
-    public string ImageUrl { get; set; } = default!;
+    public string ImageUri { get; set; } = default!;
     public int Popularity { get; set; } // popularity starts at 0 and is incremented by 1 for each signup that uses this category
     public virtual ICollection<UserPhotoCategory> UserPhotoCategories { get; set; } = default!;
 
@@ -19,7 +19,7 @@ public class PhotoCategory : Entity<HistPhotoCategory, int>
         var histEntity = (HistPhotoCategory)base.ToHistEntity(clock, state);
         histEntity.Title = Title;
         histEntity.Type = (HistPhotoCategoryType)Type;
-        histEntity.ImageUrl = ImageUrl;
+        histEntity.ImageUri = ImageUri;
         histEntity.Popularity = Popularity;
         return histEntity;
     }

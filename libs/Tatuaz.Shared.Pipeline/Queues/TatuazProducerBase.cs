@@ -9,7 +9,8 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Shared.Pipeline.Queues;
 
-public class TatuazProducerBase<TRequest, TData> where TRequest : class
+public class TatuazProducerBase<TRequest, TData>
+    where TRequest : class
 {
     private readonly ILogger _logger;
     private readonly IRequestClient<TRequest> _requestClient;

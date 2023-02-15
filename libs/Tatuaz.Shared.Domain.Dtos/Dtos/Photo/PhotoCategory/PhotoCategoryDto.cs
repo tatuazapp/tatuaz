@@ -6,6 +6,6 @@ public record PhotoCategoryDto(
     int Id,
     string Title,
     PhotoCategoryTypeDto Type,
-    string ImageUrl,
+    string ImageUri,
     int Popularity
 ) : IDto;

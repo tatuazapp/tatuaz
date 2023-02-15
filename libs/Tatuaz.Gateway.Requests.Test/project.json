@@ -22,7 +22,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "dotnet csharpier libs/Tatuaz.Gateway.Requests.Test --check"
+        "command": "dotnet-csharpier libs/Tatuaz.Gateway.Requests.Test --check"
       }
     }
   },

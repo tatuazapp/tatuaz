@@ -20,7 +20,8 @@ public class PhotoController : TatuazControllerBase
     /// Constructor receiving the mediator from DI
     /// </summary>
     /// <param name="mediator"></param>
-    public PhotoController(IMediator mediator) : base(mediator) { }
+    public PhotoController(IMediator mediator)
+        : base(mediator) { }
 
     [HttpPost("[action]")]
     [Authorize]

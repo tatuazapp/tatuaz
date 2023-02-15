@@ -8,8 +8,8 @@ public sealed class ListPhotoCategoriesDtoFaker : Faker<ListPhotoCategoriesDto>,
 {
     public ListPhotoCategoriesDtoFaker()
     {
-        StrictMode(true);
-        RuleFor(x => x.PageNumber, f => f.Random.Int(1, 100));
-        RuleFor(x => x.PageSize, f => f.Random.Int(1, 100));
+        CustomInstantiator(
+            f => new ListPhotoCategoriesDto(f.Random.Int(1, 100), f.Random.Int(1, 100))
+        );
     }
 }

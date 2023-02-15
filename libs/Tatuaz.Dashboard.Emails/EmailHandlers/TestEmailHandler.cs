@@ -18,7 +18,8 @@ public class TestEmailHandler : EmailHandlerBase
         IGenericRepository<EmailInfo, HistEmailInfo, Guid> emailInfoRepository,
         IUnitOfWork unitOfWork,
         IClock clock
-    ) : base(fluentEmail, logger, emailInfoRepository, unitOfWork, clock) { }
+    )
+        : base(fluentEmail, logger, emailInfoRepository, unitOfWork, clock) { }
 
     protected override Task<EmailData> GetEmailData(Guid objectId)
     {

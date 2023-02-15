@@ -23,7 +23,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "dotnet csharpier libs/Tatuaz.Dashboard.Emails.Test --check"
+        "command": "dotnet-csharpier libs/Tatuaz.Dashboard.Emails.Test --check"
       }
     }
   },
