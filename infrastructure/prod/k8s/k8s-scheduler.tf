@@ -1,4 +1,4 @@
-﻿resource "kubernetes_deployment" "k8s_scheduler" {
+resource "kubernetes_deployment" "k8s_scheduler" {
   metadata {
     name = "scheduler-deployment"
     labels = {

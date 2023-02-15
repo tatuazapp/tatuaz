@@ -96,7 +96,7 @@ resource "kubernetes_service" "k8s_postgres_lb" {
 
   spec {
     # Tu trzeba robić cyrk https://cloud-provider-azure.sigs.k8s.io/topics/shared-ip/
-    load_balancer_ip = "20.74.114.194"
+    load_balancer_ip = "20.74.64.159"
     selector = {
       app = kubernetes_deployment.k8s_postgres.metadata[0].name
     }

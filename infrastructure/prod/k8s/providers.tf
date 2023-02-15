@@ -1,9 +1,10 @@
 provider "azurerm" {
   features {}
-  subscription_id = var.az_creds.subscription_id
-  client_id       = var.az_creds.client_id
-  client_secret   = var.az_creds.client_secret
-  tenant_id       = var.az_creds.tenant_id
+  # niemądra politechnika warszawska zabrała nam dostęp do AAD, więc trzeba używać cli
+  #  subscription_id = var.az_creds.subscription_id
+  #  client_id       = var.az_creds.client_id
+  #  client_secret   = var.az_creds.client_secret
+  #  tenant_id       = var.az_creds.tenant_id
 }
 
 provider "kubernetes" {
