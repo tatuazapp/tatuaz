@@ -73,7 +73,8 @@ public class GenericRepository<TEntity, THistEntity, TId>
     public async Task<TDto?> GetByIdAsync<TDto>(
         TId id,
         CancellationToken cancellationToken = default
-    ) where TDto : class
+    )
+        where TDto : class
     {
         var result = await _dbContext
             .Set<TEntity>()
@@ -126,7 +127,8 @@ public class GenericRepository<TEntity, THistEntity, TId>
     public async Task<IEnumerable<TDto>> GetBySpecificationAsync<TDto>(
         ISpecification<TEntity> specification,
         CancellationToken cancellationToken = default
-    ) where TDto : class
+    )
+        where TDto : class
     {
         return await specification
             .Apply(_dbContext.Set<TEntity>())
@@ -177,7 +179,8 @@ public class GenericRepository<TEntity, THistEntity, TId>
         ISpecification<TEntity> specification,
         PagedParams pagedParams,
         CancellationToken cancellationToken = default
-    ) where TDto : class
+    )
+        where TDto : class
     {
         var baseQuery = specification.Apply(_dbContext.Set<TEntity>());
         var toSkip = (pagedParams.PageNumber - 1) * pagedParams.PageSize;

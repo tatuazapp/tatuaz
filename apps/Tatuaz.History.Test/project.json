@@ -22,7 +22,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "dotnet csharpier apps/Tatuaz.History.Test --check"
+        "command": "dotnet-csharpier apps/Tatuaz.History.Test --check"
       }
     }
   },

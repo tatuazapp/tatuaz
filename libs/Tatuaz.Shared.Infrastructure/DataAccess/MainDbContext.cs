@@ -9,7 +9,8 @@ namespace Tatuaz.Shared.Infrastructure.DataAccess;
 
 public class MainDbContext : DbContext
 {
-    public MainDbContext(DbContextOptions<MainDbContext> options) : base(options) { }
+    public MainDbContext(DbContextOptions<MainDbContext> options)
+        : base(options) { }
 
     public MainDbContext() { }
 

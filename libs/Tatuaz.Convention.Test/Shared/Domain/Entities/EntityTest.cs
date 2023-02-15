@@ -145,5 +145,51 @@ public class EntityTest
                 .ToList();
             Assert.Empty(histEntitiesWithoutFakers);
         }
+
+        [Fact]
+        public void Should_AllEntityFakersDoNotThrowWhenGenerated()
+        {
+            var failedFakers = new List<Type>();
+            foreach (var entitiyFaker in _entitiyFakers)
+            {
+                try
+                {
+                    var histDtoFakerInstance = Activator.CreateInstance(entitiyFaker);
+                    var generateMethod = entitiyFaker
+                        .GetMethods()
+                        .First(x => x.Name == "Generate" && x.GetParameters().Length == 1);
+                    generateMethod?.Invoke(histDtoFakerInstance, new object?[] { null });
+                }
+                catch (Exception)
+                {
+                    failedFakers.Add(entitiyFaker);
+                }
+            }
+
+            Assert.Empty(failedFakers);
+        }
+
+        [Fact]
+        public void Should_AllHistEntityFakersDoNotThrowWhenGenerated()
+        {
+            var failedFakers = new List<Type>();
+            foreach (var histEntitiyFaker in _histEntitiyFakers)
+            {
+                try
+                {
+                    var histDtoFakerInstance = Activator.CreateInstance(histEntitiyFaker);
+                    var generateMethod = histEntitiyFaker
+                        .GetMethods()
+                        .First(x => x.Name == "Generate" && x.GetParameters().Length == 1);
+                    generateMethod?.Invoke(histDtoFakerInstance, new object?[] { null });
+                }
+                catch (Exception)
+                {
+                    failedFakers.Add(histEntitiyFaker);
+                }
+            }
+
+            Assert.Empty(failedFakers);
+        }
     }
 }

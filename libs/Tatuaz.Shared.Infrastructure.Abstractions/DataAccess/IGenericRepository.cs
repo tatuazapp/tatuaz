@@ -46,7 +46,8 @@ public interface IGenericRepository<TEntity, THistEntity, in TId> : IDisposable
     Task<IEnumerable<TDto>> GetBySpecificationAsync<TDto>(
         ISpecification<TEntity> specification,
         CancellationToken cancellationToken = default
-    ) where TDto : class;
+    )
+        where TDto : class;
 
     Task<IEnumerable<TEntity>> GetBySpecificationAsync(
         ISpecification<TEntity> specification,
@@ -64,7 +65,8 @@ public interface IGenericRepository<TEntity, THistEntity, in TId> : IDisposable
         ISpecification<TEntity> specification,
         PagedParams pagedParams,
         CancellationToken cancellationToken = default
-    ) where TDto : class;
+    )
+        where TDto : class;
 
     Task<PagedData<TEntity>> GetBySpecificationWithPagingAsync(
         ISpecification<TEntity> specification,

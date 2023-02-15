@@ -18,7 +18,7 @@ public sealed class HistPhotoCategoryFaker : Faker<HistPhotoCategory>, IHistEnti
         RuleFor(x => x.Id, f => f.Random.Int(1, 100));
         RuleFor(x => x.Title, f => f.Lorem.Words(3).Aggregate((a, b) => a + " " + b));
         RuleFor(x => x.Type, f => f.PickRandom<HistPhotoCategoryType>());
-        RuleFor(x => x.ImageUrl, f => f.Internet.Url());
+        RuleFor(x => x.ImageUri, f => f.Internet.UrlRootedPath("jpg"));
         RuleFor(x => x.Popularity, f => f.Random.Int(0, 100));
     }
 }
