@@ -8,6 +8,14 @@
         "DOTNET_ENVIRONMENT": "Development"
       }
     },
+    "Development-linux": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development",
+        "DOTNET_ROOT": "/usr/share/dotnet"
+      }
+    },
     "Staging": {
       "commandName": "Project",
       "dotnetRunMessages": true,

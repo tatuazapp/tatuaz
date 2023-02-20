@@ -36,6 +36,7 @@ using Tatuaz.Gateway.Handlers;
 using Tatuaz.Gateway.Swagger;
 using Tatuaz.Shared.Domain.Dtos;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
+using Tatuaz.Shared.Helpers;
 using Tatuaz.Shared.Infrastructure;
 using Tatuaz.Shared.Infrastructure.DataAccess;
 using Tatuaz.Shared.Pipeline;
@@ -60,8 +61,12 @@ public static class GatewayExtensions
     /// </summary>
     /// <param name="host"></param>
     /// <returns></returns>
-    public static ConfigureHostBuilder RegisterGatewayHost(this ConfigureHostBuilder host)
+    public static ConfigureHostBuilder RegisterGatewayHost(
+        this ConfigureHostBuilder host,
+        IConfiguration configuration
+    )
     {
+        var serilogOpt = GetSerilogOpt(configuration);
         host.UseSerilog(
             (context, services, loggerConfiguration) =>
             {
@@ -69,7 +74,9 @@ public static class GatewayExtensions
                     x =>
                         x.Console(
                             outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                            levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
+                            levelSwitch: new LoggingLevelSwitch(
+                                StringHelpers.GetLoggingLevelSwitch(serilogOpt.ConsoleLogLevel)
+                            ),
                             formatProvider: new CultureInfo("en-US")
                         )
                 );
@@ -80,10 +87,23 @@ public static class GatewayExtensions
                         outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
                         path: "logs/gateway.log",
                         rollingInterval: RollingInterval.Day,
-                        levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
+                        levelSwitch: new LoggingLevelSwitch(
+                            StringHelpers.GetLoggingLevelSwitch(serilogOpt.ConsoleLogLevel)
+                        ),
                         formatProvider: new CultureInfo("en-US")
                     );
                 });
+
+                loggerConfiguration.WriteTo.AzureBlobStorage(
+                    serilogOpt.BlobConnectionString,
+                    StringHelpers.GetLoggingLevelSwitch(serilogOpt.CloudLogLevel),
+                    storageContainerName: serilogOpt.BlobContainerName,
+                    storageFileName: serilogOpt.BlobFileName,
+                    outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
+                    formatProvider: new CultureInfo("en-US"),
+                    writeInBatches: true,
+                    period: TimeSpan.FromSeconds(30)
+                );
 
                 loggerConfiguration.WriteTo.Async(x =>
                 {
@@ -120,6 +140,7 @@ public static class GatewayExtensions
         services.Configure<AuthOpt>(configuration.GetSection(AuthOpt.SectionName));
         services.Configure<RabbitMqOpt>(configuration.GetSection(RabbitMqOpt.SectionName));
         services.Configure<BlobOpt>(configuration.GetSection(BlobOpt.SectionName));
+        services.Configure<SerilogOpt>(configuration.GetSection(SerilogOpt.SectionName));
 
         services
             .AddControllers(opt =>
@@ -319,6 +340,12 @@ public static class GatewayExtensions
     {
         return configuration.GetSection(SwaggerOpt.SectionName).Get<SwaggerOpt>()
             ?? throw new Exception("Swagger options not found");
+    }
+
+    public static SerilogOpt GetSerilogOpt(this IConfiguration configuration)
+    {
+        return configuration.GetSection(SerilogOpt.SectionName).Get<SerilogOpt>()
+            ?? throw new Exception("Serilog options not found");
     }
 
     public static BlobOpt GetBlobOpt(this IConfiguration configuration)

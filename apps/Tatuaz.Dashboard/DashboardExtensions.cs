@@ -19,10 +19,12 @@ using Tatuaz.Dashboard.Queue;
 using Tatuaz.Dashboard.Queue.Consumers.Emails;
 using Tatuaz.Dashboard.Queue.Contracts.Emails;
 using Tatuaz.Shared.Domain.Dtos;
+using Tatuaz.Shared.Helpers;
 using Tatuaz.Shared.Infrastructure;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
 using Tatuaz.Shared.Pipeline;
+using Tatuaz.Shared.Pipeline.Configuration;
 using Tatuaz.Shared.Pipeline.Queues;
 
 namespace Tatuaz.Dashboard;
@@ -84,8 +86,12 @@ public static class DashboardExtensions
         return services;
     }
 
-    public static IHostBuilder RegisterDashboardHost(this IHostBuilder host)
+    public static IHostBuilder RegisterDashboardHost(
+        this IHostBuilder host,
+        IConfiguration configuration
+    )
     {
+        var serilogOpt = GetSerilogOpt(configuration);
         host.UseSerilog(
             (context, services, loggerConfiguration) =>
             {
@@ -109,6 +115,17 @@ public static class DashboardExtensions
                     );
                 });
 
+                loggerConfiguration.WriteTo.AzureBlobStorage(
+                    serilogOpt.BlobConnectionString,
+                    StringHelpers.GetLoggingLevelSwitch(serilogOpt.CloudLogLevel),
+                    storageContainerName: serilogOpt.BlobContainerName,
+                    storageFileName: serilogOpt.BlobFileName,
+                    outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
+                    formatProvider: new CultureInfo("en-US"),
+                    writeInBatches: true,
+                    period: TimeSpan.FromSeconds(30)
+                );
+
                 loggerConfiguration.WriteTo.Async(x =>
                 {
                     x.File(
@@ -126,5 +143,11 @@ public static class DashboardExtensions
         );
 
         return host;
+    }
+
+    public static SerilogOpt GetSerilogOpt(this IConfiguration configuration)
+    {
+        return configuration.GetSection(SerilogOpt.SectionName).Get<SerilogOpt>()
+            ?? throw new Exception("Serilog options not found");
     }
 }

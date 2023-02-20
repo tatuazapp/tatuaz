@@ -13,9 +13,11 @@ using Tatuaz.History.DataAccess;
 using Tatuaz.History.DataAccess.Services;
 using Tatuaz.History.Queue;
 using Tatuaz.History.Queue.Consumers.Common;
+using Tatuaz.Shared.Helpers;
 using Tatuaz.Shared.Infrastructure;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline;
+using Tatuaz.Shared.Pipeline.Configuration;
 using Tatuaz.Shared.Pipeline.UserContext;
 
 namespace Tatuaz.History;
@@ -44,8 +46,12 @@ public static class HistoryExtensions
         return services;
     }
 
-    public static IHostBuilder RegisterHistoryHost(this IHostBuilder host)
+    public static IHostBuilder RegisterHistoryHost(
+        this IHostBuilder host,
+        IConfiguration configuration
+    )
     {
+        var serilogOpt = GetSerilogOpt(configuration);
         host.UseSerilog(
             (context, services, loggerConfiguration) =>
             {
@@ -53,7 +59,9 @@ public static class HistoryExtensions
                     x =>
                         x.Console(
                             outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                            levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
+                            levelSwitch: new LoggingLevelSwitch(
+                                StringHelpers.GetLoggingLevelSwitch(serilogOpt.ConsoleLogLevel)
+                            ),
                             formatProvider: new CultureInfo("en-US")
                         )
                 );
@@ -64,10 +72,23 @@ public static class HistoryExtensions
                         outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
                         path: "logs/history.log",
                         rollingInterval: RollingInterval.Day,
-                        levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
+                        levelSwitch: new LoggingLevelSwitch(
+                            StringHelpers.GetLoggingLevelSwitch(serilogOpt.FileLogLevel)
+                        ),
                         formatProvider: new CultureInfo("en-US")
                     );
                 });
+
+                loggerConfiguration.WriteTo.AzureBlobStorage(
+                    serilogOpt.BlobConnectionString,
+                    StringHelpers.GetLoggingLevelSwitch(serilogOpt.CloudLogLevel),
+                    storageContainerName: serilogOpt.BlobContainerName,
+                    storageFileName: serilogOpt.BlobFileName,
+                    outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
+                    formatProvider: new CultureInfo("en-US"),
+                    writeInBatches: true,
+                    period: TimeSpan.FromSeconds(30)
+                );
 
                 loggerConfiguration.WriteTo.Async(x =>
                 {
@@ -86,5 +107,11 @@ public static class HistoryExtensions
         );
 
         return host;
+    }
+
+    public static SerilogOpt GetSerilogOpt(this IConfiguration configuration)
+    {
+        return configuration.GetSection(SerilogOpt.SectionName).Get<SerilogOpt>()
+            ?? throw new Exception("Serilog options not found");
     }
 }

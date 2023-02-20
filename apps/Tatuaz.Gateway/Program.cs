@@ -1,5 +1,4 @@
 #pragma warning disable CA1852
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Serilog;
 using SixLabors.ImageSharp.Web.DependencyInjection;
@@ -10,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.RegisterGatewayServices(builder.Configuration);
 
-builder.Host.RegisterGatewayHost();
+builder.Host.RegisterGatewayHost(builder.Configuration);
 
 var swaggerOpt = builder.Configuration.GetSwaggerOpt();
 

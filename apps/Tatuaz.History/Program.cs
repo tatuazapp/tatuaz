@@ -11,7 +11,11 @@ builder.ConfigureServices(
         services.RegisterHistoryServices(host.Configuration);
     }
 );
-builder.RegisterHistoryHost();
+
+builder.ConfigureAppConfiguration(config =>
+{
+    builder.RegisterHistoryHost(config.Build());
+});
 
 var app = builder.Build();
 

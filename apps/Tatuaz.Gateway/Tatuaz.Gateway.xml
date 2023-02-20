@@ -167,7 +167,7 @@
             Cors policy name
             </summary>
         </member>
-        <member name="M:Tatuaz.Gateway.GatewayExtensions.RegisterGatewayHost(Microsoft.AspNetCore.Builder.ConfigureHostBuilder)">
+        <member name="M:Tatuaz.Gateway.GatewayExtensions.RegisterGatewayHost(Microsoft.AspNetCore.Builder.ConfigureHostBuilder,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             Configure gateway host
             </summary>
