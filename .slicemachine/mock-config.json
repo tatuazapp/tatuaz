@@ -4,7 +4,10 @@
   },
   "_cts": {
     "test": {},
-    "homepageIntro": {}
+    "homepageIntro": {},
+    "ArtistSectionHeader": {},
+    "TotalStats": {},
+    "HomepagePhotos": {}
   },
   "apps/web/slices": {
     "TextBlock": {
@@ -69,6 +72,12 @@
             }
           }
         }
+      }
+    },
+    "TotalStats": {},
+    "HomepagePhotos": {
+      "default": {
+        "primary": {}
       }
     }
   }

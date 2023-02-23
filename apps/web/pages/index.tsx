@@ -6,20 +6,24 @@ import type {
 } from "next"
 import AppLayout from "../components/auth/AppLayout"
 import { PageContentWrapper } from "../components/common/PageContentWrapper/styles"
+import ArtistSection from "../components/landing/ArtistsSection"
 import FAQsHeader from "../components/landing/FAQsHeader"
 import GetATattooButton from "../components/landing/GetATattooButton"
 import { HomepageIntroAndPhotosSection } from "../components/landing/HomepageIntroAndPhotosWrapper/HomepageIntroAndPhotosWrapperSection/styles"
 import { HomepageIntroAndPhotosWrapper } from "../components/landing/HomepageIntroAndPhotosWrapper/styles"
+import TotalStats from "../components/landing/TotalStats"
 import { createClient } from "../prismicio"
-import { ArtistSectionHeader, HomepageIntro } from "../slices"
-import ArtistCard from "../slices/ArtistCard"
+import { ArtistSectionHeader, HomepageIntro, HomepagePhotos } from "../slices"
 import FAQsMobileSection from "../slices/FAQsMobileSection"
 import FAQsSection from "../slices/FAQsSection"
-import TotalStats from "../slices/TotalStats"
 
 type IndexPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
-const Index: NextPage<IndexPageProps> = ({ intro }) => (
+const Index: NextPage<IndexPageProps> = ({
+  homepageIntro,
+  artistsectionheader,
+  homepagephotos,
+}) => (
   <AppLayout>
     <PageContentWrapper>
       <HomepageIntroAndPhotosWrapper>
@@ -29,16 +33,18 @@ const Index: NextPage<IndexPageProps> = ({ intro }) => (
           <SliceZone
             components={{
               homepage_intro: HomepageIntro,
-              artist_section_header: ArtistSectionHeader,
             }}
-            slices={intro.data.slices}
+            slices={homepageIntro.data.slices}
           />
         </HomepageIntroAndPhotosSection>
 
         <HomepageIntroAndPhotosSection>
-          <div>
-            <h1>kokdwawdawd wdadw dwado</h1>
-          </div>
+          <SliceZone
+            components={{
+              homepage_photos: HomepagePhotos,
+            }}
+            slices={homepagephotos.data.slices}
+          />
         </HomepageIntroAndPhotosSection>
 
         {/* <StatsSection />
@@ -48,22 +54,32 @@ const Index: NextPage<IndexPageProps> = ({ intro }) => (
     <TotalStats />
     <PageContentWrapper>
       {/* <ArtistSectionHeader /> */}
-      <ArtistCard />
+      <SliceZone
+        components={{
+          artist_section_header: ArtistSectionHeader,
+        }}
+        slices={artistsectionheader.data.slices}
+      />
+      {/* <ArtistSection /> */}
       <FAQsHeader />
     </PageContentWrapper>
-    {/* <FAQsSection /> */}
-    <FAQsMobileSection />
+    <FAQsSection />
+    {/* <FAQsMobileSection /> */}
     <GetATattooButton />
   </AppLayout>
 )
 
 export async function getStaticProps({ previewData }: GetStaticPropsContext) {
   const client = createClient({ previewData })
-  const intro = await client.getSingle("homepageIntro")
+  const homepageIntro = await client.getSingle("homepageIntro")
+  const artistsectionheader = await client.getSingle("ArtistSectionHeader")
+  const homepagephotos = await client.getSingle("HomepagePhotos")
 
   return {
     props: {
-      intro,
+      homepageIntro,
+      artistsectionheader,
+      homepagephotos,
     },
   }
 }

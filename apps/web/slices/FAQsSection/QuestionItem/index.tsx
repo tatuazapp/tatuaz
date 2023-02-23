@@ -19,39 +19,6 @@ const QuestionItem = () => {
   const [isHovered, setHovered] = useState(false)
   const [isSelected, setSelected] = useState(false)
 
-  // useEffect(() => {
-  //   const question = document.getElementById("question")
-  //   question.addEventListener("mouseover", () => {
-  //     setHovered(true)
-  //     console.log("hovered")
-  //   })
-
-  //   question.addEventListener("mouseout", () => {
-  //     setHovered(false)
-  //   })
-
-  //   question.addEventListener("click", () => {
-  //     setSelected((isSelected) => !isSelected)
-  //     console.log("clicked")
-  //   })
-
-  //   return () => {
-  //     question.removeEventListener("mouseover", () => {
-  //       setHovered(true)
-  //       console.log("hovered")
-  //     })
-
-  //     question.removeEventListener("mouseout", () => {
-  //       setHovered(false)
-  //     })
-
-  //     question.removeEventListener("click", () => {
-  //       setSelected((isSelected) => !isSelected)
-  //       console.log("clicked")
-  //     })
-  //   }
-  // }, [])
-
   return (
     <div id="question">
       <QuestionItemWrapper>
@@ -73,3 +40,36 @@ const QuestionItem = () => {
 }
 
 export default QuestionItem
+
+// useEffect(() => {
+//   const question = document.getElementById("question")
+//   question.addEventListener("mouseover", () => {
+//     setHovered(true)
+//     console.log("hovered")
+//   })
+
+//   question.addEventListener("mouseout", () => {
+//     setHovered(false)
+//   })
+
+//   question.addEventListener("click", () => {
+//     setSelected((isSelected) => !isSelected)
+//     console.log("clicked")
+//   })
+
+//   return () => {
+//     question.removeEventListener("mouseover", () => {
+//       setHovered(true)
+//       console.log("hovered")
+//     })
+
+//     question.removeEventListener("mouseout", () => {
+//       setHovered(false)
+//     })
+
+//     question.removeEventListener("click", () => {
+//       setSelected((isSelected) => !isSelected)
+//       console.log("clicked")
+//     })
+//   }
+// }, [])

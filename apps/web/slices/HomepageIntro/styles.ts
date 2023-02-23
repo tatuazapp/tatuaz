@@ -5,7 +5,12 @@ import styled from "styled-components"
 export const HomepageIntroWrapper = styled.div`
   min-width: 300px;
   max-width: 600px;
+  margin-right: ${({ theme }) => theme.sizes.xxxxlarge};
   color: ${({ theme }) => theme.colors.secondary};
+
+  ${down("md")} {
+    margin-right: 0;
+  }
 `
 export const TitleWrapper = styled.div`
   width: 100%;

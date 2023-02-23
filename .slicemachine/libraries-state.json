@@ -164,6 +164,99 @@
         },
         "screenshotPaths": {}
       },
+      "homepage_photos": {
+        "library": "apps/web/slices",
+        "id": "homepage_photos",
+        "name": "HomepagePhotos",
+        "description": "HomepagePhotos",
+        "model": {
+          "id": "homepage_photos",
+          "type": "SharedSlice",
+          "name": "HomepagePhotos",
+          "description": "HomepagePhotos",
+          "variations": [
+            {
+              "id": "default",
+              "name": "Default",
+              "docURL": "...",
+              "version": "sktwi1xtmkfgx8626",
+              "description": "HomepagePhotos",
+              "primary": {
+                "FirstPhoto": {
+                  "type": "Image",
+                  "config": {
+                    "label": "FirstPhoto",
+                    "constraint": {},
+                    "thumbnails": []
+                  }
+                },
+                "SecondPhoto": {
+                  "type": "Image",
+                  "config": {
+                    "label": "SecondPhoto",
+                    "constraint": {},
+                    "thumbnails": []
+                  }
+                },
+                "ThirdPhoto": {
+                  "type": "Image",
+                  "config": {
+                    "label": "ThirdPhoto",
+                    "constraint": {},
+                    "thumbnails": []
+                  }
+                }
+              },
+              "items": {},
+              "imageUrl": "https://images.prismic.io/slice-machine/621a5ec4-0387-4bc5-9860-2dd46cbc07cd_default_ss.png?auto=compress,format"
+            }
+          ]
+        },
+        "mocks": {
+          "default": {
+            "variation": "default",
+            "version": "sktwi1xtmkfgx8626",
+            "items": [
+              {}
+            ],
+            "primary": {
+              "FirstPhoto": {
+                "dimensions": {
+                  "width": 900,
+                  "height": 500
+                },
+                "alt": null,
+                "copyright": null,
+                "url": "https://images.unsplash.com/photo-1591012911207-0dbac31f37da"
+              },
+              "SecondPhoto": {
+                "dimensions": {
+                  "width": 900,
+                  "height": 500
+                },
+                "alt": null,
+                "copyright": null,
+                "url": "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5"
+              },
+              "ThirdPhoto": {
+                "dimensions": {
+                  "width": 900,
+                  "height": 500
+                },
+                "alt": null,
+                "copyright": null,
+                "url": "https://images.unsplash.com/photo-1471897488648-5eae4ac6686b"
+              }
+            },
+            "slice_type": "homepage_photos"
+          }
+        },
+        "meta": {
+          "fileName": "index",
+          "extension": "tsx"
+        },
+        "screenshotPaths": {}
+      },
       "image": {
         "library": "apps/web/slices",
         "id": "image",

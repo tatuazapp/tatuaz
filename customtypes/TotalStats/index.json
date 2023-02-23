@@ -1,0 +1,9 @@
+{
+  "id": "TotalStats",
+  "label": "TotalStats",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {}
+  }
+}

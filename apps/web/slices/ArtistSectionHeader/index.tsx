@@ -25,9 +25,7 @@ const ArtistSectionHeader: FunctionComponent<ArtistSectionHeaderProps> = ({
         {/* EXPLORE */}
 
         {slice.primary.ArtistSectionHeaderFirstLine ? (
-          <PrismicRichText
-            field={slice.primary.ArtistSectionHeaderSecondLine}
-          />
+          <PrismicRichText field={slice.primary.ArtistSectionHeaderFirstLine} />
         ) : (
           <h2>Template slice, update me!</h2>
         )}
@@ -35,7 +33,15 @@ const ArtistSectionHeader: FunctionComponent<ArtistSectionHeaderProps> = ({
       <SuitDiamondFill color={theme.colors.primary} size={34} />
     </HeaderFirstLineWrapper>
     <HeaderSecondLineWrapper>
-      <SecondLineTextWrapper>OUR ARTIST</SecondLineTextWrapper>
+      <SecondLineTextWrapper>
+        {slice.primary.ArtistSectionHeaderSecondLine ? (
+          <PrismicRichText
+            field={slice.primary.ArtistSectionHeaderSecondLine}
+          />
+        ) : (
+          <h2>Template slice, update me!</h2>
+        )}
+      </SecondLineTextWrapper>
       <SecondLineSlider>
         <SliderTrack />
         <SliderThumb />

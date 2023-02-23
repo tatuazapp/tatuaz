@@ -4,7 +4,7 @@ import { down } from "styled-breakpoints"
 import styled from "styled-components"
 
 export const ArtistCardWrapper = styled.div`
-  max-width: 580px;
+  max-width: 380px;
   /* width: 580px; */
 
   /* ${down("md")} {

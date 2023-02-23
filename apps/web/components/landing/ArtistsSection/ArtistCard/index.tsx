@@ -10,7 +10,9 @@ import {
 
 const ArtistCard = () => (
   <ArtistCardWrapper>
-    <PhotoWrapper>photo</PhotoWrapper>
+    <PhotoWrapper>
+      <img src="https://picsum.photos/200/300" alt="Artist" height={100} width={100}/>
+    </PhotoWrapper>
     <Divider />
     <NameSection>
       <ArtistName>Artist Name</ArtistName>

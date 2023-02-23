@@ -6,6 +6,35 @@ import type * as prismic from "@prismicio/client";
 type Simplify<T> = {
     [KeyType in keyof T]: T[KeyType];
 };
+/** Content for ArtistSectionHeader documents */
+interface ArtistSectionHeaderDocumentData {
+    /**
+     * Slice Zone field in *ArtistSectionHeader*
+     *
+     * - **Field Type**: Slice Zone
+     * - **Placeholder**: *None*
+     * - **API ID Path**: ArtistSectionHeader.slices[]
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/slices
+     *
+     */
+    slices: prismicT.SliceZone<ArtistSectionHeaderDocumentDataSlicesSlice>;
+}
+/**
+ * Slice for *ArtistSectionHeader → Slice Zone*
+ *
+ */
+type ArtistSectionHeaderDocumentDataSlicesSlice = ArtistSectionHeaderSlice;
+/**
+ * ArtistSectionHeader document from Prismic
+ *
+ * - **API ID**: `ArtistSectionHeader`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ArtistSectionHeaderDocument<Lang extends string = string> = prismicT.PrismicDocumentWithoutUID<Simplify<ArtistSectionHeaderDocumentData>, "ArtistSectionHeader", Lang>;
 /** Content for HomepageIntro documents */
 interface HomepageIntroDocumentData {
     /**
@@ -35,7 +64,7 @@ interface HomepageIntroDocumentData {
  * Slice for *HomepageIntro → Slice Zone*
  *
  */
-type HomepageIntroDocumentDataSlicesSlice = HomepageIntroSlice | ArtistSectionHeaderSlice;
+type HomepageIntroDocumentDataSlicesSlice = HomepageIntroSlice;
 /**
  * HomepageIntro document from Prismic
  *
@@ -46,6 +75,35 @@ type HomepageIntroDocumentDataSlicesSlice = HomepageIntroSlice | ArtistSectionHe
  * @typeParam Lang - Language API ID of the document.
  */
 export type HomepageIntroDocument<Lang extends string = string> = prismicT.PrismicDocumentWithoutUID<Simplify<HomepageIntroDocumentData>, "homepageIntro", Lang>;
+/** Content for HomepagePhotos documents */
+interface HomepagePhotosDocumentData {
+    /**
+     * Slice Zone field in *HomepagePhotos*
+     *
+     * - **Field Type**: Slice Zone
+     * - **Placeholder**: *None*
+     * - **API ID Path**: HomepagePhotos.slices[]
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/slices
+     *
+     */
+    slices: prismicT.SliceZone<HomepagePhotosDocumentDataSlicesSlice>;
+}
+/**
+ * Slice for *HomepagePhotos → Slice Zone*
+ *
+ */
+type HomepagePhotosDocumentDataSlicesSlice = HomepagePhotosSlice;
+/**
+ * HomepagePhotos document from Prismic
+ *
+ * - **API ID**: `HomepagePhotos`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type HomepagePhotosDocument<Lang extends string = string> = prismicT.PrismicDocumentWithoutUID<Simplify<HomepagePhotosDocumentData>, "HomepagePhotos", Lang>;
 /** Content for Test documents */
 interface TestDocumentData {
     /**
@@ -75,7 +133,19 @@ type TestDocumentDataSlicesSlice = TextBlockSlice | ImageSlice;
  * @typeParam Lang - Language API ID of the document.
  */
 export type TestDocument<Lang extends string = string> = prismicT.PrismicDocumentWithoutUID<Simplify<TestDocumentData>, "test", Lang>;
-export type AllDocumentTypes = HomepageIntroDocument | TestDocument;
+/** Content for TotalStats documents */
+type TotalStatsDocumentData = Record<string, never>;
+/**
+ * TotalStats document from Prismic
+ *
+ * - **API ID**: `TotalStats`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type TotalStatsDocument<Lang extends string = string> = prismicT.PrismicDocumentWithoutUID<Simplify<TotalStatsDocumentData>, "TotalStats", Lang>;
+export type AllDocumentTypes = ArtistSectionHeaderDocument | HomepageIntroDocument | HomepagePhotosDocument | TestDocument | TotalStatsDocument;
 /**
  * Primary content in ArtistSectionHeader → Primary
  *
@@ -185,6 +255,65 @@ type HomepageIntroSliceVariation = HomepageIntroSliceDefault;
  */
 export type HomepageIntroSlice = prismicT.SharedSlice<"homepage_intro", HomepageIntroSliceVariation>;
 /**
+ * Primary content in HomepagePhotos → Primary
+ *
+ */
+interface HomepagePhotosSliceDefaultPrimary {
+    /**
+     * FirstPhoto field in *HomepagePhotos → Primary*
+     *
+     * - **Field Type**: Image
+     * - **Placeholder**: *None*
+     * - **API ID Path**: homepage_photos.primary.FirstPhoto
+     * - **Documentation**: https://prismic.io/docs/core-concepts/image
+     *
+     */
+    FirstPhoto: prismicT.ImageField<never>;
+    /**
+     * SecondPhoto field in *HomepagePhotos → Primary*
+     *
+     * - **Field Type**: Image
+     * - **Placeholder**: *None*
+     * - **API ID Path**: homepage_photos.primary.SecondPhoto
+     * - **Documentation**: https://prismic.io/docs/core-concepts/image
+     *
+     */
+    SecondPhoto: prismicT.ImageField<never>;
+    /**
+     * ThirdPhoto field in *HomepagePhotos → Primary*
+     *
+     * - **Field Type**: Image
+     * - **Placeholder**: *None*
+     * - **API ID Path**: homepage_photos.primary.ThirdPhoto
+     * - **Documentation**: https://prismic.io/docs/core-concepts/image
+     *
+     */
+    ThirdPhoto: prismicT.ImageField<never>;
+}
+/**
+ * Default variation for HomepagePhotos Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `HomepagePhotos`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type HomepagePhotosSliceDefault = prismicT.SharedSliceVariation<"default", Simplify<HomepagePhotosSliceDefaultPrimary>, never>;
+/**
+ * Slice variation for *HomepagePhotos*
+ *
+ */
+type HomepagePhotosSliceVariation = HomepagePhotosSliceDefault;
+/**
+ * HomepagePhotos Shared Slice
+ *
+ * - **API ID**: `homepage_photos`
+ * - **Description**: `HomepagePhotos`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type HomepagePhotosSlice = prismicT.SharedSlice<"homepage_photos", HomepagePhotosSliceVariation>;
+/**
  * Primary content in Image → Primary
  *
  */
@@ -277,6 +406,6 @@ declare module "@prismicio/client" {
         (repositoryNameOrEndpoint: string, options?: prismic.ClientConfig): prismic.Client<AllDocumentTypes>;
     }
     namespace Content {
-        export type { HomepageIntroDocumentData, HomepageIntroDocumentDataSlicesSlice, HomepageIntroDocument, TestDocumentData, TestDocumentDataSlicesSlice, TestDocument, AllDocumentTypes, ArtistSectionHeaderSliceDefaultPrimary, ArtistSectionHeaderSliceDefault, ArtistSectionHeaderSliceVariation, ArtistSectionHeaderSlice, HomepageIntroSliceDefaultPrimary, HomepageIntroSliceDefault, HomepageIntroSliceVariation, HomepageIntroSlice, ImageSliceDefaultPrimary, ImageSliceDefault, ImageSliceVariation, ImageSlice, TextBlockSliceDefaultPrimary, TextBlockSliceDefault, TextBlockSliceVariation, TextBlockSlice };
+        export type { ArtistSectionHeaderDocumentData, ArtistSectionHeaderDocumentDataSlicesSlice, ArtistSectionHeaderDocument, HomepageIntroDocumentData, HomepageIntroDocumentDataSlicesSlice, HomepageIntroDocument, HomepagePhotosDocumentData, HomepagePhotosDocumentDataSlicesSlice, HomepagePhotosDocument, TestDocumentData, TestDocumentDataSlicesSlice, TestDocument, TotalStatsDocumentData, TotalStatsDocument, AllDocumentTypes, ArtistSectionHeaderSliceDefaultPrimary, ArtistSectionHeaderSliceDefault, ArtistSectionHeaderSliceVariation, ArtistSectionHeaderSlice, HomepageIntroSliceDefaultPrimary, HomepageIntroSliceDefault, HomepageIntroSliceVariation, HomepageIntroSlice, HomepagePhotosSliceDefaultPrimary, HomepagePhotosSliceDefault, HomepagePhotosSliceVariation, HomepagePhotosSlice, ImageSliceDefaultPrimary, ImageSliceDefault, ImageSliceVariation, ImageSlice, TextBlockSliceDefaultPrimary, TextBlockSliceDefault, TextBlockSliceVariation, TextBlockSlice };
     }
 }
