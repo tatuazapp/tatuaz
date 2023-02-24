@@ -3,8 +3,7 @@ using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 
 namespace Tatuaz.Shared.Domain.Entities.Hist.Models.Photo;
 
-public class HistPhotoCategory : HistEntity<Guid>
+public class HistPhoto : HistAuditableEntity<Guid>
 {
-    public Guid PhotoId { get; set; }
-    public int CategoryId { get; set; }
+
 }

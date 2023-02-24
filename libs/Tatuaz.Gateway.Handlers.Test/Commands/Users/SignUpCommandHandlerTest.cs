@@ -28,10 +28,10 @@ public class SignUpCommandHandlerTest
         IGenericRepository<TatuazUser, HistTatuazUser, string>
     > _userRepositoryMock;
     private readonly Mock<
-        IGenericRepository<PhotoCategory, HistPhotoCategory, int>
+        IGenericRepository<Category, HistCategory, int>
     > _photoCategoryRepositoryMock;
     private readonly Mock<
-        IGenericRepository<UserPhotoCategory, HistUserPhotoCategory, Guid>
+        IGenericRepository<UserCategory, HistUserCategory, Guid>
     > _userPhotoCategoryRepositoryMock;
 
     public SignUpCommandHandlerTest(IMapper mapper)
@@ -42,9 +42,9 @@ public class SignUpCommandHandlerTest
         _signUpDtoFaker = new SignUpDtoFaker();
         _userRepositoryMock = new Mock<IGenericRepository<TatuazUser, HistTatuazUser, string>>();
         _photoCategoryRepositoryMock =
-            new Mock<IGenericRepository<PhotoCategory, HistPhotoCategory, int>>();
+            new Mock<IGenericRepository<Category, HistCategory, int>>();
         _userPhotoCategoryRepositoryMock =
-            new Mock<IGenericRepository<UserPhotoCategory, HistUserPhotoCategory, Guid>>();
+            new Mock<IGenericRepository<UserCategory, HistUserCategory, Guid>>();
     }
 
     public class Handle : SignUpCommandHandlerTest

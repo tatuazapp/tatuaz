@@ -4,11 +4,11 @@ using Tatuaz.Shared.Domain.Entities.Models.Photo;
 
 namespace Tatuaz.Shared.Domain.Entities.Configuration.Photo;
 
-public class UserPhotoCategoryConfiguration : IEntityTypeConfiguration<UserPhotoCategory>
+public class UserCategoryConfiguration : IEntityTypeConfiguration<UserCategory>
 {
-    public void Configure(EntityTypeBuilder<UserPhotoCategory> builder)
+    public void Configure(EntityTypeBuilder<UserCategory> builder)
     {
-        builder.ToTable("user_photo_categories", TatuazPhotoConstants.SchemaName);
+        builder.ToTable("photo_categories", TatuazPhotoConstants.SchemaName);
 
         builder.Property(x => x.UserId).HasMaxLength(320);
     }

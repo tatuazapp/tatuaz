@@ -43,6 +43,7 @@ using Tatuaz.Shared.Pipeline;
 using Tatuaz.Shared.Pipeline.Configuration;
 using Tatuaz.Shared.Pipeline.Filters;
 using Tatuaz.Shared.Pipeline.UserContext;
+using Tatuaz.Shared.Services;
 
 namespace Tatuaz.Gateway;
 
@@ -311,6 +312,8 @@ public static class GatewayExtensions
         services.RegisterSharedPipelineServices(configuration);
 
         services.RegisterDashboardQueueServices();
+
+        services.RegisterSharedServicesServices();
 
         services.AddHttpContextAccessor();
         services.AddSingleton<IUserContext, UserContext>();

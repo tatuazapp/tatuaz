@@ -28,13 +28,13 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
     private readonly IUnitOfWork _unitOfWork;
     private readonly IGenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
     private readonly IGenericRepository<
-        UserPhotoCategory,
-        HistUserPhotoCategory,
+        UserCategory,
+        HistUserCategory,
         Guid
     > _userPhotoCategoryRepository;
     private readonly IGenericRepository<
-        PhotoCategory,
-        HistPhotoCategory,
+        Category,
+        HistCategory,
         int
     > _photoCategoryRepository;
     private readonly IUserContext _userContext;
@@ -43,11 +43,11 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
     public SignUpCommandHandler(
         IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository,
         IGenericRepository<
-            UserPhotoCategory,
-            HistUserPhotoCategory,
+            UserCategory,
+            HistUserCategory,
             Guid
         > userPhotoCategoryRepository,
-        IGenericRepository<PhotoCategory, HistPhotoCategory, int> photoCategoryRepository,
+        IGenericRepository<Category, HistCategory, int> photoCategoryRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper,
         IUserContext userContext,
@@ -85,36 +85,28 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
                 .ConfigureAwait(false)
         )
         {
-            return CreateUserResultFactory.UserAlreadyExists<UserDto>();
+            return SignUpResultFactory.UserAlreadyExists<UserDto>();
         }
 
         var user = _mapper.Map<TatuazUser>(request.SignUpDto);
         user.Id = userEmail;
         user.Auth0Id = _userContext.CurrentUserAuth0Id ?? throw new UserContextMissingException();
+        user.ForegroundPhotoId = null;
+        user.BackgroundPhotoId = null;
         await _unitOfWork
-            .RunInTransactionAsync(
-                async _ =>
+            .RunInTransactionAsync(_ =>
                 {
                     _userRepository.Create(user);
-                    var spec = new FullSpecification<PhotoCategory>();
-                    spec.AddFilter(x => request.SignUpDto.PhotoCategoryIds!.Contains(x.Id));
-                    spec.TrackingStrategy = TrackingStrategy.Tracking;
-                    var photoCategories = await _photoCategoryRepository
-                        .GetBySpecificationAsync(spec, cancellationToken)
-                        .ConfigureAwait(false);
-
-                    foreach (var photoCategory in photoCategories)
-                        photoCategory.IncrementPopularity();
-
                     foreach (var photoCategoryId in request.SignUpDto.PhotoCategoryIds!)
                     {
-                        var userPhotoCategory = new UserPhotoCategory
+                        var userPhotoCategory = new UserCategory
                         {
                             UserId = user.Id,
                             PhotoCategoryId = photoCategoryId
                         };
                         _userPhotoCategoryRepository.Create(userPhotoCategory);
                     }
+                    return Task.CompletedTask;
                 },
                 e => throw e,
                 cancellationToken

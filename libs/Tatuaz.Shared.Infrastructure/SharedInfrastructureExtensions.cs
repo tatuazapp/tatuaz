@@ -26,8 +26,8 @@ public static class SharedInfrastructureExtensions
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
         dataSourceBuilder.UseNodaTime();
         dataSourceBuilder.MapEnum<HistState>();
-        dataSourceBuilder.MapEnum<PhotoCategoryType>();
-        dataSourceBuilder.MapEnum<HistPhotoCategoryType>();
+        dataSourceBuilder.MapEnum<CategoryType>();
+        dataSourceBuilder.MapEnum<HistCategoryType>();
         var dataSource = dataSourceBuilder.Build();
         services.AddDbContext<TDbContext>(opt =>
         {

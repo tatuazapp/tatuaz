@@ -5,7 +5,7 @@ using Tatuaz.Shared.Domain.Entities.Models.Photo;
 
 namespace Tatuaz.Shared.Domain.Entities.Fakers.Models.Photo;
 
-public sealed class UserPhotoCategoryFaker : Faker<UserPhotoCategory>, IEntityFaker
+public sealed class UserPhotoCategoryFaker : Faker<UserCategory>, IEntityFaker
 {
     public UserPhotoCategoryFaker()
     {
@@ -14,6 +14,6 @@ public sealed class UserPhotoCategoryFaker : Faker<UserPhotoCategory>, IEntityFa
         RuleFor(x => x.UserId, f => f.Random.Guid().ToString());
         RuleFor(x => x.User, f => new TatuazUserFaker().Generate());
         RuleFor(x => x.PhotoCategoryId, f => f.Random.Int(1, 100));
-        RuleFor(x => x.PhotoCategory, f => new PhotoCategoryFaker().Generate());
+        RuleFor(x => x.Category, f => new CategoryFaker().Generate());
     }
 }

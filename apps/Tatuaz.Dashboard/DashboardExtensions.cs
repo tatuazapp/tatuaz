@@ -46,7 +46,7 @@ public static class DashboardExtensions
 
         services.RegisterSharedPipelineServices(
             configuration,
-            new[] { typeof(SendEmailOrder).Assembly },
+            new[] { typeof(SendEmail).Assembly },
             (_, config) =>
             {
                 config.UseMessageRetry(r =>

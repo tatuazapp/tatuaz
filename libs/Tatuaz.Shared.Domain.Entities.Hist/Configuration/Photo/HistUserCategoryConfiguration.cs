@@ -4,11 +4,11 @@ using Tatuaz.Shared.Domain.Entities.Hist.Models.Photo;
 
 namespace Tatuaz.Shared.Domain.Entities.Hist.Configuration.Photo;
 
-public class HistUserPhotoCategoryConfiguration : IEntityTypeConfiguration<HistUserPhotoCategory>
+public class HistUserCategoryConfiguration : IEntityTypeConfiguration<HistUserCategory>
 {
-    public void Configure(EntityTypeBuilder<HistUserPhotoCategory> builder)
+    public void Configure(EntityTypeBuilder<HistUserCategory> builder)
     {
-        builder.ToTable("H_user_photo_categories", HistTatuazPhotoConstants.SchemaName);
+        builder.ToTable("H_user_categories", HistTatuazPhotoConstants.SchemaName);
 
         builder.HasKey(x => x.HistId);
 

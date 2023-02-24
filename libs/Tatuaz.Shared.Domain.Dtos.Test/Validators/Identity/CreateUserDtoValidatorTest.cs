@@ -23,7 +23,7 @@ public class CreateUserDtoValidatorTest
     private readonly MainDbContextMock _dbContextMock;
     private readonly GenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
     private readonly Mock<
-        IGenericRepository<PhotoCategory, HistPhotoCategory, int>
+        IGenericRepository<Category, HistCategory, int>
     > _photoCategoryRepositoryMock;
 
     public CreateUserDtoValidatorTest()
@@ -34,7 +34,7 @@ public class CreateUserDtoValidatorTest
             new Mock<IMapper>().Object
         );
         _photoCategoryRepositoryMock =
-            new Mock<IGenericRepository<PhotoCategory, HistPhotoCategory, int>>();
+            new Mock<IGenericRepository<Category, HistCategory, int>>();
         _photoCategoryRepositoryMock
             .Setup(x => x.ExistsByIdAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .Returns(Task.FromResult(true));

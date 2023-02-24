@@ -16,17 +16,17 @@ using Tatuaz.Shared.Pipeline.Queues;
 namespace Tatuaz.Dashboard.Queue.Consumers.Photo;
 
 public class ListPhotoCategoriesConsumer
-    : TatuazConsumerBase<ListPhotoCategoriesOrder, PagedData<PhotoCategoryDto>>
+    : TatuazConsumerBase<ListPhotoCategories, PagedData<PhotoCategoryDto>>
 {
     private readonly IGenericRepository<
-        PhotoCategory,
-        HistPhotoCategory,
+        Category,
+        HistCategory,
         int
     > _photoCategoryRepository;
 
     public ListPhotoCategoriesConsumer(
         ILogger<ListPhotoCategoriesConsumer> logger,
-        IGenericRepository<PhotoCategory, HistPhotoCategory, int> photoCategoryRepository
+        IGenericRepository<Category, HistCategory, int> photoCategoryRepository
     )
         : base(logger)
     {
@@ -34,11 +34,11 @@ public class ListPhotoCategoriesConsumer
     }
 
     protected override async Task<TatuazResult<PagedData<PhotoCategoryDto>>> ConsumeMessage(
-        ConsumeContext<ListPhotoCategoriesOrder> context
+        ConsumeContext<ListPhotoCategories> context
     )
     {
-        var spec = new FullSpecification<PhotoCategory>();
-        spec.AddOrder(x => x.Popularity, OrderDirection.Descending);
+        var spec = new FullSpecification<Category>();
+        spec.AddOrder(x => x.UserCategories.Count, OrderDirection.Descending);
         spec.AddOrder(x => x.Id);
 
         return CommonResultFactory.Ok(

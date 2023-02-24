@@ -6,7 +6,7 @@ using Tatuaz.Shared.Domain.Entities.Hist.Models.Photo;
 
 namespace Tatuaz.Shared.Domain.Entities.Hist.Fakers.Models.Photo;
 
-public class HistUserPhotoCategoryFaker : Faker<HistUserPhotoCategory>, IHistEntityFaker
+public class HistUserPhotoCategoryFaker : Faker<HistUserCategory>, IHistEntityFaker
 {
     public HistUserPhotoCategoryFaker()
     {
@@ -16,6 +16,6 @@ public class HistUserPhotoCategoryFaker : Faker<HistUserPhotoCategory>, IHistEnt
         RuleFor(x => x.HistDumpedAt, f => f.Date.Past().ToUniversalTime().ToInstant());
         RuleFor(x => x.Id, f => f.Random.Guid());
         RuleFor(x => x.UserId, f => f.Random.Guid().ToString());
-        RuleFor(x => x.PhotoCategoryId, f => f.Random.Int(1, 100));
+        RuleFor(x => x.CategoryId, f => f.Random.Int(1, 100));
     }
 }

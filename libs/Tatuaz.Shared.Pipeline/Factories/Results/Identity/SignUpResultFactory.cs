@@ -4,7 +4,7 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Shared.Pipeline.Factories.Results.Identity;
 
-public class CreateUserResultFactory
+public class SignUpResultFactory
 {
     public static TatuazResult<T> UserAlreadyExists<T>(
         string? message = null,
@@ -12,7 +12,7 @@ public class CreateUserResultFactory
     )
     {
         return new TatuazResult<T>(
-            new[] { CreateUserErrorFactory.UserAlreadyExistsError(message) },
+            new[] { SignUpErrorFactory.UserAlreadyExistsError(message) },
             httpStatusCode
         );
     }

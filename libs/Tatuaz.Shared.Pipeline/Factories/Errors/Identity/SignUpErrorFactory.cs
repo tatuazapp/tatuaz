@@ -3,12 +3,12 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Shared.Pipeline.Factories.Errors.Identity;
 
-public class CreateUserErrorFactory
+public class SignUpErrorFactory
 {
     public static TatuazError UserAlreadyExistsError(string? message = null)
     {
         return message is null
-            ? new TatuazError(CreateUserErrorCodes.UserAlreadyExists, "User already exists")
-            : new TatuazError(CreateUserErrorCodes.UserAlreadyExists, message);
+            ? new TatuazError(SignUpErrorCodes.UserAlreadyExists, "User already exists")
+            : new TatuazError(SignUpErrorCodes.UserAlreadyExists, message);
     }
 }

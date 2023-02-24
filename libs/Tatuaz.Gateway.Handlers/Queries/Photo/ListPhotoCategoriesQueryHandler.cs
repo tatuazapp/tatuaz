@@ -46,7 +46,7 @@ public class ListPhotoCategoriesQueryHandler
 
         return await _listPhotoCategoriesProducer
             .Send(
-                new ListPhotoCategoriesOrder(
+                new ListPhotoCategories(
                     request.ListPhotoCategoriesDto.PageNumber!.Value,
                     request.ListPhotoCategoriesDto.PageSize!.Value
                 ),

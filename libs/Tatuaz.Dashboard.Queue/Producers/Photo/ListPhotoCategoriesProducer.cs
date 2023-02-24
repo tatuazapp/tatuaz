@@ -8,10 +8,10 @@ using Tatuaz.Shared.Pipeline.Queues;
 namespace Tatuaz.Dashboard.Queue.Producers.Photo;
 
 public class ListPhotoCategoriesProducer
-    : TatuazProducerBase<ListPhotoCategoriesOrder, PagedData<PhotoCategoryDto>>
+    : TatuazProducerBase<ListPhotoCategories, PagedData<PhotoCategoryDto>>
 {
     public ListPhotoCategoriesProducer(
-        IRequestClient<ListPhotoCategoriesOrder> requestClient,
+        IRequestClient<ListPhotoCategories> requestClient,
         ILogger<ListPhotoCategoriesProducer> logger
     )
         : base(requestClient, logger) { }

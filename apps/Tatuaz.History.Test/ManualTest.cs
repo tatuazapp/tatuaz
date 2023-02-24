@@ -28,7 +28,7 @@ public class ManualTest
 
         await sendEndpoint
             .Send(
-                new SendEmailOrder(
+                new SendEmail(
                     "lopogo69@gmail.com",
                     Guid.NewGuid(),
                     EmailType.Test,

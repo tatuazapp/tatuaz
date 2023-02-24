@@ -8,6 +8,6 @@ public class PhotoMappingProfile : Profile
 {
     public PhotoMappingProfile()
     {
-        CreateMap<PhotoCategory, PhotoCategoryDto>();
+        CreateMap<Category, PhotoCategoryDto>();
     }
 }

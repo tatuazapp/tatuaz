@@ -1,6 +1,6 @@
 namespace Tatuaz.Shared.Domain.Entities.Models.Photo;
 
-public enum PhotoCategoryType
+public enum CategoryType
 {
     Style = 0,
     Motive = 1,

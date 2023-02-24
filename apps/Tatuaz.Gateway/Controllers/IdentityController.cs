@@ -57,4 +57,44 @@ public class IdentityController : TatuazControllerBase
             await Mediator.Send(new SignUpCommand(signUpDto)).ConfigureAwait(false)
         );
     }
+
+    /// <summary>
+    /// Set foreground photo
+    /// </summary>
+    /// <param name="setForegroundPhotoDto"></param>
+    /// <returns></returns>
+    [HttpPost("[action]")]
+    [Authorize]
+    [Produces("application/json")]
+    [Consumes("application/json")]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Created)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
+    public async Task<IActionResult> SetForegroundPhoto([FromBody] SetForegroundPhotoDto setForegroundPhotoDto)
+    {
+        return ResultToActionResult(
+            await Mediator.Send(new SetForegroundPhotoCommand(setForegroundPhotoDto)).ConfigureAwait(false)
+        );
+    }
+
+    /// <summary>
+    /// Set background photo
+    /// </summary>
+    /// <param name="setBackgroundPhotoDto"></param>
+    /// <returns></returns>
+    [HttpPost("[action]")]
+    [Authorize]
+    [Produces("application/json")]
+    [Consumes("application/json")]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Created)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
+    public async Task<IActionResult> SetBackgroundPhoto([FromBody] SetBackgroundPhotoDto setBackgroundPhotoDto)
+    {
+        return ResultToActionResult(
+            await Mediator.Send(new SetBackgroundPhotoCommand(setBackgroundPhotoDto)).ConfigureAwait(false)
+        );
+    }
 }
