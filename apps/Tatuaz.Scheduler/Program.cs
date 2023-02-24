@@ -11,6 +11,9 @@ builder.ConfigureServices(
     }
 );
 
-builder.RegisterSchedulerHost();
+builder.ConfigureAppConfiguration(config =>
+{
+    builder.RegisterSchedulerHost(config.Build());
+});
 
 builder.Build().Run();

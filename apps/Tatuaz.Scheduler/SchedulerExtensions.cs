@@ -9,10 +9,12 @@ using Quartz;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
+using Tatuaz.Shared.Helpers;
 using Tatuaz.Shared.Infrastructure;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
 using Tatuaz.Shared.Pipeline;
+using Tatuaz.Shared.Pipeline.Configuration;
 using Tatuaz.Shared.Pipeline.Queues;
 using Tatuaz.TatuazSchedulerJobs;
 
@@ -59,8 +61,13 @@ public static class SchedulerExtensions
         return services;
     }
 
-    public static IHostBuilder RegisterSchedulerHost(this IHostBuilder host)
+    public static IHostBuilder RegisterSchedulerHost(
+        this IHostBuilder host,
+        IConfiguration configuration
+    )
     {
+        var serilogOpt = GetSerilogOpt(configuration);
+
         host.UseSerilog(
             (context, services, loggerConfiguration) =>
             {
@@ -84,6 +91,17 @@ public static class SchedulerExtensions
                     );
                 });
 
+                loggerConfiguration.WriteTo.AzureBlobStorage(
+                    serilogOpt.BlobConnectionString,
+                    StringHelpers.GetLoggingLevelSwitch(serilogOpt.CloudLogLevel),
+                    storageContainerName: serilogOpt.BlobContainerName,
+                    storageFileName: serilogOpt.BlobFileName,
+                    outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
+                    formatProvider: new CultureInfo("en-US"),
+                    writeInBatches: true,
+                    period: TimeSpan.FromSeconds(30)
+                );
+
                 loggerConfiguration.WriteTo.Async(x =>
                 {
                     x.File(
@@ -101,5 +119,11 @@ public static class SchedulerExtensions
         );
 
         return host;
+    }
+
+    public static SerilogOpt GetSerilogOpt(this IConfiguration configuration)
+    {
+        return configuration.GetSection(SerilogOpt.SectionName).Get<SerilogOpt>()
+            ?? throw new Exception("Serilog options not found");
     }
 }
