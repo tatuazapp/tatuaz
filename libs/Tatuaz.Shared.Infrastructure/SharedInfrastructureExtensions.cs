@@ -28,10 +28,11 @@ public static class SharedInfrastructureExtensions
         dataSourceBuilder.MapEnum<HistState>();
         dataSourceBuilder.MapEnum<PhotoCategoryType>();
         dataSourceBuilder.MapEnum<HistPhotoCategoryType>();
+        var dataSource = dataSourceBuilder.Build();
         services.AddDbContext<TDbContext>(opt =>
         {
             opt.UseNpgsql(
-                dataSourceBuilder.Build(),
+                dataSource,
                 npgsqlOpt =>
                 {
                     npgsqlOpt.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);

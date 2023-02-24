@@ -54,6 +54,6 @@ resource "kubernetes_secret" "k8s_dashboard" {
     RabbitMq__VirtualHost           = "/"
     RabbitMq__Username              = var.k8s_queue.default_user
     RabbitMq__Password              = var.k8s_queue.default_password
-    ConnectionStrings__TatuazMainDb = "Server=postgres-service-lb.tatuaz.svc.cluster.local;Port=5432;Database=TatuazMainDb;User Id=${var.k8s_postgres.admin_login};Password=${var.k8s_postgres.admin_password};"
+    ConnectionStrings__TatuazMainDb = "Server=postgres-service-lb.tatuaz.svc.cluster.local;Port=5432;Database=TatuazMainDb;User Id=${var.k8s_postgres.admin_login};Password=${var.k8s_postgres.admin_password};Pooling=true;MinPoolSize=0;MaxPoolSize=10;"
   }
 }
