@@ -4,48 +4,47 @@ import {
   AccordionPanel,
 } from "@chakra-ui/react"
 import {
-  Divider,
-  IconNotSelected,
-  QuestionContent,
-  QuestionItemWrapper,
-  QuestionNumber,
-  QuestionTitle,
-  QuestionTitleWrapper,
+  MobileDivider,
+  MobileIconNotSelected,
+  MobileIconSelected,
+  MobileQuestionContent,
+  MobileQuestionItemWrapper,
+  MobileQuestionNumber,
+  MobileQuestionTitle,
+  MobileQuestionTitleWrapper,
 } from "./styles"
 
 const QuestionItem = () => {
   const isHovered = false
-  const isSelected = false
-
   return (
     <>
       <AccordionItem border={0}>
         {/* <AccordionItem> */}
         <AccordionButton padding={0}>
-          <QuestionItemWrapper>
-            <QuestionTitleWrapper>
-              <QuestionNumber isHovered={isHovered} isSelected={isSelected}>
+          <MobileQuestionItemWrapper>
+            <MobileQuestionTitleWrapper>
+              <MobileQuestionNumber isHovered={isHovered}>
                 01.
-              </QuestionNumber>
-              <QuestionTitle isHovered={isHovered} isSelected={isSelected}>
+              </MobileQuestionNumber>
+              <MobileQuestionTitle isHovered={isHovered}>
                 How long does it take for a tattoo ?
-              </QuestionTitle>
-            </QuestionTitleWrapper>
+              </MobileQuestionTitle>
+            </MobileQuestionTitleWrapper>
 
-            <IconNotSelected />
-          </QuestionItemWrapper>
+            {isHovered ? <MobileIconSelected /> : <MobileIconNotSelected />}
+          </MobileQuestionItemWrapper>
         </AccordionButton>
         <AccordionPanel padding={0}>
-          <QuestionContent isHovered={isHovered} isSelected={isSelected}>
+          <MobileQuestionContent isHovered={isHovered}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.
-          </QuestionContent>
+          </MobileQuestionContent>
         </AccordionPanel>
       </AccordionItem>
 
-      <Divider noMargin={false} />
+      <MobileDivider noMargin={false} />
     </>
   )
 }

@@ -2,35 +2,43 @@
 import { ArrowDownRightCircle } from "@styled-icons/bootstrap/ArrowDownRightCircle"
 import styled from "styled-components"
 
-export const QuestionItemWrapper = styled.div`
+export const MobileQuestionItemWrapper = styled.div<{
+  // isSelected: boolean
+  isHovered: boolean
+}>`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
 
   width: 100%;
   padding-bottom: ${({ theme }) => theme.space.large};
-  /* padding-top: ${({ theme }) => theme.space.xxsmall}; */
+  padding-top: ${({ theme }) => theme.space.xxsmall};
   color: ${({ theme }) => theme.colors.secondary};
+  padding-right: ${({ theme }) => theme.space.small};
+  padding-left: ${({ theme }) => theme.space.small};
+
+  background-color: ${({ isHovered, theme }) =>
+    isHovered ? theme.colors.background2 : theme.colors.background1};
 `
 
-export const QuestionTitleWrapper = styled.div`
+export const MobileQuestionTitleWrapper = styled.div`
   display: flex;
 `
 
-export const QuestionNumber = styled.div<{
-  isSelected: boolean
+export const MobileQuestionNumber = styled.div<{
+  // isSelected: boolean
   isHovered: boolean
 }>`
   /* width: 15%; */
   min-width: ${({ theme }) => theme.sizes.xxlarge};
   font-size: ${({ theme }) => theme.sizes.large};
   font-weight: 600;
-  color: ${({ isSelected, isHovered, theme }) =>
-    isSelected || isHovered ? theme.colors.primary : theme.colors.secondary};
+  color: ${({ isHovered, theme }) =>
+    isHovered ? theme.colors.primary : theme.colors.background3};
 `
 
-export const QuestionTitle = styled.div<{
-  isSelected: boolean
+export const MobileQuestionTitle = styled.div<{
+  // isSelected: boolean
   isHovered: boolean
 }>`
   /* width: 60%; */
@@ -38,13 +46,13 @@ export const QuestionTitle = styled.div<{
 
   font-size: ${({ theme }) => theme.sizes.large};
   font-weight: 900;
-  color: ${({ isSelected, isHovered, theme }) =>
-    isSelected || isHovered ? theme.colors.secondary : theme.colors.secondary};
+  color: ${({ isHovered, theme }) =>
+    isHovered ? theme.colors.secondary : theme.colors.background3};
   text-align: left;
 `
 
-export const QuestionContent = styled.div<{
-  isSelected: boolean
+export const MobileQuestionContent = styled.div<{
+  // isSelected: boolean
   isHovered: boolean
 }>`
   padding-bottom: ${({ theme }) => theme.space.large};
@@ -52,21 +60,35 @@ export const QuestionContent = styled.div<{
   padding-right: ${({ theme }) => theme.space.xxsmall};
 
   font-weight: 500;
-  color: ${({ isSelected, isHovered, theme }) =>
-    isSelected || isHovered ? theme.colors.secondary : theme.colors.secondary};
+  color: ${({ isHovered, theme }) =>
+    isHovered ? theme.colors.secondary : theme.colors.background3};
   text-align: justify;
+
+  background-color: ${({ isHovered, theme }) =>
+    isHovered ? theme.colors.background2 : theme.colors.background1};
 `
 
-export const IconNotSelected = styled(ArrowDownRightCircle)`
+export const MobileIconNotSelected = styled(ArrowDownRightCircle)`
   align-self: center;
   height: 60px;
   padding-left: ${({ theme }) => theme.space.xxxxlarge};
+  color: ${({ theme }) => theme.colors.background3};
 `
-export const Divider = styled.div<{
+
+export const MobileIconSelected = styled(ArrowDownRightCircle)`
+  align-self: center;
+  height: 60px;
+  padding-left: ${({ theme }) => theme.space.xxxxlarge};
+  color: ${({ theme }) => theme.colors.primary};
+`
+
+export const MobileDivider = styled.div<{
   noMargin: boolean
 }>`
   /* height: ${({ theme }) => theme.sizes.xxxxsmall}; */
   height: 1px;
   visibility: ${({ noMargin }) => (noMargin ? "hidden" : "visible")};
   background-color: ${({ theme }) => theme.colors.background3};
+  margin-right: ${({ theme }) => theme.space.small};
+  margin-left: ${({ theme }) => theme.space.small};
 `

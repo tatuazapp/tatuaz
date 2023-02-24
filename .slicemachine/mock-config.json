@@ -7,7 +7,8 @@
     "homepageIntro": {},
     "ArtistSectionHeader": {},
     "TotalStats": {},
-    "HomepagePhotos": {}
+    "HomepagePhotos": {},
+    "FAQsSection": {}
   },
   "apps/web/slices": {
     "TextBlock": {
@@ -78,6 +79,24 @@
     "HomepagePhotos": {
       "default": {
         "primary": {}
+      }
+    },
+    "FaqsSection": {
+      "default": {
+        "primary": {
+          "FirstQuestionTitle": {
+            "config": {
+              "patternType": "PARAGRAPH",
+              "blocks": 1
+            }
+          },
+          "FirstQuestionDescription": {
+            "config": {
+              "patternType": "PARAGRAPH",
+              "blocks": 1
+            }
+          }
+        }
       }
     }
   }

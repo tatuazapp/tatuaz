@@ -12,9 +12,23 @@ import {
   Divider,
 } from "./styles"
 
-const QuestionItem = () => {
+type QuestionItemProps = {
+  id: number
+  questionTitle: string
+  questionDescription: string
+}
+
+const QuestionItem: React.FC<QuestionItemProps> = ({
+  id,
+  questionTitle,
+  questionDescription,
+}) => {
   // const isHovered = false
   // const isSelected = false
+
+  console.log("id", id)
+  console.log("questionTitle", questionTitle)
+  console.log("questionDescription", questionDescription)
 
   const [isHovered, setHovered] = useState(false)
   const [isSelected, setSelected] = useState(false)
@@ -22,17 +36,15 @@ const QuestionItem = () => {
   return (
     <div id="question">
       <QuestionItemWrapper>
-        <QuestionNumber isHovered={isHovered} isSelected={isSelected}>
-          01.
-        </QuestionNumber>
-        <QuestionTitle isHovered={isHovered} isSelected={isSelected}>
+        <QuestionNumber isHovered={isHovered}>01.</QuestionNumber>
+        <QuestionTitle isHovered={isHovered}>
           Does Tattooing Hurt ?
         </QuestionTitle>
-        <QuestionContent isHovered={isHovered} isSelected={isSelected}>
+        <QuestionContent isHovered={isHovered}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </QuestionContent>
-        {isHovered || isSelected ? <IconSelected /> : <IconNotSelected />}
+        {isHovered ? <IconSelected /> : <IconNotSelected />}
       </QuestionItemWrapper>
       <Divider />
     </div>

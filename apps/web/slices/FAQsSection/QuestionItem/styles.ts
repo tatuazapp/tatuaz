@@ -4,7 +4,10 @@ import { ArrowDownRightCircleFill } from "@styled-icons/bootstrap/ArrowDownRight
 import styled from "styled-components"
 import { rem } from "../../../styles/utils"
 
-export const QuestionItemWrapper = styled.div`
+export const QuestionItemWrapper = styled.div<{
+  // isSelected: boolean
+  isHovered: boolean
+}>`
   display: flex;
   align-items: flex-start;
 
@@ -16,9 +19,11 @@ export const QuestionItemWrapper = styled.div`
 
   color: ${({ theme }) => theme.colors.background3};
 
-  :hover {
+  /* :hover {
     background-color: ${({ theme }) => theme.colors.background2};
-  }
+  } */
+  background-color: ${({ isHovered, theme }) =>
+    isHovered ? theme.colors.background2 : theme.colors.background1};
 `
 
 export const Divider = styled.div`
@@ -35,7 +40,7 @@ export const Divider = styled.div`
 `
 
 export const QuestionNumber = styled.div<{
-  isSelected: boolean
+  // isSelected: boolean
   isHovered: boolean
 }>`
   width: 6%;
@@ -43,12 +48,12 @@ export const QuestionNumber = styled.div<{
 
   font-size: ${({ theme }) => theme.sizes.xlarge};
   font-weight: 600;
-  color: ${({ isSelected, isHovered, theme }) =>
-    isSelected || isHovered ? theme.colors.primary : theme.colors.background3};
+  color: ${({ isHovered, theme }) =>
+    isHovered ? theme.colors.primary : theme.colors.background3};
 `
 
 export const QuestionTitle = styled.div<{
-  isSelected: boolean
+  // isSelected: boolean
   isHovered: boolean
 }>`
   width: 33%;
@@ -56,14 +61,12 @@ export const QuestionTitle = styled.div<{
 
   font-size: ${({ theme }) => theme.sizes.xlarge};
   font-weight: 900;
-  color: ${({ isSelected, isHovered, theme }) =>
-    isSelected || isHovered
-      ? theme.colors.secondary
-      : theme.colors.background3};
+  color: ${({ isHovered, theme }) =>
+    isHovered ? theme.colors.secondary : theme.colors.background3};
 `
 
 export const QuestionContent = styled.div<{
-  isSelected: boolean
+  // isSelected: boolean
   isHovered: boolean
 }>`
   width: 42%;
@@ -71,10 +74,8 @@ export const QuestionContent = styled.div<{
   padding-left: ${({ theme }) => theme.space.xlarge};
 
   font-weight: 500;
-  color: ${({ isSelected, isHovered, theme }) =>
-    isSelected || isHovered
-      ? theme.colors.secondary
-      : theme.colors.background3};
+  color: ${({ isHovered, theme }) =>
+    isHovered ? theme.colors.secondary : theme.colors.background3};
   text-align: justify;
 `
 

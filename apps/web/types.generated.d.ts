@@ -35,6 +35,35 @@ type ArtistSectionHeaderDocumentDataSlicesSlice = ArtistSectionHeaderSlice;
  * @typeParam Lang - Language API ID of the document.
  */
 export type ArtistSectionHeaderDocument<Lang extends string = string> = prismicT.PrismicDocumentWithoutUID<Simplify<ArtistSectionHeaderDocumentData>, "ArtistSectionHeader", Lang>;
+/** Content for FAQsSection documents */
+interface FaQsSectionDocumentData {
+    /**
+     * Slice Zone field in *FAQsSection*
+     *
+     * - **Field Type**: Slice Zone
+     * - **Placeholder**: *None*
+     * - **API ID Path**: FAQsSection.slices[]
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/slices
+     *
+     */
+    slices: prismicT.SliceZone<FaQsSectionDocumentDataSlicesSlice>;
+}
+/**
+ * Slice for *FAQsSection → Slice Zone*
+ *
+ */
+type FaQsSectionDocumentDataSlicesSlice = FaqsSectionSlice;
+/**
+ * FAQsSection document from Prismic
+ *
+ * - **API ID**: `FAQsSection`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type FaQsSectionDocument<Lang extends string = string> = prismicT.PrismicDocumentWithoutUID<Simplify<FaQsSectionDocumentData>, "FAQsSection", Lang>;
 /** Content for HomepageIntro documents */
 interface HomepageIntroDocumentData {
     /**
@@ -145,7 +174,7 @@ type TotalStatsDocumentData = Record<string, never>;
  * @typeParam Lang - Language API ID of the document.
  */
 export type TotalStatsDocument<Lang extends string = string> = prismicT.PrismicDocumentWithoutUID<Simplify<TotalStatsDocumentData>, "TotalStats", Lang>;
-export type AllDocumentTypes = ArtistSectionHeaderDocument | HomepageIntroDocument | HomepagePhotosDocument | TestDocument | TotalStatsDocument;
+export type AllDocumentTypes = ArtistSectionHeaderDocument | FaQsSectionDocument | HomepageIntroDocument | HomepagePhotosDocument | TestDocument | TotalStatsDocument;
 /**
  * Primary content in ArtistSectionHeader → Primary
  *
@@ -195,6 +224,95 @@ type ArtistSectionHeaderSliceVariation = ArtistSectionHeaderSliceDefault;
  *
  */
 export type ArtistSectionHeaderSlice = prismicT.SharedSlice<"artist_section_header", ArtistSectionHeaderSliceVariation>;
+/**
+ * Primary content in FaqsSection → Primary
+ *
+ */
+interface FaqsSectionSliceDefaultPrimary {
+    /**
+     * FirstQuestionTitle field in *FaqsSection → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: This is where it all begins...
+     * - **API ID Path**: faqs_section.primary.FirstQuestionTitle
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    FirstQuestionTitle: prismicT.RichTextField;
+    /**
+     * FirstQuestionDescription field in *FaqsSection → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: A nice description of your feature
+     * - **API ID Path**: faqs_section.primary.FirstQuestionDescription
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    FirstQuestionDescription: prismicT.RichTextField;
+    /**
+     * SecondQuestionTitile field in *FaqsSection → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: faqs_section.primary.SecondQuestionTitile
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    SecondQuestionTitile: prismicT.RichTextField;
+    /**
+     * SecondQuestionDescription field in *FaqsSection → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: faqs_section.primary.SecondQuestionDescription
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    SecondQuestionDescription: prismicT.RichTextField;
+    /**
+     * ThirdQuestionTitle field in *FaqsSection → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: faqs_section.primary.ThirdQuestionTitle
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    ThirdQuestionTitle: prismicT.RichTextField;
+    /**
+     * ThirdQuestionDescription field in *FaqsSection → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: faqs_section.primary.ThirdQuestionDescription
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    ThirdQuestionDescription: prismicT.RichTextField;
+}
+/**
+ * Default variation for FaqsSection Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `FaqsSection`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type FaqsSectionSliceDefault = prismicT.SharedSliceVariation<"default", Simplify<FaqsSectionSliceDefaultPrimary>, never>;
+/**
+ * Slice variation for *FaqsSection*
+ *
+ */
+type FaqsSectionSliceVariation = FaqsSectionSliceDefault;
+/**
+ * FaqsSection Shared Slice
+ *
+ * - **API ID**: `faqs_section`
+ * - **Description**: `FaqsSection`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type FaqsSectionSlice = prismicT.SharedSlice<"faqs_section", FaqsSectionSliceVariation>;
 /**
  * Primary content in HomepageIntro → Primary
  *
@@ -406,6 +524,6 @@ declare module "@prismicio/client" {
         (repositoryNameOrEndpoint: string, options?: prismic.ClientConfig): prismic.Client<AllDocumentTypes>;
     }
     namespace Content {
-        export type { ArtistSectionHeaderDocumentData, ArtistSectionHeaderDocumentDataSlicesSlice, ArtistSectionHeaderDocument, HomepageIntroDocumentData, HomepageIntroDocumentDataSlicesSlice, HomepageIntroDocument, HomepagePhotosDocumentData, HomepagePhotosDocumentDataSlicesSlice, HomepagePhotosDocument, TestDocumentData, TestDocumentDataSlicesSlice, TestDocument, TotalStatsDocumentData, TotalStatsDocument, AllDocumentTypes, ArtistSectionHeaderSliceDefaultPrimary, ArtistSectionHeaderSliceDefault, ArtistSectionHeaderSliceVariation, ArtistSectionHeaderSlice, HomepageIntroSliceDefaultPrimary, HomepageIntroSliceDefault, HomepageIntroSliceVariation, HomepageIntroSlice, HomepagePhotosSliceDefaultPrimary, HomepagePhotosSliceDefault, HomepagePhotosSliceVariation, HomepagePhotosSlice, ImageSliceDefaultPrimary, ImageSliceDefault, ImageSliceVariation, ImageSlice, TextBlockSliceDefaultPrimary, TextBlockSliceDefault, TextBlockSliceVariation, TextBlockSlice };
+        export type { ArtistSectionHeaderDocumentData, ArtistSectionHeaderDocumentDataSlicesSlice, ArtistSectionHeaderDocument, FaQsSectionDocumentData, FaQsSectionDocumentDataSlicesSlice, FaQsSectionDocument, HomepageIntroDocumentData, HomepageIntroDocumentDataSlicesSlice, HomepageIntroDocument, HomepagePhotosDocumentData, HomepagePhotosDocumentDataSlicesSlice, HomepagePhotosDocument, TestDocumentData, TestDocumentDataSlicesSlice, TestDocument, TotalStatsDocumentData, TotalStatsDocument, AllDocumentTypes, ArtistSectionHeaderSliceDefaultPrimary, ArtistSectionHeaderSliceDefault, ArtistSectionHeaderSliceVariation, ArtistSectionHeaderSlice, FaqsSectionSliceDefaultPrimary, FaqsSectionSliceDefault, FaqsSectionSliceVariation, FaqsSectionSlice, HomepageIntroSliceDefaultPrimary, HomepageIntroSliceDefault, HomepageIntroSliceVariation, HomepageIntroSlice, HomepagePhotosSliceDefaultPrimary, HomepagePhotosSliceDefault, HomepagePhotosSliceVariation, HomepagePhotosSlice, ImageSliceDefaultPrimary, ImageSliceDefault, ImageSliceVariation, ImageSlice, TextBlockSliceDefaultPrimary, TextBlockSliceDefault, TextBlockSliceVariation, TextBlockSlice };
     }
 }
