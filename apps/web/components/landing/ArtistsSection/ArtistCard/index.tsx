@@ -12,9 +12,9 @@ const ArtistCard = () => (
   <ArtistCardWrapper>
     <PhotoWrapper>
       <img
-        src="https://picsum.photos/200/300"
         alt="Artist"
         height={100}
+        src="https://picsum.photos/200/300"
         width={100}
       />
     </PhotoWrapper>
