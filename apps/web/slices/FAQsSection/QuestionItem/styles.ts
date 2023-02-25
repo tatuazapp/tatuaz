@@ -6,7 +6,7 @@ import { rem } from "../../../styles/utils"
 
 export const QuestionItemWrapper = styled.div<{
   // isSelected: boolean
-  isHovered: boolean
+  isHovered?: boolean
 }>`
   display: flex;
   align-items: flex-start;

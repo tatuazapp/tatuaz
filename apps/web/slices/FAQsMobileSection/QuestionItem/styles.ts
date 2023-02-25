@@ -4,18 +4,19 @@ import styled from "styled-components"
 
 export const MobileQuestionItemWrapper = styled.div<{
   // isSelected: boolean
-  isHovered: boolean
+  isHovered?: boolean
 }>`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
 
   width: 100%;
-  padding-bottom: ${({ theme }) => theme.space.large};
   padding-top: ${({ theme }) => theme.space.xxsmall};
-  color: ${({ theme }) => theme.colors.secondary};
   padding-right: ${({ theme }) => theme.space.small};
+  padding-bottom: ${({ theme }) => theme.space.large};
   padding-left: ${({ theme }) => theme.space.small};
+
+  color: ${({ theme }) => theme.colors.secondary};
 
   background-color: ${({ isHovered, theme }) =>
     isHovered ? theme.colors.background2 : theme.colors.background1};
@@ -55,9 +56,9 @@ export const MobileQuestionContent = styled.div<{
   // isSelected: boolean
   isHovered: boolean
 }>`
+  padding-right: ${({ theme }) => theme.space.xxsmall};
   padding-bottom: ${({ theme }) => theme.space.large};
   padding-left: ${({ theme }) => theme.space.xxlarge};
-  padding-right: ${({ theme }) => theme.space.xxsmall};
 
   font-weight: 500;
   color: ${({ isHovered, theme }) =>
@@ -87,8 +88,9 @@ export const MobileDivider = styled.div<{
 }>`
   /* height: ${({ theme }) => theme.sizes.xxxxsmall}; */
   height: 1px;
-  visibility: ${({ noMargin }) => (noMargin ? "hidden" : "visible")};
-  background-color: ${({ theme }) => theme.colors.background3};
   margin-right: ${({ theme }) => theme.space.small};
   margin-left: ${({ theme }) => theme.space.small};
+
+  visibility: ${({ noMargin }) => (noMargin ? "hidden" : "visible")};
+  background-color: ${({ theme }) => theme.colors.background3};
 `
