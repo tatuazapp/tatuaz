@@ -9,15 +9,6 @@
  * ---------------------------------------------------------------
  */
 
-export interface CreateUserDto {
-  /**
-   * ErrorCodes: UsernameNull, UsernameTooShort, UsernameTooLong, UsernameAlreadyInUse
-   * @minLength 4
-   * @maxLength 32
-   */
-  username: string
-}
-
 /** Response for marking codes that do not return any data. */
 export type EmptyResponse = object
 
@@ -29,33 +20,25 @@ export interface ErrorResponse {
   success?: boolean
 }
 
-export interface ListArtistStatsDto {
+export interface ListPhotoCategoriesDto {
   /**
-   * ErrorCodes: CountNull, CountTooLow, CountTooHigh
+   * ErrorCodes: PageNumberIsNull, PageNumberIsLessThan1
    * @format int32
-   * @min 0
-   * @exclusiveMin true
-   * @max 10
+   * @min 1
    */
-  count: number
-}
-
-export interface ListSummaryStatsDto {
-  timePeriod: SummaryStatTimePeriod
+  pageNumber: number
   /**
-   * ErrorCodes: CountNull, CountTooLow, CountTooHigh
+   * ErrorCodes: PageSizeIsNull, PageSizeIsLessThan1, PageSizeIsGreaterThan1000
    * @format int32
-   * @min 0
-   * @exclusiveMin true
-   * @max 10
+   * @min 1
+   * @max 1000
    */
-  count: number
+  pageSize: number
 }
 
 /** Wrapper used for returning success responses. */
-export interface OkResponseIEnumerableSummaryStatDto {
-  /** Payload of response. */
-  value?: SummaryStatDto[] | null
+export interface OkResponsePagedDataPhotoCategoryDto {
+  value?: PagedDataPhotoCategoryDto
   /** Indicates if request was successful. Should be always true for this type of response. */
   success?: boolean
 }
@@ -67,16 +50,44 @@ export interface OkResponseUserDto {
   success?: boolean
 }
 
-export interface SummaryStatDto {
-  title?: string
-  content?: string
-  backgroundUrl?: string
+export interface PagedDataPhotoCategoryDto {
+  data?: PhotoCategoryDto[]
+  /** @format int32 */
+  pageNumber?: number
+  /** @format int32 */
+  pageSize?: number
+  /** @format int32 */
+  totalPages?: number
+  /** @format int32 */
+  totalCount?: number
 }
 
-export enum SummaryStatTimePeriod {
-  Day = "Day",
-  Week = "Week",
-  Month = "Month",
+export interface PhotoCategoryDto {
+  /** @format int32 */
+  id?: number
+  title?: string
+  type?: PhotoCategoryTypeDto
+  imageUri?: string
+  /** @format int32 */
+  popularity?: number
+}
+
+export enum PhotoCategoryTypeDto {
+  Style = "Style",
+  Motive = "Motive",
+  BodyPart = "BodyPart",
+}
+
+export interface SignUpDto {
+  /**
+   * ErrorCodes: UsernameNull, UsernameTooShort, UsernameTooLong, UsernameAlreadyInUse, UsernameInvalidCharacters
+   * @minLength 4
+   * @maxLength 32
+   * @pattern ^[a-zA-Z0-9_]*$
+   */
+  username: string
+  /** ErrorCodes: PhotoCategoryIdsNull, PhotoCategoryIdsTooFew, PhotoCategoryIdsTooMany, PhotoCategoryIdsInvalid, PhotoCategoryIdsDuplicate */
+  photoCategoryIds: number[]
 }
 
 export interface TatuazError {
@@ -87,6 +98,7 @@ export interface TatuazError {
 export interface UserDto {
   username?: string
   email?: string
+  auth0Id?: string
 }
 
 export type QueryParamsType = Record<string | number, any>
@@ -304,26 +316,25 @@ export class HttpClient<SecurityDataType = unknown> {
  * API for tatuaz.app
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
-  landing = {
+  identity = {
     /**
      * No description
      *
-     * @tags Landing
-     * @name ListSummaryStats
-     * @summary Get summary stats for landing page
-     * @request POST:/Landing/ListSummaryStats
+     * @tags Identity
+     * @name Me
+     * @summary Check what user is logged in
+     * @request POST:/Identity/Me
      * @secure
-     * @response `200` `OkResponseIEnumerableSummaryStatDto` Success
-     * @response `400` `ErrorResponse` Bad Request
+     * @response `200` `OkResponseUserDto` Success
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
      * @response `500` `ErrorResponse` Server Error
      */
-    listSummaryStats: (data: ListSummaryStatsDto, params: RequestParams = {}) =>
-      this.request<OkResponseIEnumerableSummaryStatDto, ErrorResponse>({
-        path: `/Landing/ListSummaryStats`,
+    me: (params: RequestParams = {}) =>
+      this.request<OkResponseUserDto, EmptyResponse | ErrorResponse>({
+        path: `/Identity/Me`,
         method: "POST",
-        body: data,
         secure: true,
-        type: ContentType.Json,
         format: "json",
         ...params,
       }),
@@ -331,18 +342,20 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags Landing
-     * @name ListArtistStats
-     * @summary Get artist stats for landing page
-     * @request POST:/Landing/ListArtistStats
+     * @tags Identity
+     * @name SignUp
+     * @summary Register user
+     * @request POST:/Identity/SignUp
      * @secure
-     * @response `200` `OkResponseIEnumerableSummaryStatDto` Success
+     * @response `201` `OkResponseUserDto` Created
      * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
      * @response `500` `ErrorResponse` Server Error
      */
-    listArtistStats: (data: ListArtistStatsDto, params: RequestParams = {}) =>
-      this.request<OkResponseIEnumerableSummaryStatDto, ErrorResponse>({
-        path: `/Landing/ListArtistStats`,
+    signUp: (data: SignUpDto, params: RequestParams = {}) =>
+      this.request<OkResponseUserDto, ErrorResponse | EmptyResponse>({
+        path: `/Identity/SignUp`,
         method: "POST",
         body: data,
         secure: true,
@@ -351,46 +364,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   }
-  users = {
+  photo = {
     /**
      * No description
      *
-     * @tags Users
-     * @name WhoAmI
-     * @summary Check what user is logged in
-     * @request POST:/Users/WhoAmI
+     * @tags Photo
+     * @name ListPhotoCategories
+     * @request POST:/Photo/ListPhotoCategories
      * @secure
-     * @response `200` `OkResponseUserDto` Success
-     * @response `401` `EmptyResponse` Unauthorized
-     * @response `403` `EmptyResponse` Forbidden
-     * @response `500` `ErrorResponse` Server Error
-     */
-    whoAmI: (params: RequestParams = {}) =>
-      this.request<OkResponseUserDto, EmptyResponse | ErrorResponse>({
-        path: `/Users/WhoAmI`,
-        method: "POST",
-        secure: true,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Users
-     * @name SignUp
-     * @summary Register user
-     * @request POST:/Users/SignUp
-     * @secure
-     * @response `201` `OkResponseUserDto` Created
+     * @response `200` `OkResponsePagedDataPhotoCategoryDto` Success
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
-     * @response `403` `EmptyResponse` Forbidden
      * @response `500` `ErrorResponse` Server Error
      */
-    signUp: (data: CreateUserDto, params: RequestParams = {}) =>
-      this.request<OkResponseUserDto, ErrorResponse | EmptyResponse>({
-        path: `/Users/SignUp`,
+    listPhotoCategories: (data: ListPhotoCategoriesDto, params: RequestParams = {}) =>
+      this.request<OkResponsePagedDataPhotoCategoryDto, ErrorResponse | EmptyResponse>({
+        path: `/Photo/ListPhotoCategories`,
         method: "POST",
         body: data,
         secure: true,

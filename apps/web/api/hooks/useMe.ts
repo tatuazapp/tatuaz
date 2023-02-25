@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react"
 import { useQuery } from "@tanstack/react-query"
+import { useRouter } from "next/router"
 import { api } from "../apiClient"
 import { queryKeys } from "../queryKeys"
 
@@ -13,35 +14,28 @@ type PoorMansError = {
 }
 
 const useMe = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0()
+  const { isAuthenticated, isLoading } = useAuth0()
 
-  const { refetch, data } = useQuery(
-    [queryKeys.whoAmI],
-    api.users.whoAmICreate,
-    {
-      onError: async (error: PoorMansError) => {
-        if (error.status === 401) {
-          api.setSecurityData(undefined)
-        }
+  const router = useRouter()
 
-        // User data has not been saved to our database yet
-        if (error.status === 403) {
-          await api.users.signUpCreate({
-            email: user.email,
-            username: user.name,
-            phoneNumber: user.phone_number,
-          })
+  const { data } = useQuery([queryKeys.whoAmI], api.identity.me, {
+    onError: async (error: PoorMansError) => {
+      console.error(error)
+      if (error.status === 401) {
+        api.setSecurityData(undefined)
+      }
 
-          refetch()
-        }
-      },
+      // User data has not been saved to our database yet
+      if (error.status === 403) {
+        router.push("/onboarding")
+      }
+    },
 
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      retry: false,
-      enabled: isAuthenticated,
-    }
-  )
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    retry: false,
+    enabled: isAuthenticated,
+  })
 
   if (!isAuthenticated && !isLoading) return null
 

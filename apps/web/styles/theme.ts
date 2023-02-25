@@ -9,6 +9,7 @@ export const theme: DefaultTheme = {
     background1: "#151515",
     background2: "#2B2B2B",
     background3: "#494949",
+    background4: "#6B6B6B",
   },
 
   radius: {

@@ -7,7 +7,7 @@ import {
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react"
 import { FunctionComponent, useState } from "react"
 import { FaqsSectionSlice } from "../../types.generated"
-import useIsDesktop from "../../utils/hooks/useIsDesktop"
+import useIsMobile from "../../utils/hooks/useIsMobile"
 import {
   MobileDivider,
   MobileIconNotSelected,
@@ -38,7 +38,9 @@ const FaqsSection: FunctionComponent<FAQsSectionProps> = ({ slice }) => {
   const isHoveredSecondQuestionHovered: boolean = selectedQuestion === 2
   const isHoveredThirdQuestionHovered: boolean = selectedQuestion === 3
 
-  if (!useIsDesktop()) {
+  const isMobile = useIsMobile()
+
+  if (isMobile) {
     return (
       <FAQsMobileSectionWrapper>
         <Accordion allowToggle index={selectedQuestion - 1}>

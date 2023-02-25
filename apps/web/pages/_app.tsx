@@ -15,7 +15,7 @@ import chakraTheme from "../styles/chakra"
 import "../styles/global.css"
 import { theme, themeWithBreakpoints } from "../styles/theme"
 
-const queryClient = new QueryClient()
+export const queryClient = new QueryClient()
 
 const themeMerged = {
   ...theme,

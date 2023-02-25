@@ -20,6 +20,7 @@ const chakraTheme = extendTheme({
     global: {
       body: {
         bg: theme.colors.background1,
+        minHeight: "100vh",
       },
     },
   },

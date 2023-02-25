@@ -7,6 +7,7 @@ declare module "styled-components" {
     background1: string
     background2: string
     background3: string
+    background4: string
   }
 
   type Radius = {
