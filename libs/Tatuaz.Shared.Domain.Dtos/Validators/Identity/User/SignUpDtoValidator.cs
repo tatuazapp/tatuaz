@@ -55,11 +55,6 @@ public class SignUpDtoValidator : AbstractValidator<SignUpDto>
             .WithMessage("At least 3 categories must be selected")
             .When(x => x.CategoryIds != null);
         RuleFor(x => x.CategoryIds)
-            .Must(x => x?.Length <= 20)
-            .WithErrorCode(SignUpErrorCodes.CategoryIdsTooMany)
-            .WithMessage("At most 20 categories can be selected")
-            .When(x => x.CategoryIds != null);
-        RuleFor(x => x.CategoryIds)
             .MustAsync(
                 async (categoryIds, ct) =>
                 {
