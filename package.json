@@ -29,6 +29,7 @@
     "@prismicio/next": "0.1.5",
     "@prismicio/react": "2.5.0",
     "@prismicio/slice-simulator-react": "0.2.2",
+    "@sect/100vh": "1.2.0",
     "@styled-icons/bootstrap": "10.47.0",
     "@styled-icons/boxicons-logos": "10.47.0",
     "@swc/helpers": "0.3.3",
