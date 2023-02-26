@@ -16,9 +16,9 @@ const PreferencesPicker: FunctionComponent<PreferencesPickerProps> = ({
   setSelectedPreferences,
 }) => {
   const { data } = useQuery(
-    [queryKeys.photo.listPhotoCategories],
+    [queryKeys.photo.listCategories],
     () =>
-      api.photo.listPhotoCategories({
+      api.photo.listCategories({
         pageNumber: 1,
         pageSize: 100, // pagination is not necessary here
       }),

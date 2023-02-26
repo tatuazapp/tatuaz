@@ -1,6 +1,6 @@
 export const queryKeys = {
   whoAmI: "whoAmI",
   photo: {
-    listPhotoCategories: "listPhotoCategories",
+    listCategories: "listCategories",
   },
 } as const
