@@ -10,6 +10,7 @@ export const PreferencesPickerWrapper = styled.div`
   justify-content: center;
 
   margin-top: ${({ theme }) => theme.space.xxxlarge};
+  margin-bottom: ${({ theme }) => theme.space.xxxlarge};
   padding: 0;
 
   ${down("sm")} {

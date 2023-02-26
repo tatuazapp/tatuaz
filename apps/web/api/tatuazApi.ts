@@ -9,6 +9,24 @@
  * ---------------------------------------------------------------
  */
 
+export interface CategoryDto {
+  /** @format int32 */
+  id?: number
+  title?: string
+  type?: CategoryTypeDto
+  imageUri?: string
+}
+
+export enum CategoryTypeDto {
+  Style = "Style",
+  Motive = "Motive",
+  BodyPart = "BodyPart",
+}
+
+export type DeleteBackgroundPhotoDto = object
+
+export type DeleteForegroundPhotoDto = object
+
 /** Response for marking codes that do not return any data. */
 export type EmptyResponse = object
 
@@ -20,7 +38,7 @@ export interface ErrorResponse {
   success?: boolean
 }
 
-export interface ListPhotoCategoriesDto {
+export interface ListCategoriesDto {
   /**
    * ErrorCodes: PageNumberIsNull, PageNumberIsLessThan1
    * @format int32
@@ -37,8 +55,8 @@ export interface ListPhotoCategoriesDto {
 }
 
 /** Wrapper used for returning success responses. */
-export interface OkResponsePagedDataPhotoCategoryDto {
-  value?: PagedDataPhotoCategoryDto
+export interface OkResponsePagedDataCategoryDto {
+  value?: PagedDataCategoryDto
   /** Indicates if request was successful. Should be always true for this type of response. */
   success?: boolean
 }
@@ -50,8 +68,8 @@ export interface OkResponseUserDto {
   success?: boolean
 }
 
-export interface PagedDataPhotoCategoryDto {
-  data?: PhotoCategoryDto[]
+export interface PagedDataCategoryDto {
+  data?: CategoryDto[]
   /** @format int32 */
   pageNumber?: number
   /** @format int32 */
@@ -62,22 +80,6 @@ export interface PagedDataPhotoCategoryDto {
   totalCount?: number
 }
 
-export interface PhotoCategoryDto {
-  /** @format int32 */
-  id?: number
-  title?: string
-  type?: PhotoCategoryTypeDto
-  imageUri?: string
-  /** @format int32 */
-  popularity?: number
-}
-
-export enum PhotoCategoryTypeDto {
-  Style = "Style",
-  Motive = "Motive",
-  BodyPart = "BodyPart",
-}
-
 export interface SignUpDto {
   /**
    * ErrorCodes: UsernameNull, UsernameTooShort, UsernameTooLong, UsernameAlreadyInUse, UsernameInvalidCharacters
@@ -86,8 +88,8 @@ export interface SignUpDto {
    * @pattern ^[a-zA-Z0-9_]*$
    */
   username: string
-  /** ErrorCodes: PhotoCategoryIdsNull, PhotoCategoryIdsTooFew, PhotoCategoryIdsTooMany, PhotoCategoryIdsInvalid, PhotoCategoryIdsDuplicate */
-  photoCategoryIds: number[]
+  /** ErrorCodes: CategoryIdsNull, CategoryIdsTooFew, CategoryIdsTooMany, CategoryIdsInvalid, CategoryIdsDuplicate */
+  categoryIds: number[]
 }
 
 export interface TatuazError {
@@ -99,6 +101,10 @@ export interface UserDto {
   username?: string
   email?: string
   auth0Id?: string
+  /** @format uri */
+  foregroundPhotoUri?: string | null
+  /** @format uri */
+  backgroundPhotoUri?: string | null
 }
 
 export type QueryParamsType = Record<string | number, any>
@@ -399,29 +405,140 @@ export class Api<
         format: "json",
         ...params,
       }),
+
+    /**
+     * No description
+     *
+     * @tags Identity
+     * @name SetForegroundPhoto
+     * @summary Set foreground photo
+     * @request POST:/Identity/SetForegroundPhoto
+     * @secure
+     * @response `201` `EmptyResponse` Created
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `500` `ErrorResponse` Server Error
+     */
+    setForegroundPhoto: (
+      data: {
+        /** @format binary */
+        photo?: File
+      },
+      params: RequestParams = {}
+    ) =>
+      this.request<EmptyResponse, ErrorResponse | EmptyResponse>({
+        path: `/Identity/SetForegroundPhoto`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Identity
+     * @name SetBackgroundPhoto
+     * @summary Set background photo
+     * @request POST:/Identity/SetBackgroundPhoto
+     * @secure
+     * @response `201` `EmptyResponse` Created
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `500` `ErrorResponse` Server Error
+     */
+    setBackgroundPhoto: (
+      data: {
+        /** @format binary */
+        photo?: File
+      },
+      params: RequestParams = {}
+    ) =>
+      this.request<EmptyResponse, ErrorResponse | EmptyResponse>({
+        path: `/Identity/SetBackgroundPhoto`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Identity
+     * @name DeleteForegroundPhoto
+     * @summary Delete foreground photo
+     * @request POST:/Identity/DeleteForegroundPhoto
+     * @secure
+     * @response `201` `EmptyResponse` Created
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `500` `ErrorResponse` Server Error
+     */
+    deleteForegroundPhoto: (
+      data: DeleteForegroundPhotoDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<EmptyResponse, ErrorResponse | EmptyResponse>({
+        path: `/Identity/DeleteForegroundPhoto`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Identity
+     * @name DeleteBackgroundPhoto
+     * @summary Delete background photo
+     * @request POST:/Identity/DeleteBackgroundPhoto
+     * @secure
+     * @response `201` `EmptyResponse` Created
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `500` `ErrorResponse` Server Error
+     */
+    deleteBackgroundPhoto: (
+      data: DeleteBackgroundPhotoDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<EmptyResponse, ErrorResponse | EmptyResponse>({
+        path: `/Identity/DeleteBackgroundPhoto`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
   }
   photo = {
     /**
      * No description
      *
      * @tags Photo
-     * @name ListPhotoCategories
-     * @request POST:/Photo/ListPhotoCategories
+     * @name ListCategories
+     * @request POST:/Photo/ListCategories
      * @secure
-     * @response `200` `OkResponsePagedDataPhotoCategoryDto` Success
+     * @response `200` `OkResponsePagedDataCategoryDto` Success
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
      * @response `500` `ErrorResponse` Server Error
      */
-    listPhotoCategories: (
-      data: ListPhotoCategoriesDto,
-      params: RequestParams = {}
-    ) =>
+    listCategories: (data: ListCategoriesDto, params: RequestParams = {}) =>
       this.request<
-        OkResponsePagedDataPhotoCategoryDto,
+        OkResponsePagedDataCategoryDto,
         ErrorResponse | EmptyResponse
       >({
-        path: `/Photo/ListPhotoCategories`,
+        path: `/Photo/ListCategories`,
         method: "POST",
         body: data,
         secure: true,

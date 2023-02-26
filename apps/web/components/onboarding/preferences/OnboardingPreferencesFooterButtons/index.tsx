@@ -76,7 +76,7 @@ const OnboardingPreferencesFooterButtons: FunctionComponent<
   const signUp = useCallback(async () => {
     await mutation.mutateAsync({
       username: usernameForm.getValues().username,
-      photoCategoryIds: selectedPreferences,
+      categoryIds: selectedPreferences,
     })
   }, [mutation, selectedPreferences, usernameForm])
 

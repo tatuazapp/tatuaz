@@ -41,8 +41,8 @@ const Onboarding: NextPage = () => {
 
   useEffect(() => {
     if (step === 0) {
-      queryClient.prefetchQuery([queryKeys.photo.listPhotoCategories], () =>
-        api.photo.listPhotoCategories({
+      queryClient.prefetchQuery([queryKeys.photo.listCategories], () =>
+        api.photo.listCategories({
           pageNumber: 1,
           pageSize: 100, // pagination is not necessary here
         })
