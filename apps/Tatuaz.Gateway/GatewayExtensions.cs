@@ -148,6 +148,10 @@ public static class GatewayExtensions
             {
                 opt.Filters.Add<UserContextActionFilter>();
             })
+            .ConfigureApiBehaviorOptions(opt =>
+            {
+                opt.SuppressModelStateInvalidFilter = true;
+            })
             .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;

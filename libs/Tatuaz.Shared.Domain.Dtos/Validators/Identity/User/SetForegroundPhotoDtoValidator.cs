@@ -11,7 +11,8 @@ public class SetForegroundPhotoDtoValidator : AbstractValidator<SetForegroundPho
         RuleFor(x => x.Photo)
             .NotNull()
             .WithErrorCode(SetForegroundPhotoErrorCodes.FileNull)
-            .WithMessage("File cannot be null")
+            .WithMessage("File cannot be null");
+        RuleFor(x => x.Photo)
             .Must(file =>
             {
                 var length = file?.Length ?? 0;

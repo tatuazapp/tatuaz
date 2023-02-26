@@ -7,5 +7,4 @@ public class HistCategory : HistEntity<int>
     public string Title { get; set; } = default!;
     public HistCategoryType Type { get; set; }
     public string ImageUri { get; set; } = default!;
-    public int Popularity { get; set; }
 }

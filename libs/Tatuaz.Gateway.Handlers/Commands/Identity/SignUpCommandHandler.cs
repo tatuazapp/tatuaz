@@ -13,7 +13,6 @@ using Tatuaz.Shared.Domain.Entities.Hist.Models.Photo;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Photo;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
-using Tatuaz.Shared.Infrastructure.Specification;
 using Tatuaz.Shared.Pipeline.Exceptions;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Factories.Results.Identity;
@@ -30,24 +29,14 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
     private readonly IGenericRepository<
         UserCategory,
         HistUserCategory,
-        Guid
-    > _userPhotoCategoryRepository;
-    private readonly IGenericRepository<
-        Category,
-        HistCategory,
         int
-    > _photoCategoryRepository;
+    > _userCategoryRepository;
     private readonly IUserContext _userContext;
     private readonly IValidator<SignUpDto> _validator;
 
     public SignUpCommandHandler(
         IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository,
-        IGenericRepository<
-            UserCategory,
-            HistUserCategory,
-            Guid
-        > userPhotoCategoryRepository,
-        IGenericRepository<Category, HistCategory, int> photoCategoryRepository,
+        IGenericRepository<UserCategory, HistUserCategory, int> userCategoryRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper,
         IUserContext userContext,
@@ -55,8 +44,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
     )
     {
         _userRepository = userRepository;
-        _userPhotoCategoryRepository = userPhotoCategoryRepository;
-        _photoCategoryRepository = photoCategoryRepository;
+        _userCategoryRepository = userCategoryRepository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _userContext = userContext;
@@ -94,17 +82,18 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
         user.ForegroundPhotoId = null;
         user.BackgroundPhotoId = null;
         await _unitOfWork
-            .RunInTransactionAsync(_ =>
+            .RunInTransactionAsync(
+                _ =>
                 {
                     _userRepository.Create(user);
-                    foreach (var photoCategoryId in request.SignUpDto.PhotoCategoryIds!)
+                    foreach (var categoryId in request.SignUpDto.CategoryIds!)
                     {
-                        var userPhotoCategory = new UserCategory
+                        var userCategory = new UserCategory
                         {
                             UserId = user.Id,
-                            PhotoCategoryId = photoCategoryId
+                            CategoryId = categoryId
                         };
-                        _userPhotoCategoryRepository.Create(userPhotoCategory);
+                        _userCategoryRepository.Create(userCategory);
                     }
                     return Task.CompletedTask;
                 },

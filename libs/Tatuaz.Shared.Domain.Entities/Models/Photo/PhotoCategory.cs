@@ -6,7 +6,7 @@ using Tatuaz.Shared.Domain.Entities.Models.Common;
 
 namespace Tatuaz.Shared.Domain.Entities.Models.Photo;
 
-public class PhotoCategory : Entity<HistPhotoCategory, Guid>
+public class PhotoCategory : Entity<HistPhotoCategory, int>
 {
     public Guid PhotoId { get; set; }
     public virtual Photo Photo { get; set; } = default!;

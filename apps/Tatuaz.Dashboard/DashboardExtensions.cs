@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
+using Azure.Storage.Blobs;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -82,6 +83,10 @@ public static class DashboardExtensions
             );
 
         services.AddScoped<IEmailHandlerFactory, EmailHandlerFactory>();
+        var blobOpt = GetBlobOpt(configuration);
+        services.AddSingleton(
+            new BlobContainerClient(blobOpt.ConnectionString, blobOpt.ImagesContainerName)
+        );
 
         return services;
     }
@@ -149,5 +154,11 @@ public static class DashboardExtensions
     {
         return configuration.GetSection(SerilogOpt.SectionName).Get<SerilogOpt>()
             ?? throw new Exception("Serilog options not found");
+    }
+
+    public static BlobOpt GetBlobOpt(this IConfiguration configuration)
+    {
+        return configuration.GetSection(BlobOpt.SectionName).Get<BlobOpt>()
+            ?? throw new Exception("Blob options not found");
     }
 }

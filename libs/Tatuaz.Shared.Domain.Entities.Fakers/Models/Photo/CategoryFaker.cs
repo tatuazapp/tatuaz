@@ -16,5 +16,6 @@ public sealed class CategoryFaker : Faker<Category>, IEntityFaker
         RuleFor(x => x.Type, f => f.PickRandom<CategoryType>());
         RuleFor(x => x.ImageUri, f => f.Internet.UrlRootedPath("jpg"));
         RuleFor(x => x.UserCategories, _ => new List<UserCategory>());
+        RuleFor(x => x.PhotoCategories, _ => new List<PhotoCategory>());
     }
 }

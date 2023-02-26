@@ -7,18 +7,18 @@ using Tatuaz.Shared.Domain.Entities.Models.Identity;
 
 namespace Tatuaz.Shared.Domain.Entities.Models.Photo;
 
-public class UserCategory : Entity<HistUserCategory, Guid>
+public class UserCategory : Entity<HistUserCategory, int>
 {
     public string UserId { get; set; } = default!;
     public virtual TatuazUser User { get; set; } = default!;
-    public int PhotoCategoryId { get; set; }
+    public int CategoryId { get; set; }
     public virtual Category Category { get; set; } = default!;
 
     public override HistEntity ToHistEntity(IClock clock, HistState state)
     {
         var histEntity = (HistUserCategory)base.ToHistEntity(clock, state);
         histEntity.UserId = UserId;
-        histEntity.CategoryId = PhotoCategoryId;
+        histEntity.CategoryId = CategoryId;
         return histEntity;
     }
 }

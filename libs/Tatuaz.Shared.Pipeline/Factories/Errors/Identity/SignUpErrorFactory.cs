@@ -3,7 +3,7 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Shared.Pipeline.Factories.Errors.Identity;
 
-public class SignUpErrorFactory
+public static class SignUpErrorFactory
 {
     public static TatuazError UserAlreadyExistsError(string? message = null)
     {

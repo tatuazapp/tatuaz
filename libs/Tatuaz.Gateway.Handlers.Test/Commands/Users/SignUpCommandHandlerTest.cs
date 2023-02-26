@@ -6,6 +6,7 @@ using Moq;
 using Tatuaz.Gateway.Handlers.Commands.Identity;
 using Tatuaz.Gateway.Requests.Commands.Identity;
 using Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Identity;
+using Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Identity.User;
 using Tatuaz.Shared.Domain.Dtos.Validators.Identity;
 using Tatuaz.Shared.Domain.Dtos.Validators.Identity.User;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
@@ -27,12 +28,10 @@ public class SignUpCommandHandlerTest
     private readonly Mock<
         IGenericRepository<TatuazUser, HistTatuazUser, string>
     > _userRepositoryMock;
+    private readonly Mock<IGenericRepository<Category, HistCategory, int>> _categoryRepositoryMock;
     private readonly Mock<
-        IGenericRepository<Category, HistCategory, int>
-    > _photoCategoryRepositoryMock;
-    private readonly Mock<
-        IGenericRepository<UserCategory, HistUserCategory, Guid>
-    > _userPhotoCategoryRepositoryMock;
+        IGenericRepository<UserCategory, HistUserCategory, int>
+    > _userCategoryRepositoryMock;
 
     public SignUpCommandHandlerTest(IMapper mapper)
     {
@@ -41,10 +40,9 @@ public class SignUpCommandHandlerTest
         _unitOfWorkMock = new UnitOfWorkMock();
         _signUpDtoFaker = new SignUpDtoFaker();
         _userRepositoryMock = new Mock<IGenericRepository<TatuazUser, HistTatuazUser, string>>();
-        _photoCategoryRepositoryMock =
-            new Mock<IGenericRepository<Category, HistCategory, int>>();
-        _userPhotoCategoryRepositoryMock =
-            new Mock<IGenericRepository<UserCategory, HistUserCategory, Guid>>();
+        _categoryRepositoryMock = new Mock<IGenericRepository<Category, HistCategory, int>>();
+        _userCategoryRepositoryMock =
+            new Mock<IGenericRepository<UserCategory, HistUserCategory, int>>();
     }
 
     public class Handle : SignUpCommandHandlerTest
@@ -59,21 +57,17 @@ public class SignUpCommandHandlerTest
                 .Setup(x => x.ExistsByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(false));
 
-            _photoCategoryRepositoryMock
+            _categoryRepositoryMock
                 .Setup(x => x.ExistsByIdAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(true));
 
             var commandHandler = new SignUpCommandHandler(
                 _userRepositoryMock.Object,
-                _userPhotoCategoryRepositoryMock.Object,
-                _photoCategoryRepositoryMock.Object,
+                _userCategoryRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
                 _userContextMock.Object,
-                new SignUpDtoValidator(
-                    _userRepositoryMock.Object,
-                    _photoCategoryRepositoryMock.Object
-                )
+                new SignUpDtoValidator(_userRepositoryMock.Object, _categoryRepositoryMock.Object)
             );
             var createUserDto = _signUpDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
@@ -94,21 +88,17 @@ public class SignUpCommandHandlerTest
                 .Setup(x => x.ExistsByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(true));
 
-            _photoCategoryRepositoryMock
+            _categoryRepositoryMock
                 .Setup(x => x.ExistsByIdAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(true));
 
             var commandHandler = new SignUpCommandHandler(
                 _userRepositoryMock.Object,
-                _userPhotoCategoryRepositoryMock.Object,
-                _photoCategoryRepositoryMock.Object,
+                _userCategoryRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
                 _userContextMock.Object,
-                new SignUpDtoValidator(
-                    _userRepositoryMock.Object,
-                    _photoCategoryRepositoryMock.Object
-                )
+                new SignUpDtoValidator(_userRepositoryMock.Object, _categoryRepositoryMock.Object)
             );
             var createUserDto = _signUpDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
@@ -124,21 +114,17 @@ public class SignUpCommandHandlerTest
         [Fact]
         public async Task Should_ReturnErrorWhenValidationErrorsOccur()
         {
-            _photoCategoryRepositoryMock
+            _categoryRepositoryMock
                 .Setup(x => x.ExistsByIdAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(true));
 
             var commandHandler = new SignUpCommandHandler(
                 _userRepositoryMock.Object,
-                _userPhotoCategoryRepositoryMock.Object,
-                _photoCategoryRepositoryMock.Object,
+                _userCategoryRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
                 _userContextMock.Object,
-                new SignUpDtoValidator(
-                    _userRepositoryMock.Object,
-                    _photoCategoryRepositoryMock.Object
-                )
+                new SignUpDtoValidator(_userRepositoryMock.Object, _categoryRepositoryMock.Object)
             );
             var createUserDto = _signUpDtoFaker.Generate();
             createUserDto = createUserDto with
@@ -159,21 +145,17 @@ public class SignUpCommandHandlerTest
         [Fact]
         public async Task Should_CallUserRepositoryExistsByIdAsync()
         {
-            _photoCategoryRepositoryMock
+            _categoryRepositoryMock
                 .Setup(x => x.ExistsByIdAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(true));
 
             var commandHandler = new SignUpCommandHandler(
                 _userRepositoryMock.Object,
-                _userPhotoCategoryRepositoryMock.Object,
-                _photoCategoryRepositoryMock.Object,
+                _userCategoryRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
                 _userContextMock.Object,
-                new SignUpDtoValidator(
-                    _userRepositoryMock.Object,
-                    _photoCategoryRepositoryMock.Object
-                )
+                new SignUpDtoValidator(_userRepositoryMock.Object, _categoryRepositoryMock.Object)
             );
             var createUserDto = _signUpDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
@@ -192,21 +174,17 @@ public class SignUpCommandHandlerTest
                 .Setup(x => x.ExistsByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(false));
 
-            _photoCategoryRepositoryMock
+            _categoryRepositoryMock
                 .Setup(x => x.ExistsByIdAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(true));
 
             var commandHandler = new SignUpCommandHandler(
                 _userRepositoryMock.Object,
-                _userPhotoCategoryRepositoryMock.Object,
-                _photoCategoryRepositoryMock.Object,
+                _userCategoryRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
                 _userContextMock.Object,
-                new SignUpDtoValidator(
-                    _userRepositoryMock.Object,
-                    _photoCategoryRepositoryMock.Object
-                )
+                new SignUpDtoValidator(_userRepositoryMock.Object, _categoryRepositoryMock.Object)
             );
             var createUserDto = _signUpDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);
@@ -231,15 +209,11 @@ public class SignUpCommandHandlerTest
                 .Returns(Task.FromResult(true));
             var commandHandler = new SignUpCommandHandler(
                 _userRepositoryMock.Object,
-                _userPhotoCategoryRepositoryMock.Object,
-                _photoCategoryRepositoryMock.Object,
+                _userCategoryRepositoryMock.Object,
                 _unitOfWorkMock.Object,
                 _mapper,
                 _userContextMock.Object,
-                new SignUpDtoValidator(
-                    _userRepositoryMock.Object,
-                    _photoCategoryRepositoryMock.Object
-                )
+                new SignUpDtoValidator(_userRepositoryMock.Object, _categoryRepositoryMock.Object)
             );
             var createUserDto = _signUpDtoFaker.Generate();
             var command = new SignUpCommand(createUserDto);

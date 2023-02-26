@@ -28,12 +28,7 @@ public class ManualTest
 
         await sendEndpoint
             .Send(
-                new SendEmail(
-                    "lopogo69@gmail.com",
-                    Guid.NewGuid(),
-                    EmailType.Test,
-                    Guid.NewGuid()
-                )
+                new SendEmail("lopogo69@gmail.com", Guid.NewGuid(), EmailType.Test, Guid.NewGuid())
             )
             .ConfigureAwait(false);
     }

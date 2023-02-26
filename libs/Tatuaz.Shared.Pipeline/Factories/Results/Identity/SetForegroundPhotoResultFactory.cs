@@ -4,7 +4,7 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Shared.Pipeline.Factories.Results.Identity;
 
-public class SetForegroundPhotoResultFactory
+public static class SetForegroundPhotoResultFactory
 {
     public static TatuazResult<T> InvalidFileFormat<T>(
         string? message = null,
