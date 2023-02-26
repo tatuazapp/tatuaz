@@ -15,7 +15,8 @@
     "import",
     "unused-imports",
     "prettier",
-    "formatjs"
+    "formatjs",
+    "etc"
   ],
   "rules": {
     "no-var": "off",
@@ -23,6 +24,8 @@
     "max-params": ["error", { "max": 4 }],
     "arrow-body-style": "error",
     "no-useless-rename": "error",
+    "etc/no-commented-out-code": "error",
+    "react/jsx-no-useless-fragment": "error",
 
     "prettier/prettier": "warn",
 

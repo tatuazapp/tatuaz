@@ -3,7 +3,12 @@
     "TextBlock": {}
   },
   "_cts": {
-    "test": {}
+    "test": {},
+    "homepageIntro": {},
+    "ArtistSectionHeader": {},
+    "TotalStats": {},
+    "HomepagePhotos": {},
+    "FAQsSection": {}
   },
   "apps/web/slices": {
     "TextBlock": {
@@ -32,6 +37,66 @@
       "default": {
         "primary": {},
         "items": {}
+      }
+    },
+    "HomepageIntro": {
+      "default": {
+        "primary": {
+          "TitleFirstLine": {
+            "config": {
+              "patternType": "PARAGRAPH",
+              "blocks": 1
+            }
+          },
+          "TitleSecondLine": {
+            "config": {
+              "patternType": "HEADING",
+              "blocks": 1
+            }
+          }
+        }
+      }
+    },
+    "ArtistSectionHeader": {
+      "default": {
+        "primary": {
+          "ArtistSectionHeaderFirstLine": {
+            "config": {
+              "patternType": "PARAGRAPH",
+              "blocks": 1
+            }
+          },
+          "ArtistSectionHeaderSecondLine": {
+            "config": {
+              "patternType": "PARAGRAPH",
+              "blocks": 1
+            }
+          }
+        }
+      }
+    },
+    "TotalStats": {},
+    "HomepagePhotos": {
+      "default": {
+        "primary": {}
+      }
+    },
+    "FaqsSection": {
+      "default": {
+        "primary": {
+          "FirstQuestionTitle": {
+            "config": {
+              "patternType": "PARAGRAPH",
+              "blocks": 1
+            }
+          },
+          "FirstQuestionDescription": {
+            "config": {
+              "patternType": "PARAGRAPH",
+              "blocks": 1
+            }
+          }
+        }
       }
     }
   }

@@ -1,0 +1,76 @@
+﻿* {
+  cursor: url(https://cur.cursors-4u.net/holidays/hol-4/hol336.cur), auto !important;
+}
+#swagger-ui {
+  background-image: url("https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.topbar {
+  visibility: hidden;
+  height: 0;
+}
+
+.info {
+  display: flex;
+  justify-content: center;
+}
+
+.title > span,
+p {
+  display: none;
+}
+
+.title > h2 {
+  font-weight: bolder;
+}
+
+.main {
+  padding: 1rem;
+  border: 2px solid green;
+  border-radius: 1rem;
+  background-color: white;
+}
+
+.title,
+.url {
+  color: green !important;
+}
+
+.scheme-container {
+  background-color: transparent !important;
+}
+
+.opblock-tag {
+  background-color: lightgreen;
+  border-radius: 1rem 1rem 0 0;
+}
+
+.opblock-tag:hover {
+  background-color: green !important;
+  border-radius: 1rem 1rem 0 0;
+}
+
+.opblock-tag > a {
+  color: black !important;
+}
+
+.operation-tag-content {
+  background-color: lightgreen;
+  border-radius: 4px;
+}
+
+.swagger-ui .opblock.opblock-post {
+  border: none;
+  background-color: lightgreen;
+}
+
+.opblock-section-header {
+  background-color: transparent !important;
+}
+
+.models {
+  background-color: lightgreen !important;
+}

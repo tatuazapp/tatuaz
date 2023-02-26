@@ -6,6 +6,153 @@ import type * as prismicT from "@prismicio/types"
 type Simplify<T> = {
   [KeyType in keyof T]: T[KeyType]
 }
+/** Content for ArtistSectionHeader documents */
+interface ArtistSectionHeaderDocumentData {
+  /**
+   * Slice Zone field in *ArtistSectionHeader*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: ArtistSectionHeader.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/core-concepts/slices
+   *
+   */
+  slices: prismicT.SliceZone<ArtistSectionHeaderDocumentDataSlicesSlice>
+}
+/**
+ * Slice for *ArtistSectionHeader → Slice Zone*
+ *
+ */
+type ArtistSectionHeaderDocumentDataSlicesSlice = ArtistSectionHeaderSlice
+/**
+ * ArtistSectionHeader document from Prismic
+ *
+ * - **API ID**: `ArtistSectionHeader`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ArtistSectionHeaderDocument<Lang extends string = string> =
+  prismicT.PrismicDocumentWithoutUID<
+    Simplify<ArtistSectionHeaderDocumentData>,
+    "ArtistSectionHeader",
+    Lang
+  >
+/** Content for FAQsSection documents */
+interface FaQsSectionDocumentData {
+  /**
+   * Slice Zone field in *FAQsSection*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: FAQsSection.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/core-concepts/slices
+   *
+   */
+  slices: prismicT.SliceZone<FaQsSectionDocumentDataSlicesSlice>
+}
+/**
+ * Slice for *FAQsSection → Slice Zone*
+ *
+ */
+type FaQsSectionDocumentDataSlicesSlice = FaqsSectionSlice
+/**
+ * FAQsSection document from Prismic
+ *
+ * - **API ID**: `FAQsSection`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type FaQsSectionDocument<Lang extends string = string> =
+  prismicT.PrismicDocumentWithoutUID<
+    Simplify<FaQsSectionDocumentData>,
+    "FAQsSection",
+    Lang
+  >
+/** Content for HomepageIntro documents */
+interface HomepageIntroDocumentData {
+  /**
+   * TitleFirstLine field in *HomepageIntro*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepageIntro.titlefirstline
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  titlefirstline: prismicT.RichTextField
+  /**
+   * Slice Zone field in *HomepageIntro*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepageIntro.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/core-concepts/slices
+   *
+   */
+  slices: prismicT.SliceZone<HomepageIntroDocumentDataSlicesSlice>
+}
+/**
+ * Slice for *HomepageIntro → Slice Zone*
+ *
+ */
+type HomepageIntroDocumentDataSlicesSlice = HomepageIntroSlice
+/**
+ * HomepageIntro document from Prismic
+ *
+ * - **API ID**: `homepageIntro`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type HomepageIntroDocument<Lang extends string = string> =
+  prismicT.PrismicDocumentWithoutUID<
+    Simplify<HomepageIntroDocumentData>,
+    "homepageIntro",
+    Lang
+  >
+/** Content for HomepagePhotos documents */
+interface HomepagePhotosDocumentData {
+  /**
+   * Slice Zone field in *HomepagePhotos*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: HomepagePhotos.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/core-concepts/slices
+   *
+   */
+  slices: prismicT.SliceZone<HomepagePhotosDocumentDataSlicesSlice>
+}
+/**
+ * Slice for *HomepagePhotos → Slice Zone*
+ *
+ */
+type HomepagePhotosDocumentDataSlicesSlice = HomepagePhotosSlice
+/**
+ * HomepagePhotos document from Prismic
+ *
+ * - **API ID**: `HomepagePhotos`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type HomepagePhotosDocument<Lang extends string = string> =
+  prismicT.PrismicDocumentWithoutUID<
+    Simplify<HomepagePhotosDocumentData>,
+    "HomepagePhotos",
+    Lang
+  >
 /** Content for Test documents */
 interface TestDocumentData {
   /**
@@ -36,7 +183,314 @@ type TestDocumentDataSlicesSlice = TextBlockSlice | ImageSlice
  */
 export type TestDocument<Lang extends string = string> =
   prismicT.PrismicDocumentWithoutUID<Simplify<TestDocumentData>, "test", Lang>
-export type AllDocumentTypes = TestDocument
+/** Content for TotalStats documents */
+type TotalStatsDocumentData = Record<string, never>
+/**
+ * TotalStats document from Prismic
+ *
+ * - **API ID**: `TotalStats`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type TotalStatsDocument<Lang extends string = string> =
+  prismicT.PrismicDocumentWithoutUID<
+    Simplify<TotalStatsDocumentData>,
+    "TotalStats",
+    Lang
+  >
+export type AllDocumentTypes =
+  | ArtistSectionHeaderDocument
+  | FaQsSectionDocument
+  | HomepageIntroDocument
+  | HomepagePhotosDocument
+  | TestDocument
+  | TotalStatsDocument
+/**
+ * Primary content in ArtistSectionHeader → Primary
+ *
+ */
+interface ArtistSectionHeaderSliceDefaultPrimary {
+  /**
+   * ArtistSectionHeaderFirstLine field in *ArtistSectionHeader → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: This is where it all begins...
+   * - **API ID Path**: artist_section_header.primary.ArtistSectionHeaderFirstLine
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  ArtistSectionHeaderFirstLine: prismicT.RichTextField
+  /**
+   * ArtistSectionHeaderSecondLine field in *ArtistSectionHeader → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: A nice description of your feature
+   * - **API ID Path**: artist_section_header.primary.ArtistSectionHeaderSecondLine
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  ArtistSectionHeaderSecondLine: prismicT.RichTextField
+}
+/**
+ * Default variation for ArtistSectionHeader Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `ArtistSectionHeader`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ArtistSectionHeaderSliceDefault = prismicT.SharedSliceVariation<
+  "default",
+  Simplify<ArtistSectionHeaderSliceDefaultPrimary>,
+  never
+>
+/**
+ * Slice variation for *ArtistSectionHeader*
+ *
+ */
+type ArtistSectionHeaderSliceVariation = ArtistSectionHeaderSliceDefault
+/**
+ * ArtistSectionHeader Shared Slice
+ *
+ * - **API ID**: `artist_section_header`
+ * - **Description**: `ArtistSectionHeader`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ArtistSectionHeaderSlice = prismicT.SharedSlice<
+  "artist_section_header",
+  ArtistSectionHeaderSliceVariation
+>
+/**
+ * Primary content in FaqsSection → Primary
+ *
+ */
+interface FaqsSectionSliceDefaultPrimary {
+  /**
+   * FirstQuestionTitle field in *FaqsSection → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: This is where it all begins...
+   * - **API ID Path**: faqs_section.primary.FirstQuestionTitle
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  FirstQuestionTitle: prismicT.RichTextField
+  /**
+   * FirstQuestionDescription field in *FaqsSection → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: A nice description of your feature
+   * - **API ID Path**: faqs_section.primary.FirstQuestionDescription
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  FirstQuestionDescription: prismicT.RichTextField
+  /**
+   * SecondQuestionTitile field in *FaqsSection → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: faqs_section.primary.SecondQuestionTitile
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  SecondQuestionTitile: prismicT.RichTextField
+  /**
+   * SecondQuestionDescription field in *FaqsSection → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: faqs_section.primary.SecondQuestionDescription
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  SecondQuestionDescription: prismicT.RichTextField
+  /**
+   * ThirdQuestionTitle field in *FaqsSection → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: faqs_section.primary.ThirdQuestionTitle
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  ThirdQuestionTitle: prismicT.RichTextField
+  /**
+   * ThirdQuestionDescription field in *FaqsSection → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: faqs_section.primary.ThirdQuestionDescription
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  ThirdQuestionDescription: prismicT.RichTextField
+}
+/**
+ * Default variation for FaqsSection Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `FaqsSection`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type FaqsSectionSliceDefault = prismicT.SharedSliceVariation<
+  "default",
+  Simplify<FaqsSectionSliceDefaultPrimary>,
+  never
+>
+/**
+ * Slice variation for *FaqsSection*
+ *
+ */
+type FaqsSectionSliceVariation = FaqsSectionSliceDefault
+/**
+ * FaqsSection Shared Slice
+ *
+ * - **API ID**: `faqs_section`
+ * - **Description**: `FaqsSection`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type FaqsSectionSlice = prismicT.SharedSlice<
+  "faqs_section",
+  FaqsSectionSliceVariation
+>
+/**
+ * Primary content in HomepageIntro → Primary
+ *
+ */
+interface HomepageIntroSliceDefaultPrimary {
+  /**
+   * TitleFirstLine field in *HomepageIntro → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage_intro.primary.TitleFirstLine
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  TitleFirstLine: prismicT.RichTextField
+  /**
+   * TitleSecondLine field in *HomepageIntro → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: This is where it all begins...
+   * - **API ID Path**: homepage_intro.primary.TitleSecondLine
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  TitleSecondLine: prismicT.RichTextField
+  /**
+   * Description field in *HomepageIntro → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: A nice description of your feature
+   * - **API ID Path**: homepage_intro.primary.description
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  description: prismicT.RichTextField
+}
+/**
+ * Default variation for HomepageIntro Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `HomepageIntro`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type HomepageIntroSliceDefault = prismicT.SharedSliceVariation<
+  "default",
+  Simplify<HomepageIntroSliceDefaultPrimary>,
+  never
+>
+/**
+ * Slice variation for *HomepageIntro*
+ *
+ */
+type HomepageIntroSliceVariation = HomepageIntroSliceDefault
+/**
+ * HomepageIntro Shared Slice
+ *
+ * - **API ID**: `homepage_intro`
+ * - **Description**: `HomepageIntro`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type HomepageIntroSlice = prismicT.SharedSlice<
+  "homepage_intro",
+  HomepageIntroSliceVariation
+>
+/**
+ * Primary content in HomepagePhotos → Primary
+ *
+ */
+interface HomepagePhotosSliceDefaultPrimary {
+  /**
+   * FirstPhoto field in *HomepagePhotos → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage_photos.primary.FirstPhoto
+   * - **Documentation**: https://prismic.io/docs/core-concepts/image
+   *
+   */
+  FirstPhoto: prismicT.ImageField<never>
+  /**
+   * SecondPhoto field in *HomepagePhotos → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage_photos.primary.SecondPhoto
+   * - **Documentation**: https://prismic.io/docs/core-concepts/image
+   *
+   */
+  SecondPhoto: prismicT.ImageField<never>
+  /**
+   * ThirdPhoto field in *HomepagePhotos → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: homepage_photos.primary.ThirdPhoto
+   * - **Documentation**: https://prismic.io/docs/core-concepts/image
+   *
+   */
+  ThirdPhoto: prismicT.ImageField<never>
+}
+/**
+ * Default variation for HomepagePhotos Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `HomepagePhotos`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type HomepagePhotosSliceDefault = prismicT.SharedSliceVariation<
+  "default",
+  Simplify<HomepagePhotosSliceDefaultPrimary>,
+  never
+>
+/**
+ * Slice variation for *HomepagePhotos*
+ *
+ */
+type HomepagePhotosSliceVariation = HomepagePhotosSliceDefault
+/**
+ * HomepagePhotos Shared Slice
+ *
+ * - **API ID**: `homepage_photos`
+ * - **Description**: `HomepagePhotos`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type HomepagePhotosSlice = prismicT.SharedSlice<
+  "homepage_photos",
+  HomepagePhotosSliceVariation
+>
 /**
  * Primary content in Image → Primary
  *
@@ -145,10 +599,40 @@ declare module "@prismicio/client" {
   }
   namespace Content {
     export type {
+      ArtistSectionHeaderDocumentData,
+      ArtistSectionHeaderDocumentDataSlicesSlice,
+      ArtistSectionHeaderDocument,
+      FaQsSectionDocumentData,
+      FaQsSectionDocumentDataSlicesSlice,
+      FaQsSectionDocument,
+      HomepageIntroDocumentData,
+      HomepageIntroDocumentDataSlicesSlice,
+      HomepageIntroDocument,
+      HomepagePhotosDocumentData,
+      HomepagePhotosDocumentDataSlicesSlice,
+      HomepagePhotosDocument,
       TestDocumentData,
       TestDocumentDataSlicesSlice,
       TestDocument,
+      TotalStatsDocumentData,
+      TotalStatsDocument,
       AllDocumentTypes,
+      ArtistSectionHeaderSliceDefaultPrimary,
+      ArtistSectionHeaderSliceDefault,
+      ArtistSectionHeaderSliceVariation,
+      ArtistSectionHeaderSlice,
+      FaqsSectionSliceDefaultPrimary,
+      FaqsSectionSliceDefault,
+      FaqsSectionSliceVariation,
+      FaqsSectionSlice,
+      HomepageIntroSliceDefaultPrimary,
+      HomepageIntroSliceDefault,
+      HomepageIntroSliceVariation,
+      HomepageIntroSlice,
+      HomepagePhotosSliceDefaultPrimary,
+      HomepagePhotosSliceDefault,
+      HomepagePhotosSliceVariation,
+      HomepagePhotosSlice,
       ImageSliceDefaultPrimary,
       ImageSliceDefault,
       ImageSliceVariation,
