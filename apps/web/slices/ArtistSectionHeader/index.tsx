@@ -22,8 +22,6 @@ const ArtistSectionHeader: FunctionComponent<ArtistSectionHeaderProps> = ({
   <ArtistsSectionHeaderWrapper>
     <HeaderFirstLineWrapper>
       <FirstLineTextWrapper>
-        {/* EXPLORE */}
-
         {slice.primary.ArtistSectionHeaderFirstLine ? (
           <PrismicRichText field={slice.primary.ArtistSectionHeaderFirstLine} />
         ) : (

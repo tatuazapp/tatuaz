@@ -19,7 +19,6 @@ const QuestionItem = () => {
   return (
     <>
       <AccordionItem border={0}>
-        {/* <AccordionItem> */}
         <AccordionButton padding={0}>
           <MobileQuestionItemWrapper>
             <MobileQuestionTitleWrapper>

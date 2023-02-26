@@ -1,8 +1,4 @@
 import {
-  // useEffect,
-  useState,
-} from "react"
-import {
   IconNotSelected,
   QuestionContent,
   QuestionItemWrapper,
@@ -12,26 +8,8 @@ import {
   Divider,
 } from "./styles"
 
-type QuestionItemProps = {
-  id: number
-  questionTitle: string
-  questionDescription: string
-}
-
-const QuestionItem: React.FC<QuestionItemProps> = ({
-  id,
-  questionTitle,
-  questionDescription,
-}) => {
-  // const isHovered = false
-  // const isSelected = false
-
-  console.log("id", id)
-  console.log("questionTitle", questionTitle)
-  console.log("questionDescription", questionDescription)
-
-  const [isHovered, setHovered] = useState(false)
-  const [isSelected, setSelected] = useState(false)
+const QuestionItem = () => {
+  const isHovered = false
 
   return (
     <div id="question">
@@ -52,36 +30,3 @@ const QuestionItem: React.FC<QuestionItemProps> = ({
 }
 
 export default QuestionItem
-
-// useEffect(() => {
-//   const question = document.getElementById("question")
-//   question.addEventListener("mouseover", () => {
-//     setHovered(true)
-//     console.log("hovered")
-//   })
-
-//   question.addEventListener("mouseout", () => {
-//     setHovered(false)
-//   })
-
-//   question.addEventListener("click", () => {
-//     setSelected((isSelected) => !isSelected)
-//     console.log("clicked")
-//   })
-
-//   return () => {
-//     question.removeEventListener("mouseover", () => {
-//       setHovered(true)
-//       console.log("hovered")
-//     })
-
-//     question.removeEventListener("mouseout", () => {
-//       setHovered(false)
-//     })
-
-//     question.removeEventListener("click", () => {
-//       setSelected((isSelected) => !isSelected)
-//       console.log("clicked")
-//     })
-//   }
-// }, [])

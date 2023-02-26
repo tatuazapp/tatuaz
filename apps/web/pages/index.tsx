@@ -6,7 +6,6 @@ import type {
 } from "next"
 import AppLayout from "../components/auth/AppLayout"
 import { PageContentWrapper } from "../components/common/PageContentWrapper/styles"
-// import ArtistSection from "../components/landing/ArtistsSection"
 import FAQsHeader from "../components/landing/FAQsHeader"
 import GetATattooButton from "../components/landing/GetATattooButton"
 import { HomepageIntroAndPhotosSection } from "../components/landing/HomepageIntroAndPhotosWrapper/HomepageIntroAndPhotosWrapperSection/styles"
@@ -19,7 +18,6 @@ import {
   HomepagePhotos,
   FaqsSection,
 } from "../slices"
-// import FAQsSection from "../slices/FAQsSection"
 
 type IndexPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -32,8 +30,6 @@ const Index: NextPage<IndexPageProps> = ({
   <AppLayout>
     <PageContentWrapper>
       <HomepageIntroAndPhotosWrapper>
-        {/* <Profile /> */}
-
         <HomepageIntroAndPhotosSection>
           <SliceZone
             components={{
@@ -51,31 +47,24 @@ const Index: NextPage<IndexPageProps> = ({
             slices={homepagephotos.data.slices}
           />
         </HomepageIntroAndPhotosSection>
-
-        {/* <StatsSection />
-      <PhotoCardSection /> */}
       </HomepageIntroAndPhotosWrapper>
     </PageContentWrapper>
     <TotalStats />
     <PageContentWrapper>
-      {/* <ArtistSectionHeader /> */}
       <SliceZone
         components={{
           artist_section_header: ArtistSectionHeader,
         }}
         slices={artistsectionheader.data.slices}
       />
-      {/* <ArtistSection /> */}
       <FAQsHeader />
     </PageContentWrapper>
-    {/* <FAQsSection /> */}
     <SliceZone
       components={{
         faqs_section: FaqsSection,
       }}
       slices={faqssection.data.slices}
     />
-    {/* <FAQsMobileSection /> */}
     <GetATattooButton />
   </AppLayout>
 )

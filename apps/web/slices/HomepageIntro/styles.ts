@@ -1,6 +1,5 @@
 import { down } from "styled-breakpoints"
 import styled from "styled-components"
-// import { rem } from "../../styles/utils"
 
 export const HomepageIntroWrapper = styled.div`
   min-width: 300px;
@@ -42,7 +41,6 @@ export const Slider = styled.div`
   display: flex;
   flex: 1;
   align-items: center;
-  /* vertical-align: middle; */
   min-width: 20%;
 
   ${down("sm")} {

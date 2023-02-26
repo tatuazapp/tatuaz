@@ -1,6 +1,5 @@
 import { down } from "styled-breakpoints"
 import styled from "styled-components"
-// import { rem } from "../../styles/utils"
 
 export const HomepagePhotosWrapper = styled.div`
   width: 100%;

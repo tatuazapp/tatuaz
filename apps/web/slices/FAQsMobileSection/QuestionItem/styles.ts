@@ -1,9 +1,7 @@
-// import { down } from "styled-breakpoints"
 import { ArrowDownRightCircle } from "@styled-icons/bootstrap/ArrowDownRightCircle"
 import styled from "styled-components"
 
 export const MobileQuestionItemWrapper = styled.div<{
-  // isSelected: boolean
   isHovered?: boolean
 }>`
   display: flex;
@@ -27,10 +25,8 @@ export const MobileQuestionTitleWrapper = styled.div`
 `
 
 export const MobileQuestionNumber = styled.div<{
-  // isSelected: boolean
   isHovered: boolean
 }>`
-  /* width: 15%; */
   min-width: ${({ theme }) => theme.sizes.xxlarge};
   font-size: ${({ theme }) => theme.sizes.large};
   font-weight: 600;
@@ -39,10 +35,8 @@ export const MobileQuestionNumber = styled.div<{
 `
 
 export const MobileQuestionTitle = styled.div<{
-  // isSelected: boolean
   isHovered: boolean
 }>`
-  /* width: 60%; */
   padding-right: ${({ theme }) => theme.space.xlarge};
 
   font-size: ${({ theme }) => theme.sizes.large};
@@ -53,7 +47,6 @@ export const MobileQuestionTitle = styled.div<{
 `
 
 export const MobileQuestionContent = styled.div<{
-  // isSelected: boolean
   isHovered: boolean
 }>`
   padding-right: ${({ theme }) => theme.space.xxsmall};
@@ -86,7 +79,6 @@ export const MobileIconSelected = styled(ArrowDownRightCircle)`
 export const MobileDivider = styled.div<{
   noMargin: boolean
 }>`
-  /* height: ${({ theme }) => theme.sizes.xxxxsmall}; */
   height: 1px;
   margin-right: ${({ theme }) => theme.space.small};
   margin-left: ${({ theme }) => theme.space.small};
