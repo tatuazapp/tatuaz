@@ -10,7 +10,8 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(@"INSERT INTO ""photo"".""categories""(title, type, image_uri)
+            migrationBuilder.Sql(
+                @"INSERT INTO ""photo"".""categories""(title, type, image_uri)
 VALUES ('czaszka', 1, '/tatuaz-images/12e44657cafb4c2bb858609c6f573660.jpg'),
 ('kaktus', 1, '/tatuaz-images/986500a2a6e346639b882500862ca833.jpg'),
 ('koło', 1, '/tatuaz-images/dc54f3092746427391484cc8661c0fbe.jpg'),
@@ -64,7 +65,8 @@ VALUES ('czaszka', 1, '/tatuaz-images/12e44657cafb4c2bb858609c6f573660.jpg'),
 ('ignorant', 0, '/tatuaz-images/c0bcd65e890142b9964f79f94b5b2d45.jpg'),
 ('watercolor', 0, '/tatuaz-images/f1b1a9de5fb944128460bba3916638b4.jpg'),
 ('minimalist', 0, '/tatuaz-images/3ea751ccb24c47109c3663377f0fb105.jpg'),
-('dotwork', 0, '/tatuaz-images/9834bb694142408ab8624b846697144f.jpg');");
+('dotwork', 0, '/tatuaz-images/9834bb694142408ab8624b846697144f.jpg');"
+            );
         }
 
         /// <inheritdoc />
