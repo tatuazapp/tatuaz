@@ -9,7 +9,6 @@ public static class SignUpErrorCodes
     public const string UsernameAlreadyInUse = "UsernameAlreadyInUse";
     public const string UsernameInvalidCharacters = "UsernameInvalidCharacters";
     public const string CategoryIdsTooFew = "CategoryIdsTooFew";
-    public const string CategoryIdsTooMany = "CategoryIdsTooMany";
     public const string CategoryIdsInvalid = "CategoryIdsInvalid";
     public const string CategoryIdsDuplicate = "CategoryIdsDuplicate";
     public const string CategoryIdsNull = "CategoryIdsNull";
