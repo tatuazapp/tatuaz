@@ -23,8 +23,8 @@ public class MainDbContext : DbContext
     public virtual DbSet<EmailInfo> EmailInfos { get; set; } = default!;
 
     // photos
-    public virtual DbSet<PhotoCategory> PhotoCategories { get; set; } = default!;
-    public virtual DbSet<UserPhotoCategory> UserPhotoCategories { get; set; } = default!;
+    public virtual DbSet<Category> PhotoCategories { get; set; } = default!;
+    public virtual DbSet<UserCategory> UserPhotoCategories { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

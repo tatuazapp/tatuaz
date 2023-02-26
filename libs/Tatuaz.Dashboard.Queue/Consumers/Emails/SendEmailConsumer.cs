@@ -9,7 +9,7 @@ using Tatuaz.Shared.Pipeline.Queues;
 
 namespace Tatuaz.Dashboard.Queue.Consumers.Emails;
 
-public class SendEmailConsumer : TatuazConsumerBaseWithoutResponse<SendEmailOrder>
+public class SendEmailConsumer : TatuazConsumerBaseWithoutResponse<SendEmail>
 {
     private readonly ILogger<SendEmailConsumer> _logger;
     private readonly IEmailHandlerFactory _emailHandlerFactory;
@@ -27,7 +27,7 @@ public class SendEmailConsumer : TatuazConsumerBaseWithoutResponse<SendEmailOrde
         _clock = clock;
     }
 
-    protected override async Task ConsumeMessage(ConsumeContext<SendEmailOrder> context)
+    protected override async Task ConsumeMessage(ConsumeContext<SendEmail> context)
     {
         _logger.LogInformation(
             "Sending email of type {EmailType} to {RecipientEmail} about {ObjectId}",

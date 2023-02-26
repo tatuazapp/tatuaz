@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Moq;
 using Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Identity;
+using Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Identity.User;
 using Tatuaz.Shared.Domain.Dtos.Validators.Identity;
 using Tatuaz.Shared.Domain.Dtos.Validators.Identity.User;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
@@ -22,9 +23,7 @@ public class CreateUserDtoValidatorTest
     private readonly SignUpDtoFaker _signUpDtoFaker;
     private readonly MainDbContextMock _dbContextMock;
     private readonly GenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
-    private readonly Mock<
-        IGenericRepository<PhotoCategory, HistPhotoCategory, int>
-    > _photoCategoryRepositoryMock;
+    private readonly Mock<IGenericRepository<Category, HistCategory, int>> _categoryRepositoryMock;
 
     public CreateUserDtoValidatorTest()
     {
@@ -33,9 +32,8 @@ public class CreateUserDtoValidatorTest
             _dbContextMock.Object,
             new Mock<IMapper>().Object
         );
-        _photoCategoryRepositoryMock =
-            new Mock<IGenericRepository<PhotoCategory, HistPhotoCategory, int>>();
-        _photoCategoryRepositoryMock
+        _categoryRepositoryMock = new Mock<IGenericRepository<Category, HistCategory, int>>();
+        _categoryRepositoryMock
             .Setup(x => x.ExistsByIdAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .Returns(Task.FromResult(true));
 
@@ -48,10 +46,7 @@ public class CreateUserDtoValidatorTest
         public async Task Should_ReturnValidWhenCorrectCreateUserDtoProvided()
         {
             var createUserDto = _signUpDtoFaker.Generate();
-            var validator = new SignUpDtoValidator(
-                _userRepository,
-                _photoCategoryRepositoryMock.Object
-            );
+            var validator = new SignUpDtoValidator(_userRepository, _categoryRepositoryMock.Object);
 
             var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
             Assert.True(result.IsValid);
@@ -62,10 +57,7 @@ public class CreateUserDtoValidatorTest
         {
             var createUserDto = _signUpDtoFaker.Generate();
             _dbContextMock.TatuazUsers.Add(new TatuazUser { Username = createUserDto.Username! });
-            var validator = new SignUpDtoValidator(
-                _userRepository,
-                _photoCategoryRepositoryMock.Object
-            );
+            var validator = new SignUpDtoValidator(_userRepository, _categoryRepositoryMock.Object);
 
             var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
             Assert.False(result.IsValid);
@@ -77,10 +69,7 @@ public class CreateUserDtoValidatorTest
         {
             var createUserDto = _signUpDtoFaker.Generate();
             createUserDto = createUserDto with { Username = new string('a', 33) };
-            var validator = new SignUpDtoValidator(
-                _userRepository,
-                _photoCategoryRepositoryMock.Object
-            );
+            var validator = new SignUpDtoValidator(_userRepository, _categoryRepositoryMock.Object);
 
             var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
             Assert.False(result.IsValid);
@@ -92,10 +81,7 @@ public class CreateUserDtoValidatorTest
         {
             var createUserDto = _signUpDtoFaker.Generate();
             createUserDto = createUserDto with { Username = new string('a', 3) };
-            var validator = new SignUpDtoValidator(
-                _userRepository,
-                _photoCategoryRepositoryMock.Object
-            );
+            var validator = new SignUpDtoValidator(_userRepository, _categoryRepositoryMock.Object);
 
             var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
             Assert.False(result.IsValid);
@@ -107,10 +93,7 @@ public class CreateUserDtoValidatorTest
         {
             var createUserDto = _signUpDtoFaker.Generate();
             createUserDto = createUserDto with { Username = "a b as as " };
-            var validator = new SignUpDtoValidator(
-                _userRepository,
-                _photoCategoryRepositoryMock.Object
-            );
+            var validator = new SignUpDtoValidator(_userRepository, _categoryRepositoryMock.Object);
 
             var result = await validator.ValidateAsync(createUserDto).ConfigureAwait(false);
             Assert.False(result.IsValid);

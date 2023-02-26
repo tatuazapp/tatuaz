@@ -5,6 +5,7 @@ using AutoMapper;
 using Moq;
 using Tatuaz.Gateway.Handlers.Queries.Identity;
 using Tatuaz.Gateway.Requests.Queries.Identity;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
 using Tatuaz.Shared.Domain.Entities.Fakers.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
@@ -43,8 +44,8 @@ public class WhoAmIQueryHandlerTest
             var user = _tatuazUserFaker.Generate();
             _userContextMock.ReturnUserId(user.Id);
             _userRepositoryMock
-                .Setup(x => x.GetByIdAsync(user.Id, false, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(user);
+                .Setup(x => x.GetByIdAsync<UserDto>(user.Id, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(_mapper.Map<UserDto>(user));
 
             var query = new MeQuery();
             var handler = new MeQueryHandler(

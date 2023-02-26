@@ -36,16 +36,16 @@ public class MeQueryHandler : IRequestHandler<MeQuery, TatuazResult<UserDto>>
         CancellationToken cancellationToken
     )
     {
-        var user = await _userRepository
-            .GetByIdAsync(
-                _userContext.CurrentUserEmail ?? throw new UserContextMissingException(),
+        var userDto = await _userRepository
+            .GetByIdAsync<UserDto>(
+                _userContext.RequiredCurrentUserEmail(),
                 cancellationToken: cancellationToken
             )
             .ConfigureAwait(false);
-        return user == null
+        return userDto == null
             ?
             // Authorization challenge should catch this
             CommonResultFactory.InternalError<UserDto>()
-            : CommonResultFactory.Ok(_mapper.Map<UserDto>(user));
+            : CommonResultFactory.Ok(userDto);
     }
 }

@@ -10,7 +10,16 @@ public class IdentityMappingProfile : Profile
     public IdentityMappingProfile()
     {
         CreateMap<TatuazUser, UserDto>()
-            .ConstructUsing(x => new UserDto(x.Username, x.Id, x.Auth0Id));
+            .ConstructUsing(
+                x =>
+                    new UserDto(
+                        x.Username,
+                        x.Id,
+                        x.Auth0Id,
+                        x.ForegroundPhoto != null ? x.ForegroundPhoto.Uri : null,
+                        x.BackgroundPhoto != null ? x.BackgroundPhoto.Uri : null
+                    )
+            );
         CreateMap<SignUpDto, TatuazUser>();
         CreateMap<TatuazUser, SignUpDto>();
     }

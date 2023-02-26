@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using NodaTime;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Photo;
@@ -8,24 +8,16 @@ namespace Tatuaz.Shared.Domain.Entities.Models.Photo;
 
 public class PhotoCategory : Entity<HistPhotoCategory, int>
 {
-    public string Title { get; set; } = default!;
-    public PhotoCategoryType Type { get; set; }
-    public string ImageUri { get; set; } = default!;
-    public int Popularity { get; set; } // popularity starts at 0 and is incremented by 1 for each signup that uses this category
-    public virtual ICollection<UserPhotoCategory> UserPhotoCategories { get; set; } = default!;
+    public Guid PhotoId { get; set; }
+    public virtual Photo Photo { get; set; } = default!;
+    public int CategoryId { get; set; }
+    public virtual Category Category { get; set; } = default!;
 
     public override HistEntity ToHistEntity(IClock clock, HistState state)
     {
         var histEntity = (HistPhotoCategory)base.ToHistEntity(clock, state);
-        histEntity.Title = Title;
-        histEntity.Type = (HistPhotoCategoryType)Type;
-        histEntity.ImageUri = ImageUri;
-        histEntity.Popularity = Popularity;
+        histEntity.PhotoId = PhotoId;
+        histEntity.CategoryId = CategoryId;
         return histEntity;
-    }
-
-    public void IncrementPopularity()
-    {
-        Popularity++;
     }
 }
