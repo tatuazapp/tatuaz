@@ -9,7 +9,7 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
-    "prepare": "echo \"Preparing...\"",
+    "prepare": "node tools/cloudflare/skipRestore.js",
     "slicemachine": "start-slicemachine",
     "web:prismic:generate": "cd apps/web && prismic-ts-codegen",
     "web:i18n:compile": "formatjs compile apps/web/i18n/pl.temp.json  --out-file apps/web/i18n/pl.json && rm apps/web/i18n/pl.temp.json",
