@@ -122,11 +122,3 @@ export const FacebookIcon = styled(Facebook)`
     height: ${({ theme }) => theme.space.xlarge};
   }
 `
-
-//   color: ${({ theme }) => theme.colors.primary};
-// `
-
-// export const NavItemsWrapper = styled.div`
-//   display: flex;
-//   gap: ${({ theme }) => theme.space.xxxlarge};
-// `

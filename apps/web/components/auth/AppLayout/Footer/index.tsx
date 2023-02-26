@@ -1,5 +1,3 @@
-// import { IconButton, Icon } from "@chakra-ui/react"
-// import { Facebook } from "@styled-icons/boxicons-logos/Facebook"
 import {
   FooterWrapper,
   GreenWrapper,

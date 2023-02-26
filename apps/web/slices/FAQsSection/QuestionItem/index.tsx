@@ -14,11 +14,9 @@ const QuestionItem = () => {
   return (
     <div id="question">
       <QuestionItemWrapper>
-        <QuestionNumber isHovered={isHovered}>01.</QuestionNumber>
-        <QuestionTitle isHovered={isHovered}>
-          Does Tattooing Hurt ?
-        </QuestionTitle>
-        <QuestionContent isHovered={isHovered}>
+        <QuestionNumber>01.</QuestionNumber>
+        <QuestionTitle>Does Tattooing Hurt ?</QuestionTitle>
+        <QuestionContent>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </QuestionContent>

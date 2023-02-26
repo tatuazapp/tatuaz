@@ -11,10 +11,6 @@ export const FAQsHeaderWrapper = styled.div`
   font-weight: 600;
   color: ${({ theme }) => theme.colors.secondary};
 
-  /* ${down("md")} {
-    padding-top: ${({ theme }) => theme.sizes.xxlarge};
-  } */
-
   ${down("sm")} {
     font-size: ${({ theme }) => theme.sizes.xlarge};
   }
