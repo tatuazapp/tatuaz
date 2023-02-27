@@ -21,5 +21,7 @@ public class TatuazUserConfiguration : IEntityTypeConfiguration<TatuazUser>
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserEmail)
             .HasConstraintName("fk_tatuaz_user_roles_tatuaz_users_tatuaz_user_id");
+
+        builder.HasIndex(x => x.Username).IsUnique();
     }
 }

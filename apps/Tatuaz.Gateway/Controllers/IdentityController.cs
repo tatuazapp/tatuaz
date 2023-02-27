@@ -145,4 +145,24 @@ public class IdentityController : TatuazControllerBase
                 .ConfigureAwait(false)
         );
     }
+
+    /// <summary>
+    /// Get user with username
+    /// </summary>
+    /// <param name="getUserDto"></param>
+    /// <returns></returns>
+    [HttpPost("[action]")]
+    [AuthorizeActiveUser]
+    [Produces("application/json")]
+    [Consumes("application/json")]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Created)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
+    public async Task<IActionResult> GetUser([FromBody] GetUserDto getUserDto)
+    {
+        return ResultToActionResult(
+            await Mediator.Send(new GetUserQuery(getUserDto)).ConfigureAwait(false)
+        );
+    }
 }

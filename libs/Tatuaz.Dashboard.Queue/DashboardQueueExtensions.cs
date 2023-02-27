@@ -15,6 +15,7 @@ public static class DashboardQueueExtensions
         services.AddScoped<SetForegroundPhotoProducer>();
         services.AddScoped<DeleteBackgroundPhotoProducer>();
         services.AddScoped<DeleteForegroundPhotoProducer>();
+        services.AddScoped<GetUserProducer>();
 
         return services;
     }
