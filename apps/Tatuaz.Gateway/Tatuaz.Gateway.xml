@@ -133,6 +133,24 @@
             </summary>
             <param name="mediator"></param>
         </member>
+        <member name="T:Tatuaz.Gateway.Controllers.StatisticsController">
+            <summary>
+            Controller for dashboard
+            </summary>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.StatisticsController.#ctor(MediatR.IMediator)">
+            <summary>
+            Constructor receiving the mediator from DI
+            </summary>
+            <param name="mediator"></param>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.StatisticsController.GetRegisteredUserCount">
+            <summary>
+                <p>Get number of registered tattoo artists, clients and users.</p>
+                A client is a user who has booked at least 1 appointment
+            </summary>
+            <returns>RegisteredUserCountDto</returns>
+        </member>
         <member name="T:Tatuaz.Gateway.Controllers.TatuazControllerBase">
             <summary>
             Base controller for all controllers

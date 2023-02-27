@@ -17,6 +17,7 @@ using Tatuaz.Dashboard.Emails.Configuration;
 using Tatuaz.Dashboard.Emails.Exceptions;
 using Tatuaz.Dashboard.Queue;
 using Tatuaz.Dashboard.Queue.Consumers.Emails;
+using Tatuaz.Dashboard.Queue.Consumers.Statistics;
 using Tatuaz.Dashboard.Queue.Contracts.Emails;
 using Tatuaz.Shared.Domain.Dtos;
 using Tatuaz.Shared.Infrastructure;
@@ -55,6 +56,7 @@ public static class DashboardExtensions
             }
         );
 
+
         var emailOpt =
             configuration.GetRequiredSection(EmailOpt.SectionName).Get<EmailOpt>()
             ?? throw new Exception("Email configuration is missing");
@@ -62,10 +64,7 @@ public static class DashboardExtensions
         // Change for something else in production
         services
             .AddFluentEmail(emailOpt.FromEmail, emailOpt.FromName)
-            .AddLiquidRenderer(opt =>
-            {
-                opt.FileProvider = new EmbeddedFileProvider(typeof(EmailType).Assembly);
-            })
+            .AddLiquidRenderer(opt => { opt.FileProvider = new EmbeddedFileProvider(typeof(EmailType).Assembly); })
             .AddSmtpSender(
                 new SmtpClient
                 {
@@ -73,8 +72,7 @@ public static class DashboardExtensions
                     Port = emailOpt.SmtpPort,
                     Credentials = new NetworkCredential
                     {
-                        UserName = emailOpt.SmtpUsername,
-                        Password = emailOpt.SmtpPassword
+                        UserName = emailOpt.SmtpUsername, Password = emailOpt.SmtpPassword
                     }
                 }
             );
