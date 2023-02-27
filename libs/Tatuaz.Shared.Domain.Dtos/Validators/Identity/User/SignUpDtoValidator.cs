@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using FluentValidation;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
@@ -34,7 +35,7 @@ public class SignUpDtoValidator : AbstractValidator<SignUpDto>
                 async (username, ct) =>
                 {
                     return !await userRepository
-                        .ExistsByPredicateAsync(x => x.Username == username, ct)
+                        .ExistsByPredicateAsync(x => x.Username.ToLower() == username.ToLower(), ct)
                         .ConfigureAwait(false);
                 }
             )

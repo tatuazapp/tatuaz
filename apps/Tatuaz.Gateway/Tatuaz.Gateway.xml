@@ -150,6 +150,13 @@
             <param name="deleteBackgroundPhotoDto"></param>
             <returns></returns>
         </member>
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.GetUser(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User.GetUserDto)">
+            <summary>
+            Get user with username
+            </summary>
+            <param name="getUserDto"></param>
+            <returns></returns>
+        </member>
         <member name="T:Tatuaz.Gateway.Controllers.PhotoController">
             <summary>
             Controller for photo categories
