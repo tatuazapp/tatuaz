@@ -1,17 +1,16 @@
-import { Center } from "@chakra-ui/react"
 import type { NextPage } from "next"
-import { PageContentWrapper } from "../components/common/PageContentWrapper/styles"
+import DesktopLayout from "../components/auth/DesktopLayout"
 import ArtistsPostSection from "../components/dashboard/ArtistsPostSection"
 import { DashboardContentWrapper } from "../components/dashboard/DashboardContentWrapper/styles"
 import TopArtistsSection from "../components/dashboard/TopArtistsSection"
 
 const Index: NextPage = () => (
-  // <AppLayout>
-  <DashboardContentWrapper>
-    <ArtistsPostSection />
-    <TopArtistsSection />
-  </DashboardContentWrapper>
-  // { </AppLayout> }
+  <DesktopLayout>
+    <DashboardContentWrapper>
+      <ArtistsPostSection />
+      <TopArtistsSection />
+    </DashboardContentWrapper>
+  </DesktopLayout>
 )
 
 export default Index

@@ -7,6 +7,9 @@ export const RightSectionContainer = styled.div`
   flex-direction: column;
   margin-right: ${({ theme }) => theme.space.xlarge};
   margin-left: ${({ theme }) => theme.space.xxxxlarge};
+  ${down("xl")} {
+    margin-left: ${({ theme }) => theme.space.xlarge};
+  }
 `
 
 export const TopArtistsSectionWrapper = styled.div`

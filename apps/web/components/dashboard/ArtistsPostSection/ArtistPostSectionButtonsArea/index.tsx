@@ -10,8 +10,6 @@ import {
 } from "./styles"
 
 const ArtistsPostSectionButtonArea = () => {
-  const tmp = "Kk"
-
   const [selectedType, setSelectedType] = useState("All")
   const [currentPostSelectionOption, setCurrentPostSelectionOption] =
     useState("Popular")
@@ -24,30 +22,41 @@ const ArtistsPostSectionButtonArea = () => {
       <LeftContainer>
         <Menu>
           <MenuButton
+            _expanded={{ backgroundColor: theme.colors.background1 }}
+            _hover={{ backgroundColor: theme.colors.background1 }}
             as={Button}
             backgroundColor={theme.colors.background1}
             borderColor={theme.colors.secondary}
             borderRadius={theme.radius.small}
             borderWidth={1}
             color={theme.colors.secondary}
-            paddingBottom={theme.space.xsmall}
-            paddingTop={theme.space.xsmall}
-            rightIcon={<ChevronDownIcon />}
+            fontSize={theme.sizes.small}
+            fontWeight={500}
+            paddingBottom={theme.space.xxsmall}
+            paddingTop={theme.space.xxsmall}
+            rightIcon={<ChevronDownIcon fontSize={theme.space.large} />}
           >
             {currentPostSelectionOption}
           </MenuButton>
-          <MenuList>
-            <MenuItem>Attend a Workshop</MenuItem>
-            {postSelectionOptions.map((option) => (
-              <MenuItem
-                key={option}
-                onClick={() => {
-                  setCurrentPostSelectionOption(option)
-                }}
-              >
-                {option}
-              </MenuItem>
-            ))}
+          <MenuList
+            backgroundColor={theme.colors.background1}
+            borderColor={theme.colors.background2}
+          >
+            {postSelectionOptions
+              .filter((x) => x !== currentPostSelectionOption)
+              .map((option) => (
+                <MenuItem
+                  key={option}
+                  _hover={{ backgroundColor: theme.colors.background2 }}
+                  backgroundColor={theme.colors.background1}
+                  color={theme.colors.secondary}
+                  onClick={() => {
+                    setCurrentPostSelectionOption(option)
+                  }}
+                >
+                  {option}
+                </MenuItem>
+              ))}
           </MenuList>
         </Menu>
       </LeftContainer>
@@ -57,10 +66,10 @@ const ArtistsPostSectionButtonArea = () => {
             key={buttonType}
             isSelected={selectedType === buttonType}
             onClick={() => {
-              setSelectedType(selectedType === buttonType ? "None" : buttonType)
+              setSelectedType(buttonType)
             }}
           >
-            Posts
+            {buttonType}
           </TypeButton>
         ))}
       </TypeButtonsContainer>

@@ -7,11 +7,15 @@ export const ArtistPostSectionWrapper = styled.div`
 
 export const ArtistPostSectionContainer = styled.div`
   overflow: scroll;
-  height: calc(100vh - 120px);
-  /* ::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 15px;
-    height: 15px;
-    border: 1px solid black;
-  } */
+  height: calc(100vh - 110px);
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.colors.background1};
+  }
 `

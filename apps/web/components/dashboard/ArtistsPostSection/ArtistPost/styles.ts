@@ -5,7 +5,7 @@ import { Comment as CommentSolid } from "@styled-icons/boxicons-solid/Comment"
 import styled from "styled-components"
 
 export const ArtistPostWrapper = styled.div`
-  width: 735px;
+  /* width: 735px; */
   min-width: 435px;
   /* min-width: 735px; */
   max-width: 735px;
@@ -57,6 +57,8 @@ export const LikesContainer = styled.div`
 export const NotLikedPhotoIcon = styled(BalloonHeart)`
   height: 34px;
   color: ${({ theme }) => theme.colors.primary};
+  transition: all 0.1s ease-in-out;
+
   :hover {
     cursor: pointer;
   }
@@ -65,6 +67,18 @@ export const NotLikedPhotoIcon = styled(BalloonHeart)`
 export const LikedPhotoIcon = styled(BalloonHeartFill)`
   height: 34px;
   color: ${({ theme }) => theme.colors.primary};
+  transition: all 0.1s ease-in-out;
+  animation: 0.1s ease-out slideInFromLeft;
+
+  @keyframes slideInFromLeft {
+    0% {
+      transform: scale(0.7);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
   :hover {
     cursor: pointer;
   }
@@ -84,11 +98,17 @@ export const CommentsContainer = styled.div`
 export const CommentSectionClickedIcon = styled(CommentSolid)`
   height: 34px;
   color: ${({ theme }) => theme.colors.background3};
+  :hover {
+    cursor: pointer;
+  }
 `
 
 export const CommentSectionNotClickedIcon = styled(CommentRegular)`
   height: 34px;
   color: ${({ theme }) => theme.colors.background3};
+  :hover {
+    cursor: pointer;
+  }
 `
 
 export const CommentsNumber = styled.p`

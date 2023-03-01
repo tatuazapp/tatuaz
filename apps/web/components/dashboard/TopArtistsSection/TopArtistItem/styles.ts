@@ -42,4 +42,7 @@ export const ArtistLocation = styled.p`
 export const VisitArtistIcon = styled(ArrowRightCircleFill)`
   height: 34px;
   color: ${({ theme }) => theme.colors.primary};
+  :hover {
+    cursor: pointer;
+  }
 `

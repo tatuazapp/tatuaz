@@ -1,21 +1,11 @@
-import { down } from "styled-breakpoints"
 import styled from "styled-components"
 
 export const ArtistsPostSectionButtonAreaWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: 120px;
+  height: 100px;
   align-items: center;
-  /* padding-bottom: ${({ theme }) => theme.space.xlarge}; */
-  /* padding-top: ${({ theme }) => theme.space.xlarge}; */
-  /* ${down("md")} {
-    padding-top: ${({ theme }) => theme.sizes.xxlarge};
-  } */
-
-  /* ${down("sm")} {
-    font-size: ${({ theme }) => theme.sizes.xlarge};
-  } */
 `
 
 export const LeftContainer = styled.div`
@@ -32,9 +22,9 @@ export const TypeButton = styled.button<{
   isSelected: boolean
 }>`
   margin-left: ${({ theme }) => theme.sizes.xlarge};
-  padding-top: ${({ theme }) => theme.sizes.xsmall};
+  padding-top: ${({ theme }) => theme.sizes.xxsmall};
   padding-right: ${({ theme }) => theme.sizes.large};
-  padding-bottom: ${({ theme }) => theme.sizes.xsmall};
+  padding-bottom: ${({ theme }) => theme.sizes.xxsmall};
   padding-left: ${({ theme }) => theme.sizes.large};
 
   font-size: ${({ theme }) => theme.sizes.small};

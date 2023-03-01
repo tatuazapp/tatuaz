@@ -1,3 +1,4 @@
+// import { Box, Button, Collapse, useDisclosure } from "@chakra-ui/react"
 import { useState } from "react"
 import {
   ArtistPostContent,
@@ -23,7 +24,25 @@ const ArtistPost = () => {
   const tmp = "Kk"
 
   const [isPostLiked, setIsPostLiked] = useState(false)
-  const isCommentSectionOpen = false
+  const [isCommentsSectionOpen, setIsCommentsSectionOpen] = useState(false)
+
+  const onNotLikedPhotoClickHandler = () => {
+    const notLikedButton = document.getElementById("notLikedButton")
+    notLikedButton.style.transform = "scale(0.7)"
+    setTimeout(() => {
+      setIsPostLiked(true)
+    }, 100)
+  }
+
+  const onLikedPhotoClickHandler = () => {
+    const likedButton = document.getElementById("likedButton")
+    likedButton.style.transform = "scale(0.8)"
+    setTimeout(() => {
+      setIsPostLiked(false)
+    }, 100)
+  }
+
+  // const { isOpen, onToggle } = useDisclosure()
   return (
     <ArtistPostWrapper>
       <ArtistPostMainPhoto>
@@ -34,29 +53,54 @@ const ArtistPost = () => {
           <LikesContainer>
             {isPostLiked ? (
               <LikedPhotoIcon
-                onClick={() => {
-                  setIsPostLiked(false)
-                }}
+                id="likedButton"
+                // onClick={() => {
+                //   setIsPostLiked(false)
+                // }}
+                onClick={onLikedPhotoClickHandler}
               />
             ) : (
               <NotLikedPhotoIcon
-                onClick={() => {
-                  setIsPostLiked(true)
-                }}
+                id="notLikedButton"
+                onClick={onNotLikedPhotoClickHandler}
               />
             )}
             <LikesNumber>234 Likes</LikesNumber>
           </LikesContainer>
-
           <CommentsContainer>
-            {isCommentSectionOpen ? (
-              <CommentSectionClickedIcon />
+            {isCommentsSectionOpen ? (
+              <CommentSectionClickedIcon
+                onClick={() => {
+                  setIsCommentsSectionOpen(false)
+                }}
+              />
             ) : (
-              <CommentSectionNotClickedIcon />
+              <CommentSectionNotClickedIcon
+                onClick={() => {
+                  setIsCommentsSectionOpen(true)
+                }}
+              />
             )}
-            <CommentsNumber>234 Likes</CommentsNumber>
+            <CommentsNumber>234 Comments</CommentsNumber>
           </CommentsContainer>
         </ArtistPostLikesAndCommentsWrapper>
+        {/* <Button onClick={onToggle}>Click Me</Button>
+        <Collapse in={isOpen} animateOpacity>
+          <Box
+            p="40px"
+            color="white"
+            mt="4"
+            bg="teal.500"
+            rounded="md"
+            shadow="md"
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Consequat ac felis donec et odio pellentesque diam volutpat commodo.
+            Venenatis cras sed felis eget. Quis hendrerit dolor magna eget est
+            lorem ipsum.
+          </Box>
+        </Collapse> */}
         <ArtistPostUserWrapper>
           <UserIconPhoto />
           <UserName>Jacob Vin</UserName>
