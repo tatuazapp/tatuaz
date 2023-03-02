@@ -11,6 +11,8 @@ type PreferencesPickerProps = {
   setSelectedPreferences: (preferences: number[]) => void
 }
 
+const ONBOARDING_IMAGE_MAX_WIDTH = 384
+
 const PreferencesPicker: FunctionComponent<PreferencesPickerProps> = ({
   selectedPreferences,
   setSelectedPreferences,
@@ -46,7 +48,9 @@ const PreferencesPicker: FunctionComponent<PreferencesPickerProps> = ({
         <PreferencesPickerItem
           key={category.id}
           active={selectedPreferences.includes(category.id)}
-          imageUrl={formatCDNImageUrl(category.imageUri)}
+          imageUrl={formatCDNImageUrl(category.imageUri, {
+            maxWidth: ONBOARDING_IMAGE_MAX_WIDTH,
+          })}
           title={category.title}
           onClick={() => onPreferenceSelect(category.id)}
         />
