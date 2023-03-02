@@ -2,7 +2,9 @@ import { removeUndefinedOrNull } from "../removeUndefinedOrNull"
 
 type formatCDNImageUrlOptions = {
   width?: number
+  maxWidth?: number
   height?: number
+  maxHeight?: number
   quality?: number
   format?: "bmp" | "gif" | "jpg" | "pbm" | "png" | "tga" | "tiff" | "webp"
 }
@@ -14,17 +16,22 @@ const formatCDNImageUrl = (
   uri: string,
   options: formatCDNImageUrlOptions = {}
 ) => {
-  const { width, height, quality, format } = options
+  const { width, maxWidth, height, quality, format } = options
 
   const windowSize = Math.max(window.innerWidth, window.innerHeight)
 
   const currentDeviceSizeIndex = deviceSizes.findIndex(
     (size) => size > windowSize
   )
-  const currentImageSize = imageSizes[currentDeviceSizeIndex]
+  const currentImageSize =
+    imageSizes.at(currentDeviceSizeIndex) || imageSizes.at(-1)
+
+  const adjustedImageWidth = maxWidth
+    ? Math.min(currentImageSize, maxWidth)
+    : currentImageSize
 
   const autoOptions = {
-    width: currentImageSize,
+    width: adjustedImageWidth,
     quality: 100,
     format: "webp",
   }
