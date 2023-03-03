@@ -1,4 +1,3 @@
-// import { Box, Button, Collapse, useDisclosure } from "@chakra-ui/react"
 import { useState } from "react"
 import {
   ArtistPostContent,
@@ -42,7 +41,6 @@ const ArtistPost = () => {
     }, 100)
   }
 
-  // const { isOpen, onToggle } = useDisclosure()
   return (
     <ArtistPostWrapper>
       <ArtistPostMainPhoto>

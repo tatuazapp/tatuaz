@@ -9,6 +9,7 @@ import {
   ProfileIcon,
   MenuIcon,
   MenuContainer,
+  NarrowMenuSignOutIcon,
 } from "./styles"
 
 interface NarrowMenuProps {
@@ -52,6 +53,7 @@ const NarrowMenu: React.FC<NarrowMenuProps> = (props) => {
           </NarrowMenuListItem>
         ))}
       </NarrowMenuList>
+      <NarrowMenuSignOutIcon>Sign out</NarrowMenuSignOutIcon>
     </NarrowMenuWrapper>
   )
 }

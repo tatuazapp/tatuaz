@@ -6,9 +6,18 @@ import {
 } from "@chakra-ui/react"
 import { FunctionComponent } from "react"
 import useIsDesktop from "../../../utils/hooks/useIsDesktop"
+import useIsMobile from "../../../utils/hooks/useIsMobile"
 import Menu from "./Menu"
+import MobileMenu from "./MobileMenu"
 import NarrowMenu from "./NarrowMenu "
-import { DesktopLayoutContainer } from "./styles"
+import {
+  DesktopLayoutContainer,
+  GreenWrapper,
+  MobileLayoutContainer,
+  MobileLayoutHeader,
+  MobileMenuIcon,
+  WordmarkWrapper,
+} from "./styles"
 
 type DesktopLayoutProps = {
   children?: React.ReactNode
@@ -18,25 +27,55 @@ const DesktopLayout: FunctionComponent<DesktopLayoutProps> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const showDrawer = !useIsDesktop()
+  const mobileVersion = useIsMobile()
+
+  console.log("mobileVersion", mobileVersion)
 
   return (
-    <DesktopLayoutContainer>
-      {!showDrawer && <Menu />}
+    <>
+      {!mobileVersion && (
+        <DesktopLayoutContainer>
+          {!showDrawer && <Menu />}
 
-      {showDrawer && (
-        <>
-          <NarrowMenu onOpen={onOpen} />
+          {showDrawer && (
+            <>
+              <NarrowMenu onOpen={onOpen} />
 
-          <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+              <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+                <DrawerOverlay />
+                <DrawerContent maxW="184px" width="184px">
+                  <Menu />
+                </DrawerContent>
+              </Drawer>
+            </>
+          )}
+          <div>{children}</div>
+        </DesktopLayoutContainer>
+      )}
+
+      {mobileVersion && (
+        <MobileLayoutContainer>
+          <MobileLayoutHeader>
+            <WordmarkWrapper>
+              Tatuaz<GreenWrapper>App</GreenWrapper>
+            </WordmarkWrapper>
+            <MobileMenuIcon onClick={onOpen} />
+          </MobileLayoutHeader>
+          <Drawer
+            isOpen={isOpen}
+            placement="right"
+            size="full"
+            onClose={onClose}
+          >
             <DrawerOverlay />
-            <DrawerContent width="184px" maxW="184px">
-              <Menu />
+            <DrawerContent display="flex" justifyContent="center">
+              <MobileMenu onClose={onClose} />
             </DrawerContent>
           </Drawer>
-        </>
+          <div>{children}</div>
+        </MobileLayoutContainer>
       )}
-      <div>{children}</div>
-    </DesktopLayoutContainer>
+    </>
   )
 }
 export default DesktopLayout

@@ -1,3 +1,4 @@
+import { down } from "styled-breakpoints"
 import styled from "styled-components"
 
 export const ArtistsPostSectionButtonAreaWrapper = styled.div`
@@ -39,4 +40,10 @@ export const TypeButton = styled.button<{
   border-color: ${({ isSelected, theme }) =>
     isSelected ? theme.colors.primary : theme.colors.secondary};
   border-radius: ${({ theme }) => theme.radius.small};
+
+  ${down("sm")} {
+    margin-left: ${({ theme }) => theme.sizes.small};
+    padding-right: ${({ theme }) => theme.sizes.small};
+    padding-left: ${({ theme }) => theme.sizes.small};
+  }
 `

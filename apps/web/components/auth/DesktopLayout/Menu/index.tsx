@@ -10,6 +10,7 @@ import {
   SearchIcon,
   DashboardIcon,
   ProfileIcon,
+  SignOutButton,
 } from "./styles"
 
 const Menu = () => {
@@ -50,6 +51,7 @@ const Menu = () => {
           </MenuListItem>
         ))}
       </MenuList>
+      <SignOutButton>Sign out</SignOutButton>
     </MenuWrapper>
   )
 }

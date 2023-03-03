@@ -6,7 +6,7 @@ import styled from "styled-components"
 
 export const ArtistPostWrapper = styled.div`
   /* width: 735px; */
-  min-width: 435px;
+  /* min-width: 2p50x; */
   /* min-width: 735px; */
   max-width: 735px;
   margin-bottom: ${({ theme }) => theme.space.xlarge};

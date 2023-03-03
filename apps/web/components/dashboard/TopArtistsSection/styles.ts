@@ -5,10 +5,19 @@ import styled from "styled-components"
 export const RightSectionContainer = styled.div`
   display: flex;
   flex-direction: column;
+
   margin-right: ${({ theme }) => theme.space.xlarge};
   margin-left: ${({ theme }) => theme.space.xxxxlarge};
+
+  ${down("xxl")} {
+    margin-left: ${({ theme }) => theme.space.xxlarge};
+  }
   ${down("xl")} {
     margin-left: ${({ theme }) => theme.space.xlarge};
+  }
+
+  ${down("lg")} {
+    display: none;
   }
 `
 
