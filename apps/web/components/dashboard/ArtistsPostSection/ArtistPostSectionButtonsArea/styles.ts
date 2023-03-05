@@ -8,6 +8,12 @@ export const ArtistsPostSectionButtonAreaWrapper = styled.div`
 
   width: 100%;
   height: 100px;
+
+  ${down("xs")} {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
 `
 
 export const LeftContainer = styled.div`
@@ -17,7 +23,11 @@ export const LeftContainer = styled.div`
 
 export const TypeButtonsContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  ${down("xs")} {
+    width: 100%;
+  }
+  margin-top: ${({ theme }) => theme.sizes.xxsmall};
 `
 
 export const TypeButton = styled.button<{
@@ -46,5 +56,11 @@ export const TypeButton = styled.button<{
     margin-left: ${({ theme }) => theme.sizes.small};
     padding-right: ${({ theme }) => theme.sizes.small};
     padding-left: ${({ theme }) => theme.sizes.small};
+  }
+
+  ${down("xs")} {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 0;
   }
 `

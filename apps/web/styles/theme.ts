@@ -57,6 +57,7 @@ export const theme: DefaultTheme = {
 }
 
 export const themeWithBreakpoints = createTheme({
+  xs: "420px",
   sm: "576px",
   md: "768px",
   lg: "992px",
