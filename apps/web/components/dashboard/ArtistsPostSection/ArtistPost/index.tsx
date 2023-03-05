@@ -3,8 +3,12 @@ import {
   ModalOverlay,
   ModalContent,
   useDisclosure,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
 } from "@chakra-ui/react"
 import { useState } from "react"
+import useIsTablet from "../../../../utils/hooks/useIsTablet"
 import ArtistPostCommentView from "./ArtistPostCommentView"
 import {
   ArtistPostContent,
@@ -45,6 +49,8 @@ const ArtistPost = () => {
       setIsPostLiked(false)
     }, 100)
   }
+
+  const isTablet = useIsTablet()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -96,12 +102,26 @@ const ArtistPost = () => {
           </ArtistPostDescription>
         </ArtistPostContent>
       </ArtistPostWrapper>
-      <Modal isCentered isOpen={isOpen} onClose={onClose} size="xxl">
-        <ModalOverlay />
-        <ModalContent width="735px" marginTop="10px" marginBottom="10px">
-          <ArtistPostCommentView onClose={onClose} />
-        </ModalContent>
-      </Modal>
+      {!isTablet && (
+        <Modal isCentered isOpen={isOpen} size="xxl" onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent marginBottom="10px" marginTop="10px" width="735px">
+            <ArtistPostCommentView onClose={onClose} />
+          </ModalContent>
+        </Modal>
+      )}
+      {isTablet && (
+        <Drawer isOpen={isOpen} placement="right" size="full" onClose={onClose}>
+          <DrawerOverlay />
+          <DrawerContent
+            display="flex"
+            justifyContent="center"
+            backgroundColor="rgba(21, 21, 21, 0.8)"
+          >
+            <ArtistPostCommentView onClose={onClose} />
+          </DrawerContent>
+        </Drawer>
+      )}
     </>
   )
 }

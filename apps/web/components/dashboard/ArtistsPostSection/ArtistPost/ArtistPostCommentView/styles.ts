@@ -4,18 +4,24 @@ import { HeartFill } from "@styled-icons/bootstrap/HeartFill"
 import { Comment as CommentRegular } from "@styled-icons/boxicons-regular/Comment"
 import { Comment as CommentSolid } from "@styled-icons/boxicons-solid/Comment"
 import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline"
+import { down } from "styled-breakpoints"
 import styled from "styled-components"
 
 export const ArtistPostCommentsViewWrapper = styled.div`
   position: relative;
-  width: 735px;
-  height: 700px;
+  max-width: 735px;
+  max-height: calc(100vh - 110px);
   background-color: ${({ theme }) => theme.colors.background2};
+
+  ${down("md")} {
+    height: 100vh;
+  }
 `
 
 export const ArtistPostScrollingArea = styled.div`
   overflow: scroll;
-  height: 620px;
+  /* max-height: 800px; */
+  max-height: calc(100vh - 200px);
   ::-webkit-scrollbar {
     width: 0;
   }

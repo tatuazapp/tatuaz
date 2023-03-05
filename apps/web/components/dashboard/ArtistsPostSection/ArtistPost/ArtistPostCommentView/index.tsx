@@ -129,46 +129,6 @@ const ArtistPostCommentView: React.FC<ArtistPostCommentViewProps> = ({
                 </CommentOptionsWrapper>
               </CommentContentWrapper>
             </ArtistPostCommentsViewCommentWrapper>
-            <ArtistPostCommentsViewCommentWrapper>
-              <CommentOwnerAvatar />
-              <CommentContentWrapper>
-                <CommentContent>
-                  Besides the goals and assists, all Madrid players won it.
-                  Vinicius was good. Winning with country matters the most
-                  because then you dont assemble best players across the world
-                  <CommentReactions>
-                    <ReactionIcon />
-                    <p>12</p>
-                  </CommentReactions>
-                </CommentContent>
-
-                <CommentOptionsWrapper>
-                  <CommentOption>Like</CommentOption>
-                  <CommentOption>Reply</CommentOption>
-                  <CommentPostDate>Today</CommentPostDate>
-                </CommentOptionsWrapper>
-              </CommentContentWrapper>
-            </ArtistPostCommentsViewCommentWrapper>
-            <ArtistPostCommentsViewCommentWrapper>
-              <CommentOwnerAvatar />
-              <CommentContentWrapper>
-                <CommentContent>
-                  Besides the goals and assists, all Madrid players won it.
-                  Vinicius was good. Winning with country matters the most
-                  because then you dont assemble best players across the world
-                  <CommentReactions>
-                    <ReactionIcon />
-                    <p>12</p>
-                  </CommentReactions>
-                </CommentContent>
-
-                <CommentOptionsWrapper>
-                  <CommentOption>Like</CommentOption>
-                  <CommentOption>Reply</CommentOption>
-                  <CommentPostDate>Today</CommentPostDate>
-                </CommentOptionsWrapper>
-              </CommentContentWrapper>
-            </ArtistPostCommentsViewCommentWrapper>
           </ArtistPostCommentsViewCommentsSection>
         </ArtistPostContent>
       </ArtistPostScrollingArea>
