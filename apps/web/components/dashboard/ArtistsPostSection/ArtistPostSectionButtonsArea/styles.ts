@@ -24,10 +24,10 @@ export const LeftContainer = styled.div`
 export const TypeButtonsContainer = styled.div`
   display: flex;
   justify-content: space-around;
+  margin-top: ${({ theme }) => theme.sizes.xxsmall};
   ${down("xs")} {
     width: 100%;
   }
-  margin-top: ${({ theme }) => theme.sizes.xxsmall};
 `
 
 export const TypeButton = styled.button<{
