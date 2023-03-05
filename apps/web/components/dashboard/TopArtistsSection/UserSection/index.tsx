@@ -1,4 +1,10 @@
-import { UserSectionAreaWrapper, UserName, UserPhoto, UserIcon, UserIconStatus } from "./styles"
+import {
+  UserSectionAreaWrapper,
+  UserName,
+  UserPhoto,
+  UserIcon,
+  UserIconStatus,
+} from "./styles"
 
 const UserSection = () => {
   const tmp = "Kk"
@@ -9,7 +15,6 @@ const UserSection = () => {
         <UserPhoto />
         <UserIconStatus />
       </UserIcon>
-
       <UserName>Richard Brewl</UserName>
     </UserSectionAreaWrapper>
   )

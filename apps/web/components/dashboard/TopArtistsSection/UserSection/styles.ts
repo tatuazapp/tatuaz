@@ -35,11 +35,11 @@ export const UserIcon = styled.div`
 
 export const UserIconStatus = styled.div`
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: ${({ theme }) => theme.space.xxxxsmall};
+  bottom: ${({ theme }) => theme.space.xxxxsmall};
 
-  width: 11px;
-  height: 11px;
+  width: ${({ theme }) => theme.space.xsmall};
+  height: ${({ theme }) => theme.space.xsmall};
 
   background-color: ${({ theme }) => theme.colors.primary};
   border-radius: 50%;

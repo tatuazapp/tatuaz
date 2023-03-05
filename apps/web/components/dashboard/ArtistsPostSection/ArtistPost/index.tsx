@@ -1,4 +1,11 @@
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  useDisclosure,
+} from "@chakra-ui/react"
 import { useState } from "react"
+import ArtistPostCommentView from "./ArtistPostCommentView"
 import {
   ArtistPostContent,
   ArtistPostDescription,
@@ -20,8 +27,6 @@ import {
 } from "./styles"
 
 const ArtistPost = () => {
-  const tmp = "Kk"
-
   const [isPostLiked, setIsPostLiked] = useState(false)
   const [isCommentsSectionOpen, setIsCommentsSectionOpen] = useState(false)
 
@@ -41,76 +46,63 @@ const ArtistPost = () => {
     }, 100)
   }
 
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
   return (
-    <ArtistPostWrapper>
-      <ArtistPostMainPhoto>
-        <ArtistPostMainPhotoTitle>Flare Boom</ArtistPostMainPhotoTitle>
-      </ArtistPostMainPhoto>
-      <ArtistPostContent>
-        <ArtistPostLikesAndCommentsWrapper>
-          <LikesContainer>
-            {isPostLiked ? (
-              <LikedPhotoIcon
-                id="likedButton"
-                // onClick={() => {
-                //   setIsPostLiked(false)
-                // }}
-                onClick={onLikedPhotoClickHandler}
-              />
-            ) : (
-              <NotLikedPhotoIcon
-                id="notLikedButton"
-                onClick={onNotLikedPhotoClickHandler}
-              />
-            )}
-            <LikesNumber>234 Likes</LikesNumber>
-          </LikesContainer>
-          <CommentsContainer>
-            {isCommentsSectionOpen ? (
-              <CommentSectionClickedIcon
-                onClick={() => {
-                  setIsCommentsSectionOpen(false)
-                }}
-              />
-            ) : (
-              <CommentSectionNotClickedIcon
-                onClick={() => {
-                  setIsCommentsSectionOpen(true)
-                }}
-              />
-            )}
-            <CommentsNumber>234 Comments</CommentsNumber>
-          </CommentsContainer>
-        </ArtistPostLikesAndCommentsWrapper>
-        {/* <Button onClick={onToggle}>Click Me</Button>
-        <Collapse in={isOpen} animateOpacity>
-          <Box
-            p="40px"
-            color="white"
-            mt="4"
-            bg="teal.500"
-            rounded="md"
-            shadow="md"
-          >
+    <>
+      <ArtistPostWrapper>
+        <ArtistPostMainPhoto>
+          <ArtistPostMainPhotoTitle>Flare Boom</ArtistPostMainPhotoTitle>
+        </ArtistPostMainPhoto>
+        <ArtistPostContent>
+          <ArtistPostLikesAndCommentsWrapper>
+            <LikesContainer>
+              {isPostLiked ? (
+                <LikedPhotoIcon
+                  id="likedButton"
+                  onClick={onLikedPhotoClickHandler}
+                />
+              ) : (
+                <NotLikedPhotoIcon
+                  id="notLikedButton"
+                  onClick={onNotLikedPhotoClickHandler}
+                />
+              )}
+              <LikesNumber>234 Likes</LikesNumber>
+            </LikesContainer>
+            <CommentsContainer>
+              {isCommentsSectionOpen ? (
+                <CommentSectionClickedIcon
+                  onClick={() => {
+                    setIsCommentsSectionOpen(false)
+                  }}
+                />
+              ) : (
+                <CommentSectionNotClickedIcon onClick={onOpen} />
+              )}
+              <CommentsNumber>234 Comments</CommentsNumber>
+            </CommentsContainer>
+          </ArtistPostLikesAndCommentsWrapper>
+          <ArtistPostUserWrapper>
+            <UserIconPhoto />
+            <UserName>Jacob Vin</UserName>
+          </ArtistPostUserWrapper>
+          <ArtistPostDescription>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
             Consequat ac felis donec et odio pellentesque diam volutpat commodo.
-            Venenatis cras sed felis eget. Quis hendrerit dolor magna eget est
+            Venenatis cras sedfelis eget. Quis hendrerit dolor magna eget est
             lorem ipsum.
-          </Box>
-        </Collapse> */}
-        <ArtistPostUserWrapper>
-          <UserIconPhoto />
-          <UserName>Jacob Vin</UserName>
-        </ArtistPostUserWrapper>
-        <ArtistPostDescription>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Consequat
-          ac felis donec et odio pellentesque diam volutpat commodo. Venenatis
-          cras sedfelis eget. Quis hendrerit dolor magna eget est lorem ipsum.
-        </ArtistPostDescription>
-      </ArtistPostContent>
-    </ArtistPostWrapper>
+          </ArtistPostDescription>
+        </ArtistPostContent>
+      </ArtistPostWrapper>
+      <Modal isCentered isOpen={isOpen} onClose={onClose} size="xxl">
+        <ModalOverlay />
+        <ModalContent width="735px" marginTop="10px" marginBottom="10px">
+          <ArtistPostCommentView onClose={onClose} />
+        </ModalContent>
+      </Modal>
+    </>
   )
 }
 

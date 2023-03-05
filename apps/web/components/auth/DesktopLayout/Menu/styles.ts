@@ -6,18 +6,19 @@ import { down } from "styled-breakpoints"
 import styled from "styled-components"
 
 export const MenuWrapper = styled.div`
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   box-sizing: content-box;
   min-width: 200px;
   max-width: 200px;
-  height: 100vh;
+  min-height: 100vh;
   margin-right: ${({ theme }) => theme.space.xxxxlarge};
 
   background-color: ${({ theme }) => theme.colors.background2};
   ${down("xxl")} {
     margin-right: ${({ theme }) => theme.space.xxlarge};
-    /* margin-right: 5.5vw; */
   }
 `
 
@@ -55,9 +56,9 @@ export const MenuListItem = styled.div<{
   align-items: center;
 
   width: 100%;
-  height: 50px;
-  margin-bottom: ${({ theme }) => theme.space.medium};
+  padding-top: ${({ theme }) => theme.space.small};
   padding-right: ${({ theme }) => theme.space.small};
+  padding-bottom: ${({ theme }) => theme.space.small};
   padding-left: ${({ theme }) => theme.space.small};
 
   font-size: ${({ theme }) => theme.sizes.medium};
@@ -73,7 +74,6 @@ export const MenuListItem = styled.div<{
 export const HomeIcon = styled(Home)`
   height: ${({ theme }) => theme.sizes.xlarge};
 `
-
 export const SearchIcon = styled(Search)`
   height: ${({ theme }) => theme.sizes.xlarge};
 `
@@ -91,13 +91,9 @@ export const MenuListItemText = styled.p`
 `
 
 export const SignOutButton = styled.button`
-  position: absolute;
-  right: 0;
-  bottom: 100px;
-  left: 0;
-
   max-width: 150px;
   margin-right: auto;
+  margin-bottom: ${({ theme }) => theme.space.xxxxlarge};
   margin-left: auto;
   padding: ${({ theme }) => theme.space.xsmall};
 

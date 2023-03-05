@@ -13,7 +13,7 @@ import {
 } from "./styles"
 
 interface NarrowMenuProps {
-  onOpen: any
+  onOpen: () => void
 }
 
 const NarrowMenu: React.FC<NarrowMenuProps> = (props) => {
@@ -36,23 +36,24 @@ const NarrowMenu: React.FC<NarrowMenuProps> = (props) => {
   }
   return (
     <NarrowMenuWrapper>
-      <MenuContainer>
-        <MenuIcon onClick={onOpen} />
-      </MenuContainer>
-
-      <NarrowMenuList>
-        {tabs.map((tab) => (
-          <NarrowMenuListItem
-            key={tab}
-            isSelected={activeTab === tab}
-            onClick={() => {
-              setActiveTab(tab)
-            }}
-          >
-            {renderIcon(tab)}
-          </NarrowMenuListItem>
-        ))}
-      </NarrowMenuList>
+      <div>
+        <MenuContainer>
+          <MenuIcon onClick={onOpen} />
+        </MenuContainer>
+        <NarrowMenuList>
+          {tabs.map((tab) => (
+            <NarrowMenuListItem
+              key={tab}
+              isSelected={activeTab === tab}
+              onClick={() => {
+                setActiveTab(tab)
+              }}
+            >
+              {renderIcon(tab)}
+            </NarrowMenuListItem>
+          ))}
+        </NarrowMenuList>
+      </div>
       <NarrowMenuSignOutIcon>Sign out</NarrowMenuSignOutIcon>
     </NarrowMenuWrapper>
   )

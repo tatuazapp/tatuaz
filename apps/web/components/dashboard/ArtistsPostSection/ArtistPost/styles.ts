@@ -5,12 +5,8 @@ import { Comment as CommentSolid } from "@styled-icons/boxicons-solid/Comment"
 import styled from "styled-components"
 
 export const ArtistPostWrapper = styled.div`
-  /* width: 735px; */
-  /* min-width: 2p50x; */
-  /* min-width: 735px; */
   max-width: 735px;
   margin-bottom: ${({ theme }) => theme.space.xlarge};
-
   background-color: ${({ theme }) => theme.colors.background2};
   border-radius: ${({ theme }) => theme.radius.medium};
 `
@@ -29,8 +25,8 @@ export const ArtistPostMainPhoto = styled.div`
 
 export const ArtistPostMainPhotoTitle = styled.p`
   position: absolute;
-  bottom: 12px;
-  left: 12px;
+  bottom: ${({ theme }) => theme.space.xsmall};
+  left: ${({ theme }) => theme.space.xsmall};
 
   font-size: ${({ theme }) => theme.sizes.large};
   font-weight: 600;
@@ -55,18 +51,19 @@ export const LikesContainer = styled.div`
 `
 
 export const NotLikedPhotoIcon = styled(BalloonHeart)`
-  height: 34px;
+  cursor: pointer;
+  height: ${({ theme }) => theme.space.xlarge};
   color: ${({ theme }) => theme.colors.primary};
   transition: all 0.1s ease-in-out;
-
-  :hover {
-    cursor: pointer;
-  }
 `
 
 export const LikedPhotoIcon = styled(BalloonHeartFill)`
-  height: 34px;
+  cursor: pointer;
+
+  height: ${({ theme }) => theme.space.xlarge};
+
   color: ${({ theme }) => theme.colors.primary};
+
   transition: all 0.1s ease-in-out;
   animation: 0.1s ease-out slideInFromLeft;
 
@@ -78,16 +75,12 @@ export const LikedPhotoIcon = styled(BalloonHeartFill)`
       transform: scale(1);
     }
   }
-
-  :hover {
-    cursor: pointer;
-  }
 `
 
 export const LikesNumber = styled.p`
   margin-left: ${({ theme }) => theme.space.xxsmall};
   font-size: ${({ theme }) => theme.sizes.small};
-  color: ${({ theme }) => theme.colors.background3};
+  color: ${({ theme }) => theme.colors.background4};
 `
 
 export const CommentsContainer = styled.div`
@@ -96,25 +89,21 @@ export const CommentsContainer = styled.div`
 `
 
 export const CommentSectionClickedIcon = styled(CommentSolid)`
-  height: 34px;
-  color: ${({ theme }) => theme.colors.background3};
-  :hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
+  height: ${({ theme }) => theme.space.xlarge};
+  color: ${({ theme }) => theme.colors.background4};
 `
 
 export const CommentSectionNotClickedIcon = styled(CommentRegular)`
-  height: 34px;
-  color: ${({ theme }) => theme.colors.background3};
-  :hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
+  height: ${({ theme }) => theme.space.xlarge};
+  color: ${({ theme }) => theme.colors.background4};
 `
 
 export const CommentsNumber = styled.p`
   margin-left: ${({ theme }) => theme.space.xxsmall};
   font-size: ${({ theme }) => theme.sizes.small};
-  color: ${({ theme }) => theme.colors.background3};
+  color: ${({ theme }) => theme.colors.background4};
 `
 
 export const ArtistPostUserWrapper = styled.div`
@@ -126,15 +115,13 @@ export const ArtistPostUserWrapper = styled.div`
 export const UserIconPhoto = styled.div`
   display: inline-block;
 
-  width: 24px;
-  height: 24px;
+  width: ${({ theme }) => theme.space.large};
+  height: ${({ theme }) => theme.space.large};
   margin-right: ${({ theme }) => theme.space.xsmall};
   margin-left: ${({ theme }) => theme.space.xxxsmall};
 
   background-image: url("https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg");
   background-size: cover;
-
-  /* background-color: #bbb; */
   border-radius: 50%;
 `
 

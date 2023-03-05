@@ -1,6 +1,5 @@
 import {
   RightSectionContainer,
-  TopArtistsSectionArtistList,
   TopArtistsSectionHeader,
   TopArtistsSectionTitle,
   TopArtistsSectionViewMore,
@@ -19,13 +18,13 @@ const TopArtistsSection = () => {
           <TopArtistsSectionTitle>Top Artists</TopArtistsSectionTitle>
           <TopArtistsSectionViewMore>View more</TopArtistsSectionViewMore>
         </TopArtistsSectionHeader>
-        <TopArtistsSectionArtistList>
+        <div>
           <TopArtistsItem />
           <TopArtistsItem />
           <TopArtistsItem />
           <TopArtistsItem />
           <TopArtistsItem />
-        </TopArtistsSectionArtistList>
+        </div>
       </TopArtistsSectionWrapper>
     </RightSectionContainer>
   )

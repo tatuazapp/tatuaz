@@ -36,7 +36,7 @@ export const MobileLayoutHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: ${({ theme }) => theme.space.large};
+  /* margin-top: ${({ theme }) => theme.space.large}; */
   width: 100%;
   min-width: 250px;
   max-width: 735px;
@@ -45,6 +45,8 @@ export const MobileLayoutHeader = styled.div`
 export const WordmarkWrapper = styled.div`
   display: flex;
   justify-content: start;
+  align-items: center;
+  height: 116px;
 
   font-size: ${({ theme }) => theme.sizes.xlarge};
   font-weight: 600;

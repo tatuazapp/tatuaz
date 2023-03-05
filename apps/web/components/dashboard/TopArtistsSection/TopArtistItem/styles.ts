@@ -17,8 +17,8 @@ export const ArtistWrapper = styled.div`
 export const ArtistPhoto = styled.div`
   display: inline-block;
 
-  width: 56px;
-  height: 56px;
+  width: ${({ theme }) => theme.space.xxlarge};
+  height: ${({ theme }) => theme.space.xxlarge};
   margin-right: ${({ theme }) => theme.space.xsmall};
 
   background-image: url("https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg");
@@ -40,9 +40,7 @@ export const ArtistLocation = styled.p`
 `
 
 export const VisitArtistIcon = styled(ArrowRightCircleFill)`
-  height: 34px;
+  cursor: pointer;
+  height: ${({ theme }) => theme.space.xlarge};
   color: ${({ theme }) => theme.colors.primary};
-  :hover {
-    cursor: pointer;
-  }
 `

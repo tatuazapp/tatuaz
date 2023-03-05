@@ -29,8 +29,6 @@ const DesktopLayout: FunctionComponent<DesktopLayoutProps> = ({ children }) => {
   const showDrawer = !useIsDesktop()
   const mobileVersion = useIsMobile()
 
-  console.log("mobileVersion", mobileVersion)
-
   return (
     <>
       {!mobileVersion && (

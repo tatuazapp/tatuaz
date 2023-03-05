@@ -7,11 +7,14 @@ import { SignOut } from "@styled-icons/octicons/SignOut"
 import styled from "styled-components"
 
 export const NarrowMenuWrapper = styled.div`
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   box-sizing: content-box;
+  box-sizing: content-box;
   width: 70px;
-  height: 100vh;
+  min-height: 100vh;
   margin-right: ${({ theme }) => theme.space.xlarge};
 
   background-color: ${({ theme }) => theme.colors.background2};
@@ -42,9 +45,9 @@ export const NarrowMenuListItem = styled.div<{
   align-items: center;
 
   width: 100%;
-  height: 50px;
-  margin-bottom: ${({ theme }) => theme.space.medium};
+  padding-top: ${({ theme }) => theme.space.small};
   padding-right: ${({ theme }) => theme.space.small};
+  padding-bottom: ${({ theme }) => theme.space.small};
   padding-left: ${({ theme }) => theme.space.small};
 
   font-size: ${({ theme }) => theme.sizes.medium};
@@ -81,17 +84,13 @@ export const ProfileIcon = styled(Profile)`
 `
 
 export const NarrowMenuSignOutIcon = styled(SignOut)`
-  position: absolute;
-  right: 0;
-  bottom: 100px;
-  left: 0;
-
+  box-sizing: content-box;
   height: ${({ theme }) => theme.sizes.xlarge};
   margin-right: auto;
+  margin-bottom: ${({ theme }) => theme.space.xxxxlarge};
   margin-left: auto;
   padding: ${({ theme }) => theme.space.xxsmall};
 
-  box-sizing: content-box;
   color: ${({ theme }) => theme.colors.background1};
 
   background-color: ${({ theme }) => theme.colors.primary};

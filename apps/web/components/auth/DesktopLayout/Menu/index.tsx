@@ -34,23 +34,25 @@ const Menu = () => {
   }
   return (
     <MenuWrapper>
-      <WordmarkWrapper>
-        Tatuaz<GreenWrapper>App</GreenWrapper>
-      </WordmarkWrapper>
-      <MenuList>
-        {tabs.map((tab) => (
-          <MenuListItem
-            key={tab}
-            isSelected={activeTab === tab}
-            onClick={() => {
-              setActiveTab(tab)
-            }}
-          >
-            {renderIcon(tab)}
-            <MenuListItemText>{tab}</MenuListItemText>
-          </MenuListItem>
-        ))}
-      </MenuList>
+      <div>
+        <WordmarkWrapper>
+          Tatuaz<GreenWrapper>App</GreenWrapper>
+        </WordmarkWrapper>
+        <MenuList>
+          {tabs.map((tab) => (
+            <MenuListItem
+              key={tab}
+              isSelected={activeTab === tab}
+              onClick={() => {
+                setActiveTab(tab)
+              }}
+            >
+              {renderIcon(tab)}
+              <MenuListItemText>{tab}</MenuListItemText>
+            </MenuListItem>
+          ))}
+        </MenuList>
+      </div>
       <SignOutButton>Sign out</SignOutButton>
     </MenuWrapper>
   )
