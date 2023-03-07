@@ -9,7 +9,6 @@ import { rem } from "../../../../styles/utils"
 export const MobileMenuBackgroundContainer = styled.div`
   display: flex;
   justify-content: center;
-  height: 100vh;
   background-color: ${({ theme }) => theme.colors.background2};
 `
 
@@ -21,7 +20,7 @@ export const MobileMenuWrapper = styled.div`
   box-sizing: content-box;
   width: 100%;
   max-width: 735px;
-  height: 100vh;
+  min-height: 100vh;
   padding-right: ${({ theme }) => theme.space.small};
   padding-left: ${({ theme }) => theme.space.small};
 

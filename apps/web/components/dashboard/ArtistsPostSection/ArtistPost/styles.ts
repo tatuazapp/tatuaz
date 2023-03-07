@@ -26,6 +26,10 @@ export const ArtistPostMainPhotoTitle = styled.p`
   position: absolute;
   bottom: ${({ theme }) => theme.space.xsmall};
   left: ${({ theme }) => theme.space.xsmall};
+
+  font-size: ${({ theme }) => theme.sizes.large};
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.primary};
 `
 
 export const ArtistPostContent = styled.div`
@@ -74,6 +78,8 @@ export const LikedPhotoIcon = styled(BalloonHeartFill)`
 
 export const LikesNumber = styled.p`
   margin-left: ${({ theme }) => theme.space.xxsmall};
+  font-size: ${({ theme }) => theme.sizes.small};
+  color: ${({ theme }) => theme.colors.background4};
 `
 
 export const CommentsContainer = styled.div`
@@ -95,6 +101,8 @@ export const CommentSectionNotClickedIcon = styled(CommentRegular)`
 
 export const CommentsNumber = styled.p`
   margin-left: ${({ theme }) => theme.space.xxsmall};
+  font-size: ${({ theme }) => theme.sizes.small};
+  color: ${({ theme }) => theme.colors.background4};
 `
 
 export const ArtistPostUserWrapper = styled.div`
@@ -117,7 +125,14 @@ export const UserIconPhoto = styled.div`
   border-radius: 50%;
 `
 
+export const UserName = styled.p`
+  font-size: ${({ theme }) => theme.sizes.small};
+  font-weight: 700;
+  color: ${({ theme }) => theme.colors.primary};
+`
+
 export const ArtistPostDescription = styled.div`
   padding-top: ${({ theme }) => theme.space.xsmall};
+  color: ${({ theme }) => theme.colors.secondary};
   text-align: justify;
 `

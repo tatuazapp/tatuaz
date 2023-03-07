@@ -1,4 +1,3 @@
-import { Heading } from "@tatuaz/ui"
 import {
   UserSectionAreaWrapper,
   UserName,
@@ -13,9 +12,7 @@ const UserSection = () => (
       <UserPhoto />
       <UserIconStatus />
     </UserIcon>
-    <UserName>
-      <Heading level={5}>Richard Brewl</Heading>
-    </UserName>
+    <UserName>Richard Brewl</UserName>
   </UserSectionAreaWrapper>
 )
 

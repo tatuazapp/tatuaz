@@ -7,9 +7,7 @@ import {
   DrawerOverlay,
   DrawerContent,
 } from "@chakra-ui/react"
-import { Paragraph, Heading } from "@tatuaz/ui"
 import { useState } from "react"
-import { theme } from "../../../../styles/theme"
 import useIsTablet from "../../../../utils/hooks/useIsTablet"
 import ArtistPostCommentView from "./ArtistPostCommentView"
 import {
@@ -29,6 +27,7 @@ import {
   LikesNumber,
   NotLikedPhotoIcon,
   UserIconPhoto,
+  UserName,
 } from "./styles"
 
 const ArtistPost = () => {
@@ -59,11 +58,7 @@ const ArtistPost = () => {
     <>
       <ArtistPostWrapper>
         <ArtistPostMainPhoto>
-          <ArtistPostMainPhotoTitle>
-            <Heading color={theme.colors.primary} level={4}>
-              Flare Boom
-            </Heading>
-          </ArtistPostMainPhotoTitle>
+          <ArtistPostMainPhotoTitle>Flare Boom</ArtistPostMainPhotoTitle>
         </ArtistPostMainPhoto>
         <ArtistPostContent>
           <ArtistPostLikesAndCommentsWrapper>
@@ -79,11 +74,7 @@ const ArtistPost = () => {
                   onClick={onNotLikedPhotoClickHandler}
                 />
               )}
-              <LikesNumber>
-                <Paragraph color={theme.colors.background4} level={2}>
-                  234 Likes
-                </Paragraph>
-              </LikesNumber>
+              <LikesNumber>234 Likes</LikesNumber>
             </LikesContainer>
             <CommentsContainer>
               {isCommentsSectionOpen ? (
@@ -95,27 +86,19 @@ const ArtistPost = () => {
               ) : (
                 <CommentSectionNotClickedIcon onClick={onOpen} />
               )}
-              <CommentsNumber>
-                <Paragraph color={theme.colors.background4} level={2}>
-                  234 Comments
-                </Paragraph>
-              </CommentsNumber>
+              <CommentsNumber>234 Comments</CommentsNumber>
             </CommentsContainer>
           </ArtistPostLikesAndCommentsWrapper>
           <ArtistPostUserWrapper>
             <UserIconPhoto />
-            <Paragraph strong color={theme.colors.primary} level={2}>
-              Jacob Vin
-            </Paragraph>
+            <UserName>Jacob Vin</UserName>
           </ArtistPostUserWrapper>
           <ArtistPostDescription>
-            <Paragraph level={2}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Consequat ac felis donec et odio pellentesque diam volutpat
-              commodo. Venenatis cras sedfelis eget. Quis hendrerit dolor magna
-              eget est lorem ipsum.
-            </Paragraph>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Consequat ac felis donec et odio pellentesque diam volutpat commodo.
+            Venenatis cras sedfelis eget. Quis hendrerit dolor magna eget est
+            lorem ipsum.
           </ArtistPostDescription>
         </ArtistPostContent>
       </ArtistPostWrapper>
@@ -131,9 +114,9 @@ const ArtistPost = () => {
         <Drawer isOpen={isOpen} placement="right" size="full" onClose={onClose}>
           <DrawerOverlay />
           <DrawerContent
-            backgroundColor="rgba(21, 21, 21, 0.8)"
             display="flex"
             justifyContent="center"
+            backgroundColor="rgba(21, 21, 21, 0.8)"
           >
             <ArtistPostCommentView onClose={onClose} />
           </DrawerContent>

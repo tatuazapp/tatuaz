@@ -9,6 +9,9 @@ export const UserSectionAreaWrapper = styled.div`
 
 export const UserName = styled.p`
   margin-left: ${({ theme }) => theme.space.large};
+  font-size: ${({ theme }) => theme.sizes.medium};
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.secondary};
 `
 
 export const UserPhoto = styled.div`
