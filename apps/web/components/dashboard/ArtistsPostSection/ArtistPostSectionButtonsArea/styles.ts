@@ -5,7 +5,6 @@ export const ArtistsPostSectionButtonAreaWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   height: 100px;
 
   ${down("xs")} {
@@ -37,12 +36,6 @@ export const TypeButton = styled.button<{
   padding-right: ${({ theme }) => theme.sizes.large};
   padding-bottom: ${({ theme }) => theme.sizes.xxsmall};
   padding-left: ${({ theme }) => theme.sizes.large};
-
-  font-size: ${({ theme }) => theme.sizes.small};
-  font-weight: 500;
-  color: ${({ theme }) => theme.colors.secondary};
-  color: ${({ isSelected, theme }) =>
-    isSelected ? theme.colors.background1 : theme.colors.secondary};
 
   background-color: ${({ isSelected, theme }) =>
     isSelected ? theme.colors.primary : theme.colors.background1};

@@ -1,7 +1,8 @@
+import { Heading, Paragraph } from "@tatuaz/ui"
+import { theme } from "../../../styles/theme"
 import {
   RightSectionContainer,
   TopArtistsSectionHeader,
-  TopArtistsSectionTitle,
   TopArtistsSectionViewMore,
   TopArtistsSectionWrapper,
 } from "./styles"
@@ -13,8 +14,12 @@ const TopArtistsSection = () => (
     <UserSection />
     <TopArtistsSectionWrapper>
       <TopArtistsSectionHeader>
-        <TopArtistsSectionTitle>Top Artists</TopArtistsSectionTitle>
-        <TopArtistsSectionViewMore>View more</TopArtistsSectionViewMore>
+        <Heading level={4}> Top Artists</Heading>
+        <TopArtistsSectionViewMore>
+          <Paragraph color={theme.colors.primary} level={4}>
+            View more
+          </Paragraph>
+        </TopArtistsSectionViewMore>
       </TopArtistsSectionHeader>
       <div>
         <TopArtistsItem />

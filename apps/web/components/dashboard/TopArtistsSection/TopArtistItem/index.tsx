@@ -1,7 +1,5 @@
+import { Paragraph } from "@tatuaz/ui"
 import {
-  ArtistData,
-  ArtistLocation,
-  ArtistName,
   ArtistPhoto,
   ArtistWrapper,
   TopArtistsSectionArtistListItem,
@@ -12,12 +10,11 @@ const TopArtistsItem = () => (
   <TopArtistsSectionArtistListItem>
     <ArtistWrapper>
       <ArtistPhoto />
-      <ArtistData>
-        <ArtistName>Steve Burn</ArtistName>
-        <ArtistLocation>California</ArtistLocation>
-      </ArtistData>
+      <div>
+        <Paragraph level={2}>Steve Burn</Paragraph>
+        <Paragraph level={4}>California</Paragraph>
+      </div>
     </ArtistWrapper>
-
     <VisitArtistIcon />
   </TopArtistsSectionArtistListItem>
 )

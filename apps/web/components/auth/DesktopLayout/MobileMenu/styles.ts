@@ -9,9 +9,7 @@ import { rem } from "../../../../styles/utils"
 export const MobileMenuBackgroundContainer = styled.div`
   display: flex;
   justify-content: center;
-
   height: 100vh;
-
   background-color: ${({ theme }) => theme.colors.background2};
 `
 
@@ -39,6 +37,7 @@ export const TopMobileMenuWrapper = styled.div`
 export const CloseMenuIcon = styled(CloseOutline)`
   height: ${({ theme }) => theme.sizes.xlarge};
   color: ${({ theme }) => theme.colors.secondary};
+  cursor: pointer;
 `
 
 export const WordmarkWrapper = styled.div`
@@ -196,11 +195,6 @@ export const SignOutButton = styled.button`
   margin-bottom: ${({ theme }) => theme.space.xxxxlarge};
   margin-left: auto;
   padding: ${({ theme }) => theme.space.xsmall};
-
-  font-size: ${({ theme }) => theme.sizes.medium};
-  /* font-weight: 600; */
-  color: ${({ theme }) => theme.colors.background1};
-  text-align: center;
 
   background-color: ${({ theme }) => theme.colors.primary};
   border-radius: ${({ theme }) => theme.radius.medium};

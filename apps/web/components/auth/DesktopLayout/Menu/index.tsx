@@ -1,4 +1,6 @@
+import { Paragraph, Paragraph1 } from "@tatuaz/ui"
 import { useState } from "react"
+import { theme } from "../../../../styles/theme"
 import {
   GreenWrapper,
   MenuList,
@@ -48,12 +50,18 @@ const Menu = () => {
               }}
             >
               {renderIcon(tab)}
-              <MenuListItemText>{tab}</MenuListItemText>
+              <MenuListItemText>
+                <Paragraph1>{tab}</Paragraph1>
+              </MenuListItemText>
             </MenuListItem>
           ))}
         </MenuList>
       </div>
-      <SignOutButton>Sign out</SignOutButton>
+      <SignOutButton>
+        <Paragraph color={theme.colors.background1} level={1}>
+          Sign out
+        </Paragraph>
+      </SignOutButton>
     </MenuWrapper>
   )
 }

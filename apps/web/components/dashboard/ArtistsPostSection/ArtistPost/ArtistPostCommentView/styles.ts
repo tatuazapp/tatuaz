@@ -51,7 +51,6 @@ export const CommentOwnerAvatar = styled.div`
   margin-left: ${({ theme }) => theme.space.xsmall};
 
   /* TODO: change to dynamic */
-
   background-image: url("https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg");
   background-size: cover;
   border-radius: 50%;
@@ -69,8 +68,6 @@ export const CommentContent = styled.div`
   padding-right: ${({ theme }) => theme.space.xsmall};
   padding-bottom: ${({ theme }) => theme.space.xxsmall};
   padding-left: ${({ theme }) => theme.space.xsmall};
-
-  color: ${({ theme }) => theme.colors.secondary};
 
   background-color: ${({ theme }) => theme.colors.background3};
   border-radius: ${({ theme }) => theme.radius.small};
@@ -108,15 +105,6 @@ export const CommentOptionsWrapper = styled.div`
 export const CommentOption = styled.p`
   cursor: pointer;
   margin-right: ${({ theme }) => theme.space.xsmall};
-  color: ${({ theme }) => theme.colors.secondary};
-  :hover {
-    color: ${({ theme }) => theme.colors.primary};
-  }
-`
-
-export const CommentPostDate = styled.p`
-  font-size: ${({ theme }) => theme.sizes.xsmall};
-  color: ${({ theme }) => theme.colors.background4};
 `
 
 export const ArtistPostCommentsViewDivider = styled.div`
@@ -210,11 +198,6 @@ export const ArtistPostCommentsViewHeader = styled.div`
 
   background-color: ${({ theme }) => theme.colors.background1};
   border-bottom: 1px solid ${({ theme }) => theme.colors.background3};
-`
-
-export const ArtistPostCommentsViewHeaderTitle = styled.div`
-  font-size: ${({ theme }) => theme.sizes.medium};
-  color: ${({ theme }) => theme.colors.secondary};
 `
 
 export const ArtistPostCommentsViewHeaderCloseButton = styled(CloseOutline)`
@@ -334,12 +317,6 @@ export const UserIconPhoto = styled.div`
   background-image: url("https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg");
   background-size: cover;
   border-radius: 50%;
-`
-
-export const UserName = styled.p`
-  font-size: ${({ theme }) => theme.sizes.small};
-  font-weight: 700;
-  color: ${({ theme }) => theme.colors.primary};
 `
 
 export const ArtistPostDescription = styled.div`

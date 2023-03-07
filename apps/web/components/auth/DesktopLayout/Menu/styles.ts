@@ -53,6 +53,8 @@ export const MenuList = styled.div`
 export const MenuListItem = styled.div<{
   isSelected: boolean
 }>`
+  cursor: pointer;
+
   display: flex;
   align-items: center;
 
@@ -65,8 +67,6 @@ export const MenuListItem = styled.div<{
   font-weight: 500;
   color: ${({ isSelected, theme }) =>
     isSelected ? theme.colors.primary : theme.colors.secondary};
-
-  cursor: pointer;
   :hover {
     background-color: ${({ theme }) => theme.colors.background3};
   }
@@ -97,11 +97,6 @@ export const SignOutButton = styled.button`
   margin-bottom: ${({ theme }) => theme.space.xxxxlarge};
   margin-left: auto;
   padding: ${({ theme }) => theme.space.xsmall};
-
-  font-size: ${({ theme }) => theme.sizes.medium};
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.background1};
-  text-align: center;
 
   background-color: ${({ theme }) => theme.colors.primary};
   border-radius: ${({ theme }) => theme.radius.medium};

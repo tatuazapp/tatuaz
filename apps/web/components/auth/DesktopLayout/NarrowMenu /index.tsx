@@ -53,7 +53,7 @@ const NarrowMenu: React.FunctionComponent<NarrowMenuProps> = ({ onOpen }) => {
           ))}
         </NarrowMenuList>
       </div>
-      <NarrowMenuSignOutIcon>Sign out</NarrowMenuSignOutIcon>
+      <NarrowMenuSignOutIcon />
     </NarrowMenuWrapper>
   )
 }

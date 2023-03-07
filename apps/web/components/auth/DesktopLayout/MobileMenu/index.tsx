@@ -1,4 +1,6 @@
+import { Paragraph, Paragraph1 } from "@tatuaz/ui"
 import { useState } from "react"
+import { theme } from "../../../../styles/theme"
 import {
   GreenWrapper,
   MobileMenuList,
@@ -59,12 +61,18 @@ const MobileMenu: React.FunctionComponent<MobileMenuProps> = ({ onClose }) => {
                 }}
               >
                 {renderIcon(tab)}
-                <MenuListItemText>{tab}</MenuListItemText>
+                <MenuListItemText>
+                  <Paragraph1>{tab}</Paragraph1>
+                </MenuListItemText>
               </MobileMenuListItem>
             ))}
           </MobileMenuList>
         </div>
-        <SignOutButton>Sign out</SignOutButton>
+        <SignOutButton>
+          <Paragraph color={theme.colors.background1} level={1} strong={true}>
+            Sign out
+          </Paragraph>
+        </SignOutButton>
       </MobileMenuWrapper>
     </MobileMenuBackgroundContainer>
   )

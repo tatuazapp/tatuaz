@@ -1,8 +1,9 @@
+import { Heading, Paragraph } from "@tatuaz/ui"
 import { useState } from "react"
+import { theme } from "../../../../../styles/theme"
 import {
   ArtistPostCommentsViewHeader,
   ArtistPostCommentsViewHeaderCloseButton,
-  ArtistPostCommentsViewHeaderTitle,
   ArtistPostContent,
   ArtistPostDescription,
   ArtistPostLikesAndCommentsWrapper,
@@ -18,7 +19,6 @@ import {
   LikesNumber,
   NotLikedPhotoIcon,
   UserIconPhoto,
-  UserName,
   ArtistPostCommentsViewCreateCommentSection,
   ArtistPostCommentsViewCreateCommentAvatar,
   ArtistPostCommentsViewCreateCommentInput,
@@ -29,7 +29,6 @@ import {
   CommentContent,
   CommentContentWrapper,
   CommentOptionsWrapper,
-  CommentPostDate,
   CommentOption,
   CommentReactions,
   ReactionIcon,
@@ -44,7 +43,6 @@ const ArtistPostCommentView: React.FunctionComponent<
   ArtistPostCommentViewProps
 > = ({ onClose }) => {
   const [isPostLiked, setIsPostLiked] = useState(false)
-  const [isCommentsSectionOpen, setIsCommentsSectionOpen] = useState(false)
 
   const onNotLikedPhotoClickHandler = () => {
     const notLikedButton = document.getElementById("notLikedButton")
@@ -65,14 +63,18 @@ const ArtistPostCommentView: React.FunctionComponent<
   return (
     <ArtistPostCommentsViewWrapper>
       <ArtistPostCommentsViewHeader>
-        <ArtistPostCommentsViewHeaderTitle>
+        <Heading color={theme.colors.secondary} level={4}>
           Jacob Vin Post
-        </ArtistPostCommentsViewHeaderTitle>
+        </Heading>
         <ArtistPostCommentsViewHeaderCloseButton onClick={onClose} />
       </ArtistPostCommentsViewHeader>
       <ArtistPostScrollingArea>
         <ArtistPostMainPhoto>
-          <ArtistPostMainPhotoTitle>Flare Boom</ArtistPostMainPhotoTitle>
+          <ArtistPostMainPhotoTitle>
+            <Heading color={theme.colors.primary} level={4}>
+              Flare Boom
+            </Heading>
+          </ArtistPostMainPhotoTitle>
         </ArtistPostMainPhoto>
         <ArtistPostContent>
           <ArtistPostLikesAndCommentsWrapper>
@@ -88,23 +90,35 @@ const ArtistPostCommentView: React.FunctionComponent<
                   onClick={onNotLikedPhotoClickHandler}
                 />
               )}
-              <LikesNumber>234 Likes</LikesNumber>
+              <LikesNumber>
+                <Paragraph color={theme.colors.background4} level={2}>
+                  234 Likes
+                </Paragraph>
+              </LikesNumber>
             </LikesContainer>
             <CommentsContainer>
               <CommentSectionClickedIcon />
-              <CommentsNumber>234 Comments</CommentsNumber>
+              <CommentsNumber>
+                <Paragraph color={theme.colors.background4} level={2}>
+                  234 Comments
+                </Paragraph>
+              </CommentsNumber>
             </CommentsContainer>
           </ArtistPostLikesAndCommentsWrapper>
           <ArtistPostUserWrapper>
             <UserIconPhoto />
-            <UserName>Jacob Vin</UserName>
+              <Paragraph strong color={theme.colors.primary} level={2}>
+                Jacob Vin
+              </Paragraph>
           </ArtistPostUserWrapper>
           <ArtistPostDescription>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Consequat ac felis donec et odio pellentesque diam volutpat commodo.
-            Venenatis cras sedfelis eget. Quis hendrerit dolor magna eget est
-            lorem ipsum.
+            <Paragraph level={2}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Consequat ac felis donec et odio pellentesque diam volutpat
+              commodo. Venenatis cras sedfelis eget. Quis hendrerit dolor magna
+              eget est lorem ipsum.
+            </Paragraph>
           </ArtistPostDescription>
           <ArtistPostCommentsViewDivider />
           <ArtistPostCommentsViewCommentsSection>
@@ -112,19 +126,28 @@ const ArtistPostCommentView: React.FunctionComponent<
               <CommentOwnerAvatar />
               <CommentContentWrapper>
                 <CommentContent>
-                  Besides the goals and assists, all Madrid players won it.
-                  Vinicius was good. Winning with country matters the most
-                  because then you dont assemble best players across the world
+                  <Paragraph level={2}>
+                    Besides the goals and assists, all Madrid players won it.
+                    Vinicius was good. Winning with country matters the most
+                    because then you dont assemble best players across the world
+                    eget est lorem ipsum.
+                  </Paragraph>
                   <CommentReactions>
                     <ReactionIcon />
-                    <p>12</p>
+                    <Paragraph level={2}>12</Paragraph>
                   </CommentReactions>
                 </CommentContent>
 
                 <CommentOptionsWrapper>
-                  <CommentOption>Like</CommentOption>
-                  <CommentOption>Reply</CommentOption>
-                  <CommentPostDate>Today</CommentPostDate>
+                  <CommentOption>
+                    <Paragraph level={2}>Like</Paragraph>
+                  </CommentOption>
+                  <CommentOption>
+                    <Paragraph level={2}>Reply</Paragraph>
+                  </CommentOption>
+                  <Paragraph color={theme.colors.background4} level={3}>
+                    Today
+                  </Paragraph>
                 </CommentOptionsWrapper>
               </CommentContentWrapper>
             </ArtistPostCommentsViewCommentWrapper>

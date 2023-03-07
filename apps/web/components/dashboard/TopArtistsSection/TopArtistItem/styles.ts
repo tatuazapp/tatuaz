@@ -27,19 +27,6 @@ export const ArtistPhoto = styled.div`
   border-radius: 50%;
 `
 
-export const ArtistData = styled.div`
-  color: ${({ theme }) => theme.colors.secondary};
-`
-
-export const ArtistName = styled.p`
-  font-size: ${({ theme }) => theme.sizes.small};
-  font-weight: 500;
-`
-export const ArtistLocation = styled.p`
-  font-size: ${({ theme }) => theme.sizes.xsmall};
-  font-weight: 400;
-`
-
 export const VisitArtistIcon = styled(ArrowRightCircleFill)`
   cursor: pointer;
   height: ${({ theme }) => theme.space.xlarge};

@@ -1,5 +1,6 @@
 import { ChevronDownIcon } from "@chakra-ui/icons"
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react"
+import { Paragraph } from "@tatuaz/ui"
 import { useState } from "react"
 import { theme } from "../../../../styles/theme"
 import {
@@ -69,7 +70,15 @@ const ArtistsPostSectionButtonArea = () => {
               setSelectedType(buttonType)
             }}
           >
-            {buttonType}
+            <Paragraph
+              color={
+                selectedType === buttonType
+                  ? theme.colors.background1
+                  : theme.colors.secondary
+              }
+            >
+              {buttonType}
+            </Paragraph>
           </TypeButton>
         ))}
       </TypeButtonsContainer>
