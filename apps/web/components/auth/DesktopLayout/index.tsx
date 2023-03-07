@@ -29,51 +29,38 @@ const DesktopLayout: FunctionComponent<DesktopLayoutProps> = ({ children }) => {
   const showDrawer = useIsDesktop()
   const mobileVersion = useIsMobile()
 
-  return (
-    <>
-      {!mobileVersion && (
-        <DesktopLayoutContainer>
-          {showDrawer && <Menu />}
-
-          {!showDrawer && (
-            <>
-              <NarrowMenu onOpen={onOpen} />
-
-              <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
-                <DrawerOverlay />
-                <DrawerContent maxW="184px" >
-                  <Menu />
-                </DrawerContent>
-              </Drawer>
-            </>
-          )}
-          <div>{children}</div>
-        </DesktopLayoutContainer>
-      )}
-
-      {mobileVersion && (
-        <MobileLayoutContainer>
-          <MobileLayoutHeader>
-            <WordmarkWrapper>
-              Tatuaz<GreenWrapper>App</GreenWrapper>
-            </WordmarkWrapper>
-            <MobileMenuIcon onClick={onOpen} />
-          </MobileLayoutHeader>
-          <Drawer
-            isOpen={isOpen}
-            placement="right"
-            size="full"
-            onClose={onClose}
-          >
+  return mobileVersion ? (
+    <MobileLayoutContainer>
+      <MobileLayoutHeader>
+        <WordmarkWrapper>
+          Tatuaz<GreenWrapper>App</GreenWrapper>
+        </WordmarkWrapper>
+        <MobileMenuIcon onClick={onOpen} />
+      </MobileLayoutHeader>
+      <Drawer isOpen={isOpen} placement="right" size="full" onClose={onClose}>
+        <DrawerOverlay />
+        <DrawerContent display="flex" justifyContent="center">
+          <MobileMenu onClose={onClose} />
+        </DrawerContent>
+      </Drawer>
+      <div>{children}</div>
+    </MobileLayoutContainer>
+  ) : (
+    <DesktopLayoutContainer>
+      {showDrawer && <Menu />}
+      {!showDrawer && (
+        <>
+          <NarrowMenu onOpen={onOpen} />
+          <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
             <DrawerOverlay />
-            <DrawerContent display="flex" justifyContent="center">
-              <MobileMenu onClose={onClose} />
+            <DrawerContent maxWidth="184px">
+              <Menu />
             </DrawerContent>
           </Drawer>
-          <div>{children}</div>
-        </MobileLayoutContainer>
+        </>
       )}
-    </>
+      <div>{children}</div>
+    </DesktopLayoutContainer>
   )
 }
 export default DesktopLayout
