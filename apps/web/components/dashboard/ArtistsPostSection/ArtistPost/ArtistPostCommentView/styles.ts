@@ -20,7 +20,6 @@ export const ArtistPostCommentsViewWrapper = styled.div`
 
 export const ArtistPostScrollingArea = styled.div`
   overflow: scroll;
-  /* max-height: 800px; */
   max-height: calc(100vh - 200px);
   ::-webkit-scrollbar {
     width: 0;
@@ -50,6 +49,8 @@ export const CommentOwnerAvatar = styled.div`
   margin-top: ${({ theme }) => theme.space.xxxsmall};
   margin-right: ${({ theme }) => theme.space.xsmall};
   margin-left: ${({ theme }) => theme.space.xsmall};
+
+  /* TODO: change to dynamic */
 
   background-image: url("https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg");
   background-size: cover;
@@ -146,9 +147,9 @@ export const ArtistPostCommentsViewCreateCommentAvatar = styled.div`
   box-sizing: content-box;
   width: ${({ theme }) => theme.space.xlarge};
   height: ${({ theme }) => theme.space.xlarge};
-  margin-right: ${({ theme }) => theme.space.xsmall};
-  margin-left: ${({ theme }) => theme.space.xsmall};
+  margin: 0 ${({ theme }) => theme.space.xsmall};
 
+  /* TODO: change to dynamic */
   background-image: url("https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg");
   background-size: cover;
   border: 2px solid ${({ theme }) => theme.colors.background2};
@@ -331,6 +332,7 @@ export const UserIconPhoto = styled.div`
   margin-right: ${({ theme }) => theme.space.xsmall};
   margin-left: ${({ theme }) => theme.space.xxxsmall};
 
+  /* TODO: change to dynamic */
   background-image: url("https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg");
   background-size: cover;
   border-radius: 50%;

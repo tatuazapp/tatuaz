@@ -5,6 +5,7 @@ import { User as Profile } from "@styled-icons/boxicons-regular/User"
 import { Search } from "@styled-icons/evaicons-solid/Search"
 import { SignOut } from "@styled-icons/octicons/SignOut"
 import styled from "styled-components"
+import { rem } from "../../../../styles/utils"
 
 export const NarrowMenuWrapper = styled.div`
   display: flex;
@@ -12,8 +13,7 @@ export const NarrowMenuWrapper = styled.div`
   justify-content: space-between;
 
   box-sizing: content-box;
-  box-sizing: content-box;
-  width: 70px;
+  width: ${({ theme }) => theme.sizes.xxxlarge};
   min-height: 100vh;
   margin-right: ${({ theme }) => theme.space.xlarge};
 
@@ -24,7 +24,7 @@ export const MenuContainer = styled.div`
   display: flex;
   justify-content: center;
 
-  height: 116px;
+  height: ${rem(116)};
   padding-top: ${({ theme }) => theme.space.xlarge};
   padding-bottom: ${({ theme }) => theme.space.xxlarge};
 
@@ -41,6 +41,8 @@ export const NarrowMenuList = styled.div`
 export const NarrowMenuListItem = styled.div<{
   isSelected: boolean
 }>`
+  cursor: pointer;
+
   display: flex;
   align-items: center;
 
@@ -55,17 +57,13 @@ export const NarrowMenuListItem = styled.div<{
   color: ${({ isSelected, theme }) =>
     isSelected ? theme.colors.primary : theme.colors.secondary};
   :hover {
-    cursor: pointer;
     background-color: ${({ theme }) => theme.colors.background3};
   }
 `
 
 export const MenuIcon = styled(Menu)`
+  cursor: pointer;
   height: ${({ theme }) => theme.sizes.xlarge};
-
-  :hover {
-    cursor: pointer;
-  }
 `
 
 export const HomeIcon = styled(Home)`
@@ -84,6 +82,8 @@ export const ProfileIcon = styled(Profile)`
 `
 
 export const NarrowMenuSignOutIcon = styled(SignOut)`
+  cursor: pointer;
+
   box-sizing: content-box;
   height: ${({ theme }) => theme.sizes.xlarge};
   margin-right: auto;
@@ -95,8 +95,4 @@ export const NarrowMenuSignOutIcon = styled(SignOut)`
 
   background-color: ${({ theme }) => theme.colors.primary};
   border-radius: ${({ theme }) => theme.radius.medium};
-
-  :hover {
-    cursor: pointer;
-  }
 `

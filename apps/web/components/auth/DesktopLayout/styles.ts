@@ -1,23 +1,18 @@
 import { MenuApp } from "@styled-icons/bootstrap/MenuApp"
 import { down } from "styled-breakpoints"
 import styled from "styled-components"
+import { rem } from "../../../styles/utils"
 
 export const DesktopLayoutContainer = styled.div`
   display: flex;
   width: 100%;
 `
 
-export const DrawerViewContainer = styled.div`
-  width: 50px;
-`
 
 export const MenuIcon = styled(MenuApp)`
+  cursor: pointer;
   height: ${({ theme }) => theme.space.large};
   color: ${({ theme }) => theme.colors.primary};
-
-  :hover {
-    cursor: pointer;
-  }
 `
 
 export const MobileLayoutContainer = styled.div`
@@ -34,9 +29,9 @@ export const MobileLayoutContainer = styled.div`
 
 export const MobileLayoutHeader = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  /* margin-top: ${({ theme }) => theme.space.large}; */
+  justify-content: space-between;
+
   width: 100%;
   min-width: 250px;
   max-width: 735px;
@@ -44,9 +39,10 @@ export const MobileLayoutHeader = styled.div`
 
 export const WordmarkWrapper = styled.div`
   display: flex;
-  justify-content: start;
   align-items: center;
-  height: 116px;
+  justify-content: start;
+
+  height: ${rem(116)};
 
   font-size: ${({ theme }) => theme.sizes.xlarge};
   font-weight: 600;
@@ -63,10 +59,7 @@ export const NavItemsWrapper = styled.div`
 `
 
 export const MobileMenuIcon = styled(MenuApp)`
+  cursor: pointer;
   height: ${({ theme }) => theme.space.xlarge};
   color: ${({ theme }) => theme.colors.primary};
-
-  :hover {
-    cursor: pointer;
-  }
 `

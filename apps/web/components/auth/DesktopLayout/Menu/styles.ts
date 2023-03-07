@@ -4,6 +4,7 @@ import { User as Profile } from "@styled-icons/boxicons-regular/User"
 import { Search } from "@styled-icons/evaicons-solid/Search"
 import { down } from "styled-breakpoints"
 import styled from "styled-components"
+import { rem } from "../../../../styles/utils"
 
 export const MenuWrapper = styled.div`
   display: flex;
@@ -26,7 +27,7 @@ export const WordmarkWrapper = styled.div`
   display: flex;
   justify-content: center;
 
-  height: 116px;
+  height: ${rem(116)};
   padding-top: ${({ theme }) => theme.space.xlarge};
   padding-bottom: ${({ theme }) => theme.space.xxlarge};
 
@@ -65,8 +66,9 @@ export const MenuListItem = styled.div<{
   font-weight: 500;
   color: ${({ isSelected, theme }) =>
     isSelected ? theme.colors.primary : theme.colors.secondary};
+
+  cursor: pointer;
   :hover {
-    cursor: pointer;
     background-color: ${({ theme }) => theme.colors.background3};
   }
 `

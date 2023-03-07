@@ -80,10 +80,7 @@ export const TwitterIcon = styled(Twitter)`
   height: ${({ theme }) => theme.space.xlarge};
   color: ${({ theme }) => theme.colors.primary};
 
-  :hover {
-    cursor: pointer;
-  }
-
+  cursor: pointer;
   ${down("sm")} {
     height: ${({ theme }) => theme.space.xxlarge};
   }
@@ -92,9 +89,7 @@ export const YoutubeIcon = styled(Youtube)`
   height: ${({ theme }) => theme.space.xlarge};
   color: ${({ theme }) => theme.colors.primary};
 
-  :hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 
   ${down("sm")} {
     height: ${({ theme }) => theme.space.xxlarge};
@@ -104,9 +99,7 @@ export const InstagramIcon = styled(Instagram)`
   height: ${({ theme }) => theme.space.xlarge};
   color: ${({ theme }) => theme.colors.primary};
 
-  :hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
   ${down("sm")} {
     height: ${({ theme }) => theme.space.xxlarge};
   }
@@ -115,9 +108,7 @@ export const FacebookIcon = styled(Facebook)`
   height: ${({ theme }) => theme.space.large};
   color: ${({ theme }) => theme.colors.primary};
 
-  :hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
   ${down("sm")} {
     height: ${({ theme }) => theme.space.xlarge};
   }

@@ -26,22 +26,22 @@ type DesktopLayoutProps = {
 const DesktopLayout: FunctionComponent<DesktopLayoutProps> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const showDrawer = !useIsDesktop()
+  const showDrawer = useIsDesktop()
   const mobileVersion = useIsMobile()
 
   return (
     <>
       {!mobileVersion && (
         <DesktopLayoutContainer>
-          {!showDrawer && <Menu />}
+          {showDrawer && <Menu />}
 
-          {showDrawer && (
+          {!showDrawer && (
             <>
               <NarrowMenu onOpen={onOpen} />
 
               <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
                 <DrawerOverlay />
-                <DrawerContent maxW="184px" width="184px">
+                <DrawerContent maxW="184px" >
                   <Menu />
                 </DrawerContent>
               </Drawer>

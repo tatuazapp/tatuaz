@@ -120,6 +120,7 @@ export const UserIconPhoto = styled.div`
   margin-right: ${({ theme }) => theme.space.xsmall};
   margin-left: ${({ theme }) => theme.space.xxxsmall};
 
+/* TODO: change to dynamic */
   background-image: url("https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg");
   background-size: cover;
   border-radius: 50%;

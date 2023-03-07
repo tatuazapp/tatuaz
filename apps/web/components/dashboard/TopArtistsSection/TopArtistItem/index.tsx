@@ -8,21 +8,18 @@ import {
   VisitArtistIcon,
 } from "./styles"
 
-const TopArtistsItem = () => {
-  const tmp = "Kk"
-  return (
-    <TopArtistsSectionArtistListItem>
-      <ArtistWrapper>
-        <ArtistPhoto />
-        <ArtistData>
-          <ArtistName>Steve Burn</ArtistName>
-          <ArtistLocation>California</ArtistLocation>
-        </ArtistData>
-      </ArtistWrapper>
+const TopArtistsItem = () => (
+  <TopArtistsSectionArtistListItem>
+    <ArtistWrapper>
+      <ArtistPhoto />
+      <ArtistData>
+        <ArtistName>Steve Burn</ArtistName>
+        <ArtistLocation>California</ArtistLocation>
+      </ArtistData>
+    </ArtistWrapper>
 
-      <VisitArtistIcon />
-    </TopArtistsSectionArtistListItem>
-  )
-}
+    <VisitArtistIcon />
+  </TopArtistsSectionArtistListItem>
+)
 
 export default TopArtistsItem

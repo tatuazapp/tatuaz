@@ -16,11 +16,11 @@ import {
   MobileMenuBackgroundContainer,
 } from "./styles"
 
-interface MobileMenuProps {
+type MobileMenuProps = {
   onClose: () => void
 }
 
-const MobileMenu: React.FC<MobileMenuProps> = ({ onClose }) => {
+const MobileMenu: React.FunctionComponent<MobileMenuProps> = ({ onClose }) => {
   const [activeTab, setActiveTab] = useState("Home")
 
   const tabs = ["Home", "Search", "Dashboard", "Profile"]
@@ -42,26 +42,28 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ onClose }) => {
   return (
     <MobileMenuBackgroundContainer>
       <MobileMenuWrapper>
-        <TopMobileMenuWrapper>
-          <WordmarkWrapper>
-            Tatuaz<GreenWrapper>App</GreenWrapper>
-          </WordmarkWrapper>
-          <CloseMenuIcon onClick={onClose} />
-        </TopMobileMenuWrapper>
-        <MobileMenuList>
-          {tabs.map((tab) => (
-            <MobileMenuListItem
-              key={tab}
-              isSelected={activeTab === tab}
-              onClick={() => {
-                setActiveTab(tab)
-              }}
-            >
-              {renderIcon(tab)}
-              <MenuListItemText>{tab}</MenuListItemText>
-            </MobileMenuListItem>
-          ))}
-        </MobileMenuList>
+        <div>
+          <TopMobileMenuWrapper>
+            <WordmarkWrapper>
+              Tatuaz<GreenWrapper>App</GreenWrapper>
+            </WordmarkWrapper>
+            <CloseMenuIcon onClick={onClose} />
+          </TopMobileMenuWrapper>
+          <MobileMenuList>
+            {tabs.map((tab) => (
+              <MobileMenuListItem
+                key={tab}
+                isSelected={activeTab === tab}
+                onClick={() => {
+                  setActiveTab(tab)
+                }}
+              >
+                {renderIcon(tab)}
+                <MenuListItemText>{tab}</MenuListItemText>
+              </MobileMenuListItem>
+            ))}
+          </MobileMenuList>
+        </div>
         <SignOutButton>Sign out</SignOutButton>
       </MobileMenuWrapper>
     </MobileMenuBackgroundContainer>

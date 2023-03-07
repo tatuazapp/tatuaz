@@ -12,12 +12,11 @@ import {
   NarrowMenuSignOutIcon,
 } from "./styles"
 
-interface NarrowMenuProps {
+type NarrowMenuProps = {
   onOpen: () => void
 }
 
-const NarrowMenu: React.FC<NarrowMenuProps> = (props) => {
-  const { onOpen } = props
+const NarrowMenu: React.FunctionComponent<NarrowMenuProps> = ({ onOpen }) => {
   const [activeTab, setActiveTab] = useState("Home")
   const tabs = ["Home", "Search", "Dashboard", "Profile"]
   const renderIcon = (tab: string) => {

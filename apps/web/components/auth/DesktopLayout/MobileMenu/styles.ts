@@ -4,6 +4,7 @@ import { User as Profile } from "@styled-icons/boxicons-regular/User"
 import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline"
 import { Search } from "@styled-icons/evaicons-solid/Search"
 import styled from "styled-components"
+import { rem } from "../../../../styles/utils"
 
 export const MobileMenuBackgroundContainer = styled.div`
   display: flex;
@@ -16,7 +17,9 @@ export const MobileMenuBackgroundContainer = styled.div`
 `
 
 export const MobileMenuWrapper = styled.div`
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   box-sizing: content-box;
   width: 100%;
@@ -43,7 +46,7 @@ export const WordmarkWrapper = styled.div`
   display: flex;
   justify-content: center;
 
-  height: 116px;
+  height: ${rem(116)};
   padding-top: ${({ theme }) => theme.space.xlarge};
   padding-bottom: ${({ theme }) => theme.space.xlarge};
 
@@ -69,6 +72,8 @@ export const MobileMenuList = styled.div`
 export const MobileMenuListItem = styled.div<{
   isSelected: boolean
 }>`
+  cursor: pointer;
+
   display: flex;
   align-items: center;
 
@@ -84,9 +89,7 @@ export const MobileMenuListItem = styled.div<{
     isSelected ? theme.colors.primary : theme.colors.secondary};
 
   transition: padding-left 0.5s, background-color 0.4s;
-
   :hover {
-    cursor: pointer;
     padding-left: ${({ theme }) => theme.space.small};
     background-color: ${({ theme }) => theme.colors.background3};
   }
@@ -191,18 +194,13 @@ export const ProfileIcon = styled(Profile)`
 `
 
 export const SignOutButton = styled.button`
-  position: absolute;
-  right: 0;
-  bottom: 100px;
-  left: 0;
-
-  max-width: 150px;
   margin-right: auto;
+  margin-bottom: ${({ theme }) => theme.space.xxxxlarge};
   margin-left: auto;
   padding: ${({ theme }) => theme.space.xsmall};
 
   font-size: ${({ theme }) => theme.sizes.medium};
-  font-weight: 600;
+  /* font-weight: 600; */
   color: ${({ theme }) => theme.colors.background1};
   text-align: center;
 

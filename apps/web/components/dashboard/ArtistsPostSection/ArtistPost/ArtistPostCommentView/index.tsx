@@ -36,14 +36,13 @@ import {
   ArtistPostScrollingArea,
 } from "./styles"
 
-interface ArtistPostCommentViewProps {
-  onClose: () => void // onClose is a function that is passed as a prop from the parent component
+type ArtistPostCommentViewProps = {
+  onClose: () => void
 }
 
-const ArtistPostCommentView: React.FC<ArtistPostCommentViewProps> = ({
-  onClose,
-}) => {
-  // const ArtistPostCommentView = () => {
+const ArtistPostCommentView: React.FunctionComponent<
+  ArtistPostCommentViewProps
+> = ({ onClose }) => {
   const [isPostLiked, setIsPostLiked] = useState(false)
   const [isCommentsSectionOpen, setIsCommentsSectionOpen] = useState(false)
 
