@@ -5,7 +5,6 @@ import { FindArtistButton } from "./FindArtistButton"
 import {
   HomepageIntroWrapper,
   TitleSecondLineWrapper,
-  TitleWrapper,
   TitleFirstLineTitleWrapper,
   TitleFirstLineWrapper,
   SliderTrack,
@@ -18,7 +17,7 @@ type HomepageIntroProps = SliceComponentProps<HomepageIntroSlice>
 
 const HomepageIntro: FunctionComponent<HomepageIntroProps> = ({ slice }) => (
   <HomepageIntroWrapper>
-    <TitleWrapper>
+    <div>
       <TitleFirstLineWrapper>
         <TitleFirstLineTitleWrapper>
           {slice.primary.TitleFirstLine && (
@@ -35,7 +34,7 @@ const HomepageIntro: FunctionComponent<HomepageIntroProps> = ({ slice }) => (
           <PrismicRichText field={slice.primary.TitleSecondLine} />
         )}
       </TitleSecondLineWrapper>
-    </TitleWrapper>
+    </div>
     <DescriptionWrapper>
       {slice.primary.description && (
         <PrismicRichText field={slice.primary.description} />

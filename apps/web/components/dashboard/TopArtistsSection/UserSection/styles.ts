@@ -4,8 +4,6 @@ export const UserSectionAreaWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: end;
-
-  width: 100%;
   height: 100px;
 `
 
@@ -22,7 +20,7 @@ export const UserPhoto = styled.div`
   width: 56px;
   height: 56px;
 
-/* TODO: change to dynamic */
+  /* TODO: change to dynamic */
   background-image: url("https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg");
   background-size: cover;
   border-radius: 50%;

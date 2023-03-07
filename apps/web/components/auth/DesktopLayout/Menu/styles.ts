@@ -56,7 +56,6 @@ export const MenuListItem = styled.div<{
   display: flex;
   align-items: center;
 
-  width: 100%;
   padding-top: ${({ theme }) => theme.space.small};
   padding-right: ${({ theme }) => theme.space.small};
   padding-bottom: ${({ theme }) => theme.space.small};

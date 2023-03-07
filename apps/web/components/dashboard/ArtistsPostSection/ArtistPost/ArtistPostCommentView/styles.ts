@@ -205,7 +205,6 @@ export const ArtistPostCommentsViewHeader = styled.div`
   align-items: center;
   justify-content: center;
 
-  width: 100%;
   padding-top: ${({ theme }) => theme.space.small};
   padding-bottom: ${({ theme }) => theme.space.small};
 
@@ -232,7 +231,6 @@ export const ArtistPostCommentsViewHeaderCloseButton = styled(CloseOutline)`
 export const ArtistPostMainPhoto = styled.div`
   position: relative;
 
-  width: 100%;
   height: 300px;
 
   background-image: url("https://t3.ftcdn.net/jpg/01/01/05/24/360_F_101052491_D8WlkJsZclF5kO8LsA7AstXI9Ir4iuFl.jpg");

@@ -5,9 +5,7 @@ import { rem } from "../../../styles/utils"
 
 export const DesktopLayoutContainer = styled.div`
   display: flex;
-  width: 100%;
 `
-
 
 export const MenuIcon = styled(MenuApp)`
   cursor: pointer;
@@ -19,7 +17,6 @@ export const MobileLayoutContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
 
   ${down("lg")} {
     padding-right: ${({ theme }) => theme.space.small};

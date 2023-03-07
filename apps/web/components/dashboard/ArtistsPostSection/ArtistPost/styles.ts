@@ -14,7 +14,6 @@ export const ArtistPostWrapper = styled.div`
 export const ArtistPostMainPhoto = styled.div`
   position: relative;
 
-  width: 100%;
   height: 300px;
 
   background-image: url("https://t3.ftcdn.net/jpg/01/01/05/24/360_F_101052491_D8WlkJsZclF5kO8LsA7AstXI9Ir4iuFl.jpg");
@@ -120,7 +119,7 @@ export const UserIconPhoto = styled.div`
   margin-right: ${({ theme }) => theme.space.xsmall};
   margin-left: ${({ theme }) => theme.space.xxxsmall};
 
-/* TODO: change to dynamic */
+  /* TODO: change to dynamic */
   background-image: url("https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg");
   background-size: cover;
   border-radius: 50%;
