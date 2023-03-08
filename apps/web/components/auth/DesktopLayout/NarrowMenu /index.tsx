@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Tabs } from "../../../../types/tabs"
 import {
   NarrowMenuList,
   NarrowMenuListItem,
@@ -15,10 +16,10 @@ import {
 type NarrowMenuProps = {
   onOpen: () => void
 }
-const tabs = ["Home", "Search", "Dashboard", "Profile"]
+const tabs: Tabs[] = ["Home", "Search", "Dashboard", "Profile"]
 
 const NarrowMenu: React.FunctionComponent<NarrowMenuProps> = ({ onOpen }) => {
-  const [activeTab, setActiveTab] = useState("Home")
+  const [activeTab, setActiveTab] = useState<Tabs>("Home")
 
   const renderIcon = (tab: string) => {
     switch (tab) {
