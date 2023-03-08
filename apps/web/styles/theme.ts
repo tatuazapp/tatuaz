@@ -12,6 +12,20 @@ export const theme: DefaultTheme = {
     background4: "#6B6B6B",
   },
 
+  animationTime: {
+    xxxxslow: "1.5s",
+    xxxslow: "1s",
+    xxslow: "0.9s",
+    xslow: "0.8s",
+    slow: "0.7s",
+    medium: "0.6s",
+    fast: "0.5s",
+    xfast: "0.4s",
+    xxfast: "0.3s",
+    xxxfast: "0.2s",
+    xxxxfast: "0.1s",
+  },
+
   radius: {
     xxxxsmall: "2px",
     xxxsmall: "4px",

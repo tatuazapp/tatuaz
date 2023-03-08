@@ -34,9 +34,9 @@ export const TopMobileMenuWrapper = styled.div`
 `
 
 export const CloseMenuIcon = styled(CloseOutline)`
+  cursor: pointer;
   height: ${({ theme }) => theme.sizes.xlarge};
   color: ${({ theme }) => theme.colors.secondary};
-  cursor: pointer;
 `
 
 export const WordmarkWrapper = styled.div`
@@ -84,7 +84,8 @@ export const MobileMenuListItem = styled.div<{
   color: ${({ isSelected, theme }) =>
     isSelected ? theme.colors.primary : theme.colors.secondary};
 
-  transition: padding-left 0.5s, background-color 0.4s;
+  transition: padding-left ${({ theme }) => theme.animationTime.fast},
+    background-color ${({ theme }) => theme.animationTime.xfast};
   :hover {
     padding-left: ${({ theme }) => theme.space.small};
     background-color: ${({ theme }) => theme.colors.background3};
@@ -99,7 +100,7 @@ export const MenuListItemText = styled.p`
   font-size: ${({ theme }) => theme.sizes.medium};
 
   animation-name: incommingEffect;
-  animation-duration: 0.6s;
+  animation-duration: ${({ theme }) => theme.animationTime.medium};
 
   @keyframes incommingEffect {
     0% {
@@ -118,7 +119,7 @@ export const HomeIcon = styled(Home)`
   position: relative;
   height: ${({ theme }) => theme.sizes.xlarge};
   animation-name: incommingEffect;
-  animation-duration: 0.6s;
+  animation-duration: ${({ theme }) => theme.animationTime.medium};
 
   @keyframes incommingEffect {
     0% {
@@ -137,7 +138,7 @@ export const SearchIcon = styled(Search)`
   position: relative;
   height: ${({ theme }) => theme.sizes.xlarge};
   animation-name: incommingEffect;
-  animation-duration: 0.6s;
+  animation-duration: ${({ theme }) => theme.animationTime.medium};
 
   @keyframes incommingEffect {
     0% {
@@ -155,7 +156,7 @@ export const DashboardIcon = styled(Dashboard)`
   position: relative;
   height: ${({ theme }) => theme.sizes.xlarge};
   animation-name: incommingEffect;
-  animation-duration: 0.6s;
+  animation-duration: ${({ theme }) => theme.animationTime.medium};
 
   @keyframes incommingEffect {
     0% {
@@ -174,7 +175,7 @@ export const ProfileIcon = styled(Profile)`
   position: relative;
   height: ${({ theme }) => theme.sizes.xlarge};
   animation-name: incommingEffect;
-  animation-duration: 0.6s;
+  animation-duration: ${({ theme }) => theme.animationTime.medium};
 
   @keyframes incommingEffect {
     0% {

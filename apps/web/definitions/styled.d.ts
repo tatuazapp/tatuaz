@@ -10,6 +10,20 @@ declare module "styled-components" {
     background4: string
   }
 
+  type animationTime = {
+    xxxxslow: string
+    xxxslow: string
+    xxslow: string
+    xslow: string
+    slow: string
+    medium: string
+    fast: string
+    xfast: string
+    xxfast: string
+    xxxfast: string
+    xxxxfast: string
+  }
+
   type Radius = {
     xxxxsmall: string
     xxxsmall: string
@@ -57,6 +71,7 @@ declare module "styled-components" {
   }
 
   export interface DefaultTheme {
+    animationTime: animationTime
     colors: Colors
     space: Space
     sizes: Sizes

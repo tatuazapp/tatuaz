@@ -53,7 +53,7 @@ export const NotLikedPhotoIcon = styled(BalloonHeart)`
   cursor: pointer;
   height: ${({ theme }) => theme.space.xlarge};
   color: ${({ theme }) => theme.colors.primary};
-  transition: all 0.1s ease-in-out;
+  transition: all ${({ theme }) => theme.animationTime.xxxxfast} ease-in-out;
 `
 
 export const LikedPhotoIcon = styled(BalloonHeartFill)`
@@ -63,8 +63,9 @@ export const LikedPhotoIcon = styled(BalloonHeartFill)`
 
   color: ${({ theme }) => theme.colors.primary};
 
-  transition: all 0.1s ease-in-out;
-  animation: 0.1s ease-out slideInFromLeft;
+  transition: all ${({ theme }) => theme.animationTime.xxxxfast} ease-in-out;
+  animation: ${({ theme }) => theme.animationTime.xxxxfast} ease-out
+    slideInFromLeft;
 
   @keyframes slideInFromLeft {
     0% {

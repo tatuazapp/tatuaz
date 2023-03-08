@@ -16,7 +16,7 @@ export const IconWrapper = styled.div<{
   background-size: cover;
   border-radius: 50%;
 
-  transition: all 0.3s ease-in-out;
+  transition: all ${({ theme }) => theme.animationTime.xxfast} ease-in-out;
 
   &:hover {
     transform: scale(1.1);
