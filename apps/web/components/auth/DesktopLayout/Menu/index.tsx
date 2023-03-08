@@ -1,5 +1,6 @@
 import { Paragraph, Paragraph1 } from "@tatuaz/ui"
 import { useState } from "react"
+import { FormattedMessage } from "react-intl"
 import { theme } from "../../../../styles/theme"
 import {
   GreenWrapper,
@@ -15,10 +16,13 @@ import {
   SignOutButton,
 } from "./styles"
 
-const Menu = () => {
-  const [activeTab, setActiveTab] = useState("Home")
+type tabsType = "Home" | "Search" | "Dashboard" | "Profile"
+const tabs: tabsType[] = ["Home", "Search", "Dashboard", "Profile"]
 
-  const tabs = ["Home", "Search", "Dashboard", "Profile"]
+const Menu = () => {
+  const [activeTab, setActiveTab] = useState<
+    "Home" | "Search" | "Dashboard" | "Profile"
+  >("Home")
 
   const renderIcon = (tab: string) => {
     switch (tab) {
@@ -34,6 +38,21 @@ const Menu = () => {
         return "Error"
     }
   }
+  const renderTabName = (tab: string) => {
+    switch (tab) {
+      case "Home":
+        return <FormattedMessage defaultMessage="Strona główna" id="8GchbR" />
+      case "Search":
+        return <FormattedMessage defaultMessage="Wyszukiwanie" id="QEcCbg" />
+      case "Dashboard":
+        return <FormattedMessage defaultMessage="Panel" id="hIxZtX" />
+      case "Profile":
+        return <FormattedMessage defaultMessage="Profil" id="n7oiI/" />
+      default:
+        return "Error"
+    }
+  }
+
   return (
     <MenuWrapper>
       <div>
@@ -51,7 +70,7 @@ const Menu = () => {
             >
               {renderIcon(tab)}
               <MenuListItemText>
-                <Paragraph1>{tab}</Paragraph1>
+                <Paragraph1>{renderTabName(tab)}</Paragraph1>
               </MenuListItemText>
             </MenuListItem>
           ))}
@@ -59,7 +78,7 @@ const Menu = () => {
       </div>
       <SignOutButton>
         <Paragraph color={theme.colors.background1} level={1}>
-          Sign out
+          <FormattedMessage defaultMessage="Wyloguj" id="UqV7Od" />
         </Paragraph>
       </SignOutButton>
     </MenuWrapper>

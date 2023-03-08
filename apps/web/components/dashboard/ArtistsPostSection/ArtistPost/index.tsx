@@ -8,6 +8,7 @@ import {
   DrawerContent,
 } from "@chakra-ui/react"
 import { useState } from "react"
+import { FormattedMessage } from "react-intl"
 import useIsTablet from "../../../../utils/hooks/useIsTablet"
 import ArtistPostCommentView from "./ArtistPostCommentView"
 import {
@@ -74,7 +75,9 @@ const ArtistPost = () => {
                   onClick={onNotLikedPhotoClickHandler}
                 />
               )}
-              <LikesNumber>234 Likes</LikesNumber>
+              <LikesNumber>
+                234 <FormattedMessage defaultMessage="polubień" id="1/6yup" />
+              </LikesNumber>
             </LikesContainer>
             <CommentsContainer>
               {isCommentsSectionOpen ? (
@@ -86,7 +89,9 @@ const ArtistPost = () => {
               ) : (
                 <CommentSectionNotClickedIcon onClick={onOpen} />
               )}
-              <CommentsNumber>234 Comments</CommentsNumber>
+              <CommentsNumber>
+                234 <FormattedMessage defaultMessage="komentarzy" id="M9FmsT" />
+              </CommentsNumber>
             </CommentsContainer>
           </ArtistPostLikesAndCommentsWrapper>
           <ArtistPostUserWrapper>
@@ -114,9 +119,9 @@ const ArtistPost = () => {
         <Drawer isOpen={isOpen} placement="right" size="full" onClose={onClose}>
           <DrawerOverlay />
           <DrawerContent
+            backgroundColor="rgba(21, 21, 21, 0.8)"
             display="flex"
             justifyContent="center"
-            backgroundColor="rgba(21, 21, 21, 0.8)"
           >
             <ArtistPostCommentView onClose={onClose} />
           </DrawerContent>

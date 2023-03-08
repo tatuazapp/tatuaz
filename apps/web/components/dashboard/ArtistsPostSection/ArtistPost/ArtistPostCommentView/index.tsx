@@ -1,5 +1,6 @@
 import { Heading, Paragraph } from "@tatuaz/ui"
 import { useState } from "react"
+import { FormattedMessage } from "react-intl"
 import { theme } from "../../../../../styles/theme"
 import {
   ArtistPostCommentsViewHeader,
@@ -92,7 +93,7 @@ const ArtistPostCommentView: React.FunctionComponent<
               )}
               <LikesNumber>
                 <Paragraph color={theme.colors.background4} level={2}>
-                  234 Likes
+                  234 <FormattedMessage defaultMessage="polubień" id="1/6yup" />
                 </Paragraph>
               </LikesNumber>
             </LikesContainer>
@@ -100,16 +101,17 @@ const ArtistPostCommentView: React.FunctionComponent<
               <CommentSectionClickedIcon />
               <CommentsNumber>
                 <Paragraph color={theme.colors.background4} level={2}>
-                  234 Comments
+                  234{" "}
+                  <FormattedMessage defaultMessage="komentarzy" id="M9FmsT" />
                 </Paragraph>
               </CommentsNumber>
             </CommentsContainer>
           </ArtistPostLikesAndCommentsWrapper>
           <ArtistPostUserWrapper>
             <UserIconPhoto />
-              <Paragraph strong color={theme.colors.primary} level={2}>
-                Jacob Vin
-              </Paragraph>
+            <Paragraph strong color={theme.colors.primary} level={2}>
+              Jacob Vin
+            </Paragraph>
           </ArtistPostUserWrapper>
           <ArtistPostDescription>
             <Paragraph level={2}>
@@ -137,16 +139,22 @@ const ArtistPostCommentView: React.FunctionComponent<
                     <Paragraph level={2}>12</Paragraph>
                   </CommentReactions>
                 </CommentContent>
-
                 <CommentOptionsWrapper>
                   <CommentOption>
-                    <Paragraph level={2}>Like</Paragraph>
+                    <Paragraph level={2}>
+                      <FormattedMessage defaultMessage="Lubię to" id="k0b45W" />
+                    </Paragraph>
                   </CommentOption>
                   <CommentOption>
-                    <Paragraph level={2}>Reply</Paragraph>
+                    <Paragraph level={2}>
+                      <FormattedMessage
+                        defaultMessage="Odpowiedz"
+                        id="mGv3OR"
+                      />
+                    </Paragraph>
                   </CommentOption>
                   <Paragraph color={theme.colors.background4} level={3}>
-                    Today
+                    <FormattedMessage defaultMessage="Wczoraj" id="M+no1T" />
                   </Paragraph>
                 </CommentOptionsWrapper>
               </CommentContentWrapper>

@@ -20,7 +20,7 @@ export const RightSectionContainer = styled.div`
 `
 
 export const TopArtistsSectionWrapper = styled.div`
-  width: 285px;
+  width: 325px;
   height: 484px;
   padding: ${({ theme }) => theme.space.large};
 

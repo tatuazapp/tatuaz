@@ -1,4 +1,5 @@
 import { Heading, Paragraph } from "@tatuaz/ui"
+import { FormattedMessage } from "react-intl"
 import { theme } from "../../../styles/theme"
 import {
   RightSectionContainer,
@@ -14,10 +15,12 @@ const TopArtistsSection = () => (
     <UserSection />
     <TopArtistsSectionWrapper>
       <TopArtistsSectionHeader>
-        <Heading level={4}> Top Artists</Heading>
+        <Heading level={4}>
+          <FormattedMessage defaultMessage="Topowi artyści" id="J5nXcl" />
+        </Heading>
         <TopArtistsSectionViewMore>
           <Paragraph color={theme.colors.primary} level={4}>
-            View more
+            <FormattedMessage defaultMessage="Zobacz więcej" id="sP2Svl" />
           </Paragraph>
         </TopArtistsSectionViewMore>
       </TopArtistsSectionHeader>

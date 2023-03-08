@@ -12,6 +12,9 @@ const GetATattooButton = () => (
         rightIcon={<ArrowUpRight size={24} />}
         size="lg"
         width={{ base: "100%" }}
+        onClick={() => {
+          window.location.href = "/dashboard"
+        }}
       >
         <FormattedMessage defaultMessage="Zrób tatuaż" id="z4IFca" />
       </Button>

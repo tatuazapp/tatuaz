@@ -15,10 +15,11 @@ import {
 type NarrowMenuProps = {
   onOpen: () => void
 }
+const tabs = ["Home", "Search", "Dashboard", "Profile"]
 
 const NarrowMenu: React.FunctionComponent<NarrowMenuProps> = ({ onOpen }) => {
   const [activeTab, setActiveTab] = useState("Home")
-  const tabs = ["Home", "Search", "Dashboard", "Profile"]
+
   const renderIcon = (tab: string) => {
     switch (tab) {
       case "Home":
