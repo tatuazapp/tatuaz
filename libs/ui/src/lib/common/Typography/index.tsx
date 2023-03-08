@@ -26,7 +26,15 @@ export const h4 = css`
   line-height: ${rem(29)};
 `
 
-export const Heading = styled.div<{ level?: 1 | 2 | 3 | 4; color?: string }>`
+export const h5 = css`
+  font-size: ${rem(20)};
+  line-height: ${rem(29)};
+`
+
+export const Heading = styled.div<{
+  level?: 1 | 2 | 3 | 4 | 5
+  color?: string
+}>`
   ${heading}
 
   color: ${({ color }) => color || defaultTextColor};
@@ -42,6 +50,8 @@ export const Heading = styled.div<{ level?: 1 | 2 | 3 | 4; color?: string }>`
         return h3
       case 4:
         return h4
+      case 5:
+        return h5
     }
   }}
 `
@@ -76,9 +86,13 @@ export const p3 = css`
   font-size: ${rem(14)};
   line-height: ${rem(16)};
 `
+export const p4 = css`
+  font-size: ${rem(12)};
+  line-height: ${rem(14)};
+`
 
 export const Paragraph = styled.div<{
-  level?: 1 | 2 | 3
+  level?: 1 | 2 | 3 | 4
   strong?: boolean
   color?: string
 }>`
@@ -94,6 +108,8 @@ export const Paragraph = styled.div<{
         return p2
       case 3:
         return p3
+      case 4:
+        return p4
     }
   }}
 `
@@ -146,6 +162,23 @@ export const Paragraph3Strong: FunctionComponent<ParagraphProps> = ({
   <Paragraph3 {...props} strong>
     {children}
   </Paragraph3>
+)
+
+export const Paragraph4: FunctionComponent<ParagraphProps> = ({
+  children,
+  ...props
+}) => (
+  <Paragraph {...props} level={4}>
+    {children}
+  </Paragraph>
+)
+export const Paragraph4Strong: FunctionComponent<ParagraphProps> = ({
+  children,
+  ...props
+}) => (
+  <Paragraph4 {...props} strong>
+    {children}
+  </Paragraph4>
 )
 
 export const semiBold = css`

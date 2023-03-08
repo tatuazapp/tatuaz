@@ -9,6 +9,9 @@ export const FindArtistButton = () => (
     rightIcon={<ArrowUpRight size={24} />}
     size="lg"
     width={{ base: "100%", md: "auto" }}
+    onClick={() => {
+      window.location.href = "/dashboard"
+    }}
   >
     <FormattedMessage defaultMessage="Znajdź artystę" id="okwzd8" />
   </Button>

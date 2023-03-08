@@ -2,7 +2,6 @@ import { down } from "styled-breakpoints"
 import styled from "styled-components"
 
 export const HomepagePhotosWrapper = styled.div`
-  width: 100%;
   max-width: 600px;
   margin-left: ${({ theme }) => theme.sizes.xxxxlarge};
 

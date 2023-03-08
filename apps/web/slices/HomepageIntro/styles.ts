@@ -11,9 +11,7 @@ export const HomepageIntroWrapper = styled.div`
     margin-right: 0;
   }
 `
-export const TitleWrapper = styled.div`
-  width: 100%;
-`
+
 export const TitleFirstLineWrapper = styled.div`
   display: flex;
 
