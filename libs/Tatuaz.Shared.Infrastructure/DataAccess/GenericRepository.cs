@@ -76,13 +76,13 @@ public class GenericRepository<TEntity, THistEntity, TId>
     )
         where TDto : class
     {
-        var result = await _dbContext
+        return await _dbContext
             .Set<TEntity>()
             .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken)
+            .Where(x => x.Id.Equals(id))
+            .ProjectTo<TDto>(_mapper.ConfigurationProvider)
+            .SingleOrDefaultAsync(cancellationToken)
             .ConfigureAwait(false);
-
-        return result is null ? null : _mapper.Map<TDto>(result);
     }
 
     public Task<TEntity?> GetByIdAsync(

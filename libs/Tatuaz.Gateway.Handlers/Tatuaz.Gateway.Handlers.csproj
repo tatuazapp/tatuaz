@@ -14,6 +14,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Tatuaz.Dashboard.Queue\Tatuaz.Dashboard.Queue.csproj" />
         <ProjectReference Include="..\Tatuaz.Gateway.Requests\Tatuaz.Gateway.Requests.csproj" />
+        <ProjectReference Include="..\Tatuaz.Shared.Services\Tatuaz.Shared.Services.csproj" />
     </ItemGroup>
 
     <ItemGroup>

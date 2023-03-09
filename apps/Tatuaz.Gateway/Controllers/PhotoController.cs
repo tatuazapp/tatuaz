@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tatuaz.Gateway.HttpResponses;
 using Tatuaz.Gateway.Requests.Queries.Photo;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Photo.PhotoCategory;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Photo.Category;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 
 namespace Tatuaz.Gateway.Controllers;
@@ -27,18 +26,14 @@ public class PhotoController : TatuazControllerBase
     [Authorize]
     [Produces("application/json")]
     [Consumes("application/json")]
-    [ProducesResponseType(typeof(OkResponse<PagedData<PhotoCategoryDto>>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(OkResponse<PagedData<CategoryDto>>), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
-    public async Task<IActionResult> ListPhotoCategories(
-        [FromBody] ListPhotoCategoriesDto listPhotoCategoriesDto
-    )
+    public async Task<IActionResult> ListCategories([FromBody] ListCategoriesDto listCategoriesDto)
     {
         return ResultToActionResult(
-            await Mediator
-                .Send(new ListPhotoCategoriesQuery(listPhotoCategoriesDto))
-                .ConfigureAwait(false)
+            await Mediator.Send(new ListCategoriesQuery(listCategoriesDto)).ConfigureAwait(false)
         );
     }
 }

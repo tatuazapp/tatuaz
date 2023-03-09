@@ -12,8 +12,10 @@ builder.ConfigureServices(
     }
 );
 
-builder.RegisterDashboardHost();
-
+builder.ConfigureAppConfiguration(config =>
+{
+    builder.RegisterDashboardHost(config.Build());
+});
 var app = builder.Build();
 
 await app.MigrateDatabaseInDevelopmentAsync().ConfigureAwait(false);

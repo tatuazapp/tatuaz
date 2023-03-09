@@ -1,4 +1,3 @@
-using System.Linq;
 using Bogus;
 using NodaTime.Extensions;
 using Tatuaz.Shared.Domain.Entities.Hist.Fakers.Models.Common;
@@ -12,13 +11,11 @@ public sealed class HistPhotoCategoryFaker : Faker<HistPhotoCategory>, IHistEnti
     public HistPhotoCategoryFaker()
     {
         StrictMode(true);
+        RuleFor(x => x.Id, f => f.Random.Int(1, 100));
         RuleFor(x => x.HistId, f => f.Random.Guid());
         RuleFor(x => x.HistState, f => f.PickRandom<HistState>());
         RuleFor(x => x.HistDumpedAt, f => f.Date.Past().ToUniversalTime().ToInstant());
-        RuleFor(x => x.Id, f => f.Random.Int(1, 100));
-        RuleFor(x => x.Title, f => f.Lorem.Words(3).Aggregate((a, b) => a + " " + b));
-        RuleFor(x => x.Type, f => f.PickRandom<HistPhotoCategoryType>());
-        RuleFor(x => x.ImageUri, f => f.Internet.UrlRootedPath("jpg"));
-        RuleFor(x => x.Popularity, f => f.Random.Int(0, 100));
+        RuleFor(x => x.PhotoId, f => f.Random.Guid());
+        RuleFor(x => x.CategoryId, f => f.Random.Int(1, 100));
     }
 }

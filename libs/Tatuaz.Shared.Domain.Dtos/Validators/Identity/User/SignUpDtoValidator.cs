@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using FluentValidation;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
@@ -14,54 +15,56 @@ public class SignUpDtoValidator : AbstractValidator<SignUpDto>
 {
     public SignUpDtoValidator(
         IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository,
-        IGenericRepository<PhotoCategory, HistPhotoCategory, int> photoCategoryRepository
+        IGenericRepository<Category, HistCategory, int> categoryRepository
     )
     {
         RuleFor(x => x.Username)
             .NotNull()
-            .WithErrorCode(CreateUserErrorCodes.UsernameNull)
-            .WithMessage("Username cannot be null")
+            .WithErrorCode(SignUpErrorCodes.UsernameNull)
+            .WithMessage("Username cannot be null");
+        RuleFor(x => x.Username)
             .MinimumLength(4)
-            .WithErrorCode(CreateUserErrorCodes.UsernameTooShort)
-            .WithMessage("Username must be at least 4 characters long")
+            .WithErrorCode(SignUpErrorCodes.UsernameTooShort)
+            .WithMessage("Username must be at least 4 characters long");
+        RuleFor(x => x.Username)
             .MaximumLength(32)
-            .WithErrorCode(CreateUserErrorCodes.UsernameTooLong)
-            .WithMessage("Username must not be longer than 32 characters")
+            .WithErrorCode(SignUpErrorCodes.UsernameTooLong)
+            .WithMessage("Username must not be longer than 32 characters");
+        RuleFor(x => x.Username)
             .MustAsync(
                 async (username, ct) =>
                 {
                     return !await userRepository
-                        .ExistsByPredicateAsync(x => x.Username == username, ct)
+                        .ExistsByPredicateAsync(x => x.Username.ToLower() == username.ToLower(), ct)
                         .ConfigureAwait(false);
                 }
             )
-            .WithErrorCode(CreateUserErrorCodes.UsernameAlreadyInUse)
-            .WithMessage("Username already in use")
+            .WithErrorCode(SignUpErrorCodes.UsernameAlreadyInUse)
+            .WithMessage("Username already in use");
+        RuleFor(x => x.Username)
             .Matches("^[a-zA-Z0-9_]*$")
-            .WithErrorCode(CreateUserErrorCodes.UsernameInvalidCharacters)
+            .WithErrorCode(SignUpErrorCodes.UsernameInvalidCharacters)
             .WithMessage("Username can only contain letters, numbers and underscores");
 
-        RuleFor(x => x.PhotoCategoryIds)
+        RuleFor(x => x.CategoryIds)
             .NotNull()
-            .WithErrorCode(CreateUserErrorCodes.PhotoCategoryIdsNull)
-            .WithMessage("Photo categories cannot be null")
+            .WithErrorCode(SignUpErrorCodes.CategoryIdsNull)
+            .WithMessage("Photo categories cannot be null");
+        RuleFor(x => x.CategoryIds)
             .Must(x => x?.Length >= 3)
-            .When(x => x.PhotoCategoryIds != null)
-            .WithErrorCode(CreateUserErrorCodes.PhotoCategoryIdsTooFew)
-            .WithMessage("At least 3 photo categories must be selected")
-            .Must(x => x?.Length <= 20)
-            .When(x => x.PhotoCategoryIds != null)
-            .WithErrorCode(CreateUserErrorCodes.PhotoCategoryIdsTooMany)
-            .WithMessage("At most 20 photo categories can be selected")
+            .WithErrorCode(SignUpErrorCodes.CategoryIdsTooFew)
+            .WithMessage("At least 3 categories must be selected")
+            .When(x => x.CategoryIds != null);
+        RuleFor(x => x.CategoryIds)
             .MustAsync(
-                async (photoCategoryIds, ct) =>
+                async (categoryIds, ct) =>
                 {
                     var valid = true;
-                    foreach (var photoCategoryId in photoCategoryIds!)
+                    foreach (var categoryId in categoryIds!)
                     {
                         if (
-                            await photoCategoryRepository
-                                .ExistsByIdAsync(photoCategoryId, ct)
+                            await categoryRepository
+                                .ExistsByIdAsync(categoryId, ct)
                                 .ConfigureAwait(false)
                         )
                         {
@@ -75,12 +78,13 @@ public class SignUpDtoValidator : AbstractValidator<SignUpDto>
                     return valid;
                 }
             )
-            .When(x => x.PhotoCategoryIds != null)
-            .WithErrorCode(CreateUserErrorCodes.PhotoCategoryIdsInvalid)
-            .WithMessage("One or more photo categories are invalid")
+            .WithErrorCode(SignUpErrorCodes.CategoryIdsInvalid)
+            .WithMessage("One or more categories are invalid")
+            .When(x => x.CategoryIds != null);
+        RuleFor(x => x.CategoryIds)
             .Must(x => x?.Length == x?.Distinct().Count())
-            .When(x => x.PhotoCategoryIds != null)
-            .WithErrorCode(CreateUserErrorCodes.PhotoCategoryIdsDuplicate)
-            .WithMessage("Photo categories must not contain duplicates");
+            .WithErrorCode(SignUpErrorCodes.CategoryIdsDuplicate)
+            .WithMessage("Categories must not contain duplicates")
+            .When(x => x.CategoryIds != null);
     }
 }

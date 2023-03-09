@@ -1,35 +1,38 @@
 import { extendTheme } from "@chakra-ui/react"
 import { theme } from "./theme"
 
+const makeAllSameColor = (color: string) => ({
+  50: color,
+  100: color,
+  200: color,
+  300: color,
+  400: color,
+  500: color,
+  600: color,
+  700: color,
+  800: color,
+  900: color,
+})
+
 const chakraTheme = extendTheme({
   initialColorMode: "dark",
   styles: {
     global: {
       body: {
-        bg: "black",
+        bg: theme.colors.background1,
+        minHeight: "var(--vh, 100vh)",
       },
     },
   },
 
   fonts: {
-    heading: `Comfortaa, sans-serif`,
-    body: `Comfortaa, sans-serif`,
+    heading: `Inter, sans-serif`,
+    body: `Inter, sans-serif`,
   },
 
   colors: {
-    black: {
-      50: "#000",
-      100: "#000",
-      200: "#000",
-      300: "#000",
-      400: "#000",
-      500: "#000",
-      600: "#000",
-      700: "#000",
-      800: "#000",
-      900: "#000",
-    },
-    primary: theme.colors.primary,
+    black: makeAllSameColor("#000000"),
+    primary: makeAllSameColor(theme.colors.primary),
     secondary: theme.colors.secondary,
   },
 })

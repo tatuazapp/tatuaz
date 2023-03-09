@@ -22,14 +22,13 @@ public class HistDbContext : DbContext
     public DbSet<HistEmailInfo> HEmailInfos { get; set; } = default!;
 
     // photos
-    public DbSet<HistPhotoCategory> HPhotoCategories { get; set; } = default!;
-    public virtual DbSet<HistUserPhotoCategory> HUserPhotoCategories { get; set; } = default!;
+    public DbSet<HistCategory> HPhotoCategories { get; set; } = default!;
+    public virtual DbSet<HistUserCategory> HUserPhotoCategories { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(typeof(HistEntity<>).Assembly);
-        builder.HasPostgresEnum<HistState>();
         builder.HasPostgresExtension("postgis");
     }
 }

@@ -7,4 +7,4 @@ metadata:
     app: scheduler
 data:
   DOTNET_ENVIRONMENT: Development # Change to Production to run release build
-  ConnectionStrings__TatuazMainDb: Server=postgresql-service.tatuaz-dev.svc.cluster.local;Port=5432;Database=TatuazMainDb;User Id=postgres;Password=password;
+  ConnectionStrings__TatuazMainDb: Server=postgresql-service.tatuaz-dev.svc.cluster.local;Port=5432;Database=TatuazMainDb;User Id=postgres;Password=password;Pooling=true;MinPoolSize=0;MaxPoolSize=10;

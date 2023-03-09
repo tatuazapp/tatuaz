@@ -20,6 +20,7 @@
         <ProjectReference Include="..\..\libs\Tatuaz.Gateway.Handlers\Tatuaz.Gateway.Handlers.csproj" />
         <ProjectReference Include="..\..\libs\Tatuaz.Gateway.Requests\Tatuaz.Gateway.Requests.csproj" />
         <ProjectReference Include="..\..\libs\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\libs\Tatuaz.Shared.Services\Tatuaz.Shared.Services.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -27,6 +28,7 @@
         <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
         <PackageReference Include="Serilog.Enrichers.MassTransit" Version="1.1.0" />
         <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
+        <PackageReference Include="Serilog.Sinks.AzureBlobStorage" Version="3.1.3" />
         <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
         <PackageReference Include="SixLabors.ImageSharp.Web" Version="2.0.2" />
         <PackageReference Include="SixLabors.ImageSharp.Web.Providers.Azure" Version="2.0.2" />

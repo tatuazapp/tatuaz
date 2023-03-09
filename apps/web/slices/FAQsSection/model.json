@@ -1,0 +1,73 @@
+{
+  "id": "faqs_section",
+  "type": "SharedSlice",
+  "name": "FaqsSection",
+  "description": "FaqsSection",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8626",
+      "description": "FaqsSection",
+      "primary": {
+        "FirstQuestionTitle": {
+          "type": "StructuredText",
+          "config": {
+            "label": "FirstQuestionTitle",
+            "placeholder": "This is where it all begins...",
+            "allowTargetBlank": true,
+            "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+          }
+        },
+        "FirstQuestionDescription": {
+          "type": "StructuredText",
+          "config": {
+            "label": "FirstQuestionDescription",
+            "placeholder": "A nice description of your feature",
+            "allowTargetBlank": true,
+            "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+          }
+        },
+        "SecondQuestionTitile": {
+          "type": "StructuredText",
+          "config": {
+            "label": "SecondQuestionTitile",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+          }
+        },
+        "SecondQuestionDescription": {
+          "type": "StructuredText",
+          "config": {
+            "label": "SecondQuestionDescription",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+          }
+        },
+        "ThirdQuestionTitle": {
+          "type": "StructuredText",
+          "config": {
+            "label": "ThirdQuestionTitle",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+          }
+        },
+        "ThirdQuestionDescription": {
+          "type": "StructuredText",
+          "config": {
+            "label": "ThirdQuestionDescription",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+          }
+        }
+      },
+      "items": {},
+      "imageUrl": "https://images.prismic.io/slice-machine/621a5ec4-0387-4bc5-9860-2dd46cbc07cd_default_ss.png?auto=compress,format"
+    }
+  ]
+}

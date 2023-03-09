@@ -120,12 +120,12 @@ public class UnitOfWork : IUnitOfWork
             .Select(HistorySerializer.SerializeDumpHistoryOrder)
             .ToImmutableArray();
 
+        var endpoint = await _sendEndpointProvider
+            .GetSendEndpoint(HistoryQueueConstants.DumpHistoryQueueUri)
+            .ConfigureAwait(false);
+
         if (dumpHistoryOrders.Any())
         {
-            var endpoint = await _sendEndpointProvider
-                .GetSendEndpoint(HistoryQueueConstants.DumpHistoryQueueUri)
-                .ConfigureAwait(false);
-
             await Task.WhenAll(dumpHistoryOrders.Select(x => endpoint.Send(x, cancellationToken)))
                 .ConfigureAwait(false);
         }

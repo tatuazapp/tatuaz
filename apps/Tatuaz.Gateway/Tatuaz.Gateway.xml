@@ -122,6 +122,41 @@
             </summary>
             <returns>UserDto</returns>
         </member>
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.SetForegroundPhoto(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Set foreground photo
+            </summary>
+            <param name="setForegroundPhotoDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.SetBackgroundPhoto(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Set background photo
+            </summary>
+            <param name="setBackgroundPhotoDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.DeleteForegroundPhoto(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User.DeleteForegroundPhotoDto)">
+            <summary>
+            Delete foreground photo
+            </summary>
+            <param name="deleteForegroundPhotoDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.DeleteBackgroundPhoto(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User.DeleteBackgroundPhotoDto)">
+            <summary>
+            Delete background photo
+            </summary>
+            <param name="deleteBackgroundPhotoDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.GetUser(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User.GetUserDto)">
+            <summary>
+            Get user with username
+            </summary>
+            <param name="getUserDto"></param>
+            <returns></returns>
+        </member>
         <member name="T:Tatuaz.Gateway.Controllers.PhotoController">
             <summary>
             Controller for photo categories
@@ -185,7 +220,7 @@
             Cors policy name
             </summary>
         </member>
-        <member name="M:Tatuaz.Gateway.GatewayExtensions.RegisterGatewayHost(Microsoft.AspNetCore.Builder.ConfigureHostBuilder)">
+        <member name="M:Tatuaz.Gateway.GatewayExtensions.RegisterGatewayHost(Microsoft.AspNetCore.Builder.ConfigureHostBuilder,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             Configure gateway host
             </summary>
