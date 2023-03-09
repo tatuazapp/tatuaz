@@ -3,8 +3,26 @@ import { Home } from "@styled-icons/boxicons-regular/Home"
 import { User as Profile } from "@styled-icons/boxicons-regular/User"
 import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline"
 import { Search } from "@styled-icons/evaicons-solid/Search"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { rem } from "../../../../styles/utils"
+
+const incommingEffect = css`
+  position: relative;
+  animation-name: incommingEffect;
+  animation-duration: ${({ theme }) => theme.animationTime.medium};
+
+  @keyframes incommingEffect {
+    0% {
+      left: 100%;
+      opacity: 0;
+    }
+
+    100% {
+      left: 0%;
+      opacity: 1;
+    }
+  }
+`
 
 export const MobileMenuBackgroundContainer = styled.div`
   display: flex;
@@ -20,7 +38,7 @@ export const MobileMenuWrapper = styled.div`
   box-sizing: content-box;
   width: 100%;
   max-width: 735px;
-  min-height: 100vh;
+  height: var(--vh, 100vh);
   padding-right: ${({ theme }) => theme.space.small};
   padding-left: ${({ theme }) => theme.space.small};
 
@@ -93,101 +111,29 @@ export const MobileMenuListItem = styled.div<{
 `
 
 export const MenuListItemText = styled.p`
-  position: relative;
-
   padding-left: ${({ theme }) => theme.space.xxsmall};
-
   font-size: ${({ theme }) => theme.sizes.medium};
 
-  animation-name: incommingEffect;
-  animation-duration: ${({ theme }) => theme.animationTime.medium};
-
-  @keyframes incommingEffect {
-    0% {
-      left: 100%;
-      opacity: 0;
-    }
-
-    100% {
-      left: 0%;
-      opacity: 1;
-    }
-  }
+  ${incommingEffect}
 `
 
 export const HomeIcon = styled(Home)`
-  position: relative;
   height: ${({ theme }) => theme.sizes.xlarge};
-  animation-name: incommingEffect;
-  animation-duration: ${({ theme }) => theme.animationTime.medium};
-
-  @keyframes incommingEffect {
-    0% {
-      left: 100%;
-      opacity: 0;
-    }
-
-    100% {
-      left: 0%;
-      opacity: 1;
-    }
-  }
+  ${incommingEffect}
 `
 
 export const SearchIcon = styled(Search)`
-  position: relative;
   height: ${({ theme }) => theme.sizes.xlarge};
-  animation-name: incommingEffect;
-  animation-duration: ${({ theme }) => theme.animationTime.medium};
-
-  @keyframes incommingEffect {
-    0% {
-      left: 100%;
-      opacity: 0;
-    }
-
-    100% {
-      left: 0%;
-      opacity: 1;
-    }
-  }
+  ${incommingEffect}
 `
 export const DashboardIcon = styled(Dashboard)`
-  position: relative;
   height: ${({ theme }) => theme.sizes.xlarge};
-  animation-name: incommingEffect;
-  animation-duration: ${({ theme }) => theme.animationTime.medium};
-
-  @keyframes incommingEffect {
-    0% {
-      left: 100%;
-      opacity: 0;
-    }
-
-    100% {
-      left: 0%;
-      opacity: 1;
-    }
-  }
+  ${incommingEffect}
 `
 
 export const ProfileIcon = styled(Profile)`
-  position: relative;
   height: ${({ theme }) => theme.sizes.xlarge};
-  animation-name: incommingEffect;
-  animation-duration: ${({ theme }) => theme.animationTime.medium};
-
-  @keyframes incommingEffect {
-    0% {
-      left: 100%;
-      opacity: 0;
-    }
-
-    100% {
-      left: 0%;
-      opacity: 1;
-    }
-  }
+  ${incommingEffect}
 `
 
 export const SignOutButton = styled.button`

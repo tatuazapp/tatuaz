@@ -64,12 +64,12 @@ export const LikedPhotoIcon = styled(BalloonHeartFill)`
   color: ${({ theme }) => theme.colors.primary};
 
   transition: all ${({ theme }) => theme.animationTime.xxxxfast} ease-in-out;
-  animation: ${({ theme }) => theme.animationTime.xxxxfast} ease-out
+  animation: ${({ theme }) => theme.animationTime.xxxfast} ease-out
     slideInFromLeft;
 
   @keyframes slideInFromLeft {
     0% {
-      transform: scale(0.7);
+      transform: scale(0.8);
     }
     100% {
       transform: scale(1);

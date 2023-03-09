@@ -5,8 +5,8 @@ import {
   useDisclosure,
 } from "@chakra-ui/react"
 import { FunctionComponent } from "react"
-import useIsDesktop from "../../../utils/hooks/useIsDesktop"
 import useIsMobile from "../../../utils/hooks/useIsMobile"
+import useIsWideDesktop from "../../../utils/hooks/useIsWideDesktop"
 import Menu from "./Menu"
 import MobileMenu from "./MobileMenu"
 import NarrowMenu from "./NarrowMenu"
@@ -26,7 +26,7 @@ type DesktopLayoutProps = {
 const DesktopLayout: FunctionComponent<DesktopLayoutProps> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const showDrawer = useIsDesktop()
+  const showDrawer = useIsWideDesktop()
   const mobileVersion = useIsMobile()
 
   return mobileVersion ? (
@@ -59,7 +59,7 @@ const DesktopLayout: FunctionComponent<DesktopLayoutProps> = ({ children }) => {
           </Drawer>
         </>
       )}
-      <div>{children}</div>
+      {children}
     </DesktopLayoutContainer>
   )
 }
