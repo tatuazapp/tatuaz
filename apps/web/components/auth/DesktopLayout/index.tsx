@@ -9,7 +9,7 @@ import useIsDesktop from "../../../utils/hooks/useIsDesktop"
 import useIsMobile from "../../../utils/hooks/useIsMobile"
 import Menu from "./Menu"
 import MobileMenu from "./MobileMenu"
-import NarrowMenu from "./NarrowMenu "
+import NarrowMenu from "./NarrowMenu"
 import {
   DesktopLayoutContainer,
   GreenWrapper,
