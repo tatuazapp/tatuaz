@@ -7,6 +7,7 @@ import {
   DrawerOverlay,
   DrawerContent,
 } from "@chakra-ui/react"
+import { motion } from "framer-motion"
 import { useState } from "react"
 import { FormattedMessage } from "react-intl"
 import useIsTablet from "../../../../utils/hooks/useIsTablet"
@@ -35,19 +36,9 @@ const ArtistPost = () => {
   const [isPostLiked, setIsPostLiked] = useState(false)
   const [isCommentsSectionOpen, setIsCommentsSectionOpen] = useState(false)
 
-  const onNotLikedPhotoClickHandler = () => {
-    const notLikedButton = document.getElementById("notLikedButton")
-    notLikedButton.style.transform = "scale(0.7)"
+  const onLikeIconClickHandler = () => {
     setTimeout(() => {
-      setIsPostLiked(true)
-    }, 100)
-  }
-
-  const onLikedPhotoClickHandler = () => {
-    const likedButton = document.getElementById("likedButton")
-    likedButton.style.transform = "scale(0.8)"
-    setTimeout(() => {
-      setIsPostLiked(false)
+      setIsPostLiked((prev) => !prev)
     }, 100)
   }
 
@@ -64,17 +55,16 @@ const ArtistPost = () => {
         <ArtistPostContent>
           <ArtistPostLikesAndCommentsWrapper>
             <LikesContainer>
-              {isPostLiked ? (
-                <LikedPhotoIcon
-                  id="likedButton"
-                  onClick={onLikedPhotoClickHandler}
-                />
-              ) : (
-                <NotLikedPhotoIcon
-                  id="notLikedButton"
-                  onClick={onNotLikedPhotoClickHandler}
-                />
-              )}
+              <motion.button
+                whileTap={{ scale: 0.7, transition: { duration: 0.01 } }}
+              >
+                {isPostLiked ? (
+                  <LikedPhotoIcon onClick={onLikeIconClickHandler} />
+                ) : (
+                  <NotLikedPhotoIcon onClick={onLikeIconClickHandler} />
+                )}
+              </motion.button>
+
               <LikesNumber>
                 234 <FormattedMessage defaultMessage="polubień" id="1/6yup" />
               </LikesNumber>

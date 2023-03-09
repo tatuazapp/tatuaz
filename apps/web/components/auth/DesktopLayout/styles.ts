@@ -1,10 +1,14 @@
 import { MenuApp } from "@styled-icons/bootstrap/MenuApp"
-import { down } from "styled-breakpoints"
+import { down, up } from "styled-breakpoints"
 import styled from "styled-components"
 import { rem } from "../../../styles/utils"
 
 export const DesktopLayoutContainer = styled.div`
   display: flex;
+  width: 100%;
+  ${up("xxxl")} {
+    justify-content: center;
+  }
 `
 
 export const MenuIcon = styled(MenuApp)`

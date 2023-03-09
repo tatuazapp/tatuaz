@@ -2,7 +2,7 @@ import { Data as Dashboard } from "@styled-icons/boxicons-regular/Data"
 import { Home } from "@styled-icons/boxicons-regular/Home"
 import { User as Profile } from "@styled-icons/boxicons-regular/User"
 import { Search } from "@styled-icons/evaicons-solid/Search"
-import { down } from "styled-breakpoints"
+import { down, up } from "styled-breakpoints"
 import styled from "styled-components"
 import { rem } from "../../../../styles/utils"
 
@@ -20,6 +20,11 @@ export const MenuWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.background2};
   ${down("xxl")} {
     margin-right: ${({ theme }) => theme.space.xxlarge};
+  }
+
+  ${up("xxxl")} {
+    position: absolute;
+    left: 0;
   }
 `
 
