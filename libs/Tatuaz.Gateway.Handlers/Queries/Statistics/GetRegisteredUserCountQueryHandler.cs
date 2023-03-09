@@ -10,23 +10,23 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway.Handlers.Queries.Statistics;
 
-public class GetRegisteredUserCountQueryHandler : IRequestHandler<GetRegisteredUserCountQuery,
-    TatuazResult<RegisteredUserCountDto>>
+public class GetRegisteredStatsQueryHandler : IRequestHandler<GetRegisteredStatsQuery,
+    TatuazResult<RegisteredStatsDto>>
 {
-    private readonly GetRegisteredUserCountProducer _getRegisteredUserCountProducer;
+    private readonly GetRegisteredStatsProducer _getRegisteredStatsProducer;
 
-    public GetRegisteredUserCountQueryHandler(GetRegisteredUserCountProducer getRegisteredUserCountProducer)
+    public GetRegisteredStatsQueryHandler(GetRegisteredStatsProducer getRegisteredStatsProducer)
     {
-        _getRegisteredUserCountProducer = getRegisteredUserCountProducer;
+        _getRegisteredStatsProducer = getRegisteredStatsProducer;
     }
 
-    public async Task<TatuazResult<RegisteredUserCountDto>> Handle(
-        GetRegisteredUserCountQuery request,
+    public async Task<TatuazResult<RegisteredStatsDto>> Handle(
+        GetRegisteredStatsQuery request,
         CancellationToken cancellationToken)
     {
-        return await _getRegisteredUserCountProducer
+        return await _getRegisteredStatsProducer
             .Send(
-                new GetRegisteredUserCountOrder(),
+                new GetRegisteredStatsOrder(),
                 cancellationToken
             )
             .ConfigureAwait(false);

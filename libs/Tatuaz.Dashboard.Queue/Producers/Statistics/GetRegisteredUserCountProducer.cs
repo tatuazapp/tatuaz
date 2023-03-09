@@ -5,12 +5,12 @@ using Tatuaz.Shared.Pipeline.Queues;
 
 namespace Tatuaz.Dashboard.Queue.Contracts.Statistics;
 
-public class GetRegisteredUserCountProducer :
-    TatuazProducerBase<GetRegisteredUserCountOrder, RegisteredUserCountDto>
+public class GetRegisteredStatsProducer :
+    TatuazProducerBase<GetRegisteredStatsOrder, RegisteredStatsDto>
 {
-    public GetRegisteredUserCountProducer(
-        IRequestClient<GetRegisteredUserCountOrder> requestClient,
-        ILogger<GetRegisteredUserCountProducer> logger
+    public GetRegisteredStatsProducer(
+        IRequestClient<GetRegisteredStatsOrder> requestClient,
+        ILogger<GetRegisteredStatsProducer> logger
     )
         : base(requestClient, logger)
     {

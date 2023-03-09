@@ -11,7 +11,7 @@ public static class DashboardQueueExtensions
     )
     {
         services.AddScoped<ListPhotoCategoriesProducer>();
-        services.AddScoped<GetRegisteredUserCountProducer>();
+        services.AddScoped<GetRegisteredStatsProducer>();
 
         return services;
     }

@@ -1,3 +1,3 @@
 namespace Tatuaz.Dashboard.Queue.Contracts.Statistics;
 
-public record GetRegisteredUserCountOrder();
+public record GetRegisteredStatsOrder();

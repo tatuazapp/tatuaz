@@ -4,4 +4,4 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway.Requests.Queries.Statistics;
 
-public record GetRegisteredUserCountQuery : IRequest<TatuazResult<RegisteredUserCountDto>>;
+public record GetRegisteredStatsQuery : IRequest<TatuazResult<RegisteredStatsDto>>;

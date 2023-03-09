@@ -1,6 +1,6 @@
 namespace Tatuaz.Shared.Pipeline.Factories.ErrorCodes.Statistics;
 
-public class GetRegisteredUserCountErrorCodes
+public class GetRegisteredStatsErrorCodes
 {
 
     public const string AristCountIsNull = "AristCountIsNull";

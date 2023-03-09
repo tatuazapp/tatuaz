@@ -4,12 +4,12 @@ using Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Common;
 
 namespace Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Statistics;
 
-public sealed class RegisteredUserCountDtoFaker : Faker<RegisteredUserCountDto>, IDtoFaker
+public sealed class RegisteredStatsDtoFaker : Faker<RegisteredStatsDto>, IDtoFaker
 {
-    public RegisteredUserCountDtoFaker()
+    public RegisteredStatsDtoFaker()
     {
         CustomInstantiator(
-            f => new RegisteredUserCountDto(
+            f => new RegisteredStatsDto(
                 f.Random.Int(0, 10000),
                 f.Random.Int(0, 1000),
                 f.Random.Int(1000, 10000))

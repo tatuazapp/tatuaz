@@ -9,17 +9,17 @@ using Tatuaz.Shared.Pipeline.Queues;
 
 namespace Tatuaz.Dashboard.Queue.Consumers.Statistics;
 
-public class GetRegisteredUserCountConsumer : TatuazConsumerBase<GetRegisteredUserCountOrder, RegisteredUserCountDto>
+public class GetRegisteredStatsConsumer : TatuazConsumerBase<GetRegisteredStatsOrder, RegisteredStatsDto>
 {
-    public GetRegisteredUserCountConsumer(ILogger<GetRegisteredUserCountConsumer> logger) : base(logger)
+    public GetRegisteredStatsConsumer(ILogger<GetRegisteredStatsConsumer> logger) : base(logger)
     {
     }
 
-    protected override Task<TatuazResult<RegisteredUserCountDto>> ConsumeMessage(
-        ConsumeContext<GetRegisteredUserCountOrder> context)
+    protected override Task<TatuazResult<RegisteredStatsDto>> ConsumeMessage(
+        ConsumeContext<GetRegisteredStatsOrder> context)
     {
-        var result = new RegisteredUserCountDto(10, 20, 500);
+        var result = new RegisteredStatsDto(10, 20, 500);
 
-        return Task.FromResult(CommonResultFactory.Ok<RegisteredUserCountDto>(result));
+        return Task.FromResult(CommonResultFactory.Ok<RegisteredStatsDto>(result));
     }
 }
