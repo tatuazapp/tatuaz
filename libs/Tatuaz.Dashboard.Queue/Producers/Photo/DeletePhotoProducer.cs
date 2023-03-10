@@ -1,6 +1,7 @@
 using MassTransit;
 using Microsoft.Extensions.Logging;
 using Tatuaz.Dashboard.Queue.Consumers.Photo;
+using Tatuaz.Dashboard.Queue.Contracts.Photo;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Common;
 using Tatuaz.Shared.Pipeline.Queues;
 

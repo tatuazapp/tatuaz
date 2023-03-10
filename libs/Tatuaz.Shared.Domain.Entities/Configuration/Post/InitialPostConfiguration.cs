@@ -4,10 +4,10 @@ using Tatuaz.Shared.Domain.Entities.Models.Post;
 
 namespace Tatuaz.Shared.Domain.Entities.Configuration.Post;
 
-public class PostLikeConfiguration : IEntityTypeConfiguration<PostLike>
+public class InitialPostConfiguration : IEntityTypeConfiguration<InitialPost>
 {
-    public void Configure(EntityTypeBuilder<PostLike> builder)
+    public void Configure(EntityTypeBuilder<InitialPost> builder)
     {
-        builder.ToTable("post_likes", TatuazPostConstants.SchemaName);
+        builder.ToTable("initial_posts", TatuazPostConstants.SchemaName);
     }
 }

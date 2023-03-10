@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -23,7 +24,10 @@ public class SchedulePostIntegrityCheckConsumer : TriggerSchedulingJob<ScheduleP
     protected override Func<ConsumeContext<SchedulePostIntegrityCheck>, CancellationToken, Task<ITrigger>> CreateTrigger
         => (context, _) => Task.FromResult(TriggerBuilder.Create()
             .StartAt(DateBuilder.FutureDate(MinutesToFire, IntervalUnit.Minute))
-            .UsingJobData(new JobDataMap(context.Message.PhotoIds.ToDictionary(v => v.ToString("N"))))
             .ForJob(Key)
+            .UsingJobData(new JobDataMap((IDictionary)new Dictionary<string, object>
+            {
+                { "InitialPostId", context.Message.InitialPostId }
+            }))
             .Build());
 }

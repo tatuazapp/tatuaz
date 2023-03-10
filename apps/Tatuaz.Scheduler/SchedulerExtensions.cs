@@ -9,8 +9,10 @@ using Quartz;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
+using Tatuaz.Dashboard.Queue;
 using Tatuaz.Scheduler.Queue;
 using Tatuaz.Scheduler.Queue.Consumers.Post;
+using Tatuaz.Shared.Domain.Dtos;
 using Tatuaz.Shared.Helpers;
 using Tatuaz.Shared.Infrastructure;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
@@ -36,6 +38,9 @@ public static class SchedulerExtensions
             ) ?? throw new Exception("Connection string not found")
         );
 
+        services.RegisterSharedDomainDtosServices();
+        services.RegisterDashboardQueueServices();
+
         services.RegisterSharedPipelineServices(configuration,
             new[] { typeof(SchedulePostIntegrityCheckConsumer).Assembly });
 
@@ -43,21 +48,11 @@ public static class SchedulerExtensions
         {
             opt.UseMicrosoftDependencyInjectionJobFactory();
 
-            opt.AddJob<TestJob>(jobOpt => jobOpt.WithIdentity(TestJob.Key));
             opt.AddJob<PostIntegrityCheckJob>(jobOpt =>
             {
                 jobOpt.WithIdentity(PostIntegrityCheckJob.Key);
                 jobOpt.StoreDurably();
             });
-
-            opt.AddTrigger(
-                triggerOpt =>
-                    triggerOpt
-                        .ForJob(TestJob.Key)
-                        .WithSimpleSchedule(
-                            scheduleOpt => scheduleOpt.WithIntervalInSeconds(5).RepeatForever()
-                        )
-            );
 
             opt.UseInMemoryStore();
         });

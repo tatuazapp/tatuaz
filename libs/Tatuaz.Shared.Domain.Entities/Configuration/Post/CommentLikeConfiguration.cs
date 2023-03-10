@@ -10,6 +10,5 @@ public class CommentLikeConfiguration : IEntityTypeConfiguration<CommentLike>
     {
         builder.ToTable("comment_likes", TatuazPostConstants.SchemaName);
 
-        builder.Property(x => x.UserId).HasMaxLength(320);
     }
 }

@@ -1,5 +1,3 @@
-using System;
-
-namespace Tatuaz.Dashboard.Queue.Consumers.Photo;
+namespace Tatuaz.Dashboard.Queue.Contracts.Photo;
 
 public record AddPhoto(byte[] Data);

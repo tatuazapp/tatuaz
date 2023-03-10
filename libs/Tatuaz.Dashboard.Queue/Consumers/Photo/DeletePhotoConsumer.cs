@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using MassTransit;
 using Microsoft.Extensions.Logging;
+using Tatuaz.Dashboard.Queue.Contracts.Photo;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Common;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Photo;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,11 @@ using Tatuaz.History.DataAccess;
 namespace Tatuaz.History.DataAccess.Migrations
 {
     [DbContext(typeof(HistDbContext))]
-    partial class HistDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230310134906_AddInitialPost")]
+    partial class AddInitialPost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

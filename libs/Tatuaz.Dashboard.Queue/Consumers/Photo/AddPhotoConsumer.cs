@@ -5,6 +5,7 @@ using Azure.Storage.Blobs;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 using SixLabors.ImageSharp;
+using Tatuaz.Dashboard.Queue.Contracts.Photo;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Photo;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline.Factories.Results;

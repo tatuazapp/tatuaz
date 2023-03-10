@@ -2,4 +2,4 @@ using System;
 
 namespace Tatuaz.Scheduler.Queue.Contracts.Post;
 
-public record SchedulePostIntegrityCheck(Guid[] PhotoIds);
+public record SchedulePostIntegrityCheck(Guid InitialPostId);

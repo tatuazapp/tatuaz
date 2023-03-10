@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Post;
-using Tatuaz.Shared.Domain.Entities.Models.Post;
 
 namespace Tatuaz.Shared.Domain.Entities.Hist.Configuration.Post;
 
@@ -12,8 +11,6 @@ public class HistCommentConfiguration : IEntityTypeConfiguration<HistComment>
         builder.ToTable("H_comments", HistTatuazPostConstants.SchemaName);
 
         builder.HasKey(x => x.HistId);
-
-        builder.Property(x => x.UserId).HasMaxLength(320);
 
         builder.Property(x => x.Content).HasMaxLength(1024);
     }

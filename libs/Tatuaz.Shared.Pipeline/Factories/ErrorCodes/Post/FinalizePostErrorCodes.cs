@@ -4,5 +4,8 @@ public class FinalizePostErrorCodes
 {
     public const string DescriptionIsNull = "DescriptionIsNull";
     public const string DescriptionIsTooLong = "DescriptionIsTooLong";
-    public const string PhotoDoesNotExist = "PhotoDoesNotExist";
+    public const string InitialPostDoesNotExist = "InitialPostDoesNotExist";
+    public const string PhotoNotFoundOnInitialPost = "PhotoNotFoundOnInitialPost";
+    public const string PhotoMissing = "PhotoMissing";
+    public const string UserIsNotTheAuthorOfTheInitialPost = "UserIsNotTheAuthorOfTheInitialPost";
 }

@@ -3,7 +3,9 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 using Tatuaz.Dashboard.Queue.Contracts.Photo;
+using Tatuaz.Dashboard.Queue.Contracts.Post;
 using Tatuaz.Dashboard.Queue.Producers.Photo;
+using Tatuaz.Dashboard.Queue.Producers.Post;
 using Tatuaz.Gateway.Requests.Commands.Post;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Common;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Post;
@@ -37,7 +39,7 @@ public class FinalizePostCommandHandler : IRequestHandler<FinalizePostCommand, T
         }
 
         var result = await _finalizePostProducer
-            .Send(new FinalizePost(request.FinalizePostDto.Description, request.FinalizePostDto.PhotoInfoDtos),
+            .Send(new FinalizePost(request.FinalizePostDto.InitialPostId, request.FinalizePostDto.Description, request.FinalizePostDto.PhotoInfoDtos),
                 cancellationToken)
             .ConfigureAwait(false);
 
