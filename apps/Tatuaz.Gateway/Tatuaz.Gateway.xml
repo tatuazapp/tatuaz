@@ -159,14 +159,33 @@
         </member>
         <member name="T:Tatuaz.Gateway.Controllers.PhotoController">
             <summary>
-            Controller for photo categories
+            Controller for photos
             </summary>
         </member>
         <member name="M:Tatuaz.Gateway.Controllers.PhotoController.#ctor(MediatR.IMediator)">
+            <inheritdoc />
+        </member>
+        <member name="T:Tatuaz.Gateway.Controllers.PostController">
             <summary>
-            Constructor receiving the mediator from DI
+            Controller for posts
             </summary>
-            <param name="mediator"></param>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.PostController.#ctor(MediatR.IMediator)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.PostController.UploadPostPhotos(Tatuaz.Shared.Domain.Dtos.Dtos.Post.UploadPostPhotosDto)">
+            <summary>
+            Upload post photos
+            </summary>
+            <param name="photos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.PostController.FinalizePost(Tatuaz.Shared.Domain.Dtos.Dtos.Post.FinalizePostDto)">
+            <summary>
+            Finalize post
+            </summary>
+            <param name="finalizePostDto"></param>
+            <returns></returns>
         </member>
         <member name="T:Tatuaz.Gateway.Controllers.StatisticsController">
             <summary>

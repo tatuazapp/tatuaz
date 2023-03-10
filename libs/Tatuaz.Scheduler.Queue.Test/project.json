@@ -1,0 +1,31 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "Tatuaz.Scheduler.Queue.Test",
+  "projectType": "library",
+  "sourceRoot": "libs/Tatuaz.Scheduler.Queue.Test",
+  "targets": {
+    "build": {
+      "executor": "@nx-dotnet/core:build",
+      "outputs": ["dist/libs/Tatuaz.Scheduler.Queue.Test"],
+      "options": {
+        "configuration": "Debug"
+      },
+      "configurations": {
+        "production": {
+          "configuration": "Release"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx-dotnet/core:test",
+      "options": {}
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotnet-csharpier libs/Tatuaz.Scheduler.Queue.Test --check"
+      }
+    }
+  },
+  "tags": []
+}

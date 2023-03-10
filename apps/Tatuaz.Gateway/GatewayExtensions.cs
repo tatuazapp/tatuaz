@@ -34,6 +34,7 @@ using Tatuaz.Gateway.Authorization;
 using Tatuaz.Gateway.Configuration;
 using Tatuaz.Gateway.Handlers;
 using Tatuaz.Gateway.Swagger;
+using Tatuaz.Scheduler.Queue;
 using Tatuaz.Shared.Domain.Dtos;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
 using Tatuaz.Shared.Helpers;
@@ -316,6 +317,8 @@ public static class GatewayExtensions
         services.RegisterSharedPipelineServices(configuration);
 
         services.RegisterDashboardQueueServices();
+
+        services.RegisterSchedulerQueueServices();
 
         services.RegisterSharedServicesServices();
 

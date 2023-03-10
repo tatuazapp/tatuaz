@@ -68,6 +68,7 @@ public class IdentityController : TatuazControllerBase
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Created)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Forbidden)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> SetForegroundPhoto(IFormFile photo)
     {
@@ -88,6 +89,7 @@ public class IdentityController : TatuazControllerBase
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Created)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Forbidden)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> SetBackgroundPhoto(IFormFile photo)
     {
@@ -110,6 +112,7 @@ public class IdentityController : TatuazControllerBase
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Created)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Forbidden)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> DeleteForegroundPhoto(
         [FromBody] DeleteForegroundPhotoDto deleteForegroundPhotoDto
@@ -134,6 +137,7 @@ public class IdentityController : TatuazControllerBase
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Created)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Forbidden)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> DeleteBackgroundPhoto(
         [FromBody] DeleteBackgroundPhotoDto deleteBackgroundPhotoDto
@@ -158,6 +162,7 @@ public class IdentityController : TatuazControllerBase
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Created)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Forbidden)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> GetUser([FromBody] GetUserDto getUserDto)
     {

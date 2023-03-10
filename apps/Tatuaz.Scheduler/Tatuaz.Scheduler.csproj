@@ -17,9 +17,9 @@
     
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2" />
     
-    <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.5.0" />
+    <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.6.2" />
     
-    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.5.0" />
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.6.2" />
     
     <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
     
@@ -38,6 +38,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\libs\Tatuaz.Dashboard.Queue\Tatuaz.Dashboard.Queue.csproj" />
     <ProjectReference Include="..\..\libs\Tatuaz.Scheduler.Jobs\Tatuaz.Scheduler.Jobs.csproj" />
+    <ProjectReference Include="..\..\libs\Tatuaz.Scheduler.Queue\Tatuaz.Scheduler.Queue.csproj" />
     <ProjectReference Include="..\..\libs\Tatuaz.Shared.Infrastructure\Tatuaz.Shared.Infrastructure.csproj" />
     <ProjectReference Include="..\..\libs\Tatuaz.Shared.Pipeline\Tatuaz.Shared.Pipeline.csproj" />
   </ItemGroup>

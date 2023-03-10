@@ -123,9 +123,11 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                         .HasName("pk_tatuaz_users");
 
                     b.HasIndex("BackgroundPhotoId")
+                        .IsUnique()
                         .HasDatabaseName("ix_tatuaz_users_background_photo_id");
 
                     b.HasIndex("ForegroundPhotoId")
+                        .IsUnique()
                         .HasDatabaseName("ix_tatuaz_users_foreground_photo_id");
 
                     b.HasIndex("Username")
@@ -480,13 +482,15 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", b =>
                 {
                     b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Photo.Photo", "BackgroundPhoto")
-                        .WithMany()
-                        .HasForeignKey("BackgroundPhotoId")
+                        .WithOne()
+                        .HasForeignKey("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", "BackgroundPhotoId")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("fk_tatuaz_users_photo_background_photo_id");
 
                     b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Photo.Photo", "ForegroundPhoto")
-                        .WithMany()
-                        .HasForeignKey("ForegroundPhotoId")
+                        .WithOne()
+                        .HasForeignKey("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", "ForegroundPhotoId")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("fk_tatuaz_users_photo_foreground_photo_id");
 
                     b.Navigation("BackgroundPhoto");
