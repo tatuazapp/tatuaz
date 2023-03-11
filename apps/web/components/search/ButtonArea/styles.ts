@@ -5,6 +5,12 @@ export const SearchButtonsWrapper = styled.div`
   display: flex;
   margin-top: ${({ theme }) => theme.sizes.xxxlarge};
   margin-bottom: ${({ theme }) => theme.sizes.xxlarge};
+
+  ${down("lg")} {
+    margin-top: ${({ theme }) => theme.sizes.xlarge};
+    margin-bottom: ${({ theme }) => theme.sizes.xlarge};
+  }
+
   ${down("sm")} {
     justify-content: space-between;
     margin-top: ${({ theme }) => theme.sizes.xlarge};
