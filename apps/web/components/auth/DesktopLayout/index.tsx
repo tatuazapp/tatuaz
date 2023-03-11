@@ -43,7 +43,7 @@ const DesktopLayout: FunctionComponent<DesktopLayoutProps> = ({ children }) => {
           <MobileMenu onClose={onClose} />
         </DrawerContent>
       </Drawer>
-      <div>{children}</div>
+      {children}
     </MobileLayoutContainer>
   ) : (
     <DesktopLayoutContainer>
