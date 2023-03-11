@@ -26,7 +26,7 @@ public class GetRegisteredStatsQueryHandler : IRequestHandler<GetRegisteredStats
     {
         return await _getRegisteredStatsProducer
             .Send(
-                new GetRegisteredStatsOrder(),
+                new GetRegisteredStats(),
                 cancellationToken
             )
             .ConfigureAwait(false);
