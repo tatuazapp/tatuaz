@@ -1,6 +1,6 @@
 {
+  "name": "shared-services",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "name": "Tatuaz.Shared.Services",
   "projectType": "library",
   "sourceRoot": "libs/Tatuaz.Shared.Services",
   "targets": {

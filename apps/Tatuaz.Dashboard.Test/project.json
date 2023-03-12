@@ -1,6 +1,6 @@
 {
+  "name": "dashboard-test",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "name": "Tatuaz.Dashboard.Test",
   "projectType": "application",
   "sourceRoot": "apps/Tatuaz.Dashboard.Test",
   "targets": {

@@ -1,6 +1,6 @@
 {
+  "name": "dashboard-queue",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "name": "Tatuaz.Dashboard.Queue",
   "projectType": "library",
   "sourceRoot": "libs/Tatuaz.Dashboard.Queue",
   "targets": {
