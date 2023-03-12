@@ -70,12 +70,22 @@ export const theme: DefaultTheme = {
   },
 }
 
-export const themeWithBreakpoints = createTheme({
-  xs: "420px",
-  sm: "576px",
-  md: "768px",
-  lg: "992px",
-  xl: "1200px",
-  xxl: "1400px",
-  xxxl: "1700px",
-} as const)
+export const breakpointsNumericValues = {
+  xs: 420,
+  sm: 576,
+  md: 768,
+  lg: 992,
+  xl: 1200,
+  xxl: 1400,
+  xxxl: 1700,
+}
+
+const breakpoints = Object.keys(breakpointsNumericValues).reduce((acc, key) => {
+  acc[key] = `${breakpointsNumericValues[key]}px`
+  return acc
+}, {} as Record<string, string>) as Record<
+  keyof typeof breakpointsNumericValues,
+  string
+>
+
+export const themeWithBreakpoints = createTheme(breakpoints)

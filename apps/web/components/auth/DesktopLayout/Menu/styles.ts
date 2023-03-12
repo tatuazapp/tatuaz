@@ -96,13 +96,9 @@ export const MenuListItemText = styled.p`
   font-size: ${({ theme }) => theme.sizes.medium};
 `
 
-export const SignOutButton = styled.button`
+export const SignOutButtonWrapper = styled.div`
   max-width: 150px;
   margin-right: auto;
   margin-bottom: ${({ theme }) => theme.space.xxxxlarge};
   margin-left: auto;
-  padding: ${({ theme }) => theme.space.xsmall};
-
-  background-color: ${({ theme }) => theme.colors.primary};
-  border-radius: ${({ theme }) => theme.radius.medium};
 `

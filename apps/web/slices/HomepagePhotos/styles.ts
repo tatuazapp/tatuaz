@@ -4,7 +4,6 @@ import styled from "styled-components"
 export const HomepagePhotosWrapper = styled.div`
   max-width: 600px;
   margin-left: ${({ theme }) => theme.sizes.xxxxlarge};
-
   color: ${({ theme }) => theme.colors.secondary};
   color: ${({ theme }) => theme.colors.secondary};
 

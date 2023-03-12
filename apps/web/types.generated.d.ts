@@ -6,6 +6,40 @@ import type * as prismicT from "@prismicio/types"
 type Simplify<T> = {
   [KeyType in keyof T]: T[KeyType]
 }
+/** Content for ArtistsCarousel documents */
+interface ArtistscarouselDocumentData {
+  /**
+   * Slice Zone field in *ArtistsCarousel*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: artistscarousel.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/core-concepts/slices
+   *
+   */
+  slices: prismicT.SliceZone<ArtistscarouselDocumentDataSlicesSlice>
+}
+/**
+ * Slice for *ArtistsCarousel → Slice Zone*
+ *
+ */
+type ArtistscarouselDocumentDataSlicesSlice = ArtistsCarouselSlice
+/**
+ * ArtistsCarousel document from Prismic
+ *
+ * - **API ID**: `artistscarousel`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ArtistscarouselDocument<Lang extends string = string> =
+  prismicT.PrismicDocumentWithoutUID<
+    Simplify<ArtistscarouselDocumentData>,
+    "artistscarousel",
+    Lang
+  >
 /** Content for ArtistSectionHeader documents */
 interface ArtistSectionHeaderDocumentData {
   /**
@@ -201,6 +235,7 @@ export type TotalStatsDocument<Lang extends string = string> =
     Lang
   >
 export type AllDocumentTypes =
+  | ArtistscarouselDocument
   | ArtistSectionHeaderDocument
   | FaQsSectionDocument
   | HomepageIntroDocument
@@ -262,6 +297,72 @@ type ArtistSectionHeaderSliceVariation = ArtistSectionHeaderSliceDefault
 export type ArtistSectionHeaderSlice = prismicT.SharedSlice<
   "artist_section_header",
   ArtistSectionHeaderSliceVariation
+>
+/**
+ * Item in ArtistsCarousel → Items
+ *
+ */
+export interface ArtistsCarouselSliceDefaultItem {
+  /**
+   * Title field in *ArtistsCarousel → Items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: artists_carousel.items[].title
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  title: prismicT.RichTextField
+  /**
+   * Description field in *ArtistsCarousel → Items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: artists_carousel.items[].description
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  description: prismicT.RichTextField
+  /**
+   * Photo field in *ArtistsCarousel → Items*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: artists_carousel.items[].photo
+   * - **Documentation**: https://prismic.io/docs/core-concepts/image
+   *
+   */
+  photo: prismicT.ImageField<never>
+}
+/**
+ * Default variation for ArtistsCarousel Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `ArtistsCarousel`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ArtistsCarouselSliceDefault = prismicT.SharedSliceVariation<
+  "default",
+  Record<string, never>,
+  Simplify<ArtistsCarouselSliceDefaultItem>
+>
+/**
+ * Slice variation for *ArtistsCarousel*
+ *
+ */
+type ArtistsCarouselSliceVariation = ArtistsCarouselSliceDefault
+/**
+ * ArtistsCarousel Shared Slice
+ *
+ * - **API ID**: `artists_carousel`
+ * - **Description**: `ArtistsCarousel`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ArtistsCarouselSlice = prismicT.SharedSlice<
+  "artists_carousel",
+  ArtistsCarouselSliceVariation
 >
 /**
  * Primary content in FaqsSection → Primary
@@ -599,6 +700,9 @@ declare module "@prismicio/client" {
   }
   namespace Content {
     export type {
+      ArtistscarouselDocumentData,
+      ArtistscarouselDocumentDataSlicesSlice,
+      ArtistscarouselDocument,
       ArtistSectionHeaderDocumentData,
       ArtistSectionHeaderDocumentDataSlicesSlice,
       ArtistSectionHeaderDocument,
@@ -621,6 +725,10 @@ declare module "@prismicio/client" {
       ArtistSectionHeaderSliceDefault,
       ArtistSectionHeaderSliceVariation,
       ArtistSectionHeaderSlice,
+      ArtistsCarouselSliceDefaultItem,
+      ArtistsCarouselSliceDefault,
+      ArtistsCarouselSliceVariation,
+      ArtistsCarouselSlice,
       FaqsSectionSliceDefaultPrimary,
       FaqsSectionSliceDefault,
       FaqsSectionSliceVariation,

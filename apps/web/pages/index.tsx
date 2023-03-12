@@ -17,6 +17,7 @@ import {
   HomepageIntro,
   HomepagePhotos,
   FaqsSection,
+  ArtistsCarousel,
 } from "../slices"
 
 type IndexPageProps = InferGetStaticPropsType<typeof getStaticProps>
@@ -26,6 +27,7 @@ const Index: NextPage<IndexPageProps> = ({
   artistsectionheader,
   homepagephotos,
   faqssection,
+  artistscarousel,
 }) => (
   <AppLayout>
     <PageContentWrapper>
@@ -50,12 +52,19 @@ const Index: NextPage<IndexPageProps> = ({
       </HomepageIntroAndPhotosWrapper>
     </PageContentWrapper>
     <TotalStats />
+
     <PageContentWrapper>
       <SliceZone
         components={{
           artist_section_header: ArtistSectionHeader,
         }}
         slices={artistsectionheader.data.slices}
+      />
+      <SliceZone
+        components={{
+          artists_carousel: ArtistsCarousel,
+        }}
+        slices={artistscarousel.data.slices}
       />
       <FAQsHeader />
     </PageContentWrapper>
@@ -72,16 +81,18 @@ const Index: NextPage<IndexPageProps> = ({
 export async function getStaticProps({ previewData }: GetStaticPropsContext) {
   const client = createClient({ previewData })
   const homepageIntro = await client.getSingle("homepageIntro")
-  const artistsectionheader = await client.getSingle("ArtistSectionHeader")
-  const homepagephotos = await client.getSingle("HomepagePhotos")
-  const faqssection = await client.getSingle("FAQsSection")
+  const artistSectionHeader = await client.getSingle("ArtistSectionHeader")
+  const homepagePhotos = await client.getSingle("HomepagePhotos")
+  const faqsSection = await client.getSingle("FAQsSection")
+  const artistsCarousel = await client.getSingle("artistscarousel")
 
   return {
     props: {
       homepageIntro,
-      artistsectionheader,
-      homepagephotos,
-      faqssection,
+      artistsectionheader: artistSectionHeader,
+      homepagephotos: homepagePhotos,
+      faqssection: faqsSection,
+      artistscarousel: artistsCarousel,
     },
   }
 }

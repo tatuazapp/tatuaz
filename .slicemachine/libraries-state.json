@@ -71,6 +71,103 @@
           "fileName": "index",
           "extension": "tsx"
         },
+        "screenshotPaths": {
+          "default": {
+            "path": "/home/ignacy/Documents/Studia/tatuaz/.slicemachine/assets/apps/web/slices/ArtistSectionHeader/default/preview.png",
+            "width": 800,
+            "height": 704
+          }
+        }
+      },
+      "artists_carousel": {
+        "library": "apps/web/slices",
+        "id": "artists_carousel",
+        "name": "ArtistsCarousel",
+        "description": "ArtistsCarousel",
+        "model": {
+          "id": "artists_carousel",
+          "type": "SharedSlice",
+          "name": "ArtistsCarousel",
+          "description": "ArtistsCarousel",
+          "variations": [
+            {
+              "id": "default",
+              "name": "Default",
+              "docURL": "...",
+              "version": "sktwi1xtmkfgx8626",
+              "description": "ArtistsCarousel",
+              "primary": {},
+              "items": {
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "label": "Title",
+                    "placeholder": "",
+                    "allowTargetBlank": true,
+                    "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+                  }
+                },
+                "description": {
+                  "type": "StructuredText",
+                  "config": {
+                    "label": "Description",
+                    "placeholder": "",
+                    "allowTargetBlank": true,
+                    "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+                  }
+                },
+                "photo": {
+                  "type": "Image",
+                  "config": {
+                    "label": "Photo",
+                    "constraint": {},
+                    "thumbnails": []
+                  }
+                }
+              },
+              "imageUrl": "https://images.prismic.io/slice-machine/621a5ec4-0387-4bc5-9860-2dd46cbc07cd_default_ss.png?auto=compress,format"
+            }
+          ]
+        },
+        "mocks": {
+          "default": {
+            "variation": "default",
+            "version": "sktwi1xtmkfgx8626",
+            "items": [
+              {
+                "title": [
+                  {
+                    "type": "paragraph",
+                    "text": "Amet culpa ea quis consectetur excepteur reprehenderit sit laborum non dolor esse. Velit ea et minim culpa magna sint laboris incididunt ut consequat.",
+                    "spans": []
+                  }
+                ],
+                "description": [
+                  {
+                    "type": "paragraph",
+                    "text": "Laboris adipisicing ex aliqua nulla id laborum consequat. Elit ea laborum consequat ullamco anim ullamco cillum aute amet culpa excepteur occaecat aute.",
+                    "spans": []
+                  }
+                ],
+                "photo": {
+                  "dimensions": {
+                    "width": 900,
+                    "height": 500
+                  },
+                  "alt": null,
+                  "copyright": null,
+                  "url": "https://images.unsplash.com/photo-1515378960530-7c0da6231fb1"
+                }
+              }
+            ],
+            "primary": {},
+            "slice_type": "artists_carousel"
+          }
+        },
+        "meta": {
+          "fileName": "index",
+          "extension": "tsx"
+        },
         "screenshotPaths": {}
       },
       "faqs_section": {
@@ -294,7 +391,13 @@
           "fileName": "index",
           "extension": "tsx"
         },
-        "screenshotPaths": {}
+        "screenshotPaths": {
+          "default": {
+            "path": "/home/ignacy/Documents/Studia/tatuaz/.slicemachine/assets/apps/web/slices/HomepageIntro/default/preview.png",
+            "width": 800,
+            "height": 928
+          }
+        }
       },
       "homepage_photos": {
         "library": "apps/web/slices",
@@ -385,7 +488,13 @@
           "fileName": "index",
           "extension": "tsx"
         },
-        "screenshotPaths": {}
+        "screenshotPaths": {
+          "default": {
+            "path": "/home/ignacy/Documents/Studia/tatuaz/.slicemachine/assets/apps/web/slices/HomepagePhotos/default/preview.png",
+            "width": 800,
+            "height": 2712
+          }
+        }
       },
       "image": {
         "library": "apps/web/slices",
@@ -444,7 +553,7 @@
         },
         "screenshotPaths": {
           "default": {
-            "path": "/Users/nikodemwojcik/Desktop/tatuaz/.slicemachine/assets/apps/web/slices/Image/default/preview.png",
+            "path": "/home/ignacy/Documents/Studia/tatuaz/.slicemachine/assets/apps/web/slices/Image/default/preview.png",
             "width": 800,
             "height": 444
           }
@@ -521,7 +630,7 @@
         },
         "screenshotPaths": {
           "default": {
-            "path": "/Users/nikodemwojcik/Desktop/tatuaz/.slicemachine/assets/apps/web/slices/TextBlock/default/preview.png",
+            "path": "/home/ignacy/Documents/Studia/tatuaz/.slicemachine/assets/apps/web/slices/TextBlock/default/preview.png",
             "width": 800,
             "height": 96
           }

@@ -8,7 +8,8 @@
     "ArtistSectionHeader": {},
     "TotalStats": {},
     "HomepagePhotos": {},
-    "FAQsSection": {}
+    "FAQsSection": {},
+    "artistscarousel": {}
   },
   "apps/web/slices": {
     "TextBlock": {
@@ -97,6 +98,11 @@
             }
           }
         }
+      }
+    },
+    "ArtistsCarousel": {
+      "default": {
+        "primary": {}
       }
     }
   }

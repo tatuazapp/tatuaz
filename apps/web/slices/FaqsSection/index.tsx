@@ -17,8 +17,8 @@ import {
   MobileQuestionNumber,
   MobileQuestionTitle,
   MobileQuestionTitleWrapper,
-} from "../FAQsMobileSection/QuestionItem/styles"
-import { FAQsMobileSectionWrapper } from "../FAQsMobileSection/styles"
+} from "../FaqsMobileSection/QuestionItem/styles"
+import { FAQsMobileSectionWrapper } from "../FaqsMobileSection/styles"
 import {
   Divider,
   IconNotSelected,

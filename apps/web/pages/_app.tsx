@@ -15,6 +15,8 @@ import { currentLocale, messages } from "../i18n"
 import { repositoryName } from "../prismicio"
 import chakraTheme from "../styles/chakra"
 import "../styles/global.css"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
 import { theme, themeWithBreakpoints } from "../styles/theme"
 
 export const queryClient = new QueryClient()

@@ -3,6 +3,7 @@ import { useState } from "react"
 import { FormattedMessage } from "react-intl"
 import { theme } from "../../../../styles/theme"
 import { Tabs } from "../../../../types/tabs"
+import Button from "../../../common/buttons/Button"
 import {
   GreenWrapper,
   MenuList,
@@ -14,7 +15,7 @@ import {
   SearchIcon,
   DashboardIcon,
   ProfileIcon,
-  SignOutButton,
+  SignOutButtonWrapper,
 } from "./styles"
 
 const tabs: Tabs[] = ["Home", "Search", "Dashboard", "Profile"]
@@ -93,11 +94,13 @@ const Menu = () => {
           ))}
         </MenuList>
       </div>
-      <SignOutButton>
-        <Paragraph color={theme.colors.background1} level={1}>
-          <FormattedMessage defaultMessage="Wyloguj" id="UqV7Od" />
-        </Paragraph>
-      </SignOutButton>
+      <SignOutButtonWrapper>
+        <Button kind="primary">
+          <Paragraph color={theme.colors.background1} level={1}>
+            <FormattedMessage defaultMessage="Wyloguj" id="UqV7Od" />
+          </Paragraph>
+        </Button>
+      </SignOutButtonWrapper>
     </MenuWrapper>
   )
 }

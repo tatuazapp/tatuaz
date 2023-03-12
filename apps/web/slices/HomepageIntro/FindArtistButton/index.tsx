@@ -1,18 +1,13 @@
-import { Button } from "@chakra-ui/react"
-import { ArrowUpRight } from "@styled-icons/bootstrap/ArrowUpRight"
+import { useRouter } from "next/router"
 import { FormattedMessage } from "react-intl"
+import Button from "../../../components/common/buttons/Button"
 
-export const FindArtistButton = () => (
-  <Button
-    color="black"
-    colorScheme="primary"
-    rightIcon={<ArrowUpRight size={24} />}
-    size="lg"
-    width={{ base: "100%", md: "auto" }}
-    onClick={() => {
-      window.location.href = "/dashboard"
-    }}
-  >
-    <FormattedMessage defaultMessage="Znajdź artystę" id="okwzd8" />
-  </Button>
-)
+export const FindArtistButton = () => {
+  const router = useRouter()
+
+  return (
+    <Button kind="arrowUpRight" onClick={() => router.push("/dashboard")}>
+      <FormattedMessage defaultMessage="Znajdź artystę" id="okwzd8" />
+    </Button>
+  )
+}
