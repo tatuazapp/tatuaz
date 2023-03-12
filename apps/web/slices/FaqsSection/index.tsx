@@ -6,6 +6,16 @@ import {
 } from "@chakra-ui/react"
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react"
 import { FunctionComponent, useState } from "react"
+import {
+  Divider,
+  IconNotSelected,
+  IconSelected,
+  QuestionContent,
+  QuestionItemWrapper,
+  QuestionNumber,
+  QuestionTitle,
+} from "./QuestionItem/styles"
+import { FAQsSectionWrapper } from "./styles"
 import { FaqsSectionSlice } from "../../types.generated"
 import useIsMobile from "../../utils/hooks/useIsMobile"
 import {
@@ -19,16 +29,6 @@ import {
   MobileQuestionTitleWrapper,
 } from "../FaqsMobileSection/QuestionItem/styles"
 import { FAQsMobileSectionWrapper } from "../FaqsMobileSection/styles"
-import {
-  Divider,
-  IconNotSelected,
-  IconSelected,
-  QuestionContent,
-  QuestionItemWrapper,
-  QuestionNumber,
-  QuestionTitle,
-} from "./QuestionItem/styles"
-import { FAQsSectionWrapper } from "./styles"
 
 type FAQsSectionProps = SliceComponentProps<FaqsSectionSlice>
 

@@ -2,9 +2,9 @@ import { Center, FormControl, FormErrorMessage } from "@chakra-ui/react"
 import { FunctionComponent } from "react"
 import { UseFormReturn } from "react-hook-form"
 import { FormattedMessage, useIntl } from "react-intl"
-import { OnboardingTitle } from "../../OnboardingTitle/styles"
 import { InputWithErrorWrapper, InputWrapper, UsernameWrapper } from "./styles"
 import { useOnboardingUsernameValidationRules } from "./validation"
+import { OnboardingTitle } from "../../OnboardingTitle/styles"
 
 export type OnboardingUsernameFormValues = {
   username: string

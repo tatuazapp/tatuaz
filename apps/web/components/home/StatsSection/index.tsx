@@ -1,6 +1,6 @@
 import { FormattedMessage } from "react-intl"
-import StatsCard from "../StatsCard"
 import { TitleContainer, CardsContainer } from "./styles"
+import StatsCard from "../StatsCard"
 
 const StatsSection = () => (
   <>

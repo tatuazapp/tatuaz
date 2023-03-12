@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
 import { FunctionComponent, useCallback } from "react"
+import PreferencesPickerItem from "./PreferencesPickerItem"
+import { PreferencesPickerWrapper } from "./styles"
 import { api } from "../../../../api/apiClient"
 import { queryKeys } from "../../../../api/queryKeys"
 import formatCDNImageUrl from "../../../../utils/format/formatCDNImageUrl"
-import PreferencesPickerItem from "./PreferencesPickerItem"
-import { PreferencesPickerWrapper } from "./styles"
 
 type PreferencesPickerProps = {
   selectedPreferences: number[]

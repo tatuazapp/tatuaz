@@ -1,16 +1,45 @@
 {
-  "id": "mock-doc-id",
-  "url": null,
-  "type": "ArtistSectionHeader",
-  "href": null,
-  "tags": [],
-  "first_publication_date": "1970-01-01T00:00:01+0000",
-  "last_publication_date": "1970-01-01T00:00:01+0000",
-  "slugs": [],
-  "linked_documents": [],
-  "lang": "en-us",
-  "alternate_languages": [],
-  "data": {
-    "slices": []
+  "slices": {
+    "__TYPE__": "SliceContentType",
+    "value": [
+      {
+        "key": "artist_section_header$31576289-b6e7-4d43-8fdf-77738fe741fa",
+        "name": "artist_section_header",
+        "widget": {
+          "__TYPE__": "SharedSliceContent",
+          "variation": "default",
+          "primary": {
+            "ArtistSectionHeaderFirstLine": {
+              "__TYPE__": "StructuredTextContent",
+              "value": [
+                {
+                  "type": "paragraph",
+                  "content": {
+                    "text": "Non mollit voluptate consequat enim voluptate occaecat nisi cupidatat labore anim cupidatat irure. Eu sit dolore ad ut. Velit ad deserunt in dolor duis ullamco ea laboris Lorem culpa proident commodo."
+                  }
+                }
+              ]
+            },
+            "ArtistSectionHeaderSecondLine": {
+              "__TYPE__": "StructuredTextContent",
+              "value": [
+                {
+                  "type": "paragraph",
+                  "content": {
+                    "text": "Et adipisicing enim cillum id laboris eu culpa et in."
+                  }
+                }
+              ]
+            }
+          },
+          "items": [
+            {
+              "__TYPE__": "GroupItemContent",
+              "value": []
+            }
+          ]
+        }
+      }
+    ]
   }
 }

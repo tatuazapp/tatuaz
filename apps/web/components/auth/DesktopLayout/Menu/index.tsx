@@ -1,8 +1,6 @@
 import { Paragraph, Paragraph1 } from "@tatuaz/ui"
 import { useState } from "react"
 import { FormattedMessage } from "react-intl"
-import { theme } from "../../../../styles/theme"
-import { Tabs } from "../../../../types/tabs"
 import {
   GreenWrapper,
   MenuList,
@@ -16,6 +14,8 @@ import {
   ProfileIcon,
   SignOutButton,
 } from "./styles"
+import { theme } from "../../../../styles/theme"
+import { Tabs } from "../../../../types/tabs"
 
 const tabs: Tabs[] = ["Home", "Search", "Dashboard", "Profile"]
 

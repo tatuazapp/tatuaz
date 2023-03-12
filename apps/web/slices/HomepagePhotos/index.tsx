@@ -1,7 +1,6 @@
 import { PrismicNextImage } from "@prismicio/next"
 import { SliceComponentProps } from "@prismicio/react"
 import { FunctionComponent } from "react"
-import { HomepagePhotosSlice } from "../../types.generated"
 import {
   HomepagePhotosWrapper,
   LeftPhotosContainer,
@@ -13,6 +12,7 @@ import {
   SliderThumb,
   SliderTrack,
 } from "./styles"
+import { HomepagePhotosSlice } from "../../types.generated"
 
 type HomepagePhotosProps = SliceComponentProps<HomepagePhotosSlice>
 

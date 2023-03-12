@@ -1,6 +1,5 @@
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react"
 import { FunctionComponent } from "react"
-import { HomepageIntroSlice } from "../../types.generated"
 import { FindArtistButton } from "./FindArtistButton"
 import {
   HomepageIntroWrapper,
@@ -12,6 +11,7 @@ import {
   Slider,
   DescriptionWrapper,
 } from "./styles"
+import { HomepageIntroSlice } from "../../types.generated"
 
 type HomepageIntroProps = SliceComponentProps<HomepageIntroSlice>
 

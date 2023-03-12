@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import { FormattedMessage } from "react-intl"
-import Button from "../../common/buttons/Button"
 import { GetATattooButtonWrapper, ButtonContainer } from "./styles"
+import Button from "../../common/buttons/Button"
 
 const GetATattooButton = () => {
   const router = useRouter()

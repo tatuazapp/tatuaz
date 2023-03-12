@@ -2,6 +2,7 @@ import { Fade } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
+import { queryClient } from "./_app"
 import { api } from "../api/apiClient"
 import { queryKeys } from "../api/queryKeys"
 import { OnboardingFooterWrapper } from "../components/onboarding/OnboardingFooter/styles"
@@ -14,7 +15,6 @@ import OnboardingUsername, {
 } from "../components/onboarding/username/OnboardingUsername"
 import OnboardingUsernameFooterButtons from "../components/onboarding/username/OnboardingUsernameFooterButtons"
 import useIsMobile from "../utils/hooks/useIsMobile"
-import { queryClient } from "./_app"
 
 const Onboarding: NextPage = () => {
   useOnboardingRedirect()

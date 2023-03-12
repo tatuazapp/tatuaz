@@ -1,8 +1,6 @@
 import { Paragraph, Paragraph1 } from "@tatuaz/ui"
 import { useState } from "react"
 import { FormattedMessage } from "react-intl"
-import { theme } from "../../../../styles/theme"
-import { Tabs } from "../../../../types/tabs"
 import {
   GreenWrapper,
   MobileMenuList,
@@ -19,6 +17,8 @@ import {
   TopMobileMenuWrapper,
   MobileMenuBackgroundContainer,
 } from "./styles"
+import { theme } from "../../../../styles/theme"
+import { Tabs } from "../../../../types/tabs"
 
 type MobileMenuProps = {
   onClose: () => void

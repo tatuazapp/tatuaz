@@ -1,0 +1,47 @@
+[
+  {
+    "__TYPE__": "SharedSliceContent",
+    "variation": "default",
+    "primary": {
+      "TitleFirstLine": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "paragraph",
+            "content": {
+              "text": "Eiusmod do tempor incididunt voluptate ipsum mollit consequat."
+            }
+          }
+        ]
+      },
+      "TitleSecondLine": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "heading1",
+            "content": {
+              "text": "Willing"
+            }
+          }
+        ]
+      },
+      "description": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "paragraph",
+            "content": {
+              "text": "Laboris anim esse voluptate in eiusmod. Eu consequat quis sit consequat nisi. Do ipsum aute consectetur aliqua esse minim et cupidatat qui cupidatat velit enim."
+            }
+          }
+        ]
+      }
+    },
+    "items": [
+      {
+        "__TYPE__": "GroupItemContent",
+        "value": []
+      }
+    ]
+  }
+]

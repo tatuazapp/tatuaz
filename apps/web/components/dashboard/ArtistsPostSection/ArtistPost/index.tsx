@@ -10,7 +10,6 @@ import {
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { FormattedMessage } from "react-intl"
-import useIsTablet from "../../../../utils/hooks/useIsTablet"
 import ArtistPostCommentView from "./ArtistPostCommentView"
 import {
   ArtistPostContent,
@@ -31,6 +30,7 @@ import {
   UserIconPhoto,
   UserName,
 } from "./styles"
+import useIsTablet from "../../../../utils/hooks/useIsTablet"
 
 const ArtistPost = () => {
   const [isPostLiked, setIsPostLiked] = useState(false)

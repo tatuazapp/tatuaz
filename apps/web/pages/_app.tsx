@@ -44,11 +44,13 @@ function App({ Component, pageProps }: AppProps) {
               )}
             >
               <Auth0Provider
-                audience={process.env.NEXT_PUBLIC_AUTH0_AUDIENCE}
+                authorizationParams={{
+                  audience: process.env.NEXT_PUBLIC_AUTH0_AUDIENCE,
+                  redirect_uri: process.env.NEXT_PUBLIC_AUTH0_REDIRECT_URI,
+                }}
                 cacheLocation="localstorage"
                 clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID}
                 domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN}
-                redirectUri={process.env.NEXT_PUBLIC_AUTH0_REDIRECT_URI}
               >
                 <Head>
                   <title>Tatuaż App</title>

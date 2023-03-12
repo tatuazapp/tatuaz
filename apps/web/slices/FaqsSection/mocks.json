@@ -1,0 +1,80 @@
+[
+  {
+    "__TYPE__": "SharedSliceContent",
+    "variation": "default",
+    "primary": {
+      "FirstQuestionTitle": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "paragraph",
+            "content": {
+              "text": "Excepteur excepteur ad esse aliquip qui laborum occaecat cillum veniam labore officia labore occaecat. Qui excepteur duis ad fugiat deserunt ea aliqua commodo exercitation. Ea minim deserunt non qui est."
+            }
+          }
+        ]
+      },
+      "FirstQuestionDescription": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "paragraph",
+            "content": {
+              "text": "Id tempor ex qui est dolore nostrud cupidatat. Pariatur eu duis velit sint magna aute consequat qui culpa."
+            }
+          }
+        ]
+      },
+      "SecondQuestionTitile": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "paragraph",
+            "content": {
+              "text": "Commodo consectetur in qui consequat culpa do velit aute do ipsum ullamco est consequat tempor pariatur."
+            }
+          }
+        ]
+      },
+      "SecondQuestionDescription": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "paragraph",
+            "content": {
+              "text": "Adipisicing commodo veniam veniam voluptate nostrud dolor velit irure. Enim tempor excepteur exercitation consectetur eu mollit tempor occaecat laborum amet ut commodo mollit aliqua. Voluptate officia aliqua aliquip ad cupidatat dolor esse exercitation consectetur tempor sint do occaecat qui."
+            }
+          }
+        ]
+      },
+      "ThirdQuestionTitle": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "paragraph",
+            "content": {
+              "text": "Cupidatat reprehenderit exercitation exercitation esse pariatur minim exercitation labore proident elit cillum. Elit dolore culpa enim quis quis proident cupidatat."
+            }
+          }
+        ]
+      },
+      "ThirdQuestionDescription": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "paragraph",
+            "content": {
+              "text": "Reprehenderit ut ullamco consectetur. Ex ea adipisicing qui ipsum amet reprehenderit cillum sint. Aliquip anim ullamco laboris aliquip commodo."
+            }
+          }
+        ]
+      }
+    },
+    "items": [
+      {
+        "__TYPE__": "GroupItemContent",
+        "value": []
+      }
+    ]
+  }
+]

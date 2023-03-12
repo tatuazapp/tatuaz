@@ -1,8 +1,8 @@
 import { TopBar } from "@tatuaz/ui"
 import { FunctionComponent } from "react"
-import useIsPhone from "../../../../utils/hooks/useIsPhone"
 import { GreenWrapper, NavItemsWrapper, WordmarkWrapper } from "./styles"
 import UserAction from "./UserAction"
+import useIsPhone from "../../../../utils/hooks/useIsPhone"
 
 type HeaderProps = {
   children?: React.ReactNode

@@ -2,13 +2,13 @@ import { ChevronDownIcon } from "@chakra-ui/icons"
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react"
 import { Paragraph } from "@tatuaz/ui"
 import { useState } from "react"
-import { theme } from "../../../../styles/theme"
 import {
   ArtistsPostSectionButtonAreaWrapper,
   LeftContainer,
   TypeButton,
   TypeButtonsContainer,
 } from "./styles"
+import { theme } from "../../../../styles/theme"
 
 const ArtistsPostSectionButtonArea = () => {
   const [selectedType, setSelectedType] = useState("All")

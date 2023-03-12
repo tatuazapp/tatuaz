@@ -1,6 +1,5 @@
 import { Heading, Paragraph } from "@tatuaz/ui"
 import { FormattedMessage } from "react-intl"
-import { theme } from "../../../styles/theme"
 import {
   RightSectionContainer,
   TopArtistsSectionHeader,
@@ -9,6 +8,7 @@ import {
 } from "./styles"
 import TopArtistsItem from "./TopArtistItem"
 import UserSection from "./UserSection"
+import { theme } from "../../../styles/theme"
 
 const TopArtistsSection = () => (
   <RightSectionContainer>

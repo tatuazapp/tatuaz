@@ -5,14 +5,14 @@ import { Heading, Paragraph } from "@tatuaz/ui"
 import { FunctionComponent } from "react"
 import Slider, { Settings } from "react-slick"
 import { useTheme } from "styled-components"
-import { breakpointsNumericValues } from "../../styles/theme"
-import { ArtistsCarouselSlice } from "../../types.generated"
 import {
   CarouselItemWrapper,
   CarouselWrapper,
   Divider,
   ImageWrapper,
 } from "./styles"
+import { breakpointsNumericValues } from "../../styles/theme"
+import { ArtistsCarouselSlice } from "../../types.generated"
 
 type ArtistsCarouselProps = SliceComponentProps<ArtistsCarouselSlice>
 

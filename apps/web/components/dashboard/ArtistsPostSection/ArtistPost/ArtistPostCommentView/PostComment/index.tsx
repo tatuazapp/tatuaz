@@ -1,6 +1,5 @@
 import { Paragraph } from "@tatuaz/ui"
 import { FormattedMessage } from "react-intl"
-import { theme } from "../../../../../../styles/theme"
 import {
   CommentOwnerAvatar,
   ArtistPostCommentsViewCommentWrapper,
@@ -11,6 +10,7 @@ import {
   CommentReactions,
   ReactionIcon,
 } from "./styles"
+import { theme } from "../../../../../../styles/theme"
 
 const PostComment = () => (
   <ArtistPostCommentsViewCommentWrapper>

@@ -1,8 +1,6 @@
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react"
 import { SuitDiamondFill } from "@styled-icons/bootstrap/SuitDiamondFill"
 import { FunctionComponent } from "react"
-import { theme } from "../../styles/theme"
-import { ArtistSectionHeaderSlice } from "../../types.generated"
 import {
   ArtistsSectionHeaderWrapper,
   HeaderFirstLineWrapper,
@@ -13,6 +11,8 @@ import {
   SliderTrack,
   SliderThumb,
 } from "./styles"
+import { theme } from "../../styles/theme"
+import { ArtistSectionHeaderSlice } from "../../types.generated"
 
 type ArtistSectionHeaderProps = SliceComponentProps<ArtistSectionHeaderSlice>
 

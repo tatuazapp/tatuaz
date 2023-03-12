@@ -1,0 +1,36 @@
+[
+  {
+    "__TYPE__": "SharedSliceContent",
+    "variation": "default",
+    "primary": {
+      "ArtistSectionHeaderFirstLine": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "paragraph",
+            "content": {
+              "text": "Occaecat adipisicing exercitation deserunt in adipisicing tempor."
+            }
+          }
+        ]
+      },
+      "ArtistSectionHeaderSecondLine": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "paragraph",
+            "content": {
+              "text": "Cupidatat tempor voluptate officia magna quis eiusmod anim. Sint occaecat amet excepteur aute nostrud mollit sunt qui est aliqua nisi et et."
+            }
+          }
+        ]
+      }
+    },
+    "items": [
+      {
+        "__TYPE__": "GroupItemContent",
+        "value": []
+      }
+    ]
+  }
+]

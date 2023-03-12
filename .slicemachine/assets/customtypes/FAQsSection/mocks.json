@@ -1,16 +1,89 @@
 {
-  "id": "mock-doc-id",
-  "url": null,
-  "type": "FAQsSection",
-  "href": null,
-  "tags": [],
-  "first_publication_date": "1970-01-01T00:00:01+0000",
-  "last_publication_date": "1970-01-01T00:00:01+0000",
-  "slugs": [],
-  "linked_documents": [],
-  "lang": "en-us",
-  "alternate_languages": [],
-  "data": {
-    "slices": []
+  "slices": {
+    "__TYPE__": "SliceContentType",
+    "value": [
+      {
+        "key": "faqs_section$ce024485-105c-452f-96a6-3f631b8994c3",
+        "name": "faqs_section",
+        "widget": {
+          "__TYPE__": "SharedSliceContent",
+          "variation": "default",
+          "primary": {
+            "FirstQuestionTitle": {
+              "__TYPE__": "StructuredTextContent",
+              "value": [
+                {
+                  "type": "paragraph",
+                  "content": {
+                    "text": "Laboris occaecat est minim deserunt consectetur commodo culpa laborum culpa duis aliquip mollit non."
+                  }
+                }
+              ]
+            },
+            "FirstQuestionDescription": {
+              "__TYPE__": "StructuredTextContent",
+              "value": [
+                {
+                  "type": "paragraph",
+                  "content": {
+                    "text": "Aliquip id quis amet et nulla dolore irure deserunt deserunt qui. Elit esse duis enim est. In magna consequat dolor dolore."
+                  }
+                }
+              ]
+            },
+            "SecondQuestionTitile": {
+              "__TYPE__": "StructuredTextContent",
+              "value": [
+                {
+                  "type": "paragraph",
+                  "content": {
+                    "text": "Nostrud laboris tempor ad ad voluptate incididunt ullamco nisi incididunt tempor ut. Irure reprehenderit proident laboris commodo deserunt proident ut amet velit ipsum tempor. Dolore fugiat dolore nisi eiusmod."
+                  }
+                }
+              ]
+            },
+            "SecondQuestionDescription": {
+              "__TYPE__": "StructuredTextContent",
+              "value": [
+                {
+                  "type": "paragraph",
+                  "content": {
+                    "text": "Occaecat laborum anim qui tempor elit aute ex ut reprehenderit est exercitation aute laborum nostrud."
+                  }
+                }
+              ]
+            },
+            "ThirdQuestionTitle": {
+              "__TYPE__": "StructuredTextContent",
+              "value": [
+                {
+                  "type": "paragraph",
+                  "content": {
+                    "text": "Duis aute culpa dolore in qui aliqua duis fugiat dolore ullamco."
+                  }
+                }
+              ]
+            },
+            "ThirdQuestionDescription": {
+              "__TYPE__": "StructuredTextContent",
+              "value": [
+                {
+                  "type": "paragraph",
+                  "content": {
+                    "text": "Enim sunt anim nulla cupidatat aute laborum adipisicing incididunt qui ullamco nulla culpa."
+                  }
+                }
+              ]
+            }
+          },
+          "items": [
+            {
+              "__TYPE__": "GroupItemContent",
+              "value": []
+            }
+          ]
+        }
+      }
+    ]
   }
 }

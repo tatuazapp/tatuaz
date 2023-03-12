@@ -1,20 +1,6 @@
 import { Heading, Paragraph } from "@tatuaz/ui"
 import { useState } from "react"
 import { FormattedMessage } from "react-intl"
-import { theme } from "../../../../../styles/theme"
-import {
-  ArtistPostDescription,
-  ArtistPostLikesAndCommentsWrapper,
-  ArtistPostMainPhoto,
-  ArtistPostMainPhotoTitle,
-  CommentSectionClickedIcon,
-  CommentsNumber,
-  LikedPhotoIcon,
-  LikesContainer,
-  LikesNumber,
-  NotLikedPhotoIcon,
-  UserIconPhoto,
-} from "../styles"
 import PostComment from "./PostComment"
 import {
   ArtistPostCommentsViewHeader,
@@ -30,6 +16,20 @@ import {
   ArtistPostCommentsViewDivider,
   ArtistPostScrollingArea,
 } from "./styles"
+import { theme } from "../../../../../styles/theme"
+import {
+  ArtistPostDescription,
+  ArtistPostLikesAndCommentsWrapper,
+  ArtistPostMainPhoto,
+  ArtistPostMainPhotoTitle,
+  CommentSectionClickedIcon,
+  CommentsNumber,
+  LikedPhotoIcon,
+  LikesContainer,
+  LikesNumber,
+  NotLikedPhotoIcon,
+  UserIconPhoto,
+} from "../styles"
 
 type ArtistPostCommentViewProps = {
   onClose: () => void

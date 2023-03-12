@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { Tabs } from "../../../../types/tabs"
 import {
   NarrowMenuList,
   NarrowMenuListItem,
@@ -12,6 +11,7 @@ import {
   MenuContainer,
   NarrowMenuSignOutIcon,
 } from "./styles"
+import { Tabs } from "../../../../types/tabs"
 
 type NarrowMenuProps = {
   onOpen: () => void

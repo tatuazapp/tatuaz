@@ -1,23 +1,67 @@
 {
-  "id": "mock-doc-id",
-  "url": null,
-  "type": "homepageIntro",
-  "href": null,
-  "tags": [],
-  "first_publication_date": "1970-01-01T00:00:01+0000",
-  "last_publication_date": "1970-01-01T00:00:01+0000",
-  "slugs": [],
-  "linked_documents": [],
-  "lang": "en-us",
-  "alternate_languages": [],
-  "data": {
-    "titlefirstline": [
+  "titlefirstline": {
+    "__TYPE__": "StructuredTextContent",
+    "value": [
       {
         "type": "paragraph",
-        "text": "Minim reprehenderit sunt id. Consectetur esse voluptate eu sit voluptate deserunt elit. Tempor pariatur laborum anim incididunt in excepteur eiusmod esse velit deserunt incididunt amet dolor.",
-        "spans": []
+        "content": {
+          "text": "Reprehenderit duis enim mollit consequat do adipisicing cillum. Laboris reprehenderit aute nulla consequat sit eu mollit dolor enim."
+        }
       }
-    ],
-    "slices": []
+    ]
+  },
+  "slices": {
+    "__TYPE__": "SliceContentType",
+    "value": [
+      {
+        "key": "homepage_intro$4c2c9ca8-f792-42d3-937d-cf124754e4ed",
+        "name": "homepage_intro",
+        "widget": {
+          "__TYPE__": "SharedSliceContent",
+          "variation": "default",
+          "primary": {
+            "TitleFirstLine": {
+              "__TYPE__": "StructuredTextContent",
+              "value": [
+                {
+                  "type": "paragraph",
+                  "content": {
+                    "text": "Laborum veniam labore fugiat. Cillum mollit laboris irure cupidatat nisi esse. Elit adipisicing occaecat sit aliquip."
+                  }
+                }
+              ]
+            },
+            "TitleSecondLine": {
+              "__TYPE__": "StructuredTextContent",
+              "value": [
+                {
+                  "type": "paragraph",
+                  "content": {
+                    "text": "Pariatur et occaecat sunt dolore nisi nulla eu Lorem laborum labore sit. Sint do voluptate duis nisi mollit irure amet sint qui cillum culpa officia. Laborum excepteur exercitation et in eiusmod adipisicing et Lorem nostrud occaecat occaecat commodo eiusmod labore."
+                  }
+                }
+              ]
+            },
+            "description": {
+              "__TYPE__": "StructuredTextContent",
+              "value": [
+                {
+                  "type": "paragraph",
+                  "content": {
+                    "text": "Nostrud fugiat irure irure minim proident sint laborum cupidatat cupidatat in duis nostrud elit tempor. Adipisicing officia do veniam officia duis consequat. Sit anim magna proident qui aliquip exercitation aute."
+                  }
+                }
+              ]
+            }
+          },
+          "items": [
+            {
+              "__TYPE__": "GroupItemContent",
+              "value": []
+            }
+          ]
+        }
+      }
+    ]
   }
 }

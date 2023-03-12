@@ -5,8 +5,6 @@ import {
   useDisclosure,
 } from "@chakra-ui/react"
 import { FunctionComponent } from "react"
-import useIsMobile from "../../../utils/hooks/useIsMobile"
-import useIsWideDesktop from "../../../utils/hooks/useIsWideDesktop"
 import Menu from "./Menu"
 import MobileMenu from "./MobileMenu"
 import NarrowMenu from "./NarrowMenu"
@@ -18,6 +16,8 @@ import {
   MobileMenuIcon,
   WordmarkWrapper,
 } from "./styles"
+import useIsMobile from "../../../utils/hooks/useIsMobile"
+import useIsWideDesktop from "../../../utils/hooks/useIsWideDesktop"
 
 type DesktopLayoutProps = {
   children?: React.ReactNode

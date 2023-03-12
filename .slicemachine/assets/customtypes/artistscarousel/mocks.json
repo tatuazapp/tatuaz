@@ -1,16 +1,75 @@
 {
-  "id": "mock-doc-id",
-  "url": null,
-  "type": "artistscarousel",
-  "href": null,
-  "tags": [],
-  "first_publication_date": "1970-01-01T00:00:01+0000",
-  "last_publication_date": "1970-01-01T00:00:01+0000",
-  "slugs": [],
-  "linked_documents": [],
-  "lang": "en-us",
-  "alternate_languages": [],
-  "data": {
-    "slices": []
+  "slices": {
+    "__TYPE__": "SliceContentType",
+    "value": [
+      {
+        "key": "artists_carousel$bb86be13-ec76-4bfe-a84a-0d268973985d",
+        "name": "artists_carousel",
+        "widget": {
+          "__TYPE__": "SharedSliceContent",
+          "variation": "default",
+          "primary": {},
+          "items": [
+            {
+              "__TYPE__": "GroupItemContent",
+              "value": [
+                [
+                  "title",
+                  {
+                    "__TYPE__": "StructuredTextContent",
+                    "value": [
+                      {
+                        "type": "paragraph",
+                        "content": {
+                          "text": "Ex id dolor fugiat velit consequat occaecat ad esse proident cupidatat commodo consectetur laboris est. Aliqua mollit duis labore magna dolore nisi irure in voluptate. Anim nisi cupidatat labore tempor irure reprehenderit nulla amet nisi excepteur elit sunt nostrud ex eiusmod."
+                        }
+                      }
+                    ]
+                  }
+                ],
+                [
+                  "description",
+                  {
+                    "__TYPE__": "StructuredTextContent",
+                    "value": [
+                      {
+                        "type": "paragraph",
+                        "content": {
+                          "text": "Voluptate esse nulla et Lorem deserunt nisi eu. Et dolore ea magna aliquip commodo aliqua occaecat culpa non et nostrud voluptate velit fugiat deserunt."
+                        }
+                      }
+                    ]
+                  }
+                ],
+                [
+                  "photo",
+                  {
+                    "__TYPE__": "ImageContent",
+                    "origin": {
+                      "id": "main",
+                      "url": "https://images.unsplash.com/photo-1493119508027-2b584f234d6c",
+                      "width": 3424,
+                      "height": 3424
+                    },
+                    "url": "https://images.unsplash.com/photo-1493119508027-2b584f234d6c",
+                    "width": 3424,
+                    "height": 3424,
+                    "edit": {
+                      "zoom": 1,
+                      "crop": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "background": "transparent"
+                    },
+                    "thumbnails": {}
+                  }
+                ]
+              ]
+            }
+          ]
+        }
+      }
+    ]
   }
 }
