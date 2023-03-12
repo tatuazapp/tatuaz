@@ -2,10 +2,10 @@ import {
   ButtonProps as ChakraButtonProps,
   Button as ChakraButton,
 } from "@chakra-ui/react"
-import { ArrowUpRight } from "@styled-icons/bootstrap"
+import { ArrowRight, ArrowUpRight } from "@styled-icons/bootstrap"
 import { FunctionComponent } from "react"
 
-type ButtonKind = "arrowUpRight"
+type ButtonKind = "arrowUpRight" | "arrowRight" | "primary"
 
 type ButtonProps = {
   kind?: ButtonKind
@@ -18,6 +18,17 @@ const kinds = {
     rightIcon: <ArrowUpRight size={24} />,
     size: "lg",
     width: { base: "100%" },
+  },
+  arrowRight: {
+    color: "black",
+    colorScheme: "primary",
+    rightIcon: <ArrowRight size={24} />,
+    size: "lg",
+  },
+  primary: {
+    color: "black",
+    colorScheme: "primary",
+    size: "lg",
   },
 } satisfies Record<string, ChakraButtonProps>
 
