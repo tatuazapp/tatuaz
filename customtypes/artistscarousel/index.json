@@ -1,0 +1,21 @@
+{
+  "id": "artistscarousel",
+  "label": "ArtistsCarousel",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "slices": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {
+            "artists_carousel": {
+              "type": "SharedSlice"
+            }
+          }
+        }
+      }
+    }
+  }
+}

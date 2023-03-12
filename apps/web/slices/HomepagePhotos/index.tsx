@@ -1,4 +1,3 @@
-import * as prismicH from "@prismicio/helpers"
 import { SliceComponentProps } from "@prismicio/react"
 import Image from "next/image"
 import { FunctionComponent } from "react"
@@ -17,43 +16,43 @@ import {
 
 type HomepagePhotosProps = SliceComponentProps<HomepagePhotosSlice>
 
-const HomepagePhotos: FunctionComponent<HomepagePhotosProps> = ({ slice }) => {
-  const leftPhoto = prismicH.asImageSrc(slice.primary.FirstPhoto)
-  const rightTopPhoto = prismicH.asImageSrc(slice.primary.SecondPhoto)
-  const rightBottomPhoto = prismicH.asImageSrc(slice.primary.ThirdPhoto)
+const HomepagePhotos: FunctionComponent<HomepagePhotosProps> = ({ slice }) => (
+  <HomepagePhotosWrapper>
+    <PhotosContainer>
+      <LeftPhotosContainer>
+        <Image
+          priority
+          alt={slice.primary.FirstPhoto.alt}
+          height={slice.primary.FirstPhoto.dimensions.height}
+          src={slice.primary.FirstPhoto.url}
+          width={slice.primary.FirstPhoto.dimensions.width}
+        />
+      </LeftPhotosContainer>
+      <RightPhotosContainer>
+        <RightTopPhotoContainer>
+          <Image
+            alt={slice.primary.SecondPhoto.alt}
+            height={slice.primary.SecondPhoto.dimensions.height}
+            src={slice.primary.SecondPhoto.url}
+            width={slice.primary.SecondPhoto.dimensions.width}
+          />
+        </RightTopPhotoContainer>
+        <RightBottomPhotoContainer>
+          <Image
+            alt={slice.primary.ThirdPhoto.alt}
+            height={slice.primary.ThirdPhoto.dimensions.height}
+            src={slice.primary.ThirdPhoto.url}
+            width={slice.primary.ThirdPhoto.dimensions.width}
+          />
+        </RightBottomPhotoContainer>
+      </RightPhotosContainer>
+    </PhotosContainer>
 
-  return (
-    <HomepagePhotosWrapper>
-      <PhotosContainer>
-        <LeftPhotosContainer>
-          <Image alt="leftPhoto" height={500} src={leftPhoto} width={55550} />
-        </LeftPhotosContainer>
-        <RightPhotosContainer>
-          <RightTopPhotoContainer>
-            <Image
-              alt="rightTopPhoto"
-              height={55550}
-              src={rightTopPhoto}
-              width={5000}
-            />
-          </RightTopPhotoContainer>
-          <RightBottomPhotoContainer>
-            <Image
-              alt="rightBottomPhoto"
-              height={100}
-              src={rightBottomPhoto}
-              width={200}
-            />
-          </RightBottomPhotoContainer>
-        </RightPhotosContainer>
-      </PhotosContainer>
-
-      <Slider>
-        <SliderTrack />
-        <SliderThumb />
-      </Slider>
-    </HomepagePhotosWrapper>
-  )
-}
+    <Slider>
+      <SliderTrack />
+      <SliderThumb />
+    </Slider>
+  </HomepagePhotosWrapper>
+)
 
 export default HomepagePhotos

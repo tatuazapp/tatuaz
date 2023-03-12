@@ -20,6 +20,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "**.googleusercontent.com",
       },
+      {
+        protocol: "https",
+        hostname: "images.prismic.io",
+      },
     ],
   },
   exportPathMap: async function (defaultPathMap) {
