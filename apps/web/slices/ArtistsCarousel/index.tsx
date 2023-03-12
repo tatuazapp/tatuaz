@@ -1,7 +1,7 @@
 import { Stack } from "@chakra-ui/react"
+import { PrismicNextImage } from "@prismicio/next"
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react"
 import { Heading, Paragraph } from "@tatuaz/ui"
-import Image from "next/image"
 import { FunctionComponent } from "react"
 import Slider, { Settings } from "react-slick"
 import { useTheme } from "styled-components"
@@ -62,12 +62,7 @@ const ArtistsCarousel: FunctionComponent<ArtistsCarouselProps> = ({
         {slice.items.map((item, index) => (
           <CarouselItemWrapper key={index}>
             <ImageWrapper>
-              <Image
-                alt={item.photo.alt}
-                height={item.photo.dimensions.height}
-                src={item.photo.url}
-                width={item.photo.dimensions.width}
-              />
+              <PrismicNextImage field={item.photo} />
             </ImageWrapper>
             <Divider />
             <Stack>
