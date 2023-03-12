@@ -46,7 +46,6 @@ public static class DashboardExtensions
 
         services.RegisterSharedDomainDtosServices();
 
-
         services.RegisterSharedPipelineServices(
             configuration,
             new[] { typeof(SendEmail).Assembly },

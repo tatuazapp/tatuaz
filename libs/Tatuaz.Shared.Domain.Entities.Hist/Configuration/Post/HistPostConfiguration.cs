@@ -10,6 +10,8 @@ public class HistPostConfiguration : IEntityTypeConfiguration<HistPost>
     {
         builder.ToTable("H_posts", HistTatuazPostConstants.SchemaName);
 
+        builder.HasKey(x => x.HistId);
+
         builder.Property(x => x.AuthorId).HasMaxLength(320);
 
         builder.Property(x => x.Description).HasMaxLength(4096);

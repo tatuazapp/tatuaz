@@ -12,12 +12,13 @@ public abstract class TriggerSchedulingJob<T> : IConsumer<T>
 {
     private readonly ISchedulerFactory _schedulerFactory;
     private readonly ILogger _logger;
-    protected abstract Func<ConsumeContext<T>,CancellationToken,Task<ITrigger>> CreateTrigger { get; }
+    protected abstract Func<
+        ConsumeContext<T>,
+        CancellationToken,
+        Task<ITrigger>
+    > CreateTrigger { get; }
 
-    public TriggerSchedulingJob(
-        ISchedulerFactory schedulerFactory,
-        ILogger logger
-        )
+    public TriggerSchedulingJob(ISchedulerFactory schedulerFactory, ILogger logger)
     {
         _schedulerFactory = schedulerFactory;
         _logger = logger;
@@ -28,6 +29,10 @@ public abstract class TriggerSchedulingJob<T> : IConsumer<T>
         var scheduler = await _schedulerFactory.GetScheduler().ConfigureAwait(false);
         var trigger = await CreateTrigger(context, context.CancellationToken).ConfigureAwait(false);
         await scheduler.ScheduleJob(trigger).ConfigureAwait(false);
-        _logger.LogInformation("Trigger with name {TriggerName} scheduled at {FirstFireTime} UTC.", trigger.JobKey.Name, trigger.StartTimeUtc);
+        _logger.LogInformation(
+            "Trigger with name {TriggerName} scheduled at {FirstFireTime} UTC.",
+            trigger.JobKey.Name,
+            trigger.StartTimeUtc
+        );
     }
 }

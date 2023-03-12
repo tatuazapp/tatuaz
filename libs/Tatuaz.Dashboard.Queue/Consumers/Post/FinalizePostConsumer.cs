@@ -25,8 +25,16 @@ namespace Tatuaz.Dashboard.Queue.Consumers.Post;
 
 public class FinalizePostConsumer : TatuazConsumerBase<FinalizePost, EmptyDto>
 {
-    private readonly IGenericRepository<Shared.Domain.Entities.Models.Post.Post, HistPost, Guid> _postRepository;
-    private readonly IGenericRepository<Shared.Domain.Entities.Models.Photo.Photo, HistPhoto, Guid> _photoRepository;
+    private readonly IGenericRepository<
+        Shared.Domain.Entities.Models.Post.Post,
+        HistPost,
+        Guid
+    > _postRepository;
+    private readonly IGenericRepository<
+        Shared.Domain.Entities.Models.Photo.Photo,
+        HistPhoto,
+        Guid
+    > _photoRepository;
     private readonly IGenericRepository<InitialPost, HistInitialPost, Guid> _initialPostRepository;
     private readonly IUserContext _userContext;
     private readonly IUnitOfWork _unitOfWork;
@@ -34,11 +42,16 @@ public class FinalizePostConsumer : TatuazConsumerBase<FinalizePost, EmptyDto>
     public FinalizePostConsumer(
         ILogger<FinalizePostConsumer> logger,
         IGenericRepository<Shared.Domain.Entities.Models.Post.Post, HistPost, Guid> postRepository,
-        IGenericRepository<Shared.Domain.Entities.Models.Photo.Photo, HistPhoto, Guid> photoRepository,
+        IGenericRepository<
+            Shared.Domain.Entities.Models.Photo.Photo,
+            HistPhoto,
+            Guid
+        > photoRepository,
         IGenericRepository<InitialPost, HistInitialPost, Guid> initialPostRepository,
         IUserContext userContext,
         IUnitOfWork unitOfWork
-    ) : base(logger)
+    )
+        : base(logger)
     {
         _postRepository = postRepository;
         _photoRepository = photoRepository;
@@ -47,15 +60,18 @@ public class FinalizePostConsumer : TatuazConsumerBase<FinalizePost, EmptyDto>
         _unitOfWork = unitOfWork;
     }
 
-    protected override async Task<TatuazResult<EmptyDto>> ConsumeMessage(ConsumeContext<FinalizePost> context)
+    protected override async Task<TatuazResult<EmptyDto>> ConsumeMessage(
+        ConsumeContext<FinalizePost> context
+    )
     {
         var initialPostSpec = new FullSpecification<InitialPost>();
         initialPostSpec.AddFilter(x => x.Id == context.Message.InitialPostId);
         initialPostSpec.UseInclude(x => x.Include(y => y.InitialPostPhotos));
-        var initialPost = (await _initialPostRepository
+        var initialPost = (
+            await _initialPostRepository
                 .GetBySpecificationAsync(initialPostSpec, context.CancellationToken)
-                .ConfigureAwait(false))
-            .FirstOrDefault();
+                .ConfigureAwait(false)
+        ).FirstOrDefault();
 
         if (initialPost == null)
         {
@@ -69,7 +85,6 @@ public class FinalizePostConsumer : TatuazConsumerBase<FinalizePost, EmptyDto>
             return FinalizePostResultFactory.UserIsNotTheAuthorOfTheInitialPost<EmptyDto>();
         }
 
-
         foreach (var photo in context.Message.Photo)
         {
             if (!initialPost.InitialPostPhotos.Select(x => x.PhotoId).Contains(photo.PhotoId))
@@ -78,7 +93,8 @@ public class FinalizePostConsumer : TatuazConsumerBase<FinalizePost, EmptyDto>
                     new ValidationFailure(nameof(photo.PhotoId), "Photo not found on initial post")
                     {
                         ErrorCode = FinalizePostErrorCodes.PhotoNotFoundOnInitialPost
-                    });
+                    }
+                );
             }
         }
 
@@ -86,10 +102,15 @@ public class FinalizePostConsumer : TatuazConsumerBase<FinalizePost, EmptyDto>
         {
             if (!context.Message.Photo.Select(x => x.PhotoId).Contains(initialPhoto.PhotoId))
             {
-                validationResult.Errors.Add(new ValidationFailure(nameof(initialPhoto.PhotoId), "Photo is missing")
-                {
-                    ErrorCode = FinalizePostErrorCodes.PhotoMissing
-                });
+                validationResult.Errors.Add(
+                    new ValidationFailure(
+                        nameof(initialPhoto.PhotoId),
+                        $"Photo {initialPhoto.PhotoId} is missing"
+                    )
+                    {
+                        ErrorCode = FinalizePostErrorCodes.PhotoMissing
+                    }
+                );
             }
         }
 
@@ -102,20 +123,25 @@ public class FinalizePostConsumer : TatuazConsumerBase<FinalizePost, EmptyDto>
         {
             AuthorId = _userContext.RequiredCurrentUserEmail(),
             Description = context.Message.Description,
-            Photos = context.Message.Photo.Select(x => new PostPhoto { PhotoId = x.PhotoId }).ToList(),
+            Photos = context.Message.Photo
+                .Select(x => new PostPhoto { PhotoId = x.PhotoId })
+                .ToList(),
         };
         _postRepository.Create(post);
 
         foreach (var photo in context.Message.Photo)
         {
             var photoToEdit = await _photoRepository
-                .GetByIdAsync(photo.PhotoId, true, cancellationToken: context.CancellationToken).ConfigureAwait(false);
+                .GetByIdAsync(photo.PhotoId, true, cancellationToken: context.CancellationToken)
+                .ConfigureAwait(false);
             if (photoToEdit == null)
             {
                 return CommonResultFactory.InternalError<EmptyDto>();
             }
 
-            var categories = photo.CategoryIds.Select(x => new PhotoCategory { CategoryId = x }).ToList();
+            var categories = photo.CategoryIds
+                .Select(x => new PhotoCategory { CategoryId = x })
+                .ToList();
             photoToEdit.PhotoCategories = categories;
         }
 

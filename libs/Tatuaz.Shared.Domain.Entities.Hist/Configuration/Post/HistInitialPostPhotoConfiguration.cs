@@ -9,5 +9,7 @@ public class HistInitialPostPhotoConfiguration : IEntityTypeConfiguration<HistIn
     public void Configure(EntityTypeBuilder<HistInitialPostPhoto> builder)
     {
         builder.ToTable("H_initial_post_photos", HistTatuazPostConstants.SchemaName);
+
+        builder.HasKey(x => x.HistId);
     }
 }

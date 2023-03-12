@@ -10,6 +10,7 @@ namespace Tatuaz.Shared.Domain.Entities.Models.Post;
 public class InitialPost : AuditableEntity<HistInitialPost, Guid>, IEntity
 {
     public ICollection<InitialPostPhoto> InitialPostPhotos { get; set; } = default!;
+
     public override HistEntity<Guid> ToHistEntity(IClock clock, HistState state)
     {
         var histEntity = (HistInitialPost)base.ToHistEntity(clock, state);

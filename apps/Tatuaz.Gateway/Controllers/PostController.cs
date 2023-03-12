@@ -15,9 +15,8 @@ namespace Tatuaz.Gateway.Controllers;
 public class PostController : TatuazControllerBase
 {
     /// <inheritdoc />
-    public PostController(IMediator mediator) : base(mediator)
-    {
-    }
+    public PostController(IMediator mediator)
+        : base(mediator) { }
 
     /// <summary>
     /// Upload post photos
@@ -60,6 +59,4 @@ public class PostController : TatuazControllerBase
             await Mediator.Send(new FinalizePostCommand(finalizePostDto)).ConfigureAwait(false)
         );
     }
-
-
 }

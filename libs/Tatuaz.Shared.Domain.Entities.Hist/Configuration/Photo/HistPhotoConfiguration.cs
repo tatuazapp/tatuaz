@@ -9,5 +9,7 @@ public class HistPhotoConfiguration : IEntityTypeConfiguration<HistPhoto>
     public void Configure(EntityTypeBuilder<HistPhoto> builder)
     {
         builder.ToTable("H_photos", HistTatuazPhotoConstants.SchemaName);
+
+        builder.HasKey(x => x.HistId);
     }
 }

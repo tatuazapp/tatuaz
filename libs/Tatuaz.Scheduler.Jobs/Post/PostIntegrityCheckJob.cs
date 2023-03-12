@@ -17,17 +17,20 @@ public class PostIntegrityCheckJob : IJob
 {
     private readonly ILogger<PostIntegrityCheckJob> _logger;
     private readonly IGenericRepository<InitialPost, HistInitialPost, Guid> _initialPostRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly DeletePhotoProducer _deletePhotoProducer;
     public static readonly JobKey Key = new("PostIntegrityCheck", "Post");
 
     public PostIntegrityCheckJob(
         ILogger<PostIntegrityCheckJob> logger,
         IGenericRepository<InitialPost, HistInitialPost, Guid> initialPostRepository,
+        IUnitOfWork unitOfWork,
         DeletePhotoProducer deletePhotoProducer
     )
     {
         _logger = logger;
         _initialPostRepository = initialPostRepository;
+        _unitOfWork = unitOfWork;
         _deletePhotoProducer = deletePhotoProducer;
     }
 
@@ -37,23 +40,24 @@ public class PostIntegrityCheckJob : IJob
         var initialPostSpec = new FullSpecification<InitialPost>();
         initialPostSpec.AddFilter(x => x.Id == initialPostId);
         initialPostSpec.UseInclude(x => x.Include(y => y.InitialPostPhotos));
-        var initialPost = (await _initialPostRepository
+        var initialPost = (
+            await _initialPostRepository
                 .GetBySpecificationAsync(initialPostSpec, context.CancellationToken)
-                .ConfigureAwait(false))
-            .FirstOrDefault();
+                .ConfigureAwait(false)
+        ).FirstOrDefault();
         if (initialPost != null)
         {
-            _logger.LogInformation(
-                $"Cleaning up initial post with id {initialPostId}");
+            _logger.LogInformation($"Cleaning up initial post with id {initialPostId}");
 
             foreach (var initialPostPhoto in initialPost.InitialPostPhotos)
             {
-                await _deletePhotoProducer.Send(new DeletePhoto(initialPostPhoto.PhotoId), context.CancellationToken)
+                await _deletePhotoProducer
+                    .Send(new DeletePhoto(initialPostPhoto.PhotoId), context.CancellationToken)
                     .ConfigureAwait(false);
             }
 
-            await _initialPostRepository.DeleteAsync(initialPostId)
-                .ConfigureAwait(false);
+            await _initialPostRepository.DeleteAsync(initialPostId).ConfigureAwait(false);
+            await _unitOfWork.SaveChangesAsync(context.CancellationToken).ConfigureAwait(false);
         }
     }
 }

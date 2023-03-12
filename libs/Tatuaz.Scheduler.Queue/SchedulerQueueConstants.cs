@@ -2,6 +2,4 @@
 
 namespace Tatuaz.Scheduler.Queue;
 
-public static class SchedulerQueueConstants
-{
-}
+public static class SchedulerQueueConstants { }

@@ -9,5 +9,7 @@ public class HistInitialPostConfiguration : IEntityTypeConfiguration<HistInitial
     public void Configure(EntityTypeBuilder<HistInitialPost> builder)
     {
         builder.ToTable("H_initial_posts", HistTatuazPostConstants.SchemaName);
+
+        builder.HasKey(x => x.HistId);
     }
 }

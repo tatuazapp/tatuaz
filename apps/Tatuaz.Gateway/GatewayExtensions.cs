@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text.Json;
@@ -43,6 +44,7 @@ using Tatuaz.Shared.Infrastructure.DataAccess;
 using Tatuaz.Shared.Pipeline;
 using Tatuaz.Shared.Pipeline.Configuration;
 using Tatuaz.Shared.Pipeline.Filters;
+using Tatuaz.Shared.Pipeline.Messages;
 using Tatuaz.Shared.Pipeline.UserContext;
 using Tatuaz.Shared.Services;
 
@@ -151,7 +153,23 @@ public static class GatewayExtensions
             })
             .ConfigureApiBehaviorOptions(opt =>
             {
-                opt.SuppressModelStateInvalidFilter = true;
+                opt.InvalidModelStateResponseFactory = context =>
+                {
+                    var errors = context.ModelState
+                        .Where(x => x.Value.Errors.Count > 0)
+                        .SelectMany(x => x.Value.Errors)
+                        .Select(
+                            x => new TatuazError("InvalidModel", x.ErrorMessage ?? "Invalid model")
+                        )
+                        .ToArray();
+
+                    var errorResponse = new ObjectResult(HttpHelpers.ToErrorsObject(errors))
+                    {
+                        StatusCode = (int)HttpStatusCode.BadRequest
+                    };
+
+                    return errorResponse;
+                };
             })
             .AddJsonOptions(options =>
             {

@@ -8,7 +8,9 @@ namespace Tatuaz.Dashboard.Queue.Producers.Post;
 
 public class UploadPostPhotosProducer : TatuazProducerBase<UploadPostPhotos, UploadedPhotosDto>
 {
-    public UploadPostPhotosProducer(IRequestClient<UploadPostPhotos> requestClient, ILogger<UploadPostPhotosProducer> logger) : base(requestClient, logger)
-    {
-    }
+    public UploadPostPhotosProducer(
+        IRequestClient<UploadPostPhotos> requestClient,
+        ILogger<UploadPostPhotosProducer> logger
+    )
+        : base(requestClient, logger) { }
 }

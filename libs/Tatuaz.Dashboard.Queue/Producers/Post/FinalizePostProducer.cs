@@ -8,7 +8,9 @@ namespace Tatuaz.Dashboard.Queue.Producers.Post;
 
 public class FinalizePostProducer : TatuazProducerBase<FinalizePost, EmptyDto>
 {
-    public FinalizePostProducer(IRequestClient<FinalizePost> requestClient, ILogger<FinalizePostProducer> logger) : base(requestClient, logger)
-    {
-    }
+    public FinalizePostProducer(
+        IRequestClient<FinalizePost> requestClient,
+        ILogger<FinalizePostProducer> logger
+    )
+        : base(requestClient, logger) { }
 }

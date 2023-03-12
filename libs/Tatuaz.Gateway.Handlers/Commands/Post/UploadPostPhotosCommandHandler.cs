@@ -23,7 +23,8 @@ using Tatuaz.Shared.Services;
 
 namespace Tatuaz.Gateway.Handlers.Commands.Post;
 
-public class UploadPostPhotosCommandHandler : IRequestHandler<UploadPostPhotosCommand, TatuazResult<UploadedPhotosDto>>
+public class UploadPostPhotosCommandHandler
+    : IRequestHandler<UploadPostPhotosCommand, TatuazResult<UploadedPhotosDto>>
 {
     private readonly IValidator<UploadPostPhotosDto> _validator;
     private readonly IPhotoService _photoService;
@@ -40,10 +41,13 @@ public class UploadPostPhotosCommandHandler : IRequestHandler<UploadPostPhotosCo
         _uploadPostPhotosProducer = uploadPostPhotosProducer;
     }
 
-    public async Task<TatuazResult<UploadedPhotosDto>> Handle(UploadPostPhotosCommand request,
-        CancellationToken cancellationToken)
+    public async Task<TatuazResult<UploadedPhotosDto>> Handle(
+        UploadPostPhotosCommand request,
+        CancellationToken cancellationToken
+    )
     {
-        var validationResult = await _validator.ValidateAsync(request.UploadPostPhotosDto, cancellationToken)
+        var validationResult = await _validator
+            .ValidateAsync(request.UploadPostPhotosDto, cancellationToken)
             .ConfigureAwait(false);
 
         if (!validationResult.IsValid)
@@ -55,12 +59,15 @@ public class UploadPostPhotosCommandHandler : IRequestHandler<UploadPostPhotosCo
         for (var i = 0; i < request.UploadPostPhotosDto.Photos.Length; i++)
         {
             var stream = new MemoryStream();
-            await request.UploadPostPhotosDto.Photos[i].CopyToAsync(stream, cancellationToken)
+            await request.UploadPostPhotosDto.Photos[i]
+                .CopyToAsync(stream, cancellationToken)
                 .ConfigureAwait(false);
             if (!_photoService.ValidatePhotoHeaders(stream))
             {
-                var validationError = new ValidationFailure(nameof(request.UploadPostPhotosDto.Photos),
-                    "Invalid file format for photo number " + (i + 1) + ".")
+                var validationError = new ValidationFailure(
+                    nameof(request.UploadPostPhotosDto.Photos),
+                    "Invalid file format for photo number " + (i + 1) + "."
+                )
                 {
                     ErrorCode = UploadPostPhotosErrorCodes.InvalidFileFormat
                 };
@@ -77,7 +84,10 @@ public class UploadPostPhotosCommandHandler : IRequestHandler<UploadPostPhotosCo
         }
 
         return await _uploadPostPhotosProducer
-            .Send(new UploadPostPhotos(streams.Select(x => x.ToArray()).ToArray()), cancellationToken)
+            .Send(
+                new UploadPostPhotos(streams.Select(x => x.ToArray()).ToArray()),
+                cancellationToken
+            )
             .ConfigureAwait(false);
     }
 }

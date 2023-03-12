@@ -17,9 +17,7 @@ public class PhotoController : TatuazControllerBase
 {
     /// <inheritdoc />
     public PhotoController(IMediator mediator)
-        : base(mediator)
-    {
-    }
+        : base(mediator) { }
 
     [HttpPost("[action]")]
     [Authorize]

@@ -13,36 +13,42 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
             migrationBuilder.DropForeignKey(
                 name: "fk_tatuaz_users_photo_background_photo_id",
                 schema: "identity",
-                table: "tatuaz_users");
+                table: "tatuaz_users"
+            );
 
             migrationBuilder.DropForeignKey(
                 name: "fk_tatuaz_users_photo_foreground_photo_id",
                 schema: "identity",
-                table: "tatuaz_users");
+                table: "tatuaz_users"
+            );
 
             migrationBuilder.DropIndex(
                 name: "ix_tatuaz_users_background_photo_id",
                 schema: "identity",
-                table: "tatuaz_users");
+                table: "tatuaz_users"
+            );
 
             migrationBuilder.DropIndex(
                 name: "ix_tatuaz_users_foreground_photo_id",
                 schema: "identity",
-                table: "tatuaz_users");
+                table: "tatuaz_users"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "ix_tatuaz_users_background_photo_id",
                 schema: "identity",
                 table: "tatuaz_users",
                 column: "background_photo_id",
-                unique: true);
+                unique: true
+            );
 
             migrationBuilder.CreateIndex(
                 name: "ix_tatuaz_users_foreground_photo_id",
                 schema: "identity",
                 table: "tatuaz_users",
                 column: "foreground_photo_id",
-                unique: true);
+                unique: true
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "fk_tatuaz_users_photo_background_photo_id",
@@ -52,7 +58,8 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                 principalSchema: "photo",
                 principalTable: "photos",
                 principalColumn: "id",
-                onDelete: ReferentialAction.SetNull);
+                onDelete: ReferentialAction.SetNull
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "fk_tatuaz_users_photo_foreground_photo_id",
@@ -62,7 +69,8 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                 principalSchema: "photo",
                 principalTable: "photos",
                 principalColumn: "id",
-                onDelete: ReferentialAction.SetNull);
+                onDelete: ReferentialAction.SetNull
+            );
         }
 
         /// <inheritdoc />
@@ -71,34 +79,40 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
             migrationBuilder.DropForeignKey(
                 name: "fk_tatuaz_users_photo_background_photo_id",
                 schema: "identity",
-                table: "tatuaz_users");
+                table: "tatuaz_users"
+            );
 
             migrationBuilder.DropForeignKey(
                 name: "fk_tatuaz_users_photo_foreground_photo_id",
                 schema: "identity",
-                table: "tatuaz_users");
+                table: "tatuaz_users"
+            );
 
             migrationBuilder.DropIndex(
                 name: "ix_tatuaz_users_background_photo_id",
                 schema: "identity",
-                table: "tatuaz_users");
+                table: "tatuaz_users"
+            );
 
             migrationBuilder.DropIndex(
                 name: "ix_tatuaz_users_foreground_photo_id",
                 schema: "identity",
-                table: "tatuaz_users");
+                table: "tatuaz_users"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "ix_tatuaz_users_background_photo_id",
                 schema: "identity",
                 table: "tatuaz_users",
-                column: "background_photo_id");
+                column: "background_photo_id"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "ix_tatuaz_users_foreground_photo_id",
                 schema: "identity",
                 table: "tatuaz_users",
-                column: "foreground_photo_id");
+                column: "foreground_photo_id"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "fk_tatuaz_users_photo_background_photo_id",
@@ -107,7 +121,8 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                 column: "background_photo_id",
                 principalSchema: "photo",
                 principalTable: "photos",
-                principalColumn: "id");
+                principalColumn: "id"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "fk_tatuaz_users_photo_foreground_photo_id",
@@ -116,7 +131,8 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                 column: "foreground_photo_id",
                 principalSchema: "photo",
                 principalTable: "photos",
-                principalColumn: "id");
+                principalColumn: "id"
+            );
         }
     }
 }

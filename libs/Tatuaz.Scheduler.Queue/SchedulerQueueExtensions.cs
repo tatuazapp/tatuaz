@@ -8,7 +8,6 @@ public static class SchedulerQueueExtensions
         this IServiceCollection services
     )
     {
-
         return services;
     }
 }

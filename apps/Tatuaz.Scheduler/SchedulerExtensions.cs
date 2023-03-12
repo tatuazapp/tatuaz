@@ -20,6 +20,7 @@ using Tatuaz.Shared.Infrastructure.DataAccess;
 using Tatuaz.Shared.Pipeline;
 using Tatuaz.Shared.Pipeline.Configuration;
 using Tatuaz.Shared.Pipeline.Queues;
+using Tatuaz.Shared.Pipeline.UserContext;
 using Tatuaz.TatuazSchedulerJobs;
 using Tatuaz.TatuazSchedulerJobs.Post;
 
@@ -41,8 +42,10 @@ public static class SchedulerExtensions
         services.RegisterSharedDomainDtosServices();
         services.RegisterDashboardQueueServices();
 
-        services.RegisterSharedPipelineServices(configuration,
-            new[] { typeof(SchedulePostIntegrityCheckConsumer).Assembly });
+        services.RegisterSharedPipelineServices(
+            configuration,
+            new[] { typeof(SchedulePostIntegrityCheckConsumer).Assembly }
+        );
 
         services.AddQuartz(opt =>
         {
@@ -57,7 +60,12 @@ public static class SchedulerExtensions
             opt.UseInMemoryStore();
         });
 
-        services.AddQuartzHostedService(opt => { opt.AwaitApplicationStarted = true; });
+        services.AddQuartzHostedService(opt =>
+        {
+            opt.AwaitApplicationStarted = true;
+        });
+
+        services.AddScoped<IUserContext, SchedulerUserContext>();
 
         return services;
     }
@@ -125,6 +133,6 @@ public static class SchedulerExtensions
     public static SerilogOpt GetSerilogOpt(this IConfiguration configuration)
     {
         return configuration.GetSection(SerilogOpt.SectionName).Get<SerilogOpt>()
-               ?? throw new Exception("Serilog options not found");
+            ?? throw new Exception("Serilog options not found");
     }
 }

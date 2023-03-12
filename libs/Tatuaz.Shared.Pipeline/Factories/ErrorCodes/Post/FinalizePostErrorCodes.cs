@@ -8,4 +8,9 @@ public class FinalizePostErrorCodes
     public const string PhotoNotFoundOnInitialPost = "PhotoNotFoundOnInitialPost";
     public const string PhotoMissing = "PhotoMissing";
     public const string UserIsNotTheAuthorOfTheInitialPost = "UserIsNotTheAuthorOfTheInitialPost";
+    public const string PhotoInfoDtosIsNull = "PhotoInfoDtosIsNull";
+    public const string PhotoInfoDtosTooMany = "PhotoInfoDtosTooMany";
+    public const string PhotoInfoDtosHasDuplicateCategoryIds =
+        "PhotoInfoDtosHasDuplicateCategoryIds";
+    public const string PhotoInfoDtosHasInvalidCategoryIds = "PhotoInfoDtosHasInvalidCategoryIds";
 }

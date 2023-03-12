@@ -9,5 +9,7 @@ public class HistPostLikeConfiguration : IEntityTypeConfiguration<HistPostLike>
     public void Configure(EntityTypeBuilder<HistPostLike> builder)
     {
         builder.ToTable("H_post_likes", HistTatuazPostConstants.SchemaName);
+
+        builder.HasKey(x => x.HistId);
     }
 }

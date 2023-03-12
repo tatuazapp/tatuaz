@@ -9,7 +9,9 @@ namespace Tatuaz.Dashboard.Queue.Producers.Photo;
 
 public class DeletePhotoProducer : TatuazProducerBase<DeletePhoto, EmptyDto>
 {
-    public DeletePhotoProducer(IRequestClient<DeletePhoto> requestClient, ILogger<DeletePhotoProducer> logger) : base(requestClient, logger)
-    {
-    }
+    public DeletePhotoProducer(
+        IRequestClient<DeletePhoto> requestClient,
+        ILogger<DeletePhotoProducer> logger
+    )
+        : base(requestClient, logger) { }
 }

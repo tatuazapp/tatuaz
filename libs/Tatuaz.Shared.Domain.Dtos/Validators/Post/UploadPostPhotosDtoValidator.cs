@@ -33,6 +33,8 @@ public class UploadPostPhotosDtoValidator : AbstractValidator<UploadPostPhotosDt
                 return length <= 5 * 1024 * 1024;
             })
             .WithErrorCode(UploadPostPhotosErrorCodes.PhotoTooLarge)
-            .WithMessage((dto, file) => $"Photo {dto.Photos.ToList().IndexOf(file) + 1} is too large");
+            .WithMessage(
+                (dto, file) => $"Photo {dto.Photos.ToList().IndexOf(file) + 1} is too large"
+            );
     }
 }

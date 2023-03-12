@@ -55,10 +55,14 @@ public class SetForegroundPhotoConsumer : TatuazConsumerBase<SetForegroundPhoto,
 
         if (user.ForegroundPhotoId != null)
         {
-            await context.Publish(new DeletePhoto(user.ForegroundPhotoId.Value)).ConfigureAwait(false);
+            await context
+                .Publish(new DeletePhoto(user.ForegroundPhotoId.Value))
+                .ConfigureAwait(false);
         }
 
-        var addPhotoResult = await _addPhotoProducer.Send(new AddPhoto(context.Message.Photo)).ConfigureAwait(false);
+        var addPhotoResult = await _addPhotoProducer
+            .Send(new AddPhoto(context.Message.Photo))
+            .ConfigureAwait(false);
 
         if (!addPhotoResult.Successful)
         {

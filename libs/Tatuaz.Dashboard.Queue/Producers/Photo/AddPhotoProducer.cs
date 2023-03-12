@@ -10,7 +10,9 @@ namespace Tatuaz.Dashboard.Queue.Producers.Photo;
 
 public class AddPhotoProducer : TatuazProducerBase<AddPhoto, Guid>
 {
-    public AddPhotoProducer(IRequestClient<AddPhoto> requestClient, ILogger<AddPhotoProducer> logger) : base(requestClient, logger)
-    {
-    }
+    public AddPhotoProducer(
+        IRequestClient<AddPhoto> requestClient,
+        ILogger<AddPhotoProducer> logger
+    )
+        : base(requestClient, logger) { }
 }
