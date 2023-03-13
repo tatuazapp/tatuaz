@@ -10,8 +10,8 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway.Handlers.Queries.Statistics;
 
-public class GetRegisteredStatsQueryHandler : IRequestHandler<GetRegisteredStatsQuery,
-    TatuazResult<RegisteredStatsDto>>
+public class GetRegisteredStatsQueryHandler
+    : IRequestHandler<GetRegisteredStatsQuery, TatuazResult<RegisteredStatsDto>>
 {
     private readonly GetRegisteredStatsProducer _getRegisteredStatsProducer;
 
@@ -22,13 +22,11 @@ public class GetRegisteredStatsQueryHandler : IRequestHandler<GetRegisteredStats
 
     public async Task<TatuazResult<RegisteredStatsDto>> Handle(
         GetRegisteredStatsQuery request,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken
+    )
     {
         return await _getRegisteredStatsProducer
-            .Send(
-                new GetRegisteredStats(),
-                cancellationToken
-            )
+            .Send(new GetRegisteredStats(), cancellationToken)
             .ConfigureAwait(false);
     }
 }

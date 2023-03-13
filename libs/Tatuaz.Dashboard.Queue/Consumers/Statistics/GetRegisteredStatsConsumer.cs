@@ -19,19 +19,22 @@ public class GetRegisteredStatsConsumer : TatuazConsumerBase<GetRegisteredStats,
 
     public GetRegisteredStatsConsumer(
         ILogger<GetRegisteredStatsConsumer> logger,
-        IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository)
+        IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository
+    )
         : base(logger)
     {
         _userRepository = userRepository;
     }
 
     protected override async Task<TatuazResult<RegisteredStatsDto>> ConsumeMessage(
-        ConsumeContext<GetRegisteredStats> context)
+        ConsumeContext<GetRegisteredStats> context
+    )
     {
-        var users = (int) await _userRepository.CountByPredicateAsync(x => true).ConfigureAwait(false);
+        var users = (int)
+            await _userRepository.CountByPredicateAsync(x => true).ConfigureAwait(false);
 
         //TODO: get artists and clients counts once they are implemented
-        var result = new RegisteredStatsDto(users/3, users/2, users);
+        var result = new RegisteredStatsDto(users / 3, users / 2, users);
 
         return CommonResultFactory.Ok<RegisteredStatsDto>(result);
     }

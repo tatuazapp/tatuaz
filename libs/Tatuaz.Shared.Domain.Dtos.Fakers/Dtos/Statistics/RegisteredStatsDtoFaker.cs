@@ -9,11 +9,12 @@ public sealed class RegisteredStatsDtoFaker : Faker<RegisteredStatsDto>, IDtoFak
     public RegisteredStatsDtoFaker()
     {
         CustomInstantiator(
-            f => new RegisteredStatsDto(
-                f.Random.Int(0, 10000),
-                f.Random.Int(0, 1000),
-                f.Random.Int(1000, 10000))
+            f =>
+                new RegisteredStatsDto(
+                    f.Random.Int(0, 10000),
+                    f.Random.Int(0, 1000),
+                    f.Random.Int(1000, 10000)
+                )
         );
     }
-
 }

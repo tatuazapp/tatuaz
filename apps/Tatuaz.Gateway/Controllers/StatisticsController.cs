@@ -17,9 +17,8 @@ public class StatisticsController : TatuazControllerBase
     /// Constructor receiving the mediator from DI
     /// </summary>
     /// <param name="mediator"></param>
-    public StatisticsController(IMediator mediator) : base(mediator)
-    {
-    }
+    public StatisticsController(IMediator mediator)
+        : base(mediator) { }
 
     /// <summary>
     ///     Get number of registered tattoo artists, clients and users.
@@ -33,7 +32,8 @@ public class StatisticsController : TatuazControllerBase
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> GetRegisteredStats()
     {
-        return ResultToActionResult(await Mediator.Send(new GetRegisteredStatsQuery())
-            .ConfigureAwait(false));
+        return ResultToActionResult(
+            await Mediator.Send(new GetRegisteredStatsQuery()).ConfigureAwait(false)
+        );
     }
 }
