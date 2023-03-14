@@ -12,10 +12,10 @@ export const SearchAreaWrapper = styled.div`
 
 export const SearchInput = styled.input`
   width: 100%;
+  height: ${({ theme }) => theme.sizes.xxlarge};
   padding-top: ${({ theme }) => theme.space.xsmall};
   padding-bottom: ${({ theme }) => theme.space.xsmall};
   padding-left: ${({ theme }) => theme.space.xxxsmall};
-  height: ${({ theme }) => theme.sizes.xxlarge};
 
   color: ${({ theme }) => theme.colors.secondary};
 
@@ -49,29 +49,24 @@ export const SearchInput = styled.input`
       opacity: 1;
     }
   }
-  ${down("lg")} {
-    margin-right: ${({ theme }) => theme.space.large};
+  ${down("md")} {
+    margin-right: ${({ theme }) => theme.space.xlarge};
   }
 `
 
 export const UserArea = styled.div`
   display: flex;
   align-items: center;
+  margin-left: ${({ theme }) => theme.space.xlarge};
   white-space: nowrap;
 `
 
-export const UserIcon = styled.div`
+export const UserPhoto = styled.div`
   position: relative;
+
   width: ${({ theme }) => theme.sizes.xxlarge};
   height: ${({ theme }) => theme.sizes.xxlarge};
   margin-right: ${({ theme }) => theme.space.xsmall};
-`
-
-export const UserPhoto = styled.div`
-  display: inline-block;
-
-  width: ${({ theme }) => theme.sizes.xxlarge};
-  height: ${({ theme }) => theme.sizes.xxlarge};
 
   /* TODO: change to dynamic */
   background-image: url("https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg");
@@ -89,12 +84,6 @@ export const UserIconStatus = styled.div`
 
   background-color: ${({ theme }) => theme.colors.primary};
   border-radius: 50%;
-`
-export const UserName = styled.p`
-  margin-left: ${({ theme }) => theme.space.large};
-  font-size: ${({ theme }) => theme.sizes.medium};
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.secondary};
 `
 
 export const MobileSearchIcon = styled(ArrowRightCircle)`

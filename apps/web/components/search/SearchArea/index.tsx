@@ -9,7 +9,6 @@ import {
   SearchInput,
   SearchAreaWrapper,
   UserArea,
-  UserIcon,
   UserIconStatus,
   UserPhoto,
   MobileSearchIcon,
@@ -38,7 +37,6 @@ const SearchArea = () => {
           colorScheme="primary"
           height={{ base: "auto", md: theme.sizes.xxlarge }}
           marginLeft={{ base: "0", md: theme.space.xlarge }}
-          marginRight={{ base: "0", md: isMobile ? 0 : theme.space.xlarge }}
           rightIcon={<ArrowUpRight size={24} />}
           size="lg"
         >
@@ -47,10 +45,10 @@ const SearchArea = () => {
       )}
       {!isMobile && (
         <UserArea>
-          <UserIcon>
-            <UserPhoto />
+          <UserPhoto>
             <UserIconStatus />
-          </UserIcon>
+          </UserPhoto>
+
           <Paragraph color={theme.colors.secondary} level={1} strong={true}>
             Richard Brewl
           </Paragraph>

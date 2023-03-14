@@ -3,14 +3,18 @@ import { Menu, MenuButton, Button, MenuList, MenuItem } from "@chakra-ui/react"
 import { Paragraph } from "@tatuaz/ui"
 import { useState } from "react"
 import { theme } from "../../../styles/theme"
+import { contentButton } from "../../../types/contentButton"
 import useIsSmallPhone from "../../../utils/hooks/useIsSmallMobile"
+import { rem } from "../../../../../libs/ui/src/utils/utils"
 import { TypeButton, SearchButtonsWrapper } from "./styles"
 
-const buttonTypes = ["All", "Photos", "Posts", "Artists"]
+const buttonTypes: contentButton[] = ["All", "Photos", "Posts", "Artists"]
 
 const SearchButtonArea = () => {
   const isSmallMobile = useIsSmallPhone()
-  const [selectedType, setSelectedType] = useState(buttonTypes[0])
+  const [selectedType, setSelectedType] = useState<contentButton>(
+    buttonTypes[0]
+  )
 
   return (
     <SearchButtonsWrapper>
@@ -30,7 +34,7 @@ const SearchButtonArea = () => {
             paddingBottom={theme.space.xxsmall}
             paddingTop={theme.space.xxsmall}
             rightIcon={<ChevronDownIcon fontSize={theme.space.large} />}
-            width="190px"
+            width={rem(190)}
           >
             {selectedType}
           </MenuButton>

@@ -3,18 +3,15 @@ import styled from "styled-components"
 import { rem } from "../../../../styles/utils"
 
 export const ArtistCardWrapper = styled.div`
-  max-width: ${rem(282)};
+  max-width: ${rem(300)};
   height: ${rem(432)};
-  margin-right: ${({ theme }) => theme.space.xxxsmall};
-  margin-bottom: ${({ theme }) => theme.space.small};
-  margin-left: ${({ theme }) => theme.space.xxxsmall};
+  margin-right: ${({ theme }) => theme.space.xxsmall};
 
   background-color: ${({ theme }) => theme.colors.background2};
   border-radius: ${({ theme }) => theme.radius.medium};
 
   ${down("sm")} {
     max-width: 100%;
-    height: 100%;
   }
 `
 
@@ -24,6 +21,7 @@ export const ArtistCardBacktroundPhoto = styled.div`
   height: ${rem(165)};
   margin-bottom: ${rem(51)};
 
+  /* TODO: change to dynamic */
   background-image: url("https://t3.ftcdn.net/jpg/01/01/05/24/360_F_101052491_D8WlkJsZclF5kO8LsA7AstXI9Ir4iuFl.jpg");
   background-size: cover;
   border-top-left-radius: ${({ theme }) => theme.radius.medium};
