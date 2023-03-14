@@ -5,7 +5,6 @@ import { useState } from "react"
 import { theme } from "../../../styles/theme"
 import { contentButton } from "../../../types/contentButton"
 import useIsSmallPhone from "../../../utils/hooks/useIsSmallMobile"
-import { rem } from "../../../../../libs/ui/src/utils/utils"
 import { TypeButton, SearchButtonsWrapper } from "./styles"
 
 const buttonTypes: contentButton[] = ["All", "Photos", "Posts", "Artists"]
@@ -34,7 +33,6 @@ const SearchButtonArea = () => {
             paddingBottom={theme.space.xxsmall}
             paddingTop={theme.space.xxsmall}
             rightIcon={<ChevronDownIcon fontSize={theme.space.large} />}
-            width={rem(190)}
           >
             {selectedType}
           </MenuButton>
