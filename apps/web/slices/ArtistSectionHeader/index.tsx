@@ -1,14 +1,15 @@
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react"
 import { SuitDiamondFill } from "@styled-icons/bootstrap/SuitDiamondFill"
+import { Heading } from "@tatuaz/ui"
 import { FunctionComponent } from "react"
 import { theme } from "../../styles/theme"
 import { ArtistSectionHeaderSlice } from "../../types.generated"
+import useIsMobile from "../../utils/hooks/useIsMobile"
+import useIsPhone from "../../utils/hooks/useIsPhone"
 import {
   ArtistsSectionHeaderWrapper,
   HeaderFirstLineWrapper,
   HeaderSecondLineWrapper,
-  FirstLineTextWrapper,
-  SecondLineTextWrapper,
   SecondLineSlider,
   SliderTrack,
   SliderThumb,
@@ -18,34 +19,41 @@ type ArtistSectionHeaderProps = SliceComponentProps<ArtistSectionHeaderSlice>
 
 const ArtistSectionHeader: FunctionComponent<ArtistSectionHeaderProps> = ({
   slice,
-}) => (
-  <ArtistsSectionHeaderWrapper>
-    <HeaderFirstLineWrapper>
-      <FirstLineTextWrapper>
-        {slice.primary.ArtistSectionHeaderFirstLine ? (
-          <PrismicRichText field={slice.primary.ArtistSectionHeaderFirstLine} />
-        ) : (
-          <h2>-</h2>
-        )}
-      </FirstLineTextWrapper>
-      <SuitDiamondFill color={theme.colors.primary} size={34} />
-    </HeaderFirstLineWrapper>
-    <HeaderSecondLineWrapper>
-      <SecondLineTextWrapper>
-        {slice.primary.ArtistSectionHeaderSecondLine ? (
-          <PrismicRichText
-            field={slice.primary.ArtistSectionHeaderSecondLine}
-          />
-        ) : (
-          <h2>-</h2>
-        )}
-      </SecondLineTextWrapper>
-      <SecondLineSlider>
-        <SliderTrack />
-        <SliderThumb />
-      </SecondLineSlider>
-    </HeaderSecondLineWrapper>
-  </ArtistsSectionHeaderWrapper>
-)
+}) => {
+  const isMobile = useIsMobile()
+  const isPhone = useIsPhone()
+  return (
+    <ArtistsSectionHeaderWrapper>
+      <HeaderFirstLineWrapper>
+        <Heading level={isPhone ? 3 : isMobile ? 2 : 1}>
+          {slice.primary.ArtistSectionHeaderFirstLine ? (
+            <PrismicRichText
+              field={slice.primary.ArtistSectionHeaderFirstLine}
+            />
+          ) : (
+            <h2>-</h2>
+          )}
+        </Heading>
+
+        <SuitDiamondFill color={theme.colors.primary} size={34} />
+      </HeaderFirstLineWrapper>
+      <HeaderSecondLineWrapper>
+        <Heading level={isPhone ? 3 : isMobile ? 2 : 1}>
+          {slice.primary.ArtistSectionHeaderSecondLine ? (
+            <PrismicRichText
+              field={slice.primary.ArtistSectionHeaderSecondLine}
+            />
+          ) : (
+            <h2>-</h2>
+          )}
+        </Heading>
+        <SecondLineSlider>
+          <SliderTrack />
+          <SliderThumb />
+        </SecondLineSlider>
+      </HeaderSecondLineWrapper>
+    </ArtistsSectionHeaderWrapper>
+  )
+}
 
 export default ArtistSectionHeader

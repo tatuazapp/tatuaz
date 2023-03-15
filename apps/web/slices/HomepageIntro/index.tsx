@@ -1,11 +1,12 @@
 import { PrismicRichText, SliceComponentProps } from "@prismicio/react"
+import { Heading, Paragraph } from "@tatuaz/ui"
 import { FunctionComponent } from "react"
 import { HomepageIntroSlice } from "../../types.generated"
+import useIsPhone from "../../utils/hooks/useIsPhone"
+import useIsTablet from "../../utils/hooks/useIsTablet"
 import { FindArtistButton } from "./FindArtistButton"
 import {
   HomepageIntroWrapper,
-  TitleSecondLineWrapper,
-  TitleFirstLineTitleWrapper,
   TitleFirstLineWrapper,
   SliderTrack,
   SliderThumb,
@@ -15,33 +16,43 @@ import {
 
 type HomepageIntroProps = SliceComponentProps<HomepageIntroSlice>
 
-const HomepageIntro: FunctionComponent<HomepageIntroProps> = ({ slice }) => (
-  <HomepageIntroWrapper>
-    <div>
+const HomepageIntro: FunctionComponent<HomepageIntroProps> = ({ slice }) => {
+  const isTablet = useIsTablet()
+  const isPhone = useIsPhone()
+  return (
+    <HomepageIntroWrapper>
       <TitleFirstLineWrapper>
-        <TitleFirstLineTitleWrapper>
-          {slice.primary.TitleFirstLine && (
+        <Heading level={isPhone ? 3 : isTablet ? 2 : 1}>
+          {slice.primary.TitleFirstLine ? (
             <PrismicRichText field={slice.primary.TitleFirstLine} />
+          ) : (
+            <h1>-</h1>
           )}
-        </TitleFirstLineTitleWrapper>
+        </Heading>
         <Slider>
           <SliderTrack />
           <SliderThumb />
         </Slider>
       </TitleFirstLineWrapper>
-      <TitleSecondLineWrapper>
-        {slice.primary.TitleSecondLine && (
+      <Heading level={isPhone ? 3 : isTablet ? 2 : 1}>
+        {slice.primary.TitleSecondLine ? (
           <PrismicRichText field={slice.primary.TitleSecondLine} />
+        ) : (
+          <h1>-</h1>
         )}
-      </TitleSecondLineWrapper>
-    </div>
-    <DescriptionWrapper>
-      {slice.primary.description && (
-        <PrismicRichText field={slice.primary.description} />
-      )}
-    </DescriptionWrapper>
-    <FindArtistButton />
-  </HomepageIntroWrapper>
-)
+      </Heading>
+      <DescriptionWrapper>
+        <Paragraph level={2}>
+          {slice.primary.description ? (
+            <PrismicRichText field={slice.primary.description} />
+          ) : (
+            <h2>-</h2>
+          )}
+        </Paragraph>
+      </DescriptionWrapper>
+      <FindArtistButton />
+    </HomepageIntroWrapper>
+  )
+}
 
 export default HomepageIntro

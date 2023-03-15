@@ -1,4 +1,5 @@
 import { ArrowDownRightCircle } from "@styled-icons/bootstrap/ArrowDownRightCircle"
+import { down } from "styled-breakpoints"
 import styled from "styled-components"
 
 export const MobileQuestionItemWrapper = styled.div<{
@@ -44,12 +45,16 @@ export const MobileQuestionTitle = styled.div<{
   color: ${({ isHovered, theme }) =>
     isHovered ? theme.colors.secondary : theme.colors.background3};
   text-align: left;
+
+  ${down("xs")} {
+    font-size: ${({ theme }) => theme.sizes.medium};
+  }
 `
 
 export const MobileQuestionContent = styled.div<{
   isHovered: boolean
 }>`
-  padding-right: ${({ theme }) => theme.space.xxsmall};
+  padding-right: ${({ theme }) => theme.space.medium};
   padding-bottom: ${({ theme }) => theme.space.large};
   padding-left: ${({ theme }) => theme.space.xxlarge};
 
@@ -60,19 +65,27 @@ export const MobileQuestionContent = styled.div<{
 
   background-color: ${({ isHovered, theme }) =>
     isHovered ? theme.colors.background2 : theme.colors.background1};
+
+  ${down("xs")} {
+    font-size: ${({ theme }) => theme.sizes.small};
+    /* padding-right: ${({ theme }) => theme.space.large}; */
+  }
 `
 
 export const MobileIconNotSelected = styled(ArrowDownRightCircle)`
   align-self: center;
+
+  min-width: 60px;
   height: 60px;
-  padding-left: ${({ theme }) => theme.space.xxxxlarge};
+  margin-left: ${({ theme }) => theme.space.xxsmall};
+
   color: ${({ theme }) => theme.colors.background3};
 `
 
 export const MobileIconSelected = styled(ArrowDownRightCircle)`
   align-self: center;
+  min-width: 60px;
   height: 60px;
-  padding-left: ${({ theme }) => theme.space.xxxxlarge};
   color: ${({ theme }) => theme.colors.primary};
 `
 
