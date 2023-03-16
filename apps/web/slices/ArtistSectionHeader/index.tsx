@@ -6,6 +6,7 @@ import { theme } from "../../styles/theme"
 import { ArtistSectionHeaderSlice } from "../../types.generated"
 import useIsMobile from "../../utils/hooks/useIsMobile"
 import useIsPhone from "../../utils/hooks/useIsPhone"
+import useIsSmallMobile from "../../utils/hooks/useIsSmallMobile"
 import {
   ArtistsSectionHeaderWrapper,
   HeaderFirstLineWrapper,
@@ -22,6 +23,7 @@ const ArtistSectionHeader: FunctionComponent<ArtistSectionHeaderProps> = ({
 }) => {
   const isMobile = useIsMobile()
   const isPhone = useIsPhone()
+  const isSmallMobile = useIsSmallMobile()
   return (
     <ArtistsSectionHeaderWrapper>
       <HeaderFirstLineWrapper>
@@ -38,7 +40,10 @@ const ArtistSectionHeader: FunctionComponent<ArtistSectionHeaderProps> = ({
         <SuitDiamondFill color={theme.colors.primary} size={34} />
       </HeaderFirstLineWrapper>
       <HeaderSecondLineWrapper>
-        <Heading level={isPhone ? 3 : isMobile ? 2 : 1}>
+        <Heading
+          level={isPhone ? 3 : isMobile ? 2 : 1}
+          textAlign={isSmallMobile ? "center" : "left"}
+        >
           {slice.primary.ArtistSectionHeaderSecondLine ? (
             <PrismicRichText
               field={slice.primary.ArtistSectionHeaderSecondLine}

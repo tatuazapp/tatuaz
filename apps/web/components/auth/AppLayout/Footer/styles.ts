@@ -77,39 +77,36 @@ export const SocialMediaWrapper = styled.div`
 `
 
 export const TwitterIcon = styled(Twitter)`
+  cursor: pointer;
   height: ${({ theme }) => theme.space.xlarge};
   color: ${({ theme }) => theme.colors.primary};
-
-  cursor: pointer;
   ${down("sm")} {
-    height: ${({ theme }) => theme.space.xxlarge};
+    min-width: ${({ theme }) => theme.space.xlarge};
   }
 `
 export const YoutubeIcon = styled(Youtube)`
+  cursor: pointer;
   height: ${({ theme }) => theme.space.xlarge};
   color: ${({ theme }) => theme.colors.primary};
 
-  cursor: pointer;
-
   ${down("sm")} {
-    height: ${({ theme }) => theme.space.xxlarge};
+    min-width: ${({ theme }) => theme.space.xxlarge};
   }
 `
 export const InstagramIcon = styled(Instagram)`
+  cursor: pointer;
   height: ${({ theme }) => theme.space.xlarge};
   color: ${({ theme }) => theme.colors.primary};
-
-  cursor: pointer;
   ${down("sm")} {
-    height: ${({ theme }) => theme.space.xxlarge};
+    min-width: ${({ theme }) => theme.space.xlarge};
   }
 `
 export const FacebookIcon = styled(Facebook)`
+  cursor: pointer;
   height: ${({ theme }) => theme.space.large};
   color: ${({ theme }) => theme.colors.primary};
-
-  cursor: pointer;
   ${down("sm")} {
+    min-width: ${({ theme }) => theme.space.xlarge};
     height: ${({ theme }) => theme.space.xlarge};
   }
 `

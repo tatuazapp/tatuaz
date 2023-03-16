@@ -59,28 +59,3 @@ export const StatsItem = styled.div`
     margin-bottom: ${({ theme }) => theme.sizes.large};
   }
 `
-
-export const StatsItemTop = styled.div`
-  font-size: ${({ theme }) => theme.sizes.xxlarge};
-  font-weight: 800;
-
-  ${down("md")} {
-    font-size: ${({ theme }) => theme.sizes.xlarge};
-  }
-
-  ${down("sm")} {
-    font-size: ${({ theme }) => theme.sizes.xlarge};
-  }
-`
-
-export const StatsItemBottom = styled.div`
-  font-size: ${({ theme }) => theme.sizes.medium};
-  font-weight: 600;
-
-  ${down("md")} {
-    font-size: ${({ theme }) => theme.sizes.small};
-  }
-  ${down("sm")} {
-    font-size: ${({ theme }) => theme.sizes.medium};
-  }
-`
