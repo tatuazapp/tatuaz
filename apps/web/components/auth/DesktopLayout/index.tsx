@@ -7,6 +7,7 @@ import {
 import { FunctionComponent } from "react"
 import useIsMobile from "../../../utils/hooks/useIsMobile"
 import useIsWideDesktop from "../../../utils/hooks/useIsWideDesktop"
+import Footer from "../AppLayout/Footer"
 import Menu from "./Menu"
 import MobileMenu from "./MobileMenu"
 import NarrowMenu from "./NarrowMenu"
@@ -30,21 +31,24 @@ const DesktopLayout: FunctionComponent<DesktopLayoutProps> = ({ children }) => {
   const mobileVersion = useIsMobile()
 
   return mobileVersion ? (
-    <MobileLayoutContainer>
-      <MobileLayoutHeader>
-        <WordmarkWrapper>
-          Tatuaz<GreenWrapper>App</GreenWrapper>
-        </WordmarkWrapper>
-        <MobileMenuIcon onClick={onOpen} />
-      </MobileLayoutHeader>
-      <Drawer isOpen={isOpen} placement="right" size="full" onClose={onClose}>
-        <DrawerOverlay />
-        <DrawerContent display="flex" justifyContent="center">
-          <MobileMenu onClose={onClose} />
-        </DrawerContent>
-      </Drawer>
-      <div>{children}</div>
-    </MobileLayoutContainer>
+    <>
+      <MobileLayoutContainer>
+        <MobileLayoutHeader>
+          <WordmarkWrapper>
+            Tatuaz<GreenWrapper>App</GreenWrapper>
+          </WordmarkWrapper>
+          <MobileMenuIcon onClick={onOpen} />
+        </MobileLayoutHeader>
+        <Drawer isOpen={isOpen} placement="right" size="full" onClose={onClose}>
+          <DrawerOverlay />
+          <DrawerContent display="flex" justifyContent="center">
+            <MobileMenu onClose={onClose} />
+          </DrawerContent>
+        </Drawer>
+        {children}
+      </MobileLayoutContainer>
+      <Footer />
+    </>
   ) : (
     <DesktopLayoutContainer>
       {showDrawer && <Menu />}

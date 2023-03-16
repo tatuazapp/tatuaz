@@ -3,6 +3,8 @@ import styled, { css } from "styled-components"
 import { rem } from "../../../utils/utils"
 
 const defaultTextColor = "#fff"
+const defaultTextAlign = "left"
+const defaultPadding = "0"
 
 export const heading = css`
   font-weight: 600;
@@ -95,9 +97,13 @@ export const Paragraph = styled.div<{
   level?: 1 | 2 | 3 | 4
   strong?: boolean
   color?: string
+  textAlign?: "left" | "center" | "right" | "justify"
+  padding?: string
 }>`
+  padding: ${({ padding }) => padding || defaultPadding};
   font-weight: ${({ strong, level }) => (strong || level === 1 ? 600 : 500)};
   color: ${({ color }) => color || defaultTextColor};
+  text-align: ${({ textAlign }) => textAlign || defaultTextAlign};
 
   ${({ level }) => {
     switch (level) {
