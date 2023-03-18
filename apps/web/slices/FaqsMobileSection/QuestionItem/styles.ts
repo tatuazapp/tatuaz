@@ -68,7 +68,6 @@ export const MobileQuestionContent = styled.div<{
 
   ${down("xs")} {
     font-size: ${({ theme }) => theme.sizes.small};
-    /* padding-right: ${({ theme }) => theme.space.large}; */
   }
 `
 
