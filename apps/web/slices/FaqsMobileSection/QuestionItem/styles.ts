@@ -45,8 +45,8 @@ export const MobileQuestionTitle = styled.div<{
   color: ${({ isHovered, theme }) =>
     isHovered ? theme.colors.secondary : theme.colors.background3};
   text-align: left;
-
   ${down("xs")} {
+    padding-right: ${({ theme }) => theme.space.xsmall};
     font-size: ${({ theme }) => theme.sizes.medium};
   }
 `
@@ -74,19 +74,26 @@ export const MobileQuestionContent = styled.div<{
 
 export const MobileIconNotSelected = styled(ArrowDownRightCircle)`
   align-self: center;
-
-  min-width: 60px;
-  height: 60px;
-  margin-left: ${({ theme }) => theme.space.xxsmall};
-
+  min-width: ${({ theme }) => theme.sizes.xxxlarge};
+  height: ${({ theme }) => theme.sizes.xxxlarge};
   color: ${({ theme }) => theme.colors.background3};
+
+  ${down("xs")} {
+    min-width: ${({ theme }) => theme.sizes.xxlarge};
+    height: ${({ theme }) => theme.sizes.xxlarge};
+  }
 `
 
 export const MobileIconSelected = styled(ArrowDownRightCircle)`
   align-self: center;
-  min-width: 60px;
-  height: 60px;
+  min-width: ${({ theme }) => theme.sizes.xxxlarge};
+  height: ${({ theme }) => theme.sizes.xxxlarge};
   color: ${({ theme }) => theme.colors.primary};
+
+  ${down("xs")} {
+    min-width: ${({ theme }) => theme.sizes.xxlarge};
+    height: ${({ theme }) => theme.sizes.xxlarge};
+  }
 `
 
 export const MobileDivider = styled.div<{

@@ -7,6 +7,7 @@ import { TotalStatsWrapper, CircularSeparator, StatsItem } from "./styles"
 const TotalStats = () => {
   const isTablet = useIsTablet()
   const isPhone = useIsPhone()
+
   return (
     <TotalStatsWrapper>
       <CircularSeparator />
@@ -14,10 +15,15 @@ const TotalStats = () => {
         <Heading
           color={theme.colors.primary}
           level={isPhone ? 2 : isTablet ? 3 : 1}
+          textAlign="center"
         >
           140+
         </Heading>
-        <Heading color={theme.colors.primary} level={isTablet ? 5 : 4}>
+        <Heading
+          color={theme.colors.primary}
+          level={isTablet ? 5 : 4}
+          textAlign="center"
+        >
           Artist
         </Heading>
       </StatsItem>
@@ -26,10 +32,15 @@ const TotalStats = () => {
         <Heading
           color={theme.colors.primary}
           level={isPhone ? 2 : isTablet ? 3 : 1}
+          textAlign="center"
         >
           290+
         </Heading>
-        <Heading color={theme.colors.primary} level={isTablet ? 5 : 4}>
+        <Heading
+          color={theme.colors.primary}
+          level={isTablet ? 5 : 4}
+          textAlign="center"
+        >
           Happy Clients
         </Heading>
       </StatsItem>
@@ -38,10 +49,15 @@ const TotalStats = () => {
         <Heading
           color={theme.colors.primary}
           level={isPhone ? 2 : isTablet ? 3 : 1}
+          textAlign="center"
         >
           380+
         </Heading>
-        <Heading color={theme.colors.primary} level={isTablet ? 5 : 4}>
+        <Heading
+          color={theme.colors.primary}
+          level={isTablet ? 5 : 4}
+          textAlign="center"
+        >
           Clients
         </Heading>
       </StatsItem>

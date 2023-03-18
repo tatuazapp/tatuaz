@@ -42,7 +42,7 @@ const HomepageIntro: FunctionComponent<HomepageIntroProps> = ({ slice }) => {
         )}
       </Heading>
       <DescriptionWrapper>
-        <Paragraph level={2}>
+        <Paragraph level={2} textAlign="justify">
           {slice.primary.description ? (
             <PrismicRichText field={slice.primary.description} />
           ) : (
