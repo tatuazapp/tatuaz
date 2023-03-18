@@ -1,4 +1,5 @@
 import { ArrowDownRightCircle } from "@styled-icons/bootstrap/ArrowDownRightCircle"
+import { down } from "styled-breakpoints"
 import styled from "styled-components"
 
 export const MobileQuestionItemWrapper = styled.div<{
@@ -44,12 +45,16 @@ export const MobileQuestionTitle = styled.div<{
   color: ${({ isHovered, theme }) =>
     isHovered ? theme.colors.secondary : theme.colors.background3};
   text-align: left;
+  ${down("xs")} {
+    padding-right: ${({ theme }) => theme.space.xsmall};
+    font-size: ${({ theme }) => theme.sizes.medium};
+  }
 `
 
 export const MobileQuestionContent = styled.div<{
   isHovered: boolean
 }>`
-  padding-right: ${({ theme }) => theme.space.xxsmall};
+  padding-right: ${({ theme }) => theme.space.medium};
   padding-bottom: ${({ theme }) => theme.space.large};
   padding-left: ${({ theme }) => theme.space.xxlarge};
 
@@ -60,20 +65,34 @@ export const MobileQuestionContent = styled.div<{
 
   background-color: ${({ isHovered, theme }) =>
     isHovered ? theme.colors.background2 : theme.colors.background1};
+
+  ${down("xs")} {
+    font-size: ${({ theme }) => theme.sizes.small};
+  }
 `
 
 export const MobileIconNotSelected = styled(ArrowDownRightCircle)`
   align-self: center;
-  height: 60px;
-  padding-left: ${({ theme }) => theme.space.xxxxlarge};
+  min-width: ${({ theme }) => theme.sizes.xxxlarge};
+  height: ${({ theme }) => theme.sizes.xxxlarge};
   color: ${({ theme }) => theme.colors.background3};
+
+  ${down("xs")} {
+    min-width: ${({ theme }) => theme.sizes.xxlarge};
+    height: ${({ theme }) => theme.sizes.xxlarge};
+  }
 `
 
 export const MobileIconSelected = styled(ArrowDownRightCircle)`
   align-self: center;
-  height: 60px;
-  padding-left: ${({ theme }) => theme.space.xxxxlarge};
+  min-width: ${({ theme }) => theme.sizes.xxxlarge};
+  height: ${({ theme }) => theme.sizes.xxxlarge};
   color: ${({ theme }) => theme.colors.primary};
+
+  ${down("xs")} {
+    min-width: ${({ theme }) => theme.sizes.xxlarge};
+    height: ${({ theme }) => theme.sizes.xxlarge};
+  }
 `
 
 export const MobileDivider = styled.div<{

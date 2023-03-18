@@ -36,10 +36,12 @@ export const h5 = css`
 export const Heading = styled.div<{
   level?: 1 | 2 | 3 | 4 | 5
   color?: string
+  textAlign?: "left" | "center" | "right" | "justify"
 }>`
   ${heading}
 
   color: ${({ color }) => color || defaultTextColor};
+  text-align: ${({ textAlign }) => textAlign || defaultTextAlign};
 
   ${({ level }) => {
     switch (level) {
