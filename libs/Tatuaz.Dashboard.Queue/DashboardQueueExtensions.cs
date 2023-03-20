@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Tatuaz.Dashboard.Queue.Contracts.Statistics;
 using Tatuaz.Dashboard.Queue.Producers.Identity;
 using Tatuaz.Dashboard.Queue.Producers.Photo;
 
@@ -16,6 +17,7 @@ public static class DashboardQueueExtensions
         services.AddScoped<DeleteBackgroundPhotoProducer>();
         services.AddScoped<DeleteForegroundPhotoProducer>();
         services.AddScoped<GetUserProducer>();
+        services.AddScoped<GetRegisteredStatsProducer>();
 
         return services;
     }

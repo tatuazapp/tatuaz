@@ -18,6 +18,7 @@ using Tatuaz.Dashboard.Emails.Configuration;
 using Tatuaz.Dashboard.Emails.Exceptions;
 using Tatuaz.Dashboard.Queue;
 using Tatuaz.Dashboard.Queue.Consumers.Emails;
+using Tatuaz.Dashboard.Queue.Consumers.Statistics;
 using Tatuaz.Dashboard.Queue.Contracts.Emails;
 using Tatuaz.Shared.Domain.Dtos;
 using Tatuaz.Shared.Helpers;
