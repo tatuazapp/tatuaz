@@ -1,26 +1,34 @@
 import { Data as Dashboard } from "@styled-icons/boxicons-regular/Data"
 import { Home } from "@styled-icons/boxicons-regular/Home"
-import { Menu } from "@styled-icons/boxicons-regular/Menu"
 import { User as Profile } from "@styled-icons/boxicons-regular/User"
 import { Search } from "@styled-icons/evaicons-solid/Search"
-import { SignOut } from "@styled-icons/octicons/SignOut"
+import { down, up } from "styled-breakpoints"
 import styled from "styled-components"
 import { rem } from "../../../../styles/utils"
 
-export const NarrowMenuWrapper = styled.div`
+export const MenuWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
   box-sizing: content-box;
-  width: ${({ theme }) => theme.sizes.xxxlarge};
+  min-width: 200px;
+  max-width: 200px;
   min-height: 100vh;
-  margin-right: ${({ theme }) => theme.space.xlarge};
+  margin-right: ${({ theme }) => theme.space.xxxxlarge};
 
   background-color: ${({ theme }) => theme.colors.background2};
+  ${down("xxl")} {
+    margin-right: ${({ theme }) => theme.space.xxlarge};
+  }
+
+  ${up("xxxl")} {
+    position: absolute;
+    left: 0;
+  }
 `
 
-export const MenuContainer = styled.div`
+export const WordmarkWrapper = styled.div`
   display: flex;
   justify-content: center;
 
@@ -33,12 +41,21 @@ export const MenuContainer = styled.div`
   color: ${({ theme }) => theme.colors.secondary};
 `
 
-export const NarrowMenuList = styled.div`
+export const GreenWrapper = styled.span`
+  color: ${({ theme }) => theme.colors.primary};
+`
+
+export const NavItemsWrapper = styled.div`
+  display: flex;
+  gap: ${({ theme }) => theme.space.xxxlarge};
+`
+
+export const MenuList = styled.div`
   display: flex;
   flex-direction: column;
 `
 
-export const NarrowMenuListItem = styled.div<{
+export const MenuListItem = styled.div<{
   isSelected: boolean
 }>`
   cursor: pointer;
@@ -55,20 +72,15 @@ export const NarrowMenuListItem = styled.div<{
   font-weight: 500;
   color: ${({ isSelected, theme }) =>
     isSelected ? theme.colors.primary : theme.colors.secondary};
+
   :hover {
     background-color: ${({ theme }) => theme.colors.background3};
   }
 `
 
-export const MenuIcon = styled(Menu)`
-  cursor: pointer;
-  height: ${({ theme }) => theme.sizes.xlarge};
-`
-
 export const HomeIcon = styled(Home)`
   height: ${({ theme }) => theme.sizes.xlarge};
 `
-
 export const SearchIcon = styled(Search)`
   height: ${({ theme }) => theme.sizes.xlarge};
 `
@@ -80,18 +92,14 @@ export const ProfileIcon = styled(Profile)`
   height: ${({ theme }) => theme.sizes.xlarge};
 `
 
-export const NarrowMenuSignOutIcon = styled(SignOut)`
-  cursor: pointer;
+export const MenuListItemText = styled.p`
+  padding-left: ${({ theme }) => theme.space.xxsmall};
+  font-size: ${({ theme }) => theme.sizes.medium};
+`
 
-  box-sizing: content-box;
-  height: ${({ theme }) => theme.sizes.xlarge};
+export const SignOutButtonWrapper = styled.div`
+  max-width: 150px;
   margin-right: auto;
   margin-bottom: ${({ theme }) => theme.space.xxxxlarge};
   margin-left: auto;
-  padding: ${({ theme }) => theme.space.xxsmall};
-
-  color: ${({ theme }) => theme.colors.background1};
-
-  background-color: ${({ theme }) => theme.colors.primary};
-  border-radius: ${({ theme }) => theme.radius.medium};
 `

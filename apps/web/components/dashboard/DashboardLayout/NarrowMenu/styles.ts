@@ -1,34 +1,31 @@
 import { Data as Dashboard } from "@styled-icons/boxicons-regular/Data"
 import { Home } from "@styled-icons/boxicons-regular/Home"
+import { Menu } from "@styled-icons/boxicons-regular/Menu"
 import { User as Profile } from "@styled-icons/boxicons-regular/User"
 import { Search } from "@styled-icons/evaicons-solid/Search"
-import { down, up } from "styled-breakpoints"
+import { SignOut } from "@styled-icons/octicons/SignOut"
+import { up } from "styled-breakpoints"
 import styled from "styled-components"
 import { rem } from "../../../../styles/utils"
 
-export const MenuWrapper = styled.div`
+export const NarrowMenuWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
   box-sizing: content-box;
-  min-width: 200px;
-  max-width: 200px;
+  width: ${({ theme }) => theme.sizes.xxxlarge};
   min-height: 100vh;
-  margin-right: ${({ theme }) => theme.space.xxxxlarge};
+  margin-right: ${({ theme }) => theme.space.xlarge};
 
   background-color: ${({ theme }) => theme.colors.background2};
-  ${down("xxl")} {
-    margin-right: ${({ theme }) => theme.space.xxlarge};
-  }
 
-  ${up("xxxl")} {
-    position: absolute;
-    left: 0;
+  ${up("xl")} {
+    display: none;
   }
 `
 
-export const WordmarkWrapper = styled.div`
+export const MenuContainer = styled.div`
   display: flex;
   justify-content: center;
 
@@ -41,21 +38,12 @@ export const WordmarkWrapper = styled.div`
   color: ${({ theme }) => theme.colors.secondary};
 `
 
-export const GreenWrapper = styled.span`
-  color: ${({ theme }) => theme.colors.primary};
-`
-
-export const NavItemsWrapper = styled.div`
-  display: flex;
-  gap: ${({ theme }) => theme.space.xxxlarge};
-`
-
-export const MenuList = styled.div`
+export const NarrowMenuList = styled.div`
   display: flex;
   flex-direction: column;
 `
 
-export const MenuListItem = styled.div<{
+export const NarrowMenuListItem = styled.div<{
   isSelected: boolean
 }>`
   cursor: pointer;
@@ -77,9 +65,15 @@ export const MenuListItem = styled.div<{
   }
 `
 
+export const MenuIcon = styled(Menu)`
+  cursor: pointer;
+  height: ${({ theme }) => theme.sizes.xlarge};
+`
+
 export const HomeIcon = styled(Home)`
   height: ${({ theme }) => theme.sizes.xlarge};
 `
+
 export const SearchIcon = styled(Search)`
   height: ${({ theme }) => theme.sizes.xlarge};
 `
@@ -91,14 +85,18 @@ export const ProfileIcon = styled(Profile)`
   height: ${({ theme }) => theme.sizes.xlarge};
 `
 
-export const MenuListItemText = styled.p`
-  padding-left: ${({ theme }) => theme.space.xxsmall};
-  font-size: ${({ theme }) => theme.sizes.medium};
-`
+export const NarrowMenuSignOutIcon = styled(SignOut)`
+  cursor: pointer;
 
-export const SignOutButtonWrapper = styled.div`
-  max-width: 150px;
+  box-sizing: content-box;
+  height: ${({ theme }) => theme.sizes.xlarge};
   margin-right: auto;
   margin-bottom: ${({ theme }) => theme.space.xxxxlarge};
   margin-left: auto;
+  padding: ${({ theme }) => theme.space.xxsmall};
+
+  color: ${({ theme }) => theme.colors.background1};
+
+  background-color: ${({ theme }) => theme.colors.primary};
+  border-radius: ${({ theme }) => theme.radius.medium};
 `
