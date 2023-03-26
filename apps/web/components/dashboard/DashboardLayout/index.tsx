@@ -4,10 +4,12 @@ import {
   DrawerContent,
   useDisclosure,
 } from "@chakra-ui/react"
-import { FunctionComponent } from "react"
+import { useRouter } from "next/router"
+import { FunctionComponent, useEffect } from "react"
+import useMe from "../../../api/hooks/useMe"
 import useIsMobile from "../../../utils/hooks/useIsMobile"
 import useIsWideDesktop from "../../../utils/hooks/useIsWideDesktop"
-import Footer from "../AppLayout/Footer"
+import Footer from "../../auth/AppLayout/Footer"
 import Menu from "./Menu"
 import MobileMenu from "./MobileMenu"
 import NarrowMenu from "./NarrowMenu"
@@ -20,15 +22,27 @@ import {
   WordmarkWrapper,
 } from "./styles"
 
-type DesktopLayoutProps = {
+type DashboardLayoutProps = {
   children?: React.ReactNode
 }
 
-const DesktopLayout: FunctionComponent<DesktopLayoutProps> = ({ children }) => {
+const DashboardLayout: FunctionComponent<DashboardLayoutProps> = ({
+  children,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const router = useRouter()
 
   const showDrawer = useIsWideDesktop()
   const mobileVersion = useIsMobile()
+
+  const data = useMe()
+
+  useEffect(() => {
+    if (!data?.username) {
+      router.push("/")
+    }
+  }, [data, data?.username, router])
 
   return mobileVersion ? (
     <>
@@ -67,4 +81,4 @@ const DesktopLayout: FunctionComponent<DesktopLayoutProps> = ({ children }) => {
     </DesktopLayoutContainer>
   )
 }
-export default DesktopLayout
+export default DashboardLayout

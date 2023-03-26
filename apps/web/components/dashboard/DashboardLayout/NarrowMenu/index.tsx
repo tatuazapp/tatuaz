@@ -1,5 +1,5 @@
+import { useRouter } from "next/router"
 import { useState } from "react"
-import { Tabs } from "../../../../types/tabs"
 import {
   NarrowMenuList,
   NarrowMenuListItem,
@@ -16,25 +16,54 @@ import {
 type NarrowMenuProps = {
   onOpen: () => void
 }
-const tabs: Tabs[] = ["Home", "Search", "Dashboard", "Profile"]
+
+const tabs = [
+  {
+    name: "home",
+    href: "/dashboard/",
+  },
+  {
+    name: "search",
+    href: "/dashboard/search",
+  },
+  {
+    name: "dashboard",
+    href: "/dashboard/dashboard",
+  },
+  {
+    name: "profile",
+    href: "/dashboard/profile",
+  },
+]
 
 const NarrowMenu: React.FunctionComponent<NarrowMenuProps> = ({ onOpen }) => {
-  const [activeTab, setActiveTab] = useState<Tabs>("Home")
+  const router = useRouter()
+  const currentTab = router.pathname.split("/")[2] || "home"
+  const [activeTab, setActiveTab] = useState(currentTab)
 
   const renderIcon = (tab: string) => {
     switch (tab) {
-      case "Home":
+      case "home":
         return <HomeIcon />
-      case "Search":
+      case "search":
         return <SearchIcon />
-      case "Dashboard":
+      case "dashboard":
         return <DashboardIcon />
-      case "Profile":
+      case "profile":
         return <ProfileIcon />
       default:
         return "Error"
     }
   }
+
+  const handleTabClick = (tab: string) => {
+    const tabInfo = tabs.find((t) => t.name === tab)
+    if (tabInfo) {
+      setActiveTab(tab)
+      router.push(tabInfo.href)
+    }
+  }
+
   return (
     <NarrowMenuWrapper>
       <div>
@@ -44,13 +73,11 @@ const NarrowMenu: React.FunctionComponent<NarrowMenuProps> = ({ onOpen }) => {
         <NarrowMenuList>
           {tabs.map((tab) => (
             <NarrowMenuListItem
-              key={tab}
-              isSelected={activeTab === tab}
-              onClick={() => {
-                setActiveTab(tab)
-              }}
+              key={tab.name}
+              isSelected={activeTab === tab.name}
+              onClick={() => handleTabClick(tab.name)}
             >
-              {renderIcon(tab)}
+              {renderIcon(tab.name)}
             </NarrowMenuListItem>
           ))}
         </NarrowMenuList>
