@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
@@ -21,6 +22,20 @@ public class TatuazUserConfiguration : IEntityTypeConfiguration<TatuazUser>
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserEmail)
             .HasConstraintName("fk_tatuaz_user_roles_tatuaz_users_tatuaz_user_id");
+
+        builder
+            .HasOne(x => x.ForegroundPhoto)
+            .WithOne()
+            .HasForeignKey<TatuazUser>(x => x.ForegroundPhotoId)
+            .HasConstraintName("fk_tatuaz_users_photo_foreground_photo_id")
+            .OnDelete(DeleteBehavior.SetNull);
+
+        builder
+            .HasOne(x => x.BackgroundPhoto)
+            .WithOne()
+            .HasForeignKey<TatuazUser>(x => x.BackgroundPhotoId)
+            .HasConstraintName("fk_tatuaz_users_photo_background_photo_id")
+            .OnDelete(DeleteBehavior.SetNull);
 
         builder.HasIndex(x => x.Username).IsUnique();
     }

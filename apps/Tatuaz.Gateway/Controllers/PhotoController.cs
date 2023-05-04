@@ -11,14 +11,11 @@ using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 namespace Tatuaz.Gateway.Controllers;
 
 /// <summary>
-/// Controller for photo categories
+/// Controller for photos
 /// </summary>
 public class PhotoController : TatuazControllerBase
 {
-    /// <summary>
-    /// Constructor receiving the mediator from DI
-    /// </summary>
-    /// <param name="mediator"></param>
+    /// <inheritdoc />
     public PhotoController(IMediator mediator)
         : base(mediator) { }
 
@@ -29,6 +26,7 @@ public class PhotoController : TatuazControllerBase
     [ProducesResponseType(typeof(OkResponse<PagedData<CategoryDto>>), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Forbidden)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> ListCategories([FromBody] ListCategoriesDto listCategoriesDto)
     {

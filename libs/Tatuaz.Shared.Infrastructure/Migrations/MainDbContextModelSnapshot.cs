@@ -123,9 +123,11 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                         .HasName("pk_tatuaz_users");
 
                     b.HasIndex("BackgroundPhotoId")
+                        .IsUnique()
                         .HasDatabaseName("ix_tatuaz_users_background_photo_id");
 
                     b.HasIndex("ForegroundPhotoId")
+                        .IsUnique()
                         .HasDatabaseName("ix_tatuaz_users_foreground_photo_id");
 
                     b.HasIndex("Username")
@@ -270,7 +272,6 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(320)
                         .HasColumnType("character varying(320)")
                         .HasColumnName("user_id");
 
@@ -327,7 +328,6 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(320)
                         .HasColumnType("character varying(320)")
                         .HasColumnName("user_id");
 
@@ -359,7 +359,6 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(320)
                         .HasColumnType("character varying(320)")
                         .HasColumnName("user_id");
 
@@ -373,6 +372,64 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                         .HasDatabaseName("ix_comment_likes_user_id");
 
                     b.ToTable("comment_likes", "post");
+                });
+
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Post.InitialPost", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Instant>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("created_by");
+
+                    b.Property<Instant>("ModifiedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("modified_at");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("modified_by");
+
+                    b.HasKey("Id")
+                        .HasName("pk_initial_posts");
+
+                    b.ToTable("initial_posts", "post");
+                });
+
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Post.InitialPostPhoto", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("InitialPostId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("initial_post_id");
+
+                    b.Property<Guid>("PhotoId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("photo_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_initial_post_photos");
+
+                    b.HasIndex("InitialPostId")
+                        .HasDatabaseName("ix_initial_post_photos_initial_post_id");
+
+                    b.HasIndex("PhotoId")
+                        .HasDatabaseName("ix_initial_post_photos_photo_id");
+
+                    b.ToTable("initial_post_photos", "post");
                 });
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Post.Post", b =>
@@ -434,7 +491,6 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(320)
                         .HasColumnType("character varying(320)")
                         .HasColumnName("user_id");
 
@@ -480,13 +536,15 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", b =>
                 {
                     b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Photo.Photo", "BackgroundPhoto")
-                        .WithMany()
-                        .HasForeignKey("BackgroundPhotoId")
+                        .WithOne()
+                        .HasForeignKey("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", "BackgroundPhotoId")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("fk_tatuaz_users_photo_background_photo_id");
 
                     b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Photo.Photo", "ForegroundPhoto")
-                        .WithMany()
-                        .HasForeignKey("ForegroundPhotoId")
+                        .WithOne()
+                        .HasForeignKey("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", "ForegroundPhotoId")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("fk_tatuaz_users_photo_foreground_photo_id");
 
                     b.Navigation("BackgroundPhoto");
@@ -606,6 +664,27 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Post.InitialPostPhoto", b =>
+                {
+                    b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Post.InitialPost", "InitialPost")
+                        .WithMany("InitialPostPhotos")
+                        .HasForeignKey("InitialPostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_initial_post_photos_initial_posts_initial_post_id");
+
+                    b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Photo.Photo", "Photo")
+                        .WithMany()
+                        .HasForeignKey("PhotoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_initial_post_photos_photos_photo_id");
+
+                    b.Navigation("InitialPost");
+
+                    b.Navigation("Photo");
+                });
+
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Post.Post", b =>
                 {
                     b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", "Author")
@@ -687,6 +766,11 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Post.Comment", b =>
                 {
                     b.Navigation("ChildComments");
+                });
+
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Post.InitialPost", b =>
+                {
+                    b.Navigation("InitialPostPhotos");
                 });
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Post.Post", b =>

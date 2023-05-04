@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Tatuaz.Shared.Domain.Entities.Hist.Models.General;
+using Tatuaz.Shared.Domain.Entities.Models.Post;
 using Tatuaz.Shared.Domain.Entities.Models.Common;
 using Tatuaz.Shared.Domain.Entities.Models.General;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
@@ -23,8 +23,19 @@ public class MainDbContext : DbContext
     public virtual DbSet<EmailInfo> EmailInfos { get; set; } = default!;
 
     // photos
-    public virtual DbSet<Category> PhotoCategories { get; set; } = default!;
-    public virtual DbSet<UserCategory> UserPhotoCategories { get; set; } = default!;
+    public virtual DbSet<Category> Categories { get; set; } = default!;
+    public virtual DbSet<UserCategory> UserCategories { get; set; } = default!;
+    public virtual DbSet<Photo> Photos { get; set; } = default!;
+    public virtual DbSet<PhotoCategory> PhotoCategories { get; set; } = default!;
+
+    // post
+    public virtual DbSet<Comment> Comments { get; set; } = default!;
+    public virtual DbSet<CommentLike> CommentLikes { get; set; } = default!;
+    public virtual DbSet<InitialPost> InitialPosts { get; set; } = default!;
+    public virtual DbSet<InitialPostPhoto> InitialPostPhotos { get; set; } = default!;
+    public virtual DbSet<Post> Posts { get; set; } = default!;
+    public virtual DbSet<PostLike> PostLikes { get; set; } = default!;
+    public virtual DbSet<PostPhoto> PostPhotos { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

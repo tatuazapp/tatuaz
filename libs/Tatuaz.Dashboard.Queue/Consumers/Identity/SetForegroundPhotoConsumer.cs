@@ -1,14 +1,14 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Tatuaz.Dashboard.Queue.Contracts.Blob;
+using Tatuaz.Dashboard.Queue.Consumers.Photo;
 using Tatuaz.Dashboard.Queue.Contracts.Identity;
+using Tatuaz.Dashboard.Queue.Contracts.Photo;
+using Tatuaz.Dashboard.Queue.Producers.Photo;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Common;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
-using Tatuaz.Shared.Domain.Entities.Hist.Models.Photo;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.Specification;
@@ -23,30 +23,22 @@ public class SetForegroundPhotoConsumer : TatuazConsumerBase<SetForegroundPhoto,
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IGenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
-    private readonly IGenericRepository<
-        Shared.Domain.Entities.Models.Photo.Photo,
-        HistPhoto,
-        Guid
-    > _photoRepository;
     private readonly IUserContext _userContext;
+    private readonly AddPhotoProducer _addPhotoProducer;
 
     public SetForegroundPhotoConsumer(
         ILogger<SetForegroundPhotoConsumer> logger,
         IUnitOfWork unitOfWork,
         IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository,
-        IGenericRepository<
-            Shared.Domain.Entities.Models.Photo.Photo,
-            HistPhoto,
-            Guid
-        > photoRepository,
-        IUserContext userContext
+        IUserContext userContext,
+        AddPhotoProducer addPhotoProducer
     )
         : base(logger)
     {
         _unitOfWork = unitOfWork;
         _userRepository = userRepository;
-        _photoRepository = photoRepository;
         _userContext = userContext;
+        _addPhotoProducer = addPhotoProducer;
     }
 
     protected override async Task<TatuazResult<EmptyDto>> ConsumeMessage(
@@ -63,18 +55,23 @@ public class SetForegroundPhotoConsumer : TatuazConsumerBase<SetForegroundPhoto,
 
         if (user.ForegroundPhotoId != null)
         {
-            var photoId = user.ForegroundPhotoId.Value;
-            await _photoRepository.DeleteAsync(photoId).ConfigureAwait(false);
-            await context.Publish(new DeleteBlobFile(photoId)).ConfigureAwait(false);
+            await context
+                .Publish(new DeletePhoto(user.ForegroundPhotoId.Value))
+                .ConfigureAwait(false);
         }
 
-        var photo = new Shared.Domain.Entities.Models.Photo.Photo();
-        _photoRepository.Create(photo);
-        user.ForegroundPhoto = photo;
-        await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
-        await context
-            .Publish(new AddBlobFile(photo.Id, context.Message.Photo))
+        var addPhotoResult = await _addPhotoProducer
+            .Send(new AddPhoto(context.Message.Photo))
             .ConfigureAwait(false);
+
+        if (!addPhotoResult.Successful)
+        {
+            return CommonResultFactory.InternalError<EmptyDto>("Failed to add photo");
+        }
+
+        user.ForegroundPhotoId = addPhotoResult.Value;
+        await _unitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
         return CommonResultFactory.Ok(new EmptyDto());
     }
 }

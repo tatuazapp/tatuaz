@@ -4,7 +4,6 @@ using NodaTime;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Common;
-using Tatuaz.Shared.Domain.Entities.Models.General;
 using Tatuaz.Shared.Domain.Entities.Models.Photo;
 
 namespace Tatuaz.Shared.Domain.Entities.Models.Identity;

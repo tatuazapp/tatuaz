@@ -1,4 +1,4 @@
-namespace Tatuaz.Shared.Domain.Entities.Models.Post;
+namespace Tatuaz.Shared.Domain.Entities.Hist.Models.Post;
 
 public class HistTatuazPostConstants
 {

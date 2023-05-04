@@ -10,8 +10,6 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
     {
         builder.ToTable("comments", TatuazPostConstants.SchemaName);
 
-        builder.Property(x => x.UserId).HasMaxLength(320);
-
         builder.Property(x => x.Content).HasMaxLength(1024);
     }
 }

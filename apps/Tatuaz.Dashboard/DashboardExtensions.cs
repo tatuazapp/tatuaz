@@ -23,11 +23,9 @@ using Tatuaz.Dashboard.Queue.Contracts.Emails;
 using Tatuaz.Shared.Domain.Dtos;
 using Tatuaz.Shared.Helpers;
 using Tatuaz.Shared.Infrastructure;
-using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
 using Tatuaz.Shared.Pipeline;
 using Tatuaz.Shared.Pipeline.Configuration;
-using Tatuaz.Shared.Pipeline.Queues;
 
 namespace Tatuaz.Dashboard;
 
@@ -38,6 +36,8 @@ public static class DashboardExtensions
         IConfiguration configuration
     )
     {
+        services.RegisterDashboardQueueServices();
+
         services.RegisterSharedInfrastructureServices<MainDbContext>(
             configuration.GetConnectionString(
                 SharedInfrastructureExtensions.MainDbConnectionStringName

@@ -8,6 +8,8 @@
     "dashboard-emails-test": "libs/Tatuaz.Dashboard.Emails.Test",
     "dashboard-queue": "libs/Tatuaz.Dashboard.Queue",
     "dashboard-queue-test": "libs/Tatuaz.Dashboard.Queue.Test",
+    "dashboard-scheduler": "libs/Tatuaz.Scheduler.Queue",
+    "dashboard-scheduler-test": "libs/Tatuaz.Scheduler.Queue.Test",
     "dashboard-test": "apps/Tatuaz.Dashboard.Test",
     "gateway": "apps/Tatuaz.Gateway",
     "gateway-handlers": "libs/Tatuaz.Gateway.Handlers",

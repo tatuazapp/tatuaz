@@ -11,7 +11,5 @@ public class HistUserCategoryConfiguration : IEntityTypeConfiguration<HistUserCa
         builder.ToTable("H_user_categories", HistTatuazPhotoConstants.SchemaName);
 
         builder.HasKey(x => x.HistId);
-
-        builder.Property(x => x.UserId).HasMaxLength(320);
     }
 }

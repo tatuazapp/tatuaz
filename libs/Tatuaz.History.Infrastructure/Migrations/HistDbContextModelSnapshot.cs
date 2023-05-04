@@ -237,10 +237,10 @@ namespace Tatuaz.History.DataAccess.Migrations
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Photo.HistPhoto", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("HistId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnName("hist_id");
 
                     b.Property<Instant>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
@@ -255,13 +255,13 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("hist_dumped_at");
 
-                    b.Property<Guid>("HistId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("hist_id");
-
                     b.Property<int>("HistState")
                         .HasColumnType("integer")
                         .HasColumnName("hist_state");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Instant>("ModifiedAt")
                         .HasColumnType("timestamp with time zone")
@@ -272,7 +272,7 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("text")
                         .HasColumnName("modified_by");
 
-                    b.HasKey("Id")
+                    b.HasKey("HistId")
                         .HasName("pk_h_photos");
 
                     b.ToTable("H_photos", "H_photo");
@@ -280,12 +280,10 @@ namespace Tatuaz.History.DataAccess.Migrations
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Photo.HistPhotoCategory", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("HistId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid")
+                        .HasColumnName("hist_id");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("integer")
@@ -295,19 +293,19 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("hist_dumped_at");
 
-                    b.Property<Guid>("HistId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("hist_id");
-
                     b.Property<int>("HistState")
                         .HasColumnType("integer")
                         .HasColumnName("hist_state");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     b.Property<Guid>("PhotoId")
                         .HasColumnType("uuid")
                         .HasColumnName("photo_id");
 
-                    b.HasKey("Id")
+                    b.HasKey("HistId")
                         .HasName("pk_h_photo_categories");
 
                     b.ToTable("H_photo_categories", "H_photo");
@@ -338,8 +336,7 @@ namespace Tatuaz.History.DataAccess.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(320)
-                        .HasColumnType("character varying(320)")
+                        .HasColumnType("text")
                         .HasColumnName("user_id");
 
                     b.HasKey("HistId")
@@ -401,8 +398,7 @@ namespace Tatuaz.History.DataAccess.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(320)
-                        .HasColumnType("character varying(320)")
+                        .HasColumnType("text")
                         .HasColumnName("user_id");
 
                     b.HasKey("HistId")
@@ -413,10 +409,10 @@ namespace Tatuaz.History.DataAccess.Migrations
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Post.HistCommentLike", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("HistId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnName("hist_id");
 
                     b.Property<Guid>("CommentId")
                         .HasColumnType("uuid")
@@ -426,32 +422,107 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("hist_dumped_at");
 
-                    b.Property<Guid>("HistId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("hist_id");
-
                     b.Property<int>("HistState")
                         .HasColumnType("integer")
                         .HasColumnName("hist_state");
 
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(320)
-                        .HasColumnType("character varying(320)")
+                        .HasColumnType("text")
                         .HasColumnName("user_id");
 
-                    b.HasKey("Id")
+                    b.HasKey("HistId")
                         .HasName("pk_h_comment_likes");
 
                     b.ToTable("H_comment_likes", "H_post");
                 });
 
-            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Post.HistPost", b =>
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Post.HistInitialPost", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("HistId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
+                        .HasColumnName("hist_id");
+
+                    b.Property<Instant>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("created_by");
+
+                    b.Property<Instant>("HistDumpedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("hist_dumped_at");
+
+                    b.Property<int>("HistState")
+                        .HasColumnType("integer")
+                        .HasColumnName("hist_state");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.Property<Instant>("ModifiedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("modified_at");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("modified_by");
+
+                    b.HasKey("HistId")
+                        .HasName("pk_h_initial_posts");
+
+                    b.ToTable("H_initial_posts", "H_post");
+                });
+
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Post.HistInitialPostPhoto", b =>
+                {
+                    b.Property<Guid>("HistId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("hist_id");
+
+                    b.Property<Instant>("HistDumpedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("hist_dumped_at");
+
+                    b.Property<int>("HistState")
+                        .HasColumnType("integer")
+                        .HasColumnName("hist_state");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("InitialPostId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("initial_post_id");
+
+                    b.Property<Guid>("PhotoId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("photo_id");
+
+                    b.HasKey("HistId")
+                        .HasName("pk_h_initial_post_photos");
+
+                    b.ToTable("H_initial_post_photos", "H_post");
+                });
+
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Post.HistPost", b =>
+                {
+                    b.Property<Guid>("HistId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("hist_id");
 
                     b.Property<string>("AuthorId")
                         .IsRequired()
@@ -478,13 +549,13 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("hist_dumped_at");
 
-                    b.Property<Guid>("HistId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("hist_id");
-
                     b.Property<int>("HistState")
                         .HasColumnType("integer")
                         .HasColumnName("hist_state");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Instant>("ModifiedAt")
                         .HasColumnType("timestamp with time zone")
@@ -495,7 +566,7 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("text")
                         .HasColumnName("modified_by");
 
-                    b.HasKey("Id")
+                    b.HasKey("HistId")
                         .HasName("pk_h_posts");
 
                     b.ToTable("H_posts", "H_post");
@@ -503,22 +574,22 @@ namespace Tatuaz.History.DataAccess.Migrations
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Post.HistPostLike", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("HistId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnName("hist_id");
 
                     b.Property<Instant>("HistDumpedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("hist_dumped_at");
 
-                    b.Property<Guid>("HistId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("hist_id");
-
                     b.Property<int>("HistState")
                         .HasColumnType("integer")
                         .HasColumnName("hist_state");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid>("PostId")
                         .HasColumnType("uuid")
@@ -526,11 +597,10 @@ namespace Tatuaz.History.DataAccess.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(320)
-                        .HasColumnType("character varying(320)")
+                        .HasColumnType("text")
                         .HasColumnName("user_id");
 
-                    b.HasKey("Id")
+                    b.HasKey("HistId")
                         .HasName("pk_h_post_likes");
 
                     b.ToTable("H_post_likes", "H_post");
@@ -538,22 +608,22 @@ namespace Tatuaz.History.DataAccess.Migrations
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Post.HistPostPhoto", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("HistId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnName("hist_id");
 
                     b.Property<Instant>("HistDumpedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("hist_dumped_at");
 
-                    b.Property<Guid>("HistId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("hist_id");
-
                     b.Property<int>("HistState")
                         .HasColumnType("integer")
                         .HasColumnName("hist_state");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid>("PhotoId")
                         .HasColumnType("uuid")
@@ -563,7 +633,7 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("post_id");
 
-                    b.HasKey("Id")
+                    b.HasKey("HistId")
                         .HasName("pk_h_post_photos");
 
                     b.ToTable("H_post_photos", "H_post");

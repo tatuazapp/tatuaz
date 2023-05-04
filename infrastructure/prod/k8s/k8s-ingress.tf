@@ -3,8 +3,9 @@ resource "kubernetes_ingress_v1" "k8s_main_ingress" {
     name      = "ta-main-ingress"
     namespace = kubernetes_namespace.k8s_ns.metadata[0].name
     annotations = {
-      "cert-manager.io/cluster-issuer"           = "letsencrypt"
-      "nginx.ingress.kubernetes.io/ssl-redirect" = "false"
+      "cert-manager.io/cluster-issuer"              = "letsencrypt"
+      "nginx.ingress.kubernetes.io/ssl-redirect"    = "false"
+      "nginx.ingress.kubernetes.io/proxy-body-size" = "25m"
     }
   }
 

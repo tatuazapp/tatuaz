@@ -9,7 +9,5 @@ public class PostLikeConfiguration : IEntityTypeConfiguration<PostLike>
     public void Configure(EntityTypeBuilder<PostLike> builder)
     {
         builder.ToTable("post_likes", TatuazPostConstants.SchemaName);
-
-        builder.Property(x => x.UserId).HasMaxLength(320);
     }
 }

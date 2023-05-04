@@ -9,7 +9,5 @@ public class UserCategoryConfiguration : IEntityTypeConfiguration<UserCategory>
     public void Configure(EntityTypeBuilder<UserCategory> builder)
     {
         builder.ToTable("user_categories", TatuazPhotoConstants.SchemaName);
-
-        builder.Property(x => x.UserId).HasMaxLength(320);
     }
 }
