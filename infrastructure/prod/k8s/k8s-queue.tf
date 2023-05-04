@@ -101,7 +101,7 @@ resource "kubernetes_service" "k8s_queue_lb" {
 
   spec {
     # Tu trzeba robić cyrk https://cloud-provider-azure.sigs.k8s.io/topics/shared-ip/
-    load_balancer_ip = "20.74.64.159"
+    load_balancer_ip = "20.199.3.235"
     selector = {
       app = kubernetes_deployment.k8s_queue.metadata[0].name
     }
