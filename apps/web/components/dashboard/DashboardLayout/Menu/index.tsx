@@ -1,4 +1,4 @@
-import { Paragraph, Paragraph1 } from "@tatuaz/ui"
+import { Paragraph, Paragraph2 } from "@tatuaz/ui"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { FormattedMessage } from "react-intl"
@@ -40,7 +40,11 @@ const tabs = [
     href: "/dashboard/profile",
     id: "profile",
   },
-]
+] satisfies {
+  id: Tabs
+  name: JSX.Element
+  href: string
+}[]
 
 const render = (tab: Tabs) => {
   const tabInfo = tabs.find((t) => t.id === tab.toLowerCase())
@@ -64,7 +68,7 @@ const render = (tab: Tabs) => {
       <Icon />
       <MenuListItemText>
         <Link href={tabInfo.href}>
-          <Paragraph1>{tabInfo.name}</Paragraph1>
+          <Paragraph2>{tabInfo.name}</Paragraph2>
         </Link>
       </MenuListItemText>
     </>
@@ -94,15 +98,15 @@ const Menu = () => {
             <MenuListItem
               key={tab.id}
               isSelected={currentTab === tab.id}
-              onClick={() => handleTabClick(tab.id as Tabs)}
+              onClick={() => handleTabClick(tab.id)}
             >
-              {render(tab.id as Tabs)}
+              {render(tab.id)}
             </MenuListItem>
           ))}
         </MenuList>
       </div>
       <SignOutButtonWrapper>
-        <Button kind="primary">
+        <Button kind="primary" size="md">
           <Paragraph color={theme.colors.background1} level={1}>
             <FormattedMessage defaultMessage="Wyloguj" id="UqV7Od" />
           </Paragraph>

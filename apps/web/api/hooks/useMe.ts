@@ -22,7 +22,7 @@ const useMe = () => {
     onError: async (error: PoorMansError) => {
       console.error(error)
       if (error.status === 401) {
-        api.setSecurityData(undefined)
+        api.setSecurityData(null)
       }
 
       // User data has not been saved to our database yet

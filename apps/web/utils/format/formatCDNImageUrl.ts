@@ -27,7 +27,7 @@ const formatCDNImageUrl = (
     imageSizes.at(currentDeviceSizeIndex) || imageSizes.at(-1)
 
   const adjustedImageWidth = maxWidth
-    ? Math.min(currentImageSize, maxWidth)
+    ? Math.min(currentImageSize ?? 16, maxWidth)
     : currentImageSize
 
   const autoOptions = {
@@ -38,7 +38,7 @@ const formatCDNImageUrl = (
 
   const urlParams = new URLSearchParams(
     removeUndefinedOrNull({
-      width: width ? width.toString() : autoOptions.width.toString(),
+      width: width ? width.toString() : autoOptions.width?.toString(),
       height: height ? height.toString() : null,
       quality: quality ? quality.toString() : autoOptions.quality?.toString(),
       format: format || autoOptions.format,

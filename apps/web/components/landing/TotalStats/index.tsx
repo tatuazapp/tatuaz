@@ -1,4 +1,8 @@
+import { useQuery } from "@tanstack/react-query"
 import { Heading } from "@tatuaz/ui"
+import { FormattedMessage } from "react-intl"
+import { api } from "../../../api/apiClient"
+import { queryKeys } from "../../../api/queryKeys"
 import { theme } from "../../../styles/theme"
 import useIsPhone from "../../../utils/hooks/useIsPhone"
 import useIsTablet from "../../../utils/hooks/useIsTablet"
@@ -7,6 +11,17 @@ import { TotalStatsWrapper, CircularSeparator, StatsItem } from "./styles"
 const TotalStats = () => {
   const isTablet = useIsTablet()
   const isPhone = useIsPhone()
+
+  const { data } = useQuery(
+    [queryKeys.getRegisteredStats],
+    api.statistics.getRegisteredStats,
+    {
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  )
+
+  const stats = data?.value
 
   return (
     <TotalStatsWrapper>
@@ -17,14 +32,14 @@ const TotalStats = () => {
           level={isPhone ? 2 : isTablet ? 3 : 1}
           textAlign="center"
         >
-          140+
+          {stats?.artists ?? "-"}
         </Heading>
         <Heading
           color={theme.colors.primary}
           level={isTablet ? 5 : 4}
           textAlign="center"
         >
-          Artist
+          <FormattedMessage defaultMessage="Artyści" id="8JzbSH" />
         </Heading>
       </StatsItem>
       <CircularSeparator />
@@ -34,14 +49,14 @@ const TotalStats = () => {
           level={isPhone ? 2 : isTablet ? 3 : 1}
           textAlign="center"
         >
-          290+
+          {stats?.clients ?? "-"}
         </Heading>
         <Heading
           color={theme.colors.primary}
           level={isTablet ? 5 : 4}
           textAlign="center"
         >
-          Happy Clients
+          <FormattedMessage defaultMessage="Klienci" id="RTmXj2" />
         </Heading>
       </StatsItem>
       <CircularSeparator />
@@ -51,14 +66,14 @@ const TotalStats = () => {
           level={isPhone ? 2 : isTablet ? 3 : 1}
           textAlign="center"
         >
-          380+
+          {stats?.users ?? "-"}
         </Heading>
         <Heading
           color={theme.colors.primary}
           level={isTablet ? 5 : 4}
           textAlign="center"
         >
-          Clients
+          <FormattedMessage defaultMessage="Użytkownicy" id="Xt52bW" />
         </Heading>
       </StatsItem>
       <CircularSeparator />

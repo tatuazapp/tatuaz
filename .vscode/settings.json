@@ -6,5 +6,10 @@
     "typescript",
     "typescriptreact"
   ],
-  "i18n-ally.localesPaths": ["apps/web/i18n"]
+  "i18n-ally.localesPaths": ["apps/web/i18n"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
