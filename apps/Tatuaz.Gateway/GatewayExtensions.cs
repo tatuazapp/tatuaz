@@ -20,6 +20,7 @@ using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.IO;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Core;
@@ -305,6 +306,7 @@ public static class GatewayExtensions
 
                     return Task.CompletedTask;
                 };
+                opt.MemoryStreamManager = new RecyclableMemoryStreamManager(1024, 1024 * 1024, 16 * 1024 * 1024);
             })
             .ClearProviders()
             .Configure<AzureBlobStorageImageProviderOptions>(opt =>

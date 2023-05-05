@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
+using Microsoft.IO;
 using Tatuaz.Dashboard.Queue.Contracts.Identity;
 using Tatuaz.Dashboard.Queue.Producers.Identity;
 using Tatuaz.Gateway.Requests.Commands.Identity;
@@ -21,16 +22,19 @@ public class SetForegroundPhotoCommandHandler
     private readonly IPhotoService _photoService;
     private readonly SetForegroundPhotoProducer _producer;
     private readonly IValidator<SetForegroundPhotoDto> _validator;
+    private readonly RecyclableMemoryStreamManager _recyclableMemoryStreamManager;
 
     public SetForegroundPhotoCommandHandler(
         IPhotoService photoService,
         SetForegroundPhotoProducer producer,
-        IValidator<SetForegroundPhotoDto> validator
+        IValidator<SetForegroundPhotoDto> validator,
+        RecyclableMemoryStreamManager recyclableMemoryStreamManager
     )
     {
         _photoService = photoService;
         _producer = producer;
         _validator = validator;
+        _recyclableMemoryStreamManager = recyclableMemoryStreamManager;
     }
 
     public async Task<TatuazResult<EmptyDto>> Handle(
@@ -47,7 +51,7 @@ public class SetForegroundPhotoCommandHandler
             return CommonResultFactory.ValidationError<EmptyDto>(validationResult);
         }
 
-        using var stream = new MemoryStream();
+        using var stream = _recyclableMemoryStreamManager.GetStream();
         await request.SetForegroundPhotoDto.Photo!
             .CopyToAsync(stream, cancellationToken)
             .ConfigureAwait(false);
