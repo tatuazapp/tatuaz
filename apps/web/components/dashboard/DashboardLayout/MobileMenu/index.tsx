@@ -67,6 +67,8 @@ const MobileMenu: React.FunctionComponent<MobileMenuProps> = ({ onClose }) => {
           return <DashboardIcon />
         case "profile":
           return <ProfileIcon />
+        default:
+          return null
       }
     }
 

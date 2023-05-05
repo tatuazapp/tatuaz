@@ -22,14 +22,15 @@ import { queryClient } from "../../../../pages/_app"
 import Dropzone from "../../../common/Dropzone"
 import useModals from "../../../common/modals/useModals"
 
-type BackgroundPhotoUploadModalProps = {
+type AvatarUploadModalProps = {
   isOpen: boolean
   onClose: () => void
 }
 
-const BackgroundPhotoUploadModal: FunctionComponent<
-  BackgroundPhotoUploadModalProps
-> = ({ isOpen, onClose }) => {
+const AvatarUploadModal: FunctionComponent<AvatarUploadModalProps> = ({
+  isOpen,
+  onClose,
+}) => {
   const [uploadedImage, setUploadedImage] = useState<File | null>(null)
 
   const intl = useIntl()
@@ -58,12 +59,12 @@ const BackgroundPhotoUploadModal: FunctionComponent<
 
   const mutation = useMutation({
     mutationFn: (data: { photo?: File }) =>
-      api.identity.setBackgroundPhoto(data),
+      api.identity.setForegroundPhoto(data),
     onError: () => {
       toast({
         title: intl.formatMessage({
-          defaultMessage: "Wystąpił błąd podczas zmiany zdjęcia tła",
-          id: "/12A7d",
+          defaultMessage: "Wystąpił błąd podczas zmiany avataru",
+          id: "24ACHW",
         }),
         status: "error",
         position: "top",
@@ -72,8 +73,8 @@ const BackgroundPhotoUploadModal: FunctionComponent<
     onSuccess: () => {
       toast({
         title: intl.formatMessage({
-          defaultMessage: "Zdjęcie tła zostało zmienione",
-          id: "+8tZHv",
+          defaultMessage: "Zdjęcie profilowe zostało zmienione",
+          id: "+oLkQK",
         }),
         status: "success",
         position: "top",
@@ -86,12 +87,12 @@ const BackgroundPhotoUploadModal: FunctionComponent<
   })
 
   const deleteMutation = useMutation({
-    mutationFn: () => api.identity.deleteBackgroundPhoto({}),
+    mutationFn: () => api.identity.deleteForegroundPhoto({}),
     onError: () => {
       toast({
         title: intl.formatMessage({
-          defaultMessage: "Wystąpił błąd podczas usuwania zdjęcia tła",
-          id: "4qDwM3",
+          defaultMessage: "Wystąpił błąd podczas usuwania avataru",
+          id: "l6acOX",
         }),
         status: "error",
         position: "top",
@@ -100,8 +101,8 @@ const BackgroundPhotoUploadModal: FunctionComponent<
     onSuccess: () => {
       toast({
         title: intl.formatMessage({
-          defaultMessage: "Zdjęcie tła zostało usunięte",
-          id: "QMLWpG",
+          defaultMessage: "Avatar został usunięty",
+          id: "L0sfbI",
         }),
         status: "success",
         position: "top",
@@ -119,8 +120,8 @@ const BackgroundPhotoUploadModal: FunctionComponent<
         if (!uploadedImage) {
           setError("backgroundPhoto", {
             message: intl.formatMessage({
-              defaultMessage: "Zdjęcie tła jest wymagane",
-              id: "w05BpQ",
+              defaultMessage: "Avatar jest wymagany",
+              id: "uwVZTo",
             }),
           })
           return
@@ -142,8 +143,8 @@ const BackgroundPhotoUploadModal: FunctionComponent<
     if (
       await confirm(
         intl.formatMessage({
-          defaultMessage: "Czy na pewno chcesz usunąć zdjęcie tła?",
-          id: "pxCnRe",
+          defaultMessage: "Czy na pewno chcesz usunąć avatar?",
+          id: "YJAba8",
         })
       )
     ) {
@@ -156,7 +157,7 @@ const BackgroundPhotoUploadModal: FunctionComponent<
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
-          <FormattedMessage defaultMessage="Zmień zdjęcie tła" id="fnjc96" />
+          <FormattedMessage defaultMessage="Zmień avatar" id="H4D1OM" />
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
@@ -198,8 +199,8 @@ const BackgroundPhotoUploadModal: FunctionComponent<
             onClick={onDelete}
           >
             <FormattedMessage
-              defaultMessage="Usuń bieżące zdjęcie tła"
-              id="Mj/Wxn"
+              defaultMessage="Usuń aktualny avatar"
+              id="fAV7n8"
             />
           </Button>
           <Button mr={3} variant="ghost" onClick={onClose}>
@@ -218,4 +219,4 @@ const BackgroundPhotoUploadModal: FunctionComponent<
   )
 }
 
-export default BackgroundPhotoUploadModal
+export default AvatarUploadModal

@@ -32,7 +32,7 @@ const kinds = {
   },
 } satisfies Record<string, ChakraButtonProps>
 
-const buildProps = ({ kind }: { kind: ButtonKind }) => kinds[kind]
+const buildProps = ({ kind }: { kind?: ButtonKind }) => kinds[kind ?? "primary"]
 
 const Button: FunctionComponent<ButtonProps> = ({ kind, ...chakraProps }) => {
   const props = buildProps({ kind })

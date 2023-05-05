@@ -1,29 +1,63 @@
+import { Heading4 } from "@tatuaz/ui"
 import { FunctionComponent, useState } from "react"
 import useMe from "../../../../api/hooks/useMe"
 import formatCDNImageUrl from "../../../../utils/format/formatCDNImageUrl"
-import { BackgroundPhotoContainer } from "../BackgroundPhotoContainer/styles"
+import AvatarUploadModal from "../AvatarUploadModal"
+import {
+  AvatarContainer,
+  BackgroundAndAvatarContainer,
+  BackgroundPhotoContainer,
+  UserInfoContainer,
+} from "../BackgroundAndAvatarContainer/styles"
 import BackgroundPhotoUploadModal from "../BackgroundPhotoUploadModal"
 
+const MAX_BACKGROUND_PHOTO_SIZE = 1024
+const MAX_AVATAR_SIZE = 512
+
 const BackgroundPhotoSection: FunctionComponent = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isBackgroundModalOpen, setIsBackgroundModalOpen] = useState(false)
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false)
 
   const handleBackgroundPhotoClick = () => {
-    setIsOpen(true)
+    setIsBackgroundModalOpen(true)
+  }
+
+  const handleAvatarPhotoClick = () => {
+    setIsAvatarModalOpen(true)
   }
 
   const me = useMe()
 
   return (
     <>
-      <BackgroundPhotoContainer
-        imageUrl={
-          me?.backgroundPhotoUri && formatCDNImageUrl(me?.backgroundPhotoUri)
-        }
-        onClick={handleBackgroundPhotoClick}
-      />
+      <BackgroundAndAvatarContainer>
+        <BackgroundPhotoContainer
+          imageUrl={
+            me?.backgroundPhotoUri &&
+            formatCDNImageUrl(me?.backgroundPhotoUri, {
+              width: MAX_BACKGROUND_PHOTO_SIZE,
+            })
+          }
+          onClick={handleBackgroundPhotoClick}
+        />
+        <AvatarContainer
+          src={formatCDNImageUrl(me?.foregroundPhotoUri ?? "", {
+            maxWidth: MAX_AVATAR_SIZE,
+          })}
+          onClick={handleAvatarPhotoClick}
+        />
+        <UserInfoContainer>
+          <Heading4>{me?.username ?? "-"}</Heading4>
+        </UserInfoContainer>
+      </BackgroundAndAvatarContainer>
+
       <BackgroundPhotoUploadModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        isOpen={isBackgroundModalOpen}
+        onClose={() => setIsBackgroundModalOpen(false)}
+      />
+      <AvatarUploadModal
+        isOpen={isAvatarModalOpen}
+        onClose={() => setIsAvatarModalOpen(false)}
       />
     </>
   )

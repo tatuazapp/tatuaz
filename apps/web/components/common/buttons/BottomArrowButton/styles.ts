@@ -40,12 +40,12 @@ export const BottomArrowButton = styled.button<{
     border-bottom: 3px solid ${theme.colors.background4};
   `}
 
-  ${({ disabled }) =>
+  ${({ disabled, theme }) =>
     disabled &&
     `
     cursor: not-allowed;
-    color: ${({ theme }) => theme.colors.background4};
-    border-bottom: 3px solid ${({ theme }) => theme.colors.background4};
+    color: ${theme.colors.background4};
+    border-bottom: 3px solid ${theme.colors.background4};
     
     filter: opacity(0.5);
     `}

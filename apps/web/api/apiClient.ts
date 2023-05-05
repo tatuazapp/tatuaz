@@ -2,8 +2,12 @@ import { Api } from "./tatuazApi"
 
 export const api = new Api({
   baseUrl: process.env.NEXT_PUBLIC_API_URL,
-  securityWorker: async (getAccessToken: () => Promise<string>) => {
-    const accessToken = await getAccessToken()
+  securityWorker: async (securityData: (() => Promise<string>) | null) => {
+    if (!securityData) {
+      return undefined
+    }
+
+    const accessToken = await securityData()
 
     return accessToken
       ? {

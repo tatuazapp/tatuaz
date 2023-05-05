@@ -80,7 +80,11 @@ export const breakpointsNumericValues = {
   xxxl: 1700,
 }
 
-const breakpoints = Object.keys(breakpointsNumericValues).reduce((acc, key) => {
+const breakpoints = (
+  Object.keys(
+    breakpointsNumericValues
+  ) as (keyof typeof breakpointsNumericValues)[]
+).reduce((acc, key) => {
   acc[key] = `${breakpointsNumericValues[key]}px`
   return acc
 }, {} as Record<string, string>) as Record<
