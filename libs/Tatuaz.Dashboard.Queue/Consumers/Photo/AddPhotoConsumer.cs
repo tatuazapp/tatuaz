@@ -53,9 +53,9 @@ public class AddPhotoConsumer : TatuazConsumerBase<AddPhoto, Guid>
                     _photoRepository.Create(photo);
                     await _unitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
 
-                    var stream = new MemoryStream(context.Message.Data);
+                    using var stream = new MemoryStream(context.Message.Data);
                     var image = await Image.LoadAsync(stream, ct).ConfigureAwait(false);
-                    var jpgStream = new MemoryStream();
+                    using var jpgStream = new MemoryStream();
                     await image.SaveAsJpegAsync(jpgStream, ct).ConfigureAwait(false);
                     jpgStream.Position = 0;
                     var blobClient = _blobContainerClient.GetBlobClient($"{photo.Id:N}.jpg");
