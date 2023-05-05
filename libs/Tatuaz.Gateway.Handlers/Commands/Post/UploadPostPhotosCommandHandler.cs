@@ -61,7 +61,10 @@ public class UploadPostPhotosCommandHandler
                 var validationError = new ValidationFailure(
                     nameof(request.UploadPostPhotosDto.Photos),
                     "Invalid file format for photo number " + (i + 1) + "."
-                ) { ErrorCode = UploadPostPhotosErrorCodes.InvalidFileFormat };
+                )
+                {
+                    ErrorCode = UploadPostPhotosErrorCodes.InvalidFileFormat
+                };
                 validationResult.Errors.Add(validationError);
                 return CommonResultFactory.ValidationError<UploadedPhotosDto>(validationResult);
             }
