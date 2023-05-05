@@ -1,19 +1,13 @@
-using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
-using MassTransit;
 using MediatR;
-using Tatuaz.Dashboard.Queue.Consumers.Photo;
-using Tatuaz.Dashboard.Queue.Contracts.Photo;
 using Tatuaz.Dashboard.Queue.Contracts.Post;
-using Tatuaz.Dashboard.Queue.Producers.Photo;
 using Tatuaz.Dashboard.Queue.Producers.Post;
 using Tatuaz.Gateway.Requests.Commands.Post;
-using Tatuaz.Scheduler.Queue.Contracts.Post;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Post;
 using Tatuaz.Shared.Helpers.DataStructures;
 using Tatuaz.Shared.Pipeline.Factories.ErrorCodes.Post;
@@ -67,10 +61,7 @@ public class UploadPostPhotosCommandHandler
                 var validationError = new ValidationFailure(
                     nameof(request.UploadPostPhotosDto.Photos),
                     "Invalid file format for photo number " + (i + 1) + "."
-                )
-                {
-                    ErrorCode = UploadPostPhotosErrorCodes.InvalidFileFormat
-                };
+                ) { ErrorCode = UploadPostPhotosErrorCodes.InvalidFileFormat };
                 validationResult.Errors.Add(validationError);
                 return CommonResultFactory.ValidationError<UploadedPhotosDto>(validationResult);
             }
