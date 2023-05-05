@@ -42,6 +42,10 @@ const ArtistPostCommentView: React.FunctionComponent<
 
   const onNotLikedPhotoClickHandler = () => {
     const notLikedButton = document.getElementById("notLikedButton")
+    if (!notLikedButton) {
+      return
+    }
+
     notLikedButton.style.transform = "scale(0.7)"
     setTimeout(() => {
       setIsPostLiked(true)
@@ -50,6 +54,10 @@ const ArtistPostCommentView: React.FunctionComponent<
 
   const onLikedPhotoClickHandler = () => {
     const likedButton = document.getElementById("likedButton")
+    if (!likedButton) {
+      return
+    }
+
     likedButton.style.transform = "scale(0.8)"
     setTimeout(() => {
       setIsPostLiked(false)

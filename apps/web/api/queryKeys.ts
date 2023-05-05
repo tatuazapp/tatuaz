@@ -3,4 +3,5 @@ export const queryKeys = {
   photo: {
     listCategories: "listCategories",
   },
+  getRegisteredStats: "getRegisteredStats",
 } as const

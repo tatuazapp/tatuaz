@@ -3,8 +3,17 @@ import { Home } from "@styled-icons/boxicons-regular/Home"
 import { User as Profile } from "@styled-icons/boxicons-regular/User"
 import { Search } from "@styled-icons/evaicons-solid/Search"
 import { down, up } from "styled-breakpoints"
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 import { rem } from "../../../../styles/utils"
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`
 
 export const MenuWrapper = styled.div`
   display: flex;
@@ -18,6 +27,8 @@ export const MenuWrapper = styled.div`
   margin-right: ${({ theme }) => theme.space.xxxxlarge};
 
   background-color: ${({ theme }) => theme.colors.background2};
+  border-radius: 0 12px 12px 0;
+
   ${down("xxl")} {
     margin-right: ${({ theme }) => theme.space.xxlarge};
   }
@@ -53,6 +64,7 @@ export const NavItemsWrapper = styled.div`
 export const MenuList = styled.div`
   display: flex;
   flex-direction: column;
+  gap: ${({ theme }) => theme.space.xsmall};
 `
 
 export const MenuListItem = styled.div<{
@@ -63,15 +75,19 @@ export const MenuListItem = styled.div<{
   display: flex;
   align-items: center;
 
-  padding-top: ${({ theme }) => theme.space.small};
-  padding-right: ${({ theme }) => theme.space.small};
-  padding-bottom: ${({ theme }) => theme.space.small};
-  padding-left: ${({ theme }) => theme.space.small};
+  margin: 0 ${({ theme }) => theme.space.xsmall};
+  padding: ${({ theme }) => theme.space.xsmall}
+    ${({ theme }) => theme.space.xsmall};
 
-  font-size: ${({ theme }) => theme.sizes.medium};
-  font-weight: 500;
   color: ${({ isSelected, theme }) =>
     isSelected ? theme.colors.primary : theme.colors.secondary};
+
+  background-color: ${({ isSelected, theme }) =>
+    isSelected ? theme.colors.background3 : "transparent"};
+  border-radius: 8px;
+
+  transition: background-color 0.3s;
+  animation: ${fadeIn} 0.3s;
 
   :hover {
     background-color: ${({ theme }) => theme.colors.background3};
@@ -79,22 +95,27 @@ export const MenuListItem = styled.div<{
 `
 
 export const HomeIcon = styled(Home)`
-  height: ${({ theme }) => theme.sizes.xlarge};
+  width: ${rem(28)};
+  height: ${rem(28)};
 `
+
 export const SearchIcon = styled(Search)`
-  height: ${({ theme }) => theme.sizes.xlarge};
+  width: ${rem(28)};
+  height: ${rem(28)};
 `
+
 export const DashboardIcon = styled(Dashboard)`
-  height: ${({ theme }) => theme.sizes.xlarge};
+  width: ${rem(28)};
+  height: ${rem(28)};
 `
 
 export const ProfileIcon = styled(Profile)`
-  height: ${({ theme }) => theme.sizes.xlarge};
+  width: ${rem(28)};
+  height: ${rem(28)};
 `
 
 export const MenuListItemText = styled.p`
   padding-left: ${({ theme }) => theme.space.xxsmall};
-  font-size: ${({ theme }) => theme.sizes.medium};
 `
 
 export const SignOutButtonWrapper = styled.div`

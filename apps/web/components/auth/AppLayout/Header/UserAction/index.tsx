@@ -11,7 +11,7 @@ const UserAction: FunctionComponent<UserActionProps> = () => {
   const { isAuthenticated, isLoading, user } = useAuth0()
   if (isLoading) return null
 
-  if (isAuthenticated) return <AvatarMenu user={user} />
+  if (isAuthenticated && user) return <AvatarMenu user={user} />
 
   return <SignInButton />
 }

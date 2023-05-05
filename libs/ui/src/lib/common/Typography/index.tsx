@@ -78,6 +78,24 @@ export const Heading2: FunctionComponent<HeadingProps> = ({
   </Heading>
 )
 
+export const Heading3: FunctionComponent<HeadingProps> = ({
+  children,
+  ...props
+}) => (
+  <Heading level={3} {...props}>
+    {children}
+  </Heading>
+)
+
+export const Heading4: FunctionComponent<HeadingProps> = ({
+  children,
+  ...props
+}) => (
+  <Heading level={4} {...props}>
+    {children}
+  </Heading>
+)
+
 export const p1 = css`
   font-size: ${rem(18)};
   line-height: ${rem(22)};

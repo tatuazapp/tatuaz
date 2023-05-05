@@ -38,6 +38,14 @@ export interface ErrorResponse {
   success?: boolean
 }
 
+export interface GetUserDto {
+  /**
+   * ErrorCodes: UsernameNull, UsernameTooLong
+   * @maxLength 32
+   */
+  username: string
+}
+
 export interface ListCategoriesDto {
   /**
    * ErrorCodes: PageNumberIsNull, PageNumberIsLessThan1
@@ -68,6 +76,17 @@ export interface OkResponseUserDto {
   success?: boolean
 }
 
+/** Wrapper used for returning success responses. */
+export interface OkResponseInt {
+  /**
+   * Payload of response.
+   * @format int32
+   */
+  value?: number
+  /** Indicates if request was successful. Should be always true for this type of response. */
+  success?: boolean
+}
+
 export interface PagedDataCategoryDto {
   data?: CategoryDto[]
   /** @format int32 */
@@ -88,7 +107,7 @@ export interface SignUpDto {
    * @pattern ^[a-zA-Z0-9_]*$
    */
   username: string
-  /** ErrorCodes: CategoryIdsNull, CategoryIdsTooFew, CategoryIdsTooMany, CategoryIdsInvalid, CategoryIdsDuplicate */
+  /** ErrorCodes: CategoryIdsNull, CategoryIdsTooFew, CategoryIdsInvalid, CategoryIdsDuplicate */
   categoryIds: number[]
 }
 
@@ -519,6 +538,30 @@ export class Api<
         format: "json",
         ...params,
       }),
+
+    /**
+     * No description
+     *
+     * @tags Identity
+     * @name GetUser
+     * @summary Get user with username
+     * @request POST:/Identity/GetUser
+     * @secure
+     * @response `201` `EmptyResponse` Created
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `500` `ErrorResponse` Server Error
+     */
+    getUser: (data: GetUserDto, params: RequestParams = {}) =>
+      this.request<EmptyResponse, ErrorResponse | EmptyResponse>({
+        path: `/Identity/GetUser`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
   }
   photo = {
     /**
@@ -543,6 +586,28 @@ export class Api<
         body: data,
         secure: true,
         type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+  }
+  statistics = {
+    /**
+ * No description
+ *
+ * @tags Statistics
+ * @name GetRegisteredStats
+ * @summary Get number of registered tattoo artists, clients and users.
+A client is a user who has booked at least 1 appointment
+ * @request POST:/Statistics/GetRegisteredStats
+ * @secure
+ * @response `200` `OkResponseInt` Success
+ * @response `500` `ErrorResponse` Server Error
+ */
+    getRegisteredStats: (params: RequestParams = {}) =>
+      this.request<OkResponseInt, ErrorResponse>({
+        path: `/Statistics/GetRegisteredStats`,
+        method: "POST",
+        secure: true,
         format: "json",
         ...params,
       }),

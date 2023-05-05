@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Auth0Provider } from "@auth0/auth0-react"
 import { ChakraProvider } from "@chakra-ui/react"
 import { PrismicPreview } from "@prismicio/next"
@@ -11,6 +12,7 @@ import { useEffect } from "react"
 import { IntlProvider } from "react-intl"
 import { ThemeProvider } from "styled-components"
 import ApiInit from "../components/auth/ApiInit"
+import { ModalProvider } from "../components/common/modals/useModals"
 import { currentLocale, messages } from "../i18n"
 import { repositoryName } from "../prismicio"
 import chakraTheme from "../styles/chakra"
@@ -36,31 +38,33 @@ function App({ Component, pageProps }: AppProps) {
       <IntlProvider locale={currentLocale} messages={messages[currentLocale]}>
         <ThemeProvider theme={themeMerged}>
           <ChakraProvider theme={chakraTheme}>
-            <PrismicProvider
-              internalLinkComponent={({ href, ...props }) => (
-                <Link href={href}>
-                  <a {...props} />
-                </Link>
-              )}
-            >
-              <Auth0Provider
-                audience={process.env.NEXT_PUBLIC_AUTH0_AUDIENCE}
-                cacheLocation="localstorage"
-                clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID}
-                domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN}
-                redirectUri={process.env.NEXT_PUBLIC_AUTH0_REDIRECT_URI}
+            <ModalProvider>
+              <PrismicProvider
+                internalLinkComponent={({ href, ...props }) => (
+                  <Link href={href}>
+                    <a {...props} />
+                  </Link>
+                )}
               >
-                <Head>
-                  <title>Tatuaż App</title>
-                </Head>
-                <ApiInit />
-                <PrismicPreview repositoryName={repositoryName}>
-                  <main className="app">
-                    <Component {...pageProps} />
-                  </main>
-                </PrismicPreview>
-              </Auth0Provider>
-            </PrismicProvider>
+                <Auth0Provider
+                  audience={process.env.NEXT_PUBLIC_AUTH0_AUDIENCE}
+                  cacheLocation="localstorage"
+                  clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID!}
+                  domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN!}
+                  redirectUri={process.env.NEXT_PUBLIC_AUTH0_REDIRECT_URI}
+                >
+                  <Head>
+                    <title>Tatuaż App</title>
+                  </Head>
+                  <ApiInit />
+                  <PrismicPreview repositoryName={repositoryName}>
+                    <main className="app">
+                      <Component {...pageProps} />
+                    </main>
+                  </PrismicPreview>
+                </Auth0Provider>
+              </PrismicProvider>
+            </ModalProvider>
           </ChakraProvider>
         </ThemeProvider>
       </IntlProvider>

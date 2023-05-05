@@ -39,7 +39,7 @@ const DashboardLayout: FunctionComponent<DashboardLayoutProps> = ({
   const data = useMe()
 
   useEffect(() => {
-    if (!data?.username) {
+    if (data && !data?.username) {
       router.push("/")
     }
   }, [data, data?.username, router])

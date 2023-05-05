@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
+import { isNil } from "lodash"
 import { FunctionComponent, useCallback } from "react"
 import { api } from "../../../../api/apiClient"
 import { queryKeys } from "../../../../api/queryKeys"
@@ -30,7 +31,11 @@ const PreferencesPicker: FunctionComponent<PreferencesPickerProps> = ({
   )
 
   const onPreferenceSelect = useCallback(
-    (id: number) => {
+    (id: number | undefined) => {
+      if (isNil(id)) {
+        return
+      }
+
       if (selectedPreferences.includes(id)) {
         setSelectedPreferences(
           selectedPreferences.filter((preferenceId) => preferenceId !== id)
@@ -44,17 +49,24 @@ const PreferencesPicker: FunctionComponent<PreferencesPickerProps> = ({
 
   return (
     <PreferencesPickerWrapper>
-      {data?.value.data.map((category) => (
-        <PreferencesPickerItem
-          key={category.id}
-          active={selectedPreferences.includes(category.id)}
-          imageUrl={formatCDNImageUrl(category.imageUri, {
-            maxWidth: ONBOARDING_IMAGE_MAX_WIDTH,
-          })}
-          title={category.title}
-          onClick={() => onPreferenceSelect(category.id)}
-        />
-      ))}
+      {data?.value?.data?.map(
+        (category) =>
+          !isNil(category.id) && (
+            <PreferencesPickerItem
+              key={category.id}
+              active={selectedPreferences.includes(category.id)}
+              imageUrl={
+                category.imageUri
+                  ? formatCDNImageUrl(category.imageUri, {
+                      maxWidth: ONBOARDING_IMAGE_MAX_WIDTH,
+                    })
+                  : ""
+              }
+              title={category.title ?? "-"}
+              onClick={() => onPreferenceSelect(category.id)}
+            />
+          )
+      )}
     </PreferencesPickerWrapper>
   )
 }
