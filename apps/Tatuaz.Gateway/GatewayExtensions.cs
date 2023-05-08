@@ -306,7 +306,11 @@ public static class GatewayExtensions
 
                     return Task.CompletedTask;
                 };
-                opt.MemoryStreamManager = new RecyclableMemoryStreamManager(1024, 1024 * 1024, 16 * 1024 * 1024);
+                opt.MemoryStreamManager = new RecyclableMemoryStreamManager(
+                    1024,
+                    1024 * 1024,
+                    16 * 1024 * 1024
+                );
             })
             .ClearProviders()
             .Configure<AzureBlobStorageImageProviderOptions>(opt =>

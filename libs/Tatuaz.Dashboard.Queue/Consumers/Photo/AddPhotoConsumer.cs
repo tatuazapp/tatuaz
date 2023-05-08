@@ -58,7 +58,12 @@ public class AddPhotoConsumer : TatuazConsumerBase<AddPhoto, Guid>
                     await _unitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
 
                     Image image;
-                    using (var stream = _recyclableMemoryStreamManager.GetStream("LoadImage", context.Message.Data.Length))
+                    using (
+                        var stream = _recyclableMemoryStreamManager.GetStream(
+                            "LoadImage",
+                            context.Message.Data.Length
+                        )
+                    )
                     {
                         await stream.WriteAsync(context.Message.Data, ct).ConfigureAwait(false);
                         stream.Position = 0;

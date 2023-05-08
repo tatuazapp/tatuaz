@@ -52,7 +52,9 @@ public static class SharedPipelineExtensions
         });
         services.AddScoped<UserContextActionFilter>();
         services.AddScoped<IUserContext, UserContext.UserContext>();
-        services.AddSingleton(new RecyclableMemoryStreamManager(1024, 1024 * 1024, 32 * 1024 * 1024));
+        services.AddSingleton(
+            new RecyclableMemoryStreamManager(1024, 1024 * 1024, 32 * 1024 * 1024)
+        );
 
         return services;
     }
