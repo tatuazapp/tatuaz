@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Tatuaz.Dashboard.Queue.Contracts.Photo;
 using Tatuaz.Dashboard.Queue.Contracts.Statistics;
+using Tatuaz.Dashboard.Queue.Producers.Statistics;
 using Tatuaz.Gateway.Requests.Queries.Statistics;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Statistics;
 using Tatuaz.Shared.Pipeline.Messages;

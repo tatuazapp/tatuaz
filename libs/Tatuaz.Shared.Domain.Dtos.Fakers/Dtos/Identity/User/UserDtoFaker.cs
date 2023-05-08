@@ -1,6 +1,6 @@
 using System;
 using Bogus;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Common;
 
 namespace Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Identity.User;
@@ -16,7 +16,9 @@ public sealed class UserDtoFaker : Faker<UserDto>, IDtoFaker
                     f.Internet.UserName(),
                     f.Random.Guid().ToString(),
                     new Uri(f.Internet.Url()),
-                    new Uri(f.Internet.Url())
+                    new Uri(f.Internet.Url()),
+                    f.Lorem.Sentence(),
+                    f.Random.Bool()
                 )
         );
     }

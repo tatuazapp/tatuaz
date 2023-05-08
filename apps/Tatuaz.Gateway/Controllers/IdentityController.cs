@@ -4,11 +4,12 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Tatuaz.Dashboard.Queue.Consumers.Identity;
 using Tatuaz.Gateway.Authorization;
 using Tatuaz.Gateway.HttpResponses;
 using Tatuaz.Gateway.Requests.Commands.Identity;
 using Tatuaz.Gateway.Requests.Queries.Identity;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 
 namespace Tatuaz.Gateway.Controllers;
 
@@ -168,6 +169,48 @@ public class IdentityController : TatuazControllerBase
     {
         return ResultToActionResult(
             await Mediator.Send(new GetUserQuery(getUserDto)).ConfigureAwait(false)
+        );
+    }
+
+    /// <summary>
+    /// Set bio for current user
+    /// </summary>
+    /// <param name="bio"></param>
+    /// <returns></returns>
+    [HttpPost("[action]")]
+    [AuthorizeActiveUser]
+    [Produces("application/json")]
+    [Consumes("application/json")]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Forbidden)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
+    public async Task<IActionResult> SetBio([FromBody] SetBioDto setBioDto)
+    {
+        return ResultToActionResult(
+            await Mediator.Send(new SetBioCommand(setBioDto)).ConfigureAwait(false)
+        );
+    }
+
+    /// <summary>
+    /// Set account type for current user
+    /// </summary>
+    /// <param name="setAccountTypeDto"></param>
+    /// <returns></returns>
+    [HttpPost("[action]")]
+    [AuthorizeActiveUser]
+    [Produces("application/json")]
+    [Consumes("application/json")]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Forbidden)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
+    public async Task<IActionResult> SetAccountType([FromBody] SetAccountTypeDto setAccountTypeDto)
+    {
+        return ResultToActionResult(
+            await Mediator.Send(new SetAccountTypeCommand(setAccountTypeDto)).ConfigureAwait(false)
         );
     }
 }

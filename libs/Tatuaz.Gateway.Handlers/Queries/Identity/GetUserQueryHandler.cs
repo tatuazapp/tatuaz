@@ -5,7 +5,7 @@ using MediatR;
 using Tatuaz.Dashboard.Queue.Contracts.Identity;
 using Tatuaz.Dashboard.Queue.Producers.Identity;
 using Tatuaz.Gateway.Requests.Queries.Identity;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Messages;
 

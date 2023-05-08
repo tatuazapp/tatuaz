@@ -7,7 +7,7 @@ using Tatuaz.Dashboard.Queue.Contracts.Identity;
 using Tatuaz.Dashboard.Queue.Producers.Identity;
 using Tatuaz.Gateway.Requests.Commands.Identity;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Common;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Factories.Results.Identity;
 using Tatuaz.Shared.Pipeline.Messages;

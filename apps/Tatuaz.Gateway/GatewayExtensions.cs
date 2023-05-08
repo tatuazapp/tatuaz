@@ -38,7 +38,7 @@ using Tatuaz.Gateway.Handlers;
 using Tatuaz.Gateway.Swagger;
 using Tatuaz.Scheduler.Queue;
 using Tatuaz.Shared.Domain.Dtos;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Helpers;
 using Tatuaz.Shared.Infrastructure;
 using Tatuaz.Shared.Infrastructure.DataAccess;
