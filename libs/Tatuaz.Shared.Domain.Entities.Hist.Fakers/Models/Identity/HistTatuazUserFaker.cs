@@ -19,5 +19,6 @@ public sealed class HistTatuazUserFaker : Faker<HistTatuazUser>, IHistEntityFake
         RuleFor(x => x.Auth0Id, f => f.Random.Guid().ToString());
         RuleFor(x => x.ForegroundPhotoId, f => f.Random.Guid());
         RuleFor(x => x.BackgroundPhotoId, f => f.Random.Guid());
+        RuleFor(x => x.Bio, f => f.Lorem.Sentence());
     }
 }

@@ -17,5 +17,7 @@ public class HistTatuazUserConfiguration : IEntityTypeConfiguration<HistTatuazUs
         builder.Property(x => x.Username).HasMaxLength(32);
 
         builder.Property(x => x.Auth0Id).HasMaxLength(128);
+
+        builder.Property(x => x.Bio).HasMaxLength(4096);
     }
 }

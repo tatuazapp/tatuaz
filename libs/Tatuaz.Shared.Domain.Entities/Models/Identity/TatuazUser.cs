@@ -21,6 +21,7 @@ public class TatuazUser : Entity<HistTatuazUser, string>
     public virtual Photo.Photo? ForegroundPhoto { get; set; }
     public Guid? BackgroundPhotoId { get; set; }
     public virtual Photo.Photo? BackgroundPhoto { get; set; }
+    public string? Bio { get; set; } = default!;
 
     public override HistEntity ToHistEntity(IClock clock, HistState state)
     {
@@ -29,6 +30,7 @@ public class TatuazUser : Entity<HistTatuazUser, string>
         histEntity.Auth0Id = Auth0Id;
         histEntity.ForegroundPhotoId = ForegroundPhotoId;
         histEntity.BackgroundPhotoId = BackgroundPhotoId;
+        histEntity.Bio = Bio;
         return histEntity;
     }
 }

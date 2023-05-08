@@ -8,7 +8,6 @@ using Tatuaz.Gateway.Requests.Commands.Identity;
 using Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Identity;
 using Tatuaz.Shared.Domain.Dtos.Fakers.Dtos.Identity.User;
 using Tatuaz.Shared.Domain.Dtos.Validators.Identity;
-using Tatuaz.Shared.Domain.Dtos.Validators.Identity.User;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Photo;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;

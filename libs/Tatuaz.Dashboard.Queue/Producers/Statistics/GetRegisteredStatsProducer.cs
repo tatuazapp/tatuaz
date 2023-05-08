@@ -1,9 +1,10 @@
 using MassTransit;
 using Microsoft.Extensions.Logging;
+using Tatuaz.Dashboard.Queue.Contracts.Statistics;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Statistics;
 using Tatuaz.Shared.Pipeline.Queues;
 
-namespace Tatuaz.Dashboard.Queue.Contracts.Statistics;
+namespace Tatuaz.Dashboard.Queue.Producers.Statistics;
 
 public class GetRegisteredStatsProducer : TatuazProducerBase<GetRegisteredStats, RegisteredStatsDto>
 {

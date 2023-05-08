@@ -17,5 +17,7 @@ public class TatuazRoleConfiguration : IEntityTypeConfiguration<TatuazRole>
             .WithOne(x => x.Role)
             .HasForeignKey(x => x.RoleId)
             .HasConstraintName("fk_tatuaz_user_roles_tatuaz_roles_tatuaz_role_id");
+
+        builder.HasData(new { Id = TatuazRole.ArtistId, Name = TatuazRole.ArtistName });
     }
 }

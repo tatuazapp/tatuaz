@@ -1,6 +1,6 @@
 namespace Tatuaz.Shared.Pipeline.Factories.ErrorCodes.Identity;
 
-public class GetUserErrorCodes
+public static class GetUserErrorCodes
 {
     public const string UsernameNull = "UsernameNull";
     public const string UserNotFound = "UserNotFound";

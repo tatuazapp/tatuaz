@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Infrastructure.DataAccess;
 using Tatuaz.Testing.Mocks.Infrastructure;

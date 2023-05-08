@@ -1,12 +1,11 @@
-using System;
 using FluentValidation;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline.Factories.ErrorCodes.Identity;
 
-namespace Tatuaz.Shared.Domain.Dtos.Validators.Identity.User;
+namespace Tatuaz.Shared.Domain.Dtos.Validators.Identity;
 
 public class GetUserDtoValidator : AbstractValidator<GetUserDto>
 {
