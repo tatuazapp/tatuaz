@@ -4,6 +4,7 @@ using System.Reflection;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IO;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline.Configuration;
 using Tatuaz.Shared.Pipeline.Filters;
@@ -51,6 +52,9 @@ public static class SharedPipelineExtensions
         });
         services.AddScoped<UserContextActionFilter>();
         services.AddScoped<IUserContext, UserContext.UserContext>();
+        services.AddSingleton(
+            new RecyclableMemoryStreamManager(1024, 1024 * 1024, 32 * 1024 * 1024)
+        );
 
         return services;
     }

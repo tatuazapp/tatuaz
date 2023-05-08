@@ -1,19 +1,14 @@
-using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
-using MassTransit;
 using MediatR;
-using Tatuaz.Dashboard.Queue.Consumers.Photo;
-using Tatuaz.Dashboard.Queue.Contracts.Photo;
+using Microsoft.IO;
 using Tatuaz.Dashboard.Queue.Contracts.Post;
-using Tatuaz.Dashboard.Queue.Producers.Photo;
 using Tatuaz.Dashboard.Queue.Producers.Post;
 using Tatuaz.Gateway.Requests.Commands.Post;
-using Tatuaz.Scheduler.Queue.Contracts.Post;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Post;
 using Tatuaz.Shared.Helpers.DataStructures;
 using Tatuaz.Shared.Pipeline.Factories.ErrorCodes.Post;
@@ -29,16 +24,19 @@ public class UploadPostPhotosCommandHandler
     private readonly IValidator<UploadPostPhotosDto> _validator;
     private readonly IPhotoService _photoService;
     private readonly UploadPostPhotosProducer _uploadPostPhotosProducer;
+    private readonly RecyclableMemoryStreamManager _recyclableMemoryStreamManager;
 
     public UploadPostPhotosCommandHandler(
         IValidator<UploadPostPhotosDto> validator,
         IPhotoService photoService,
-        UploadPostPhotosProducer uploadPostPhotosProducer
+        UploadPostPhotosProducer uploadPostPhotosProducer,
+        RecyclableMemoryStreamManager recyclableMemoryStreamManager
     )
     {
         _validator = validator;
         _photoService = photoService;
         _uploadPostPhotosProducer = uploadPostPhotosProducer;
+        _recyclableMemoryStreamManager = recyclableMemoryStreamManager;
     }
 
     public async Task<TatuazResult<UploadedPhotosDto>> Handle(
@@ -58,7 +56,7 @@ public class UploadPostPhotosCommandHandler
         using var streams = new DisposableList<MemoryStream>();
         for (var i = 0; i < request.UploadPostPhotosDto.Photos.Length; i++)
         {
-            var stream = new MemoryStream();
+            var stream = _recyclableMemoryStreamManager.GetStream();
             await request.UploadPostPhotosDto.Photos[i]
                 .CopyToAsync(stream, cancellationToken)
                 .ConfigureAwait(false);

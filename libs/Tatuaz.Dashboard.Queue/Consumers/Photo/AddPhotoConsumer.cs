@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using MassTransit;
 using Microsoft.Extensions.Logging;
+using Microsoft.IO;
 using SixLabors.ImageSharp;
 using Tatuaz.Dashboard.Queue.Contracts.Photo;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Photo;
@@ -23,6 +24,7 @@ public class AddPhotoConsumer : TatuazConsumerBase<AddPhoto, Guid>
     > _photoRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly BlobContainerClient _blobContainerClient;
+    private readonly RecyclableMemoryStreamManager _recyclableMemoryStreamManager;
 
     public AddPhotoConsumer(
         ILogger<AddPhotoConsumer> logger,
@@ -32,13 +34,15 @@ public class AddPhotoConsumer : TatuazConsumerBase<AddPhoto, Guid>
             Guid
         > photoRepository,
         IUnitOfWork unitOfWork,
-        BlobContainerClient blobContainerClient
+        BlobContainerClient blobContainerClient,
+        RecyclableMemoryStreamManager recyclableMemoryStreamManager
     )
         : base(logger)
     {
         _photoRepository = photoRepository;
         _unitOfWork = unitOfWork;
         _blobContainerClient = blobContainerClient;
+        _recyclableMemoryStreamManager = recyclableMemoryStreamManager;
     }
 
     protected override async Task<TatuazResult<Guid>> ConsumeMessage(
@@ -53,9 +57,19 @@ public class AddPhotoConsumer : TatuazConsumerBase<AddPhoto, Guid>
                     _photoRepository.Create(photo);
                     await _unitOfWork.SaveChangesAsync(ct).ConfigureAwait(false);
 
-                    var stream = new MemoryStream(context.Message.Data);
-                    var image = await Image.LoadAsync(stream, ct).ConfigureAwait(false);
-                    var jpgStream = new MemoryStream();
+                    Image image;
+                    using (
+                        var stream = _recyclableMemoryStreamManager.GetStream(
+                            "LoadImage",
+                            context.Message.Data.Length
+                        )
+                    )
+                    {
+                        await stream.WriteAsync(context.Message.Data, ct).ConfigureAwait(false);
+                        stream.Position = 0;
+                        image = await Image.LoadAsync(stream, ct).ConfigureAwait(false);
+                    }
+                    using var jpgStream = _recyclableMemoryStreamManager.GetStream("SaveJpeg");
                     await image.SaveAsJpegAsync(jpgStream, ct).ConfigureAwait(false);
                     jpgStream.Position = 0;
                     var blobClient = _blobContainerClient.GetBlobClient($"{photo.Id:N}.jpg");
