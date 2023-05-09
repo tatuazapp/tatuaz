@@ -9,12 +9,20 @@
  * ---------------------------------------------------------------
  */
 
+export interface BriefArtistDto {
+  username: string
+  /** @format uri */
+  foregroundPhotoUri: string | null
+  bio: string | null
+  city: string | null
+}
+
 export interface CategoryDto {
   /** @format int32 */
-  id?: number
-  title?: string
-  type?: CategoryTypeDto
-  imageUri?: string
+  id: number
+  title: string
+  type: CategoryTypeDto
+  imageUri: string
 }
 
 export enum CategoryTypeDto {
@@ -36,6 +44,37 @@ export interface ErrorResponse {
   errors?: TatuazError[]
   /** Indicates if request was successful. Should be always false for this type of response. */
   success?: boolean
+}
+
+export interface FinalizePostDto {
+  /**
+   * ErrorCodes
+   * @format uuid
+   */
+  initialPostId?: string
+  /**
+   * ErrorCodes: DescriptionIsNull, DescriptionIsTooLong
+   * @maxLength 4096
+   */
+  description: string
+  /** ErrorCodes: PhotoInfoDtosIsNull, PhotoInfoDtosTooMany, PhotoInfoDtosHasDuplicateCategoryIds, PhotoInfoDtosHasInvalidCategoryIds */
+  photoInfoDtos: PhotoInfoDto[]
+}
+
+export interface GetTopArtistsDto {
+  /**
+   * ErrorCodes: PageNumberIsNull, PageNumberIsLessThan1
+   * @format int32
+   * @min 1
+   */
+  pageNumber: number
+  /**
+   * ErrorCodes: PageSizeIsNull, PageSizeIsLessThan1, PageSizeIsGreaterThan1000
+   * @format int32
+   * @min 1
+   * @max 1000
+   */
+  pageSize: number
 }
 
 export interface GetUserDto {
@@ -63,8 +102,37 @@ export interface ListCategoriesDto {
 }
 
 /** Wrapper used for returning success responses. */
+export interface OkResponseEmptyResponse {
+  /** Response for marking codes that do not return any data. */
+  value?: EmptyResponse
+  /** Indicates if request was successful. Should be always true for this type of response. */
+  success?: boolean
+}
+
+/** Wrapper used for returning success responses. */
+export interface OkResponsePagedDataBriefArtistDto {
+  value?: PagedDataBriefArtistDto
+  /** Indicates if request was successful. Should be always true for this type of response. */
+  success?: boolean
+}
+
+/** Wrapper used for returning success responses. */
 export interface OkResponsePagedDataCategoryDto {
   value?: PagedDataCategoryDto
+  /** Indicates if request was successful. Should be always true for this type of response. */
+  success?: boolean
+}
+
+/** Wrapper used for returning success responses. */
+export interface OkResponseRegisteredStatsDto {
+  value?: RegisteredStatsDto
+  /** Indicates if request was successful. Should be always true for this type of response. */
+  success?: boolean
+}
+
+/** Wrapper used for returning success responses. */
+export interface OkResponseUploadedPhotosDto {
+  value?: UploadedPhotosDto
   /** Indicates if request was successful. Should be always true for this type of response. */
   success?: boolean
 }
@@ -76,15 +144,16 @@ export interface OkResponseUserDto {
   success?: boolean
 }
 
-/** Wrapper used for returning success responses. */
-export interface OkResponseInt {
-  /**
-   * Payload of response.
-   * @format int32
-   */
-  value?: number
-  /** Indicates if request was successful. Should be always true for this type of response. */
-  success?: boolean
+export interface PagedDataBriefArtistDto {
+  data?: BriefArtistDto[]
+  /** @format int32 */
+  pageNumber?: number
+  /** @format int32 */
+  pageSize?: number
+  /** @format int32 */
+  totalPages?: number
+  /** @format int32 */
+  totalCount?: number
 }
 
 export interface PagedDataCategoryDto {
@@ -97,6 +166,40 @@ export interface PagedDataCategoryDto {
   totalPages?: number
   /** @format int32 */
   totalCount?: number
+}
+
+export interface PhotoInfoDto {
+  /** @format uuid */
+  photoId?: string
+  categoryIds?: number[]
+  photoFileName?: string
+}
+
+export interface RegisteredStatsDto {
+  /** @format int32 */
+  artists?: number
+  /** @format int32 */
+  clients?: number
+  /** @format int32 */
+  users?: number
+}
+
+export interface SetAccountTypeDto {
+  /** ErrorCodes */
+  artist?: boolean
+}
+
+export interface SetBioDto {
+  /**
+   * ErrorCodes: BioTooLong
+   * @maxLength 4096
+   */
+  bio?: string | null
+  /**
+   * ErrorCodes: CityTooLong
+   * @maxLength 64
+   */
+  city?: string | null
 }
 
 export interface SignUpDto {
@@ -116,6 +219,12 @@ export interface TatuazError {
   message?: string
 }
 
+export interface UploadedPhotosDto {
+  /** @format uuid */
+  initialPostId?: string
+  photos?: string[]
+}
+
 export interface UserDto {
   username?: string
   email?: string
@@ -124,6 +233,8 @@ export interface UserDto {
   foregroundPhotoUri?: string | null
   /** @format uri */
   backgroundPhotoUri?: string | null
+  bio?: string | null
+  artist?: boolean
 }
 
 export type QueryParamsType = Record<string | number, any>
@@ -436,6 +547,7 @@ export class Api<
      * @response `201` `EmptyResponse` Created
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
      * @response `500` `ErrorResponse` Server Error
      */
     setForegroundPhoto: (
@@ -466,6 +578,7 @@ export class Api<
      * @response `201` `EmptyResponse` Created
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
      * @response `500` `ErrorResponse` Server Error
      */
     setBackgroundPhoto: (
@@ -496,6 +609,7 @@ export class Api<
      * @response `201` `EmptyResponse` Created
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
      * @response `500` `ErrorResponse` Server Error
      */
     deleteForegroundPhoto: (
@@ -523,6 +637,7 @@ export class Api<
      * @response `201` `EmptyResponse` Created
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
      * @response `500` `ErrorResponse` Server Error
      */
     deleteBackgroundPhoto: (
@@ -547,14 +662,93 @@ export class Api<
      * @summary Get user with username
      * @request POST:/Identity/GetUser
      * @secure
-     * @response `201` `EmptyResponse` Created
+     * @response `201` `OkResponseUserDto` Created
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
      * @response `500` `ErrorResponse` Server Error
      */
     getUser: (data: GetUserDto, params: RequestParams = {}) =>
-      this.request<EmptyResponse, ErrorResponse | EmptyResponse>({
+      this.request<OkResponseUserDto, ErrorResponse | EmptyResponse>({
         path: `/Identity/GetUser`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Identity
+     * @name SetBio
+     * @summary Set bio for current user
+     * @request POST:/Identity/SetBio
+     * @secure
+     * @response `200` `EmptyResponse` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    setBio: (data: SetBioDto, params: RequestParams = {}) =>
+      this.request<EmptyResponse, ErrorResponse | EmptyResponse>({
+        path: `/Identity/SetBio`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Identity
+     * @name SetAccountType
+     * @summary Set account type for current user
+     * @request POST:/Identity/SetAccountType
+     * @secure
+     * @response `200` `EmptyResponse` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    setAccountType: (data: SetAccountTypeDto, params: RequestParams = {}) =>
+      this.request<EmptyResponse, ErrorResponse | EmptyResponse>({
+        path: `/Identity/SetAccountType`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Identity
+     * @name GetTopArtists
+     * @summary Set account type for current user
+     * @request POST:/Identity/GetTopArtists
+     * @secure
+     * @response `200` `OkResponsePagedDataBriefArtistDto` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    getTopArtists: (data: GetTopArtistsDto, params: RequestParams = {}) =>
+      this.request<
+        OkResponsePagedDataBriefArtistDto,
+        ErrorResponse | EmptyResponse
+      >({
+        path: `/Identity/GetTopArtists`,
         method: "POST",
         body: data,
         secure: true,
@@ -574,6 +768,7 @@ export class Api<
      * @response `200` `OkResponsePagedDataCategoryDto` Success
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
      * @response `500` `ErrorResponse` Server Error
      */
     listCategories: (data: ListCategoriesDto, params: RequestParams = {}) =>
@@ -582,6 +777,62 @@ export class Api<
         ErrorResponse | EmptyResponse
       >({
         path: `/Photo/ListCategories`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+  }
+  post = {
+    /**
+     * No description
+     *
+     * @tags Post
+     * @name UploadPostPhotos
+     * @summary Upload post photos
+     * @request POST:/Post/UploadPostPhotos
+     * @secure
+     * @response `200` `OkResponseUploadedPhotosDto` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    uploadPostPhotos: (
+      data: {
+        Photos?: File[]
+      },
+      params: RequestParams = {}
+    ) =>
+      this.request<OkResponseUploadedPhotosDto, ErrorResponse | EmptyResponse>({
+        path: `/Post/UploadPostPhotos`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Post
+     * @name FinalizePost
+     * @summary Finalize post
+     * @request POST:/Post/FinalizePost
+     * @secure
+     * @response `200` `OkResponseEmptyResponse` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    finalizePost: (data: FinalizePostDto, params: RequestParams = {}) =>
+      this.request<OkResponseEmptyResponse, ErrorResponse | EmptyResponse>({
+        path: `/Post/FinalizePost`,
         method: "POST",
         body: data,
         secure: true,
@@ -600,11 +851,11 @@ export class Api<
 A client is a user who has booked at least 1 appointment
  * @request POST:/Statistics/GetRegisteredStats
  * @secure
- * @response `200` `OkResponseInt` Success
+ * @response `200` `OkResponseRegisteredStatsDto` Success
  * @response `500` `ErrorResponse` Server Error
  */
     getRegisteredStats: (params: RequestParams = {}) =>
-      this.request<OkResponseInt, ErrorResponse>({
+      this.request<OkResponseRegisteredStatsDto, ErrorResponse>({
         path: `/Statistics/GetRegisteredStats`,
         method: "POST",
         secure: true,
