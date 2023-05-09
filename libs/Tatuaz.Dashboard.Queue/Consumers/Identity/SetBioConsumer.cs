@@ -43,7 +43,8 @@ public class SetBioConsumer : TatuazConsumerBase<SetBio, EmptyDto>
         spec.TrackingStrategy = TrackingStrategy.Tracking;
         var user = (await _userRepository.GetBySpecificationAsync(spec)).Single();
 
-        user.Bio = context.Message.Bio;
+        user.Bio = string.IsNullOrWhiteSpace(context.Message.Bio) ? null : context.Message.Bio;
+        user.City = string.IsNullOrWhiteSpace(context.Message.City) ? null : context.Message.City;
 
         await _unitOfWork.SaveChangesAsync();
 

@@ -2,4 +2,4 @@ using Tatuaz.Shared.Domain.Dtos.Dtos.Common;
 
 namespace Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 
-public record SetBioDto(string? Bio, string? City) : IDto;
+public record GetTopArtistsDto(int? PageNumber, int? PageSize) : IDto;

@@ -26,6 +26,7 @@ public static class DashboardQueueExtensions
         services.AddScoped<UploadPostPhotosProducer>();
         services.AddScoped<SetBioProducer>();
         services.AddScoped<SetAccountTypeProducer>();
+        services.AddScoped<GetTopArtistsProducer>();
 
         return services;
     }

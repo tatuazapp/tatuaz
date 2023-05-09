@@ -83,6 +83,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
         user.ForegroundPhotoId = null;
         user.BackgroundPhotoId = null;
         user.UserRoles = new List<TatuazUserRole>();
+        user.Popularity = 0;
         await _unitOfWork
             .RunInTransactionAsync(
                 _ =>

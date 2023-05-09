@@ -40,5 +40,7 @@ public class TatuazUserConfiguration : IEntityTypeConfiguration<TatuazUser>
         builder.HasIndex(x => x.Username).IsUnique();
 
         builder.Property(x => x.Bio).HasMaxLength(4096);
+
+        builder.Property(x => x.City).HasMaxLength(64);
     }
 }

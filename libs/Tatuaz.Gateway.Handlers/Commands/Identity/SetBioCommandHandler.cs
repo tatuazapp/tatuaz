@@ -38,7 +38,7 @@ public class SetBioCommandHandler : IRequestHandler<SetBioCommand, TatuazResult<
         }
 
         return await _producer
-            .Send(new SetBio(request.SetBioDto.Bio), cancellationToken)
+            .Send(new SetBio(request.SetBioDto.Bio, request.SetBioDto.City), cancellationToken)
             .ConfigureAwait(false);
     }
 }
