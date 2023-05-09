@@ -215,6 +215,7 @@ public static class GatewayExtensions
 
             opt.CustomOperationIds(x => x.RelativePath?.Split("/").Last());
             opt.SchemaFilter<FluentValidationSchemaFilter>();
+            opt.SchemaFilter<MarkRequiredSchemaFilter>();
             opt.SwaggerDoc(
                 "v1",
                 new OpenApiInfo
