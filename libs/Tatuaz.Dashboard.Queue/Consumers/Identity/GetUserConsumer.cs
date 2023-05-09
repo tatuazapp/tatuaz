@@ -37,7 +37,14 @@ public class GetUserConsumer : TatuazConsumerBase<GetUser, UserDto>
     )
     {
         var spec = new FullSpecification<TatuazUser>();
-        spec.AddFilter(x => string.Equals(x.Username, context.Message.Username, StringComparison.CurrentCultureIgnoreCase));
+        spec.AddFilter(
+            x =>
+                string.Equals(
+                    x.Username,
+                    context.Message.Username,
+                    StringComparison.CurrentCultureIgnoreCase
+                )
+        );
 
         var user = (
             await _userRepository

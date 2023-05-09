@@ -9,7 +9,9 @@ namespace Tatuaz.Dashboard.Queue.Producers.Identity;
 
 public class GetTopArtistsProducer : TatuazProducerBase<GetTopArtists, PagedData<BriefArtistDto>>
 {
-    public GetTopArtistsProducer(IRequestClient<GetTopArtists> requestClient, ILogger<GetTopArtistsProducer> logger) : base(requestClient, logger)
-    {
-    }
+    public GetTopArtistsProducer(
+        IRequestClient<GetTopArtists> requestClient,
+        ILogger<GetTopArtistsProducer> logger
+    )
+        : base(requestClient, logger) { }
 }

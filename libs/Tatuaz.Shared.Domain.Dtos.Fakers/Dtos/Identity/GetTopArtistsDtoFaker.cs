@@ -8,6 +8,6 @@ public class GetTopArtistsDtoFaker : Faker<GetTopArtistsDto>, IDtoFaker
 {
     public GetTopArtistsDtoFaker()
     {
-        CustomInstantiator(f => new GetTopArtistsDto(1,1));
+        CustomInstantiator(f => new GetTopArtistsDto(1, 1));
     }
 }

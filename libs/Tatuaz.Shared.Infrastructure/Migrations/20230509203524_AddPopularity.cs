@@ -16,7 +16,8 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                 table: "tatuaz_users",
                 type: "character varying(64)",
                 maxLength: 64,
-                nullable: true);
+                nullable: true
+            );
 
             migrationBuilder.AddColumn<int>(
                 name: "popularity",
@@ -24,21 +25,20 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                 table: "tatuaz_users",
                 type: "integer",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "city",
-                schema: "identity",
-                table: "tatuaz_users");
+            migrationBuilder.DropColumn(name: "city", schema: "identity", table: "tatuaz_users");
 
             migrationBuilder.DropColumn(
                 name: "popularity",
                 schema: "identity",
-                table: "tatuaz_users");
+                table: "tatuaz_users"
+            );
         }
     }
 }

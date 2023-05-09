@@ -24,12 +24,15 @@ public class GetTopArtistsConsumer : TatuazConsumerBase<GetTopArtists, PagedData
     public GetTopArtistsConsumer(
         ILogger<GetTopArtistsConsumer> logger,
         IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository
-    ) : base(logger)
+    )
+        : base(logger)
     {
         _userRepository = userRepository;
     }
 
-    protected override async Task<TatuazResult<PagedData<BriefArtistDto>>> ConsumeMessage(ConsumeContext<GetTopArtists> context)
+    protected override async Task<TatuazResult<PagedData<BriefArtistDto>>> ConsumeMessage(
+        ConsumeContext<GetTopArtists> context
+    )
     {
         var spec = new FullSpecification<TatuazUser>();
         spec.AddOrder(x => x.Popularity, OrderDirection.Descending);

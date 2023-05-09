@@ -23,12 +23,16 @@ public class GetTopArtistsQueryHandler
     public GetTopArtistsQueryHandler(
         IValidator<GetTopArtistsDto> validator,
         GetTopArtistsProducer producer
-        )
+    )
     {
         _validator = validator;
         _producer = producer;
     }
-    public async Task<TatuazResult<PagedData<BriefArtistDto>>> Handle(GetTopArtistsQuery request, CancellationToken cancellationToken)
+
+    public async Task<TatuazResult<PagedData<BriefArtistDto>>> Handle(
+        GetTopArtistsQuery request,
+        CancellationToken cancellationToken
+    )
     {
         var validationResult = await _validator
             .ValidateAsync(request.GetTopArtistsDto, cancellationToken)

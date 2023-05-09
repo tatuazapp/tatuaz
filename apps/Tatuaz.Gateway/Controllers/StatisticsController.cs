@@ -29,7 +29,7 @@ public class StatisticsController : TatuazControllerBase
     [HttpPost("[action]")]
     [Consumes("application/json")]
     [Produces("application/json")]
-    [ProducesResponseType(typeof(RegisteredStatsDto), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(OkResponse<RegisteredStatsDto>), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> GetRegisteredStats()
     {

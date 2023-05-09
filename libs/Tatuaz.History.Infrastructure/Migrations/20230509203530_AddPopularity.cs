@@ -15,7 +15,8 @@ namespace Tatuaz.History.DataAccess.Migrations
                 schema: "H_identity",
                 table: "H_tatuaz_users",
                 type: "text",
-                nullable: true);
+                nullable: true
+            );
 
             migrationBuilder.AddColumn<int>(
                 name: "popularity",
@@ -23,7 +24,8 @@ namespace Tatuaz.History.DataAccess.Migrations
                 table: "H_tatuaz_users",
                 type: "integer",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0
+            );
         }
 
         /// <inheritdoc />
@@ -32,12 +34,14 @@ namespace Tatuaz.History.DataAccess.Migrations
             migrationBuilder.DropColumn(
                 name: "city",
                 schema: "H_identity",
-                table: "H_tatuaz_users");
+                table: "H_tatuaz_users"
+            );
 
             migrationBuilder.DropColumn(
                 name: "popularity",
                 schema: "H_identity",
-                table: "H_tatuaz_users");
+                table: "H_tatuaz_users"
+            );
         }
     }
 }
