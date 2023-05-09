@@ -12,5 +12,10 @@ public class SetBioDtoValidator : AbstractValidator<SetBioDto>
             .MaximumLength(4096)
             .WithErrorCode(AddBioErrorCodes.BioTooLong)
             .WithMessage("Bio must not be longer than 4096 characters");
+
+        RuleFor(x => x.City)
+            .MaximumLength(64)
+            .WithErrorCode(AddBioErrorCodes.CityTooLong)
+            .WithMessage("City must not be longer than 64 characters");
     }
 }
