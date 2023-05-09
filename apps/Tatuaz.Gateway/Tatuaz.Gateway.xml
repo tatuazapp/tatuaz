@@ -171,6 +171,13 @@
             <param name="setAccountTypeDto"></param>
             <returns></returns>
         </member>
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.GetTopArtists(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.GetTopArtistsDto)">
+            <summary>
+            Set account type for current user
+            </summary>
+            <param name="setAccountTypeDto"></param>
+            <returns></returns>
+        </member>
         <member name="T:Tatuaz.Gateway.Controllers.PhotoController">
             <summary>
             Controller for photos

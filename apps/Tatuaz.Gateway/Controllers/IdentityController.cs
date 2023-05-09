@@ -10,6 +10,7 @@ using Tatuaz.Gateway.HttpResponses;
 using Tatuaz.Gateway.Requests.Commands.Identity;
 using Tatuaz.Gateway.Requests.Queries.Identity;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
+using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 
 namespace Tatuaz.Gateway.Controllers;
 
@@ -160,7 +161,7 @@ public class IdentityController : TatuazControllerBase
     [AuthorizeActiveUser]
     [Produces("application/json")]
     [Consumes("application/json")]
-    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Created)]
+    [ProducesResponseType(typeof(OkResponse<UserDto>), (int)HttpStatusCode.Created)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
     [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Forbidden)]
@@ -211,6 +212,27 @@ public class IdentityController : TatuazControllerBase
     {
         return ResultToActionResult(
             await Mediator.Send(new SetAccountTypeCommand(setAccountTypeDto)).ConfigureAwait(false)
+        );
+    }
+
+    /// <summary>
+    /// Set account type for current user
+    /// </summary>
+    /// <param name="setAccountTypeDto"></param>
+    /// <returns></returns>
+    [HttpPost("[action]")]
+    [AuthorizeActiveUser]
+    [Produces("application/json")]
+    [Consumes("application/json")]
+    [ProducesResponseType(typeof(OkResponse<PagedData<BriefArtistDto>>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Forbidden)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
+    public async Task<IActionResult> GetTopArtists([FromBody] GetTopArtistsDto getTopArtistsDto)
+    {
+        return ResultToActionResult(
+            await Mediator.Send(new GetTopArtistsQuery(getTopArtistsDto)).ConfigureAwait(false)
         );
     }
 }
