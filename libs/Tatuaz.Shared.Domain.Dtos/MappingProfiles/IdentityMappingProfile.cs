@@ -19,6 +19,7 @@ public class IdentityMappingProfile : Profile
                         x.ForegroundPhoto != null ? x.ForegroundPhoto.Uri : null,
                         x.BackgroundPhoto != null ? x.BackgroundPhoto.Uri : null,
                         x.Bio,
+                        x.City,
                         x.UserRoles.Any(y => y.Role.Id == TatuazRole.ArtistId)
                     )
             );

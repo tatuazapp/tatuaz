@@ -18,6 +18,7 @@ public sealed class UserDtoFaker : Faker<UserDto>, IDtoFaker
                     new Uri(f.Internet.Url()),
                     new Uri(f.Internet.Url()),
                     f.Lorem.Sentence(),
+                    f.Address.City(),
                     f.Random.Bool()
                 )
         );

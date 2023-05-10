@@ -4,4 +4,5 @@ public static class SetAccountTypeErrorCodes
 {
     public const string AlreadyArtist = "AlreadyArtist";
     public const string AlreadyClient = "AlreadyClient";
+    public const string ArtistNull = "ArtistNull";
 }

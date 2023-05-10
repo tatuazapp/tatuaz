@@ -16,17 +16,14 @@ public class MarkRequiredSchemaFilter : ISchemaFilter
             return;
         }
 
-        if (type.GetCustomAttributes(typeof(NoUndefAttribute), inherit: true).Any())
+        if (schema.Required == null)
         {
-            if (schema.Required == null)
-            {
-                schema.Required = new HashSet<string>();
-            }
+            schema.Required = new HashSet<string>();
+        }
 
-            foreach (var property in schema.Properties.Keys)
-            {
-                schema.Required.Add(property);
-            }
+        foreach (var property in schema.Properties.Keys)
+        {
+            schema.Required.Add(property);
         }
     }
 }

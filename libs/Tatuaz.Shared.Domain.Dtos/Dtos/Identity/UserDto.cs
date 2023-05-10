@@ -10,5 +10,6 @@ public record UserDto(
     Uri? ForegroundPhotoUri,
     Uri? BackgroundPhotoUri,
     string? Bio,
+    string? City,
     bool Artist
 ) : IDto;
