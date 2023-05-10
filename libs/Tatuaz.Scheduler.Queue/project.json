@@ -1,6 +1,6 @@
 {
+  "name": "dashboard-scheduler",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "name": "Tatuaz.Scheduler.Queue",
   "projectType": "library",
   "sourceRoot": "libs/Tatuaz.Scheduler.Queue",
   "targets": {

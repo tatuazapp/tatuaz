@@ -7,10 +7,11 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:react/recommended",
-    "prettier"
+    "prettier",
+    "plugin:storybook/recommended"
   ],
   "plugins": [
-    "@nrwl/nx",
+    "@nx",
     "@typescript-eslint",
     "import",
     "unused-imports",
@@ -20,15 +21,23 @@
   ],
   "rules": {
     "no-var": "off",
-    "no-console": ["warn", { "allow": ["warn", "error", "assert"] }],
-    "max-params": ["error", { "max": 4 }],
+    "no-console": [
+      "warn",
+      {
+        "allow": ["warn", "error", "assert"]
+      }
+    ],
+    "max-params": [
+      "error",
+      {
+        "max": 4
+      }
+    ],
     "arrow-body-style": "error",
     "no-useless-rename": "error",
     "etc/no-commented-out-code": "error",
     "react/jsx-no-useless-fragment": "error",
-
     "prettier/prettier": "warn",
-
     "import/first": "error",
     "import/newline-after-import": "error",
     "import/no-anonymous-default-export": "error",
@@ -59,10 +68,12 @@
           }
         ],
         "newlines-between": "never",
-        "alphabetize": { "order": "asc", "caseInsensitive": true }
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
       }
     ],
-
     "unused-imports/no-unused-imports-ts": "error",
     "unused-imports/no-unused-vars-ts": [
       "warn",
@@ -73,7 +84,6 @@
         "argsIgnorePattern": "^_"
       }
     ],
-
     "formatjs/enforce-id": [
       "error",
       {
@@ -86,7 +96,7 @@
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
-        "@nrwl/nx/enforce-module-boundaries": [
+        "@nx/enforce-module-boundaries": [
           "error",
           {
             "enforceBuildableLibDependency": true,
@@ -103,12 +113,12 @@
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript"],
+      "extends": ["plugin:@nx/typescript"],
       "rules": {}
     },
     {
       "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
+      "extends": ["plugin:@nx/javascript"],
       "rules": {}
     }
   ]
