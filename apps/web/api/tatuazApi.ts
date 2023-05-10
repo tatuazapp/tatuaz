@@ -41,9 +41,9 @@ export type EmptyResponse = object
 /** Wrapper used for returning failed responses. */
 export interface ErrorResponse {
   /** List of errors. */
-  errors?: TatuazError[]
+  errors: TatuazError[]
   /** Indicates if request was successful. Should be always false for this type of response. */
-  success?: boolean
+  success: boolean
 }
 
 export interface FinalizePostDto {
@@ -51,7 +51,7 @@ export interface FinalizePostDto {
    * ErrorCodes
    * @format uuid
    */
-  initialPostId?: string
+  initialPostId: string
   /**
    * ErrorCodes: DescriptionIsNull, DescriptionIsTooLong
    * @maxLength 4096
@@ -104,89 +104,89 @@ export interface ListCategoriesDto {
 /** Wrapper used for returning success responses. */
 export interface OkResponseEmptyResponse {
   /** Response for marking codes that do not return any data. */
-  value?: EmptyResponse
+  value: EmptyResponse
   /** Indicates if request was successful. Should be always true for this type of response. */
-  success?: boolean
+  success: boolean
 }
 
 /** Wrapper used for returning success responses. */
 export interface OkResponsePagedDataBriefArtistDto {
-  value?: PagedDataBriefArtistDto
+  value: PagedDataBriefArtistDto
   /** Indicates if request was successful. Should be always true for this type of response. */
-  success?: boolean
+  success: boolean
 }
 
 /** Wrapper used for returning success responses. */
 export interface OkResponsePagedDataCategoryDto {
-  value?: PagedDataCategoryDto
+  value: PagedDataCategoryDto
   /** Indicates if request was successful. Should be always true for this type of response. */
-  success?: boolean
+  success: boolean
 }
 
 /** Wrapper used for returning success responses. */
 export interface OkResponseRegisteredStatsDto {
-  value?: RegisteredStatsDto
+  value: RegisteredStatsDto
   /** Indicates if request was successful. Should be always true for this type of response. */
-  success?: boolean
+  success: boolean
 }
 
 /** Wrapper used for returning success responses. */
 export interface OkResponseUploadedPhotosDto {
-  value?: UploadedPhotosDto
+  value: UploadedPhotosDto
   /** Indicates if request was successful. Should be always true for this type of response. */
-  success?: boolean
+  success: boolean
 }
 
 /** Wrapper used for returning success responses. */
 export interface OkResponseUserDto {
-  value?: UserDto
+  value: UserDto
   /** Indicates if request was successful. Should be always true for this type of response. */
-  success?: boolean
+  success: boolean
 }
 
 export interface PagedDataBriefArtistDto {
-  data?: BriefArtistDto[]
+  data: BriefArtistDto[]
   /** @format int32 */
-  pageNumber?: number
+  pageNumber: number
   /** @format int32 */
-  pageSize?: number
+  pageSize: number
   /** @format int32 */
-  totalPages?: number
+  totalPages: number
   /** @format int32 */
-  totalCount?: number
+  totalCount: number
 }
 
 export interface PagedDataCategoryDto {
-  data?: CategoryDto[]
+  data: CategoryDto[]
   /** @format int32 */
-  pageNumber?: number
+  pageNumber: number
   /** @format int32 */
-  pageSize?: number
+  pageSize: number
   /** @format int32 */
-  totalPages?: number
+  totalPages: number
   /** @format int32 */
-  totalCount?: number
+  totalCount: number
 }
 
 export interface PhotoInfoDto {
   /** @format uuid */
-  photoId?: string
-  categoryIds?: number[]
-  photoFileName?: string
+  photoId: string
+  categoryIds: number[]
+  photoFileName: string
 }
 
 export interface RegisteredStatsDto {
   /** @format int32 */
-  artists?: number
+  artists: number
   /** @format int32 */
-  clients?: number
+  clients: number
   /** @format int32 */
-  users?: number
+  users: number
 }
 
 export interface SetAccountTypeDto {
-  /** ErrorCodes */
-  artist?: boolean
+  /** ErrorCodes: ArtistNull */
+  artist: boolean
 }
 
 export interface SetBioDto {
@@ -194,12 +194,12 @@ export interface SetBioDto {
    * ErrorCodes: BioTooLong
    * @maxLength 4096
    */
-  bio?: string | null
+  bio: string | null
   /**
    * ErrorCodes: CityTooLong
    * @maxLength 64
    */
-  city?: string | null
+  city: string | null
 }
 
 export interface SignUpDto {
@@ -215,26 +215,27 @@ export interface SignUpDto {
 }
 
 export interface TatuazError {
-  code?: string
-  message?: string
+  code: string
+  message: string
 }
 
 export interface UploadedPhotosDto {
   /** @format uuid */
-  initialPostId?: string
-  photos?: string[]
+  initialPostId: string
+  photos: string[]
 }
 
 export interface UserDto {
-  username?: string
-  email?: string
-  auth0Id?: string
+  username: string
+  email: string
+  auth0Id: string
   /** @format uri */
-  foregroundPhotoUri?: string | null
+  foregroundPhotoUri: string | null
   /** @format uri */
-  backgroundPhotoUri?: string | null
-  bio?: string | null
-  artist?: boolean
+  backgroundPhotoUri: string | null
+  bio: string | null
+  city: string | null
+  artist: boolean
 }
 
 export type QueryParamsType = Record<string | number, any>

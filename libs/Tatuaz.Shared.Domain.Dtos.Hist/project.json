@@ -1,4 +1,5 @@
 {
+  "name": "shared-domain-dtos-hist",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/Tatuaz.Shared.Domain.Dtos.Hist",

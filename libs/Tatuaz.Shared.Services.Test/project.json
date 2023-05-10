@@ -1,6 +1,6 @@
 {
+  "name": "shared-services-test",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "name": "Tatuaz.Shared.Services.Test",
   "projectType": "library",
   "sourceRoot": "libs/Tatuaz.Shared.Services.Test",
   "targets": {

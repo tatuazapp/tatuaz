@@ -1,4 +1,5 @@
 {
+  "name": "shared-pipeline-test",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/Tatuaz.Shared.Pipeline.Test",

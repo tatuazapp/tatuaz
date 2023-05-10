@@ -1,6 +1,6 @@
 {
+  "name": "dashboard-emails-test",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "name": "Tatuaz.Dashboard.Emails.Test",
   "projectType": "library",
   "sourceRoot": "libs/Tatuaz.Dashboard.Emails.Test",
   "targets": {
