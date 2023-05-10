@@ -61,7 +61,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm install --shamefully-hoist
 
       - name: Lint workspace
         run: npx nx workspace-lint
