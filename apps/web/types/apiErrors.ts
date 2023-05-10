@@ -15,3 +15,5 @@ export type SignUpDtoErrorCode =
   | "PhotoCategoryIdsTooMany"
   | "PhotoCategoryIdsInvalid"
   | "PhotoCategoryIdsDuplicate"
+
+export type SetBioDtoErrorCode = "BioTooLong" | "CityTooLong"

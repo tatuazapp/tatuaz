@@ -1,22 +1,36 @@
 import { Heading4 } from "@tatuaz/ui"
 import { FunctionComponent, useState } from "react"
-import useMe from "../../../../api/hooks/useMe"
+import ClampLines from "react-clamp-lines"
+import { useIntl } from "react-intl"
+import { UserProfile } from "../../../../pages/dashboard/profile"
 import formatCDNImageUrl from "../../../../utils/format/formatCDNImageUrl"
 import AvatarUploadModal from "../AvatarUploadModal"
 import {
   AvatarContainer,
   BackgroundAndAvatarContainer,
   BackgroundPhotoContainer,
+  BioContainer,
   UserInfoContainer,
 } from "../BackgroundAndAvatarContainer/styles"
 import BackgroundPhotoUploadModal from "../BackgroundPhotoUploadModal"
+import EditBioModal from "../EditBioModal"
 
 const MAX_BACKGROUND_PHOTO_SIZE = 1024
 const MAX_AVATAR_SIZE = 512
 
-const BackgroundPhotoSection: FunctionComponent = () => {
+type BackgroundPhotoSectionProps = {
+  user: UserProfile | undefined | null
+  editable?: boolean
+}
+
+const BackgroundPhotoSection: FunctionComponent<
+  BackgroundPhotoSectionProps
+> = ({ user, editable }) => {
   const [isBackgroundModalOpen, setIsBackgroundModalOpen] = useState(false)
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false)
+  const [isEditBioModalOpen, setIsEditBioModalOpen] = useState(false)
+
+  const intl = useIntl()
 
   const handleBackgroundPhotoClick = () => {
     setIsBackgroundModalOpen(true)
@@ -26,28 +40,60 @@ const BackgroundPhotoSection: FunctionComponent = () => {
     setIsAvatarModalOpen(true)
   }
 
-  const me = useMe()
+  const handleEditBioClick = () => {
+    setIsEditBioModalOpen(true)
+  }
 
   return (
     <>
       <BackgroundAndAvatarContainer>
         <BackgroundPhotoContainer
           imageUrl={
-            me?.backgroundPhotoUri &&
-            formatCDNImageUrl(me?.backgroundPhotoUri, {
+            user?.backgroundPhotoUri &&
+            formatCDNImageUrl(user?.backgroundPhotoUri, {
               width: MAX_BACKGROUND_PHOTO_SIZE,
             })
           }
-          onClick={handleBackgroundPhotoClick}
+          isEditable={editable}
+          onClick={editable ? handleBackgroundPhotoClick : undefined}
         />
         <AvatarContainer
-          src={formatCDNImageUrl(me?.foregroundPhotoUri ?? "", {
+          isEditable={editable}
+          src={formatCDNImageUrl(user?.foregroundPhotoUri ?? "", {
             maxWidth: MAX_AVATAR_SIZE,
           })}
-          onClick={handleAvatarPhotoClick}
+          onClick={editable && handleAvatarPhotoClick}
         />
         <UserInfoContainer>
-          <Heading4>{me?.username ?? "-"}</Heading4>
+          <Heading4>{user?.username ?? "-"}</Heading4>
+          <BioContainer
+            isEditable={editable}
+            isEmpty={!user?.bio}
+            onClick={editable ? handleEditBioClick : undefined}
+          >
+            <ClampLines
+              ellipsis="..."
+              id="bio-clamp-lines"
+              lessText={intl.formatMessage({
+                defaultMessage: "Mniej",
+                id: "feQNnn",
+              })}
+              lines={2}
+              moreText={intl.formatMessage({
+                defaultMessage: "Pokaż więcej",
+                id: "UC6hZD",
+              })}
+              stopPropagation={true}
+              text={
+                user?.bio
+                  ? user.bio
+                  : intl.formatMessage({
+                      defaultMessage: "Kliknij, aby dodać opis",
+                      id: "7Fsz7M",
+                    })
+              }
+            />
+          </BioContainer>
         </UserInfoContainer>
       </BackgroundAndAvatarContainer>
 
@@ -58,6 +104,14 @@ const BackgroundPhotoSection: FunctionComponent = () => {
       <AvatarUploadModal
         isOpen={isAvatarModalOpen}
         onClose={() => setIsAvatarModalOpen(false)}
+      />
+      <EditBioModal
+        initialValues={{
+          bio: user?.bio ?? undefined,
+          city: user?.city ?? undefined,
+        }}
+        isOpen={isEditBioModalOpen}
+        onClose={() => setIsEditBioModalOpen(false)}
       />
     </>
   )
