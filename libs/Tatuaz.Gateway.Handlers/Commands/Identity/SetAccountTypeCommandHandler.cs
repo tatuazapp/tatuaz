@@ -43,7 +43,7 @@ public class SetAccountTypeCommandHandler
         }
 
         return await _producer
-            .Send(new SetAccountType(request.SetAccountTypeDto.Artist), cancellationToken)
+            .Send(new SetAccountType(request.SetAccountTypeDto.Artist!.Value), cancellationToken)
             .ConfigureAwait(false);
     }
 }
