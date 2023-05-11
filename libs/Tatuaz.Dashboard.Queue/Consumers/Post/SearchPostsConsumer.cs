@@ -94,6 +94,8 @@ public class SearchPostsConsumer : TatuazConsumerBase<SearchPosts, PagedData<Bri
             spec.AddFilter(x => x.Photos.Count == 0);
         }
 
+        spec.AddOrder(x => x.CreatedAt, OrderDirection.Descending);
+
         var results = await _postRepository
             .GetBySpecificationWithPagingAsync<BriefPostDto>(
                 spec,
