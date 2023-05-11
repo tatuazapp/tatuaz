@@ -5,6 +5,8 @@ using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IO;
+using NodaTime;
+using NodaTime.Serialization.SystemTextJson;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
 using Tatuaz.Shared.Pipeline.Configuration;
 using Tatuaz.Shared.Pipeline.Filters;
@@ -47,6 +49,9 @@ public static class SharedPipelineExtensions
                     cfg.UseConsumeFilter(typeof(UserContextConsumeFilter<>), context);
                     configure?.Invoke(context, cfg);
                     cfg.ConfigureEndpoints(context);
+                    cfg.ConfigureJsonSerializerOptions(
+                        opt => opt.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb)
+                    );
                 }
             );
         });

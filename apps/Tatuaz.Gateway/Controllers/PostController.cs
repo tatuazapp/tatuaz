@@ -2,10 +2,13 @@ using System.Net;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Tatuaz.Dashboard.Queue.Contracts.Post;
 using Tatuaz.Gateway.Authorization;
 using Tatuaz.Gateway.HttpResponses;
 using Tatuaz.Gateway.Requests.Commands.Post;
+using Tatuaz.Gateway.Requests.Queries.Posts;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Post;
+using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 
 namespace Tatuaz.Gateway.Controllers;
 
@@ -57,6 +60,27 @@ public class PostController : TatuazControllerBase
     {
         return ResultToActionResult(
             await Mediator.Send(new FinalizePostCommand(finalizePostDto)).ConfigureAwait(false)
+        );
+    }
+
+    /// <summary>
+    /// Search posts
+    /// </summary>
+    /// <param name="searchPostsDto"></param>
+    /// <returns></returns>
+    [HttpPost("[action]")]
+    [AuthorizeActiveUser]
+    [Produces("application/json")]
+    [Consumes("application/json")]
+    [ProducesResponseType(typeof(OkResponse<PagedData<BriefPostDto>>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Forbidden)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
+    public async Task<IActionResult> SearchPosts(SearchPostsDto searchPostsDto)
+    {
+        return ResultToActionResult(
+            await Mediator.Send(new SearchPostsQuery(searchPostsDto)).ConfigureAwait(false)
         );
     }
 }
