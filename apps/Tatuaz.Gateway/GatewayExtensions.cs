@@ -22,6 +22,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.IO;
 using Microsoft.OpenApi.Models;
+using NodaTime;
+using NodaTime.Serialization.SystemTextJson;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -177,6 +179,7 @@ public static class GatewayExtensions
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                 options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                options.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
             });
 
         services.AddSwaggerGen(opt =>

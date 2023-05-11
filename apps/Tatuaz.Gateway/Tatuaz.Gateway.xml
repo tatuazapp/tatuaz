@@ -208,6 +208,13 @@
             <param name="finalizePostDto"></param>
             <returns></returns>
         </member>
+        <member name="M:Tatuaz.Gateway.Controllers.PostController.SearchPosts(Tatuaz.Shared.Domain.Dtos.Dtos.Post.SearchPostsDto)">
+            <summary>
+            Search posts
+            </summary>
+            <param name="searchPostsDto"></param>
+            <returns></returns>
+        </member>
         <member name="T:Tatuaz.Gateway.Controllers.StatisticsController">
             <summary>
             Controller for dashboard

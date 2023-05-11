@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -5,6 +6,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IO;
 using Tatuaz.Dashboard.Queue.Contracts.Post;
 using Tatuaz.Dashboard.Queue.Producers.Post;
@@ -53,17 +55,17 @@ public class UploadPostPhotosCommandHandler
             return CommonResultFactory.ValidationError<UploadedPhotosDto>(validationResult);
         }
 
+        var photos = request.UploadPostPhotosDto.Photos ?? Array.Empty<IFormFile>();
+
         using var streams = new DisposableList<MemoryStream>();
-        for (var i = 0; i < request.UploadPostPhotosDto.Photos.Length; i++)
+        for (var i = 0; i < photos.Length; i++)
         {
             var stream = _recyclableMemoryStreamManager.GetStream();
-            await request.UploadPostPhotosDto.Photos[i]
-                .CopyToAsync(stream, cancellationToken)
-                .ConfigureAwait(false);
+            await photos[i].CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
             if (!_photoService.ValidatePhotoHeaders(stream))
             {
                 var validationError = new ValidationFailure(
-                    nameof(request.UploadPostPhotosDto.Photos),
+                    nameof(photos),
                     "Invalid file format for photo number " + (i + 1) + "."
                 )
                 {
