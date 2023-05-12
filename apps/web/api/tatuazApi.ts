@@ -17,6 +17,21 @@ export interface BriefArtistDto {
   city: string | null
 }
 
+export interface BriefPostDto {
+  /** @format uuid */
+  id: string
+  description: string
+  photoUris: string[]
+  authorName: string
+  /** @format uri */
+  authorPhotoUri: string | null
+  /** @format int32 */
+  likesCount: number
+  /** @format int32 */
+  commentsCount: number
+  createdAt: Instant
+}
+
 export interface CategoryDto {
   /** @format int32 */
   id: number
@@ -85,6 +100,8 @@ export interface GetUserDto {
   username: string
 }
 
+export type Instant = object
+
 export interface ListCategoriesDto {
   /**
    * ErrorCodes: PageNumberIsNull, PageNumberIsLessThan1
@@ -112,6 +129,13 @@ export interface OkResponseEmptyResponse {
 /** Wrapper used for returning success responses. */
 export interface OkResponsePagedDataBriefArtistDto {
   value: PagedDataBriefArtistDto
+  /** Indicates if request was successful. Should be always true for this type of response. */
+  success: boolean
+}
+
+/** Wrapper used for returning success responses. */
+export interface OkResponsePagedDataBriefPostDto {
+  value: PagedDataBriefPostDto
   /** Indicates if request was successful. Should be always true for this type of response. */
   success: boolean
 }
@@ -156,6 +180,18 @@ export interface PagedDataBriefArtistDto {
   totalCount: number
 }
 
+export interface PagedDataBriefPostDto {
+  data: BriefPostDto[]
+  /** @format int32 */
+  pageNumber: number
+  /** @format int32 */
+  pageSize: number
+  /** @format int32 */
+  totalPages: number
+  /** @format int32 */
+  totalCount: number
+}
+
 export interface PagedDataCategoryDto {
   data: CategoryDto[]
   /** @format int32 */
@@ -182,6 +218,34 @@ export interface RegisteredStatsDto {
   clients: number
   /** @format int32 */
   users: number
+}
+
+export interface SearchPostsDto {
+  /**
+   * ErrorCodes: QueryNull, QueryTooLong
+   * @maxLength 128
+   */
+  query: string
+  /**
+   * ErrorCodes: PageNumberIsNull, PageNumberIsLessThan1
+   * @format int32
+   * @min 1
+   */
+  pageNumber: number
+  /**
+   * ErrorCodes: PageSizeIsLessThan1, PageSizeIsGreaterThan1000
+   * @format int32
+   * @min 1
+   * @max 1000
+   */
+  pageSize: number | null
+  searchPostsFlag: SearchPostsFlag
+}
+
+export enum SearchPostsFlag {
+  All = "All",
+  OnlyPosts = "OnlyPosts",
+  OnlyPhotos = "OnlyPhotos",
 }
 
 export interface SetAccountTypeDto {
@@ -834,6 +898,34 @@ export class Api<
     finalizePost: (data: FinalizePostDto, params: RequestParams = {}) =>
       this.request<OkResponseEmptyResponse, ErrorResponse | EmptyResponse>({
         path: `/Post/FinalizePost`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Post
+     * @name SearchPosts
+     * @summary Search posts
+     * @request POST:/Post/SearchPosts
+     * @secure
+     * @response `200` `OkResponsePagedDataBriefPostDto` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    searchPosts: (data: SearchPostsDto, params: RequestParams = {}) =>
+      this.request<
+        OkResponsePagedDataBriefPostDto,
+        ErrorResponse | EmptyResponse
+      >({
+        path: `/Post/SearchPosts`,
         method: "POST",
         body: data,
         secure: true,

@@ -1,4 +1,5 @@
 import { extendTheme } from "@chakra-ui/react"
+import { modalTheme } from "../components/common/modals/chakraModals"
 import { theme } from "./theme"
 
 const makeAllSameColor = (color: string) => ({
@@ -33,10 +34,16 @@ const chakraTheme = extendTheme({
     body: `Inter, sans-serif`,
   },
 
+  components: { Modal: modalTheme },
+
   colors: {
     black: makeAllSameColor("#000000"),
     primary: makeAllSameColor(theme.colors.primary),
     secondary: theme.colors.secondary,
+    background1: makeAllSameColor(theme.colors.background1),
+    background2: makeAllSameColor(theme.colors.background2),
+    background3: makeAllSameColor(theme.colors.background3),
+    background4: makeAllSameColor(theme.colors.background4),
   },
 })
 

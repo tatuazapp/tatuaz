@@ -1,3 +1,4 @@
+import { SkeletonText } from "@chakra-ui/react"
 import { useQuery } from "@tanstack/react-query"
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
@@ -23,7 +24,7 @@ const UserProfile: NextPage = () => {
 
   const me = useMe()
 
-  const { data } = useQuery(
+  const { data, isLoading } = useQuery(
     [queryKeys.getUser, profileName],
     () =>
       api.identity.getUser({
@@ -39,10 +40,16 @@ const UserProfile: NextPage = () => {
   return (
     <DashboardLayout>
       <DashboardContentWrapper>
-        <BackgroundPhotoSection
-          editable={!profileName}
-          user={profileName ? user : me}
-        />
+        <SkeletonText
+          isLoaded={!!me?.username || !isLoading}
+          noOfLines={5}
+          skeletonHeight={10}
+        >
+          <BackgroundPhotoSection
+            editable={!profileName}
+            user={profileName ? user : me}
+          />
+        </SkeletonText>
         <TopArtistsSection />
       </DashboardContentWrapper>
     </DashboardLayout>

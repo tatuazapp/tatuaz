@@ -6,7 +6,7 @@
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["dist/libs/Tatuaz.Gateway.Requests.Test"],
+      "outputs": ["{workspaceRoot}/dist/libs/Tatuaz.Gateway.Requests.Test"],
       "options": {
         "configuration": "Debug"
       },
