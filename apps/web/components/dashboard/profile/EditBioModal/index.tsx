@@ -151,7 +151,7 @@ const EditBioModal: FunctionComponent<EditBioModalProps> = ({
             <FormattedMessage defaultMessage="Anuluj" id="JmR+Nv" />
           </Button>
           <Button
-            colorScheme="blue"
+            colorScheme="primary"
             isLoading={isSubmitting}
             onClick={onSubmit}
           >

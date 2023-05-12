@@ -71,28 +71,29 @@ const BackgroundPhotoSection: FunctionComponent<
             isEmpty={!user?.bio}
             onClick={editable ? handleEditBioClick : undefined}
           >
-            <ClampLines
-              ellipsis="..."
-              id="bio-clamp-lines"
-              lessText={intl.formatMessage({
-                defaultMessage: "Mniej",
-                id: "feQNnn",
-              })}
-              lines={2}
-              moreText={intl.formatMessage({
-                defaultMessage: "Pokaż więcej",
-                id: "UC6hZD",
-              })}
-              stopPropagation={true}
-              text={
-                user?.bio
-                  ? user.bio
-                  : intl.formatMessage({
-                      defaultMessage: "Kliknij, aby dodać opis",
-                      id: "7Fsz7M",
-                    })
-              }
-            />
+            {!!user && (
+              <ClampLines
+                id={user?.bio ?? "user-bio" + user?.username}
+                lessText={intl.formatMessage({
+                  defaultMessage: "Mniej",
+                  id: "feQNnn",
+                })}
+                lines={2}
+                moreText={intl.formatMessage({
+                  defaultMessage: "Pokaż więcej",
+                  id: "UC6hZD",
+                })}
+                stopPropagation={true}
+                text={
+                  user?.bio
+                    ? user.bio
+                    : intl.formatMessage({
+                        defaultMessage: "Kliknij, aby dodać opis",
+                        id: "7Fsz7M",
+                      })
+                }
+              />
+            )}
           </BioContainer>
         </UserInfoContainer>
       </BackgroundAndAvatarContainer>
