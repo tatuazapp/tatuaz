@@ -5,7 +5,7 @@ import { FunctionComponent } from "react"
 import { FormattedMessage } from "react-intl"
 import { theme } from "../../../../styles/theme"
 import {
-  ArtistCardBacktroundPhoto,
+  ArtistCardBackgroundPhoto,
   ArtistCardUserPhoto,
   ArtistCardWrapper,
   UserDataWrapper,
@@ -15,16 +15,19 @@ import {
 type ArtistCardProps = {
   artistName: string
   artistDescription: string
+  backgroundPhotoUrl?: string
+  foregroundPhotoUrl: string
 }
 
 const ArtistCard: FunctionComponent<ArtistCardProps> = ({
   artistName,
   artistDescription,
+  foregroundPhotoUrl,
 }) => (
   <ArtistCardWrapper>
-    <ArtistCardBacktroundPhoto>
-      <ArtistCardUserPhoto />
-    </ArtistCardBacktroundPhoto>
+    <ArtistCardBackgroundPhoto>
+      <ArtistCardUserPhoto imageUrl={foregroundPhotoUrl} />
+    </ArtistCardBackgroundPhoto>
     <UserSectionWrapper>
       <UserDataWrapper>
         <Heading color={theme.colors.primary} level={5}>

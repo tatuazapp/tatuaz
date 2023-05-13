@@ -1,16 +1,14 @@
 import { Button } from "@chakra-ui/react"
 import { ArrowUpRight } from "@styled-icons/bootstrap"
-import { Paragraph } from "@tatuaz/ui"
 import { FormattedMessage } from "react-intl"
 import { theme } from "../../../styles/theme"
 import useIsMobile from "../../../utils/hooks/useIsMobile"
 import useIsPhone from "../../../utils/hooks/useIsPhone"
+import UserSection from "../../dashboard/TopArtistsSection/UserSection"
 import {
   SearchInput,
   SearchAreaWrapper,
   UserArea,
-  UserIconStatus,
-  UserPhoto,
   MobileSearchIcon,
 } from "./styles"
 
@@ -45,13 +43,7 @@ const SearchArea = () => {
       )}
       {!isMobile && (
         <UserArea>
-          <UserPhoto>
-            <UserIconStatus />
-          </UserPhoto>
-
-          <Paragraph color={theme.colors.secondary} level={1} strong={true}>
-            Richard Brewl
-          </Paragraph>
+          <UserSection />
         </UserArea>
       )}
     </SearchAreaWrapper>
