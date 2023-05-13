@@ -10,7 +10,7 @@ resource "azurerm_kubernetes_cluster" "az_aks" {
   default_node_pool {
     name                = "np1"
     node_count          = 1
-    vm_size             = "Standard_B2ms"
+    vm_size             = "Standard_B2s"
     os_disk_size_gb     = 32
     tags                = var.az_tags
     enable_auto_scaling = false
