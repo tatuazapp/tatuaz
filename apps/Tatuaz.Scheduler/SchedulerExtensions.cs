@@ -80,25 +80,28 @@ public static class SchedulerExtensions
         host.UseSerilog(
             (context, services, loggerConfiguration) =>
             {
-                loggerConfiguration.WriteTo.Async(
-                    x =>
-                        x.Console(
+                if (services.GetRequiredService<IHostEnvironment>().IsDevelopment())
+                {
+                    loggerConfiguration.WriteTo.Async(
+                        x =>
+                            x.Console(
+                                outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
+                                levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
+                                formatProvider: new CultureInfo("en-US")
+                            )
+                    );
+
+                    loggerConfiguration.WriteTo.Async(x =>
+                    {
+                        x.File(
                             outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
+                            path: "logs/Scheduler.log",
+                            rollingInterval: RollingInterval.Day,
                             levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
                             formatProvider: new CultureInfo("en-US")
-                        )
-                );
-
-                loggerConfiguration.WriteTo.Async(x =>
-                {
-                    x.File(
-                        outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                        path: "logs/Scheduler.log",
-                        rollingInterval: RollingInterval.Day,
-                        levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
-                        formatProvider: new CultureInfo("en-US")
-                    );
-                });
+                        );
+                    });
+                }
 
                 loggerConfiguration.WriteTo.AzureBlobStorage(
                     serilogOpt.BlobConnectionString,
@@ -110,17 +113,6 @@ public static class SchedulerExtensions
                     writeInBatches: true,
                     period: TimeSpan.FromSeconds(30)
                 );
-
-                loggerConfiguration.WriteTo.Async(x =>
-                {
-                    x.File(
-                        outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                        path: "logs/Scheduler_error.log",
-                        rollingInterval: RollingInterval.Day,
-                        restrictedToMinimumLevel: LogEventLevel.Error,
-                        formatProvider: new CultureInfo("en-US")
-                    );
-                });
 
                 loggerConfiguration.Enrich.FromLogContext();
                 loggerConfiguration.Enrich.FromMassTransit();

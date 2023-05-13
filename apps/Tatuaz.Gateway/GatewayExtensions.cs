@@ -19,6 +19,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.IO;
 using Microsoft.OpenApi.Models;
@@ -77,29 +78,32 @@ public static class GatewayExtensions
         host.UseSerilog(
             (context, services, loggerConfiguration) =>
             {
-                loggerConfiguration.WriteTo.Async(
-                    x =>
-                        x.Console(
+                if (services.GetRequiredService<IHostEnvironment>().IsDevelopment())
+                {
+                    loggerConfiguration.WriteTo.Async(
+                        x =>
+                            x.Console(
+                                outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
+                                levelSwitch: new LoggingLevelSwitch(
+                                    StringHelpers.GetLoggingLevelSwitch(serilogOpt.ConsoleLogLevel)
+                                ),
+                                formatProvider: new CultureInfo("en-US")
+                            )
+                    );
+
+                    loggerConfiguration.WriteTo.Async(x =>
+                    {
+                        x.File(
                             outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
+                            path: "logs/gateway.log",
+                            rollingInterval: RollingInterval.Day,
                             levelSwitch: new LoggingLevelSwitch(
                                 StringHelpers.GetLoggingLevelSwitch(serilogOpt.ConsoleLogLevel)
                             ),
                             formatProvider: new CultureInfo("en-US")
-                        )
-                );
-
-                loggerConfiguration.WriteTo.Async(x =>
-                {
-                    x.File(
-                        outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                        path: "logs/gateway.log",
-                        rollingInterval: RollingInterval.Day,
-                        levelSwitch: new LoggingLevelSwitch(
-                            StringHelpers.GetLoggingLevelSwitch(serilogOpt.ConsoleLogLevel)
-                        ),
-                        formatProvider: new CultureInfo("en-US")
-                    );
-                });
+                        );
+                    });
+                }
 
                 loggerConfiguration.WriteTo.AzureBlobStorage(
                     serilogOpt.BlobConnectionString,
@@ -111,17 +115,6 @@ public static class GatewayExtensions
                     writeInBatches: true,
                     period: TimeSpan.FromSeconds(30)
                 );
-
-                loggerConfiguration.WriteTo.Async(x =>
-                {
-                    x.File(
-                        outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                        path: "logs/gateway_error.log",
-                        rollingInterval: RollingInterval.Day,
-                        restrictedToMinimumLevel: LogEventLevel.Error,
-                        formatProvider: new CultureInfo("en-US")
-                    );
-                });
 
                 loggerConfiguration.Enrich.FromLogContext();
                 loggerConfiguration.Enrich.FromMassTransit();

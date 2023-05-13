@@ -85,8 +85,8 @@ public static class DashboardExtensions
 
         services.AddScoped<IEmailHandlerFactory, EmailHandlerFactory>();
         var blobOpt = GetBlobOpt(configuration);
-        services.AddSingleton(
-            new BlobContainerClient(blobOpt.ConnectionString, blobOpt.ImagesContainerName)
+        services.AddScoped(
+            _ => new BlobContainerClient(blobOpt.ConnectionString, blobOpt.ImagesContainerName)
         );
 
         return services;
@@ -101,25 +101,28 @@ public static class DashboardExtensions
         host.UseSerilog(
             (context, services, loggerConfiguration) =>
             {
-                loggerConfiguration.WriteTo.Async(
-                    x =>
-                        x.Console(
+                if (services.GetRequiredService<IHostEnvironment>().IsDevelopment())
+                {
+                    loggerConfiguration.WriteTo.Async(
+                        x =>
+                            x.Console(
+                                outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
+                                levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
+                                formatProvider: new CultureInfo("en-US")
+                            )
+                    );
+
+                    loggerConfiguration.WriteTo.Async(x =>
+                    {
+                        x.File(
                             outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
+                            path: "logs/dashboard.log",
+                            rollingInterval: RollingInterval.Day,
                             levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
                             formatProvider: new CultureInfo("en-US")
-                        )
-                );
-
-                loggerConfiguration.WriteTo.Async(x =>
-                {
-                    x.File(
-                        outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                        path: "logs/dashboard.log",
-                        rollingInterval: RollingInterval.Day,
-                        levelSwitch: new LoggingLevelSwitch(LogEventLevel.Debug),
-                        formatProvider: new CultureInfo("en-US")
-                    );
-                });
+                        );
+                    });
+                }
 
                 loggerConfiguration.WriteTo.AzureBlobStorage(
                     serilogOpt.BlobConnectionString,
@@ -131,17 +134,6 @@ public static class DashboardExtensions
                     writeInBatches: true,
                     period: TimeSpan.FromSeconds(30)
                 );
-
-                loggerConfiguration.WriteTo.Async(x =>
-                {
-                    x.File(
-                        outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                        path: "logs/dashboard_error.log",
-                        rollingInterval: RollingInterval.Day,
-                        restrictedToMinimumLevel: LogEventLevel.Error,
-                        formatProvider: new CultureInfo("en-US")
-                    );
-                });
 
                 loggerConfiguration.Enrich.FromLogContext();
                 loggerConfiguration.Enrich.FromMassTransit();
