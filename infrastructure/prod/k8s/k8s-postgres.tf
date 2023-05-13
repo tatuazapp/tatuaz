@@ -71,6 +71,11 @@ resource "kubernetes_deployment" "k8s_postgres" {
             }
           }
 
+          env {
+            name  = "POSTGRES_SHARED_BUFFERS"
+            value = "64MB"
+          }
+
           volume_mount {
             mount_path = "/var"
             name       = "postgres-mount"

@@ -80,6 +80,15 @@ resource "kubernetes_deployment" "k8s_queue" {
             mount_path = "/var/lib/rabbitmq/"
             name       = "queue-mount"
           }
+
+          resources {
+            requests = {
+              memory = "128Mi"
+            }
+            limits = {
+              memory = "128Mi"
+            }
+          }
         }
 
         volume {
