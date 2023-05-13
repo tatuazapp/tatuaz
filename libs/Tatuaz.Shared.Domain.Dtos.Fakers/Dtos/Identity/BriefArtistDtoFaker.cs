@@ -8,6 +8,6 @@ public sealed class BriefArtistDtoFaker : Faker<BriefArtistDto>, IDtoFaker
 {
     public BriefArtistDtoFaker()
     {
-        CustomInstantiator(f => new BriefArtistDto(f.Internet.UserName(), null, null, null));
+        CustomInstantiator(f => new BriefArtistDto(f.Internet.UserName(), null, null, null, null));
     }
 }
