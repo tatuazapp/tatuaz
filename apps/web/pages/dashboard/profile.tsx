@@ -5,9 +5,13 @@ import { useRouter } from "next/router"
 import { api } from "../../api/apiClient"
 import useMe from "../../api/hooks/useMe"
 import { queryKeys } from "../../api/queryKeys"
-import { DashboardContentWrapper } from "../../components/dashboard/DashboardContentWrapper/styles"
+import {
+  DashboardContentWrapper,
+  DashboardUserProfileSection,
+} from "../../components/dashboard/DashboardContentWrapper/styles"
 import DashboardLayout from "../../components/dashboard/DashboardLayout"
 import BackgroundPhotoSection from "../../components/dashboard/profile/BackgroundPhotoSection"
+import CreatePostSection from "../../components/dashboard/profile/CreatePostSection"
 import TopArtistsSection from "../../components/dashboard/TopArtistsSection"
 
 export type UserProfile = {
@@ -45,11 +49,16 @@ const UserProfile: NextPage = () => {
           noOfLines={5}
           skeletonHeight={10}
         >
-          <BackgroundPhotoSection
-            editable={!profileName}
-            user={profileName ? user : me}
-          />
+          <DashboardUserProfileSection>
+            <BackgroundPhotoSection
+              editable={!profileName}
+              user={profileName ? user : me}
+            />
+
+            <CreatePostSection />
+          </DashboardUserProfileSection>
         </SkeletonText>
+
         <TopArtistsSection />
       </DashboardContentWrapper>
     </DashboardLayout>
