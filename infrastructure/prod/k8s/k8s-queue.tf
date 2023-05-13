@@ -83,10 +83,10 @@ resource "kubernetes_deployment" "k8s_queue" {
 
           resources {
             requests = {
-              memory = "128Mi"
+              memory = "256Mi"
             }
             limits = {
-              memory = "128Mi"
+              memory = "256Mi"
             }
           }
         }
