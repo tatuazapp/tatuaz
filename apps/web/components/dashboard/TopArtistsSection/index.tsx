@@ -1,4 +1,4 @@
-import { Center, Spinner } from "@chakra-ui/react"
+import { Center, Flex, Spinner } from "@chakra-ui/react"
 import { useQuery } from "@tanstack/react-query"
 import { Heading, Paragraph } from "@tatuaz/ui"
 import { FormattedMessage } from "react-intl"
@@ -26,7 +26,9 @@ const TopArtistsSection = () => {
 
   return (
     <RightSectionContainer>
-      <UserSection />
+      <Flex alignItems="center" height={100} justifyContent="flex-end">
+        <UserSection />
+      </Flex>
       <TopArtistsSectionWrapper>
         <TopArtistsSectionHeader>
           <Heading level={4}>

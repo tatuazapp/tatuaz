@@ -8,6 +8,7 @@ export const ArtistCardAreaWrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: ${({ theme }) => theme.space.medium};
 
+  min-width: 60vw;
   height: calc(var(--vh, 100vh) - ${rem(232)});
 
   ${down("lg")} {

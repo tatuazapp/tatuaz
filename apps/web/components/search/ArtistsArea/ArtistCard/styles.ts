@@ -15,7 +15,7 @@ export const ArtistCardWrapper = styled.div`
   }
 `
 
-export const ArtistCardBacktroundPhoto = styled.div`
+export const ArtistCardBackgroundPhoto = styled.div`
   position: relative;
 
   height: ${rem(165)};
@@ -28,7 +28,9 @@ export const ArtistCardBacktroundPhoto = styled.div`
   border-top-right-radius: ${({ theme }) => theme.radius.medium};
 `
 
-export const ArtistCardUserPhoto = styled.div`
+export const ArtistCardUserPhoto = styled.div<{
+  imageUrl: string
+}>`
   position: absolute;
   right: 0;
   bottom: ${rem(-47)};
@@ -38,8 +40,7 @@ export const ArtistCardUserPhoto = styled.div`
   height: ${rem(94)};
   margin: auto;
 
-  /* TODO: change to dynamic */
-  background-image: url("https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg");
+  background-image: ${({ imageUrl }) => `url(${imageUrl})`};
   background-size: cover;
   border: ${rem(4)} solid ${({ theme }) => theme.colors.background2};
   border-radius: 50%;
