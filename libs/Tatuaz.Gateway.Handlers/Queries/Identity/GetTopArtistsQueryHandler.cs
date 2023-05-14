@@ -15,7 +15,7 @@ using Tatuaz.Shared.Pipeline.Messages;
 namespace Tatuaz.Gateway.Handlers.Queries.Identity;
 
 public class GetTopArtistsQueryHandler
-    : IRequestHandler<GetTopArtistsQuery, TatuazResult<PagedData<BriefArtistDto>>>
+    : IRequestHandler<GetTopArtistsQuery, TatuazResult<PagedData<BriefUserDto>>>
 {
     private readonly IValidator<GetTopArtistsDto> _validator;
     private readonly GetTopArtistsProducer _producer;
@@ -29,7 +29,7 @@ public class GetTopArtistsQueryHandler
         _producer = producer;
     }
 
-    public async Task<TatuazResult<PagedData<BriefArtistDto>>> Handle(
+    public async Task<TatuazResult<PagedData<BriefUserDto>>> Handle(
         GetTopArtistsQuery request,
         CancellationToken cancellationToken
     )
@@ -40,7 +40,7 @@ public class GetTopArtistsQueryHandler
 
         if (!validationResult.IsValid)
         {
-            return CommonResultFactory.ValidationError<PagedData<BriefArtistDto>>(validationResult);
+            return CommonResultFactory.ValidationError<PagedData<BriefUserDto>>(validationResult);
         }
 
         return await _producer

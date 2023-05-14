@@ -25,6 +25,6 @@ public class IdentityMappingProfile : Profile
             );
         CreateMap<SignUpDto, TatuazUser>();
         CreateMap<TatuazUser, SignUpDto>();
-        CreateMap<TatuazUser, BriefArtistDto>();
+        CreateMap<TatuazUser, BriefUserDto>();
     }
 }

@@ -5,5 +5,4 @@ using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway.Requests.Queries.Identity;
 
-public record GetTopArtistsQuery(GetTopArtistsDto GetTopArtistsDto)
-    : IRequest<TatuazResult<PagedData<BriefUserDto>>>;
+public record SearchUsersQuery(SearchUsersDto SearchUsersDto) : IRequest<TatuazResult<PagedData<BriefUserDto>>>;

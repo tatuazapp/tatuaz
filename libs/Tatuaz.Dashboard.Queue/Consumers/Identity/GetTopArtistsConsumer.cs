@@ -17,7 +17,7 @@ using Tatuaz.Shared.Pipeline.Queues;
 
 namespace Tatuaz.Dashboard.Queue.Consumers.Identity;
 
-public class GetTopArtistsConsumer : TatuazConsumerBase<GetTopArtists, PagedData<BriefArtistDto>>
+public class GetTopArtistsConsumer : TatuazConsumerBase<GetTopArtists, PagedData<BriefUserDto>>
 {
     private readonly IGenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
 
@@ -30,7 +30,7 @@ public class GetTopArtistsConsumer : TatuazConsumerBase<GetTopArtists, PagedData
         _userRepository = userRepository;
     }
 
-    protected override async Task<TatuazResult<PagedData<BriefArtistDto>>> ConsumeMessage(
+    protected override async Task<TatuazResult<PagedData<BriefUserDto>>> ConsumeMessage(
         ConsumeContext<GetTopArtists> context
     )
     {
@@ -41,7 +41,7 @@ public class GetTopArtistsConsumer : TatuazConsumerBase<GetTopArtists, PagedData
 
         return CommonResultFactory.Ok(
             await _userRepository
-                .GetBySpecificationWithPagingAsync<BriefArtistDto>(
+                .GetBySpecificationWithPagingAsync<BriefUserDto>(
                     spec,
                     new PagedParams(context.Message.PageNumber, context.Message.PageSize),
                     context.CancellationToken
