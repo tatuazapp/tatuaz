@@ -5,7 +5,7 @@ resource "kubernetes_persistent_volume" "k8s_postgres" {
   spec {
     storage_class_name = "postgres"
     capacity = {
-      storage = "16Gi"
+      storage = "4Gi"
     }
     access_modes = ["ReadWriteOnce"]
     persistent_volume_source {
@@ -30,7 +30,7 @@ resource "kubernetes_persistent_volume_claim" "k8s_postgres" {
     access_modes       = ["ReadWriteOnce"]
     resources {
       requests = {
-        storage = "16Gi"
+        storage = "4Gi"
       }
     }
     volume_name = kubernetes_persistent_volume.k8s_postgres.metadata[0].name
@@ -101,7 +101,7 @@ resource "kubernetes_service" "k8s_postgres_lb" {
 
   spec {
     # Tu trzeba robić cyrk https://cloud-provider-azure.sigs.k8s.io/topics/shared-ip/
-    load_balancer_ip = "20.199.3.235"
+    load_balancer_ip = "20.85.161.230"
     selector = {
       app = kubernetes_deployment.k8s_postgres.metadata[0].name
     }
