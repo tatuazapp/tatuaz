@@ -21,22 +21,30 @@ public class SearchUsersConsumer : TatuazConsumerBase<SearchUsers, PagedData<Bri
 
     public SearchUsersConsumer(
         ILogger<SearchUsersConsumer> logger,
-        IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository) : base(logger)
+        IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository
+    )
+        : base(logger)
     {
         _userRepository = userRepository;
     }
 
-    protected override async Task<TatuazResult<PagedData<BriefUserDto>>> ConsumeMessage(ConsumeContext<SearchUsers> context)
+    protected override async Task<TatuazResult<PagedData<BriefUserDto>>> ConsumeMessage(
+        ConsumeContext<SearchUsers> context
+    )
     {
         var spec = new FullSpecification<TatuazUser>();
         spec.AddFilter(x => x.Username.ToLower().Contains(context.Message.Query.ToLower()));
-        if(context.Message.OnlyArtists)
+        if (context.Message.OnlyArtists)
         {
             spec.AddFilter(x => x.UserRoles.Any(y => y.Role.Id == TatuazRole.ArtistId));
         }
 
         var users = await _userRepository
-            .GetBySpecificationWithPagingAsync<BriefUserDto>(spec, new PagedParams(context.Message.PageNumber, context.Message.PageSize), context.CancellationToken)
+            .GetBySpecificationWithPagingAsync<BriefUserDto>(
+                spec,
+                new PagedParams(context.Message.PageNumber, context.Message.PageSize),
+                context.CancellationToken
+            )
             .ConfigureAwait(false);
 
         return CommonResultFactory.Ok(users);

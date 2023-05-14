@@ -9,7 +9,9 @@ namespace Tatuaz.Dashboard.Queue.Producers.Identity;
 
 public class SearchUsersProducer : TatuazProducerBase<SearchUsers, PagedData<BriefUserDto>>
 {
-    public SearchUsersProducer(IRequestClient<SearchUsers> requestClient, ILogger<SearchUsersProducer> logger) : base(requestClient, logger)
-    {
-    }
+    public SearchUsersProducer(
+        IRequestClient<SearchUsers> requestClient,
+        ILogger<SearchUsersProducer> logger
+    )
+        : base(requestClient, logger) { }
 }

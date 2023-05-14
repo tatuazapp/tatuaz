@@ -21,12 +21,16 @@ public class SearchUsersQueryHandler
     public SearchUsersQueryHandler(
         IValidator<SearchUsersDto> validator,
         SearchUsersProducer producer
-        )
+    )
     {
         _validator = validator;
         _producer = producer;
     }
-    public async Task<TatuazResult<PagedData<BriefUserDto>>> Handle(SearchUsersQuery request, CancellationToken cancellationToken)
+
+    public async Task<TatuazResult<PagedData<BriefUserDto>>> Handle(
+        SearchUsersQuery request,
+        CancellationToken cancellationToken
+    )
     {
         var validationResult = await _validator
             .ValidateAsync(request.SearchUsersDto, cancellationToken)
@@ -38,11 +42,15 @@ public class SearchUsersQueryHandler
         }
 
         var result = await _producer
-            .Send(new SearchUsers(request.SearchUsersDto.Query!,
-                request.SearchUsersDto.PageNumber!.Value,
-                request.SearchUsersDto.PageSize!.Value,
-                request.SearchUsersDto.OnlyArtists!.Value),
-                cancellationToken)
+            .Send(
+                new SearchUsers(
+                    request.SearchUsersDto.Query!,
+                    request.SearchUsersDto.PageNumber!.Value,
+                    request.SearchUsersDto.PageSize!.Value,
+                    request.SearchUsersDto.OnlyArtists!.Value
+                ),
+                cancellationToken
+            )
             .ConfigureAwait(false);
         return result;
     }
