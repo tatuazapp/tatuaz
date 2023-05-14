@@ -178,6 +178,13 @@
             <param name="setAccountTypeDto"></param>
             <returns></returns>
         </member>
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.SearchUsers(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.SearchUsersDto)">
+             <summary>
+             Search users
+             </summary>
+            <param name="searchUsersDto"></param>
+             <returns></returns>
+        </member>
         <member name="T:Tatuaz.Gateway.Controllers.PhotoController">
             <summary>
             Controller for photos

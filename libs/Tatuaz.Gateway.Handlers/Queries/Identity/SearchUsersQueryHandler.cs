@@ -3,26 +3,24 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 using Tatuaz.Dashboard.Queue.Contracts.Identity;
-using Tatuaz.Dashboard.Queue.Contracts.Photo;
 using Tatuaz.Dashboard.Queue.Producers.Identity;
 using Tatuaz.Gateway.Requests.Queries.Identity;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Photo.Category;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Messages;
 
 namespace Tatuaz.Gateway.Handlers.Queries.Identity;
 
-public class GetTopArtistsQueryHandler
-    : IRequestHandler<GetTopArtistsQuery, TatuazResult<PagedData<BriefUserDto>>>
+public class SearchUsersQueryHandler
+    : IRequestHandler<SearchUsersQuery, TatuazResult<PagedData<BriefUserDto>>>
 {
-    private readonly IValidator<GetTopArtistsDto> _validator;
-    private readonly GetTopArtistsProducer _producer;
+    private readonly IValidator<SearchUsersDto> _validator;
+    private readonly SearchUsersProducer _producer;
 
-    public GetTopArtistsQueryHandler(
-        IValidator<GetTopArtistsDto> validator,
-        GetTopArtistsProducer producer
+    public SearchUsersQueryHandler(
+        IValidator<SearchUsersDto> validator,
+        SearchUsersProducer producer
     )
     {
         _validator = validator;
@@ -30,12 +28,12 @@ public class GetTopArtistsQueryHandler
     }
 
     public async Task<TatuazResult<PagedData<BriefUserDto>>> Handle(
-        GetTopArtistsQuery request,
+        SearchUsersQuery request,
         CancellationToken cancellationToken
     )
     {
         var validationResult = await _validator
-            .ValidateAsync(request.GetTopArtistsDto, cancellationToken)
+            .ValidateAsync(request.SearchUsersDto, cancellationToken)
             .ConfigureAwait(false);
 
         if (!validationResult.IsValid)
@@ -43,14 +41,17 @@ public class GetTopArtistsQueryHandler
             return CommonResultFactory.ValidationError<PagedData<BriefUserDto>>(validationResult);
         }
 
-        return await _producer
+        var result = await _producer
             .Send(
-                new GetTopArtists(
-                    request.GetTopArtistsDto.PageNumber!.Value,
-                    request.GetTopArtistsDto.PageSize!.Value
+                new SearchUsers(
+                    request.SearchUsersDto.Query!,
+                    request.SearchUsersDto.PageNumber!.Value,
+                    request.SearchUsersDto.PageSize!.Value,
+                    request.SearchUsersDto.OnlyArtists!.Value
                 ),
                 cancellationToken
             )
             .ConfigureAwait(false);
+        return result;
     }
 }

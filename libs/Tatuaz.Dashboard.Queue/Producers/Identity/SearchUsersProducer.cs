@@ -7,11 +7,11 @@ using Tatuaz.Shared.Pipeline.Queues;
 
 namespace Tatuaz.Dashboard.Queue.Producers.Identity;
 
-public class GetTopArtistsProducer : TatuazProducerBase<GetTopArtists, PagedData<BriefUserDto>>
+public class SearchUsersProducer : TatuazProducerBase<SearchUsers, PagedData<BriefUserDto>>
 {
-    public GetTopArtistsProducer(
-        IRequestClient<GetTopArtists> requestClient,
-        ILogger<GetTopArtistsProducer> logger
+    public SearchUsersProducer(
+        IRequestClient<SearchUsers> requestClient,
+        ILogger<SearchUsersProducer> logger
     )
         : base(requestClient, logger) { }
 }
