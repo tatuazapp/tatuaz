@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react"
 import {
   Modal,
   ModalOverlay,
@@ -16,18 +17,11 @@ import {
 import { X } from "@styled-icons/bootstrap/X"
 import { useMutation } from "@tanstack/react-query"
 import Image from "next/image"
-import { FunctionComponent, useMemo, useState } from "react"
+import { FunctionComponent, useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { FormattedMessage, useIntl } from "react-intl"
 import { api } from "../../../../api/apiClient"
-import { queryKeys } from "../../../../api/queryKeys"
-import { SetBioDto } from "../../../../api/tatuazApi"
-import { queryClient } from "../../../../pages/_app"
-import {
-  ErrorApiResponse,
-  SetBioDtoErrorCode,
-} from "../../../../types/apiErrors"
-import ApiErrorHandler from "../../../../utils/errors/ApiErrorHandler"
+import { FinalizePostDto } from "../../../../api/tatuazApi"
 import Dropzone from "../../../common/Dropzone"
 import { UploadedPhotosWrapper } from "./styles"
 
@@ -47,9 +41,38 @@ const CreatePostModal: FunctionComponent<CreatePostModalProps> = ({
     handleSubmit,
     setError,
     formState: { isSubmitting },
-  } = useForm<SetBioDto>({
+  } = useForm({
     defaultValues: {},
   })
+
+  const [uploadedImages, setUploadedImages] = useState<File[] | null>(null)
+  const [postId, setPostId] = useState<string>("")
+  const [accessToken, setAccessToken] = useState<string>("")
+
+  const { getAccessTokenSilently } = useAuth0()
+  console.log("accessToken", accessToken)
+
+  useEffect(() => {
+    const getAccessToken = async () => {
+      try {
+        const accessToken = await getAccessTokenSilently()
+        setAccessToken(accessToken)
+      } catch (e) {
+        console.log(e.message)
+      }
+    }
+    getAccessToken()
+  }, [getAccessTokenSilently])
+
+  const uploadedImagesAsBase64: string[] = useMemo(() => {
+    if (!uploadedImages) {
+      return []
+    }
+
+    return uploadedImages.map((uploadedImage) =>
+      URL.createObjectURL(uploadedImage)
+    )
+  }, [uploadedImages])
 
   const onFileAccepted = (file: File) => {
     setUploadedImages((uploadedImages) =>
@@ -63,76 +86,120 @@ const CreatePostModal: FunctionComponent<CreatePostModalProps> = ({
     )
   }
 
-  const mutation = useMutation({
-    mutationFn: (data: SetBioDto) => api.identity.setBio(data),
-    onError: (res: ErrorApiResponse) => {
-      const handler = new ApiErrorHandler<SetBioDtoErrorCode>(res.error)
+  console.log("uploadedImages", uploadedImages)
 
-      handler
-        .handle("BioTooLong", () => {
-          setError("bio", {
-            type: "manual",
-            message: intl.formatMessage({
-              defaultMessage: "Bio jest za długie",
-              id: "Q+mZoQ",
-            }),
-          })
-        })
-        .handle("CityTooLong", () => {
-          setError("city", {
-            type: "manual",
-            message: intl.formatMessage({
-              defaultMessage: "Nazwa miasta jest za długa",
-              id: "cPjild",
-            }),
-          })
-        })
-        .handle("*", () => {
-          toast({
-            title: intl.formatMessage({
-              defaultMessage:
-                "Wystąpił błąd podczas aktualizacji. Spróbuj ponownie później",
-              id: "qP/bHU",
-            }),
-            status: "error",
-            position: "top",
-          })
-        })
-        .run()
+  const uploadPostPhotosMutation = useMutation({
+    mutationFn: (data: { Photos?: File[] }) => api.post.uploadPostPhotos(data),
+    onSuccess(data, variables, context) {
+      setPostId(data.value.initialPostId)
+      console.log(data)
     },
-    onSuccess: () => {
+    onError: () => {
       toast({
         title: intl.formatMessage({
-          defaultMessage: "Bio i Miasto zostały zaktualizowane",
-          id: "QwvT2h",
+          defaultMessage: "Wystąpił błąd podczas zmiany avataru",
+          id: "24ACHW",
         }),
-        status: "success",
+        status: "error",
         position: "top",
       })
-      queryClient.invalidateQueries({
-        queryKey: [queryKeys.whoAmI],
-      })
-      onClose()
     },
   })
 
-  const onSubmit = handleSubmit((data) => {
-    mutation.mutateAsync(data)
+  const finalizePostMutation = useMutation({
+    // mutationFn: (data: File[]) => api.post.finalizePost({ Photos: data }),
+    mutationFn: (data: FinalizePostDto) => api.post.finalizePost(data),
+    onError: () => {
+      toast({
+        title: intl.formatMessage({
+          defaultMessage: "Wystąpił błąd podczas zmiany avataru",
+          id: "24ACHW",
+        }),
+        status: "error",
+        position: "top",
+      })
+    },
   })
 
-  const [uploadedImages, setUploadedImages] = useState<File[] | null>(null)
+  const getCategoriesMutation = useMutation({
+    mutationFn: () =>
+      api.photo.listCategories({
+        pageNumber: 1,
+        pageSize: 100,
+      }),
+    onSuccess: (data) => {
+      console.log(data)
+    },
+  })
 
-  const uploadedImagesAsBase64: string[] = useMemo(() => {
-    if (!uploadedImages) {
-      return []
-    }
+  const onSubmit = useMemo(
+    () =>
+      handleSubmit(async () => {
+        if (!uploadedImages) {
+          setError("backgroundPhoto", {
+            message: intl.formatMessage({
+              defaultMessage: "Avatar jest wymagany",
+              id: "uwVZTo",
+            }),
+          })
+          return
+        }
 
-    return uploadedImages.map((uploadedImage) =>
-      URL.createObjectURL(uploadedImage)
-    )
-  }, [uploadedImages])
+        console.log("uploadedImages", uploadedImages)
 
-  console.log("uploadedImagesAsBase64 ", uploadedImagesAsBase64)
+        const formData = new FormData()
+        for (let i = 0; i < uploadedImages.length; i++) {
+          formData.append("Photos", uploadedImages[i])
+        }
+
+        const response = await fetch(
+          "https://api.tatuaz.app/Post/UploadPostPhotos",
+          {
+            method: "POST",
+            body: formData,
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization:
+                "Bearer " +
+                "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ing0dnBVTjRyX1hHOFMxbE0xQ2RrUiJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiIwMW5pa29kZW13QGdtYWlsLmNvbSIsImlzcyI6Imh0dHBzOi8vdGF0dWF6LWFwcC5ldS5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTI3NDM0OTUwNjU2OTQ5OTY3NDEiLCJhdWQiOlsiaHR0cHM6Ly90YXR1YXotYXBwLmV1LmF1dGgwLmNvbS9hcGkvdjIvIiwiaHR0cHM6Ly90YXR1YXotYXBwLmV1LmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE2ODQxNzc0NjcsImV4cCI6MTY4Njc2OTQ2NywiYXpwIjoiMU04bks3azdWQUs2N0d6dW1qS3NhMndndVpzZXlhZnkiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIn0.E3yp5j0oal43syNeHM2Nl-QPmhN3SK55yB0v07imN9WXa0caXXoN94Q1FBBbUhFissZMDzi1fSuIsNHowvmsy2K3inGQx7O0aUTFPsO7y_Pea4FaejRFaxtEUzeCZd9pPRMhIacoYLLMt6Lcm-VpbzbdhWrCmfoMQDzX9U58dFhw-Fxq2njlF-c3DjM3WlxlFeohWJ8aIPVMk7KzPgifYYFn2aPCkEh8k9FQ65LKv6fNGESOqmn4PHOA7msILk0GQcfMGr1JCb7XpRsgVhn-FN0pfRPfYz1xWpiIuoIDVwIHwdUkQrXhvSiMNsYR_NZjRSa3WynPn8LvkMXFB9qPIg",
+            },
+          }
+        )
+
+        // console.log("response", response)
+
+        // await uploadPostPhotosMutation.mutateAsync({
+        //   Photos: uploadedImages,
+        // })
+
+        // const finalizePost: FinalizePostDto = {
+        //   initialPostId: postId,
+        //   description: "test",
+        //   photoInfoDtos: [
+        //     {
+        //       photoFileName: "test",
+        //       photoId: "test",
+        //       categoryIds: [0],
+        //     },
+        //   ],
+        // }
+
+        // await finalizePostMutation.mutateAsync(finalizePost)
+
+        onClose()
+      }),
+    [
+      handleSubmit,
+      intl,
+      onClose,
+      setError,
+      uploadedImages,
+      uploadPostPhotosMutation,
+      postId,
+      accessToken,
+      // finalizePostMutation,
+    ]
+  )
 
   return (
     <Modal isOpen={isOpen} size="xl" onClose={onClose}>
