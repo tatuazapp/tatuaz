@@ -19,6 +19,7 @@ public class PostMappingProfile : Profile
                         src.Author.Username,
                         src.Author.ForegroundPhoto != null ? src.Author.ForegroundPhoto.Uri : null,
                         src.Likes.Count,
+                        false,
                         src.Comments.Count,
                         src.CreatedAt
                     )

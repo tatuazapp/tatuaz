@@ -4,13 +4,38 @@ using Tatuaz.Shared.Domain.Dtos.Dtos.Common;
 
 namespace Tatuaz.Shared.Domain.Dtos.Dtos.Post;
 
-public record BriefPostDto(
-    Guid Id,
-    string Description,
-    Uri[] PhotoUris,
-    string AuthorName,
-    Uri? AuthorPhotoUri,
-    int LikesCount,
-    int CommentsCount,
-    Instant CreatedAt
-) : IDto;
+public class BriefPostDto : IDto
+{
+    public Guid Id { get; init; }
+    public string Description { get; init; }
+    public Uri[] PhotoUris { get; init; }
+    public string AuthorName { get; init; }
+    public Uri? AuthorPhotoUri { get; init; }
+    public int LikesCount { get; init; }
+    public bool IsLikedByCurrentUser { get; set; }
+    public int CommentsCount { get; init; }
+    public Instant CreatedAt { get; init; }
+
+    public BriefPostDto(
+        Guid id,
+        string description,
+        Uri[] photoUris,
+        string authorName,
+        Uri? authorPhotoUri,
+        int likesCount,
+        bool isLikedByCurrentUser,
+        int commentsCount,
+        Instant createdAt
+    )
+    {
+        Id = id;
+        Description = description;
+        PhotoUris = photoUris;
+        AuthorName = authorName;
+        AuthorPhotoUri = authorPhotoUri;
+        LikesCount = likesCount;
+        IsLikedByCurrentUser = isLikedByCurrentUser;
+        CommentsCount = commentsCount;
+        CreatedAt = createdAt;
+    }
+}

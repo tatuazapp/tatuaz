@@ -83,4 +83,25 @@ public class PostController : TatuazControllerBase
             await Mediator.Send(new SearchPostsQuery(searchPostsDto)).ConfigureAwait(false)
         );
     }
+
+    /// <summary>
+    /// Like post
+    /// </summary>
+    /// <param name="likePostDto"></param>
+    /// <returns></returns>
+    [HttpPost("[action]")]
+    [AuthorizeActiveUser]
+    [Produces("application/json")]
+    [Consumes("application/json")]
+    [ProducesResponseType(typeof(OkResponse<EmptyResponse>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Forbidden)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
+    public async Task<IActionResult> LikePost(LikePostDto likePostDto)
+    {
+        return ResultToActionResult(
+            await Mediator.Send(new LikePostCommand(likePostDto)).ConfigureAwait(false)
+        );
+    }
 }
