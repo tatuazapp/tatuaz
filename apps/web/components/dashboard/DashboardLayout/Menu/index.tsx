@@ -1,10 +1,9 @@
-import { Paragraph, Paragraph2 } from "@tatuaz/ui"
+import { Paragraph2 } from "@tatuaz/ui"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { FormattedMessage } from "react-intl"
-import { theme } from "../../../../styles/theme"
 import { Tabs } from "../../../../types/tabs"
-import Button from "../../../common/buttons/Button"
+import { SignOutButton } from "../../../auth/SignoutButton"
 import {
   GreenWrapper,
   MenuList,
@@ -90,9 +89,11 @@ const Menu = () => {
   return (
     <MenuWrapper>
       <div>
-        <WordmarkWrapper>
-          Tatuaz<GreenWrapper>App</GreenWrapper>
-        </WordmarkWrapper>
+        <Link href="/">
+          <WordmarkWrapper>
+            Tatuaz<GreenWrapper>App</GreenWrapper>
+          </WordmarkWrapper>
+        </Link>
         <MenuList>
           {tabs.map((tab) => (
             <MenuListItem
@@ -106,11 +107,7 @@ const Menu = () => {
         </MenuList>
       </div>
       <SignOutButtonWrapper>
-        <Button kind="primary" size="md">
-          <Paragraph color={theme.colors.background1} level={1}>
-            <FormattedMessage defaultMessage="Wyloguj" id="UqV7Od" />
-          </Paragraph>
-        </Button>
+        <SignOutButton />
       </SignOutButtonWrapper>
     </MenuWrapper>
   )

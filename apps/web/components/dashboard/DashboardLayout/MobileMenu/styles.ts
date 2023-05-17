@@ -3,6 +3,7 @@ import { Home } from "@styled-icons/boxicons-regular/Home"
 import { User as Profile } from "@styled-icons/boxicons-regular/User"
 import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline"
 import { Search } from "@styled-icons/evaicons-solid/Search"
+import Link from "next/link"
 import styled, { css } from "styled-components"
 import { rem } from "../../../../styles/utils"
 
@@ -27,6 +28,7 @@ const incommingEffect = css`
 export const MobileMenuBackgroundContainer = styled.div`
   display: flex;
   justify-content: center;
+  height: 100%;
   background-color: ${({ theme }) => theme.colors.background2};
 `
 
@@ -38,7 +40,7 @@ export const MobileMenuWrapper = styled.div`
   box-sizing: content-box;
   width: 100%;
   max-width: 735px;
-  height: var(--vh, 100vh);
+  height: 100dvh;
   padding-right: ${({ theme }) => theme.space.small};
   padding-left: ${({ theme }) => theme.space.small};
 
@@ -84,7 +86,7 @@ export const MobileMenuList = styled.div`
   flex-direction: column;
 `
 
-export const MobileMenuListItem = styled.div<{
+export const MobileMenuListItem = styled(Link)<{
   isSelected: boolean
 }>`
   cursor: pointer;
@@ -136,12 +138,14 @@ export const ProfileIcon = styled(Profile)`
   ${incommingEffect}
 `
 
-export const SignOutButton = styled.button`
+export const SignOutButtonWrapper = styled.div`
   margin-right: auto;
   margin-bottom: ${({ theme }) => theme.space.xxxxlarge};
   margin-left: auto;
-  padding: ${({ theme }) => theme.space.xsmall};
+`
 
-  background-color: ${({ theme }) => theme.colors.primary};
-  border-radius: ${({ theme }) => theme.radius.medium};
+export const LinkNoStyle = styled(Link)`
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 `
