@@ -20,7 +20,6 @@ const useMe = () => {
 
   const { data } = useQuery([queryKeys.whoAmI], api.identity.me, {
     onError: async (error: PoorMansError) => {
-      console.error(error)
       if (error.status === 401) {
         api.setSecurityData(null)
       }

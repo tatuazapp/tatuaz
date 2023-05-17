@@ -1,4 +1,5 @@
 import { Paragraph1 } from "@tatuaz/ui"
+import Link from "next/link"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { FormattedMessage } from "react-intl"
@@ -93,9 +94,11 @@ const MobileMenu: React.FunctionComponent<MobileMenuProps> = ({ onClose }) => {
       <MobileMenuWrapper>
         <div>
           <TopMobileMenuWrapper>
-            <WordmarkWrapper>
-              Tatuaz<GreenWrapper>App</GreenWrapper>
-            </WordmarkWrapper>
+            <Link href="/">
+              <WordmarkWrapper>
+                Tatuaz<GreenWrapper>App</GreenWrapper>
+              </WordmarkWrapper>
+            </Link>
             <CloseMenuIcon onClick={onClose} />
           </TopMobileMenuWrapper>
           <MobileMenuList>{tabs.map((tab) => render(tab))}</MobileMenuList>
