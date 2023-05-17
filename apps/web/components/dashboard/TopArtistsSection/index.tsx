@@ -1,6 +1,7 @@
 import { Center, Flex, Spinner } from "@chakra-ui/react"
 import { useQuery } from "@tanstack/react-query"
 import { Heading, Paragraph } from "@tatuaz/ui"
+import Link from "next/link"
 import { FormattedMessage } from "react-intl"
 import { api } from "../../../api/apiClient"
 import { queryKeys } from "../../../api/queryKeys"
@@ -35,9 +36,11 @@ const TopArtistsSection = () => {
             <FormattedMessage defaultMessage="Topowi artyści" id="J5nXcl" />
           </Heading>
           <TopArtistsSectionViewMore>
-            <Paragraph color={theme.colors.primary} level={4}>
-              <FormattedMessage defaultMessage="Zobacz więcej" id="sP2Svl" />
-            </Paragraph>
+            <Link href="/dashboard/search">
+              <Paragraph color={theme.colors.primary} level={4}>
+                <FormattedMessage defaultMessage="Zobacz więcej" id="sP2Svl" />
+              </Paragraph>
+            </Link>
           </TopArtistsSectionViewMore>
         </TopArtistsSectionHeader>
         <div>

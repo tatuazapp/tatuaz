@@ -1,9 +1,9 @@
-import { Paragraph, Paragraph1 } from "@tatuaz/ui"
+import { Paragraph1 } from "@tatuaz/ui"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { FormattedMessage } from "react-intl"
-import { theme } from "../../../../styles/theme"
+import { SignOutButton } from "../../../auth/SignoutButton"
 import {
   GreenWrapper,
   MobileMenuList,
@@ -15,7 +15,6 @@ import {
   SearchIcon,
   DashboardIcon,
   ProfileIcon,
-  SignOutButton,
   CloseMenuIcon,
   TopMobileMenuWrapper,
   MobileMenuBackgroundContainer,
@@ -53,12 +52,12 @@ const MobileMenu: React.FunctionComponent<MobileMenuProps> = ({ onClose }) => {
   const currentTab = router.pathname.split("/")[2] || "home"
   const [activeTab, setActiveTab] = useState(currentTab)
 
-  const render = (tab: string) => {
-    const tabInfo = tabs.find((t) => t.id === tab)
+  const render = (tab: { name: JSX.Element; href: string; id: string }) => {
+    const tabInfo = tabs.find((t) => t.id === tab.id)
     if (!tabInfo) return "Error"
 
     const Icon = () => {
-      switch (tab) {
+      switch (tab.id) {
         case "home":
           return <HomeIcon />
         case "search":
@@ -73,14 +72,20 @@ const MobileMenu: React.FunctionComponent<MobileMenuProps> = ({ onClose }) => {
     }
 
     return (
-      <>
+      <MobileMenuListItem
+        key={tab.id}
+        href={tabInfo.href}
+        isSelected={activeTab === tab.id}
+        onClick={() => {
+          setActiveTab(tab.id)
+          onClose()
+        }}
+      >
         <Icon />
         <MenuListItemText>
-          <Link href={tabInfo.href} onClick={onClose}>
-            <Paragraph1>{tabInfo.name}</Paragraph1>
-          </Link>
+          <Paragraph1>{tabInfo.name}</Paragraph1>
         </MenuListItemText>
-      </>
+      </MobileMenuListItem>
     )
   }
 
@@ -89,30 +94,16 @@ const MobileMenu: React.FunctionComponent<MobileMenuProps> = ({ onClose }) => {
       <MobileMenuWrapper>
         <div>
           <TopMobileMenuWrapper>
-            <WordmarkWrapper>
-              Tatuaz<GreenWrapper>App</GreenWrapper>
-            </WordmarkWrapper>
+            <Link href="/">
+              <WordmarkWrapper>
+                Tatuaz<GreenWrapper>App</GreenWrapper>
+              </WordmarkWrapper>
+            </Link>
             <CloseMenuIcon onClick={onClose} />
           </TopMobileMenuWrapper>
-          <MobileMenuList>
-            {tabs.map((tab) => (
-              <MobileMenuListItem
-                key={tab.id}
-                isSelected={activeTab === tab.id}
-                onClick={() => {
-                  setActiveTab(tab.id)
-                }}
-              >
-                {render(tab.id)}
-              </MobileMenuListItem>
-            ))}
-          </MobileMenuList>
+          <MobileMenuList>{tabs.map((tab) => render(tab))}</MobileMenuList>
         </div>
-        <SignOutButton>
-          <Paragraph color={theme.colors.background1} level={1} strong={true}>
-            <FormattedMessage defaultMessage="Wyloguj" id="UqV7Od" />
-          </Paragraph>
-        </SignOutButton>
+        <SignOutButton mb={10} />
       </MobileMenuWrapper>
     </MobileMenuBackgroundContainer>
   )
