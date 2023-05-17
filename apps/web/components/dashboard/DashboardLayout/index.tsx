@@ -68,7 +68,7 @@ const DashboardLayout: FunctionComponent<DashboardLayoutProps> = ({
     </>
   ) : (
     <DesktopLayoutContainer>
-      {showDrawer && <Menu />}
+      <Menu />
       {!showDrawer && (
         <>
           <NarrowMenu onOpen={onOpen} />

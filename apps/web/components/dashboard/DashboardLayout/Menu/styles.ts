@@ -3,17 +3,8 @@ import { Home } from "@styled-icons/boxicons-regular/Home"
 import { User as Profile } from "@styled-icons/boxicons-regular/User"
 import { Search } from "@styled-icons/evaicons-solid/Search"
 import { down, up } from "styled-breakpoints"
-import styled, { keyframes } from "styled-components"
+import styled from "styled-components"
 import { rem } from "../../../../styles/utils"
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`
 
 export const MenuWrapper = styled.div`
   display: flex;
@@ -31,6 +22,10 @@ export const MenuWrapper = styled.div`
 
   ${down("xxl")} {
     margin-right: ${({ theme }) => theme.space.xxlarge};
+  }
+
+  ${down("xl")} {
+    display: none;
   }
 
   ${up("xxxl")} {
@@ -87,7 +82,6 @@ export const MenuListItem = styled.div<{
   border-radius: 8px;
 
   transition: background-color 0.3s;
-  animation: ${fadeIn} 0.3s;
 
   :hover {
     background-color: ${({ theme }) => theme.colors.background3};
