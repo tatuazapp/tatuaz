@@ -30,6 +30,7 @@ public static class DashboardQueueExtensions
         services.AddScoped<SearchPostsProducer>();
         services.AddScoped<SearchUsersProducer>();
         services.AddScoped<LikePostProducer>();
+        services.AddScoped<GetUserPostsProducer>();
 
         return services;
     }
