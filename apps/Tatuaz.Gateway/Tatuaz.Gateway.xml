@@ -229,6 +229,13 @@
             <param name="likePostDto"></param>
             <returns></returns>
         </member>
+        <member name="M:Tatuaz.Gateway.Controllers.PostController.GetUserPosts(Tatuaz.Shared.Domain.Dtos.Dtos.Post.GetUserPostsDto)">
+            <summary>
+            Get user posts
+            </summary>
+            <param name="getUserPostsDto"></param>
+            <returns></returns>
+        </member>
         <member name="T:Tatuaz.Gateway.Controllers.StatisticsController">
             <summary>
             Controller for dashboard
