@@ -4,7 +4,6 @@ import {
   DrawerContent,
   useDisclosure,
 } from "@chakra-ui/react"
-import { isNil } from "lodash"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { FunctionComponent, useEffect } from "react"
@@ -38,8 +37,6 @@ const DashboardLayout: FunctionComponent<DashboardLayoutProps> = ({
   const showDrawer = useIsWideDesktop()
   const mobileVersion = useIsMobile()
 
-  const isLoading = isNil(showDrawer) || isNil(mobileVersion)
-
   const data = useMe()
 
   useEffect(() => {
@@ -47,8 +44,6 @@ const DashboardLayout: FunctionComponent<DashboardLayoutProps> = ({
       router.push("/")
     }
   }, [data, data?.username, router])
-
-  if (isLoading) return null
 
   return mobileVersion ? (
     <>
