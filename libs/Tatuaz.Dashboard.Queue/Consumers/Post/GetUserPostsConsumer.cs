@@ -69,8 +69,6 @@ public class GetUserPostsConsumer : TatuazConsumerBase<GetUserPosts, PagedData<B
             )
             .ConfigureAwait(false);
 
-
-
         var likesSpec = new FullSpecification<PostLike>();
         var resultsIds = results.Data.Select(x => x.Id).ToArray();
         likesSpec.AddFilter(

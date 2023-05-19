@@ -106,6 +106,11 @@ OFFSET (@pageSize * (@pageNumber - 1))
             .ToListAsync(context.CancellationToken)
             .ConfigureAwait(false);
 
+        var postsCount = await _dbContext
+            .Set<Shared.Domain.Entities.Models.Post.Post>()
+            .CountAsync(context.CancellationToken)
+            .ConfigureAwait(false);
+
         await _dbContext.Database.CommitTransactionAsync().ConfigureAwait(false);
 
         var spec = new FullSpecification<Shared.Domain.Entities.Models.Post.Post>();
@@ -136,6 +141,9 @@ OFFSET (@pageSize * (@pageNumber - 1))
         {
             result.IsLikedByCurrentUser = likes.Any(x => x.PostId == result.Id);
         }
+
+        results.TotalCount = postsCount;
+        results.TotalPages = (int)Math.Ceiling((double)postsCount / context.Message.PageSize);
 
         return CommonResultFactory.Ok(results);
     }
