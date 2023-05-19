@@ -5,9 +5,14 @@ import { useRouter } from "next/router"
 import { api } from "../../api/apiClient"
 import useMe from "../../api/hooks/useMe"
 import { queryKeys } from "../../api/queryKeys"
-import { DashboardContentWrapper } from "../../components/dashboard/DashboardContentWrapper/styles"
+import {
+  DashboardContentWrapper,
+  DashboardUserProfileSection,
+} from "../../components/dashboard/DashboardContentWrapper/styles"
 import DashboardLayout from "../../components/dashboard/DashboardLayout"
 import BackgroundPhotoSection from "../../components/dashboard/profile/BackgroundPhotoSection"
+import CreatePostSection from "../../components/dashboard/profile/CreatePostSection"
+import UserPostsSection from "../../components/dashboard/profile/UserPostsSection"
 import TopArtistsSection from "../../components/dashboard/TopArtistsSection"
 
 export type UserProfile = {
@@ -37,6 +42,10 @@ const UserProfile: NextPage = () => {
 
   const user = data?.value
 
+  const currentUser = user?.username ?? me?.username ?? ""
+
+  const isCurrentUser = !profileName
+
   return (
     <DashboardLayout>
       <DashboardContentWrapper>
@@ -45,10 +54,18 @@ const UserProfile: NextPage = () => {
           noOfLines={5}
           skeletonHeight={10}
         >
-          <BackgroundPhotoSection
-            editable={!profileName}
-            user={profileName ? user : me}
-          />
+          <DashboardUserProfileSection>
+            <BackgroundPhotoSection
+              editable={isCurrentUser}
+              user={profileName ? user : me}
+            />
+            {!profileName && <CreatePostSection />}{" "}
+            <UserPostsSection
+              currentUser={currentUser}
+              isCurrentUser={!profileName}
+              isEnabled={!!profileName || !!me?.username}
+            />
+          </DashboardUserProfileSection>
         </SkeletonText>
         <TopArtistsSection />
       </DashboardContentWrapper>

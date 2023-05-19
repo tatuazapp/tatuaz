@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {
   Modal,
   ModalOverlay,
@@ -7,17 +8,23 @@ import {
   DrawerOverlay,
   DrawerContent,
 } from "@chakra-ui/react"
+import { useMutation } from "@tanstack/react-query"
 import { motion } from "framer-motion"
-import { useState } from "react"
+import Link from "next/link"
+import { FunctionComponent, useState } from "react"
 import { FormattedMessage } from "react-intl"
+import { PhotoProvider, PhotoView } from "react-photo-view"
+import { api } from "../../../../api/apiClient"
+import { queryKeys } from "../../../../api/queryKeys"
+import { queryClient } from "../../../../pages/_app"
+import formatCDNImageUrl from "../../../../utils/format/formatCDNImageUrl"
 import useIsTablet from "../../../../utils/hooks/useIsTablet"
 import ArtistPostCommentView from "./ArtistPostCommentView"
 import {
   ArtistPostContent,
   ArtistPostDescription,
   ArtistPostLikesAndCommentsWrapper,
-  ArtistPostMainPhoto,
-  ArtistPostMainPhotoTitle,
+  ArtistPostMainPhotos,
   ArtistPostUserWrapper,
   ArtistPostWrapper,
   CommentsContainer,
@@ -31,15 +38,57 @@ import {
   UserIconPhoto,
   UserName,
 } from "./styles"
+import "react-photo-view/dist/react-photo-view.css"
 
-const ArtistPost = () => {
-  const [isPostLiked, setIsPostLiked] = useState(false)
+type ArtistPostProps = {
+  id: string
+  isLiked: boolean
+  likesNumber: number
+  commentsNumber: number
+  description: string
+  author: {
+    name: string
+    photoUri: string
+  }
+  createdAt?: string
+  photoUris?: string[]
+}
+
+const ArtistPost: FunctionComponent<ArtistPostProps> = ({
+  id,
+  isLiked,
+  likesNumber,
+  commentsNumber,
+  description,
+  author,
+  photoUris,
+}) => {
+  const [isPostLiked, setIsPostLiked] = useState(isLiked)
+  const [likedNumber, setLikedNumber] = useState(likesNumber)
   const [isCommentsSectionOpen, setIsCommentsSectionOpen] = useState(false)
 
+  const likePostMutation = useMutation({
+    mutationFn: () =>
+      api.post.likePost({
+        postId: id,
+        like: !isPostLiked,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.getUserPosts, author.name],
+      })
+    },
+    onError: () => {
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.getUserPosts, author.name],
+      })
+    },
+  })
+
   const onLikeIconClickHandler = () => {
-    setTimeout(() => {
-      setIsPostLiked((prev) => !prev)
-    }, 100)
+    likePostMutation.mutate()
+    setIsPostLiked((prev) => !prev)
+    setLikedNumber((prev) => (isPostLiked ? prev - 1 : prev + 1))
   }
 
   const isTablet = useIsTablet()
@@ -49,10 +98,48 @@ const ArtistPost = () => {
   return (
     <>
       <ArtistPostWrapper>
-        <ArtistPostMainPhoto>
-          <ArtistPostMainPhotoTitle>Flare Boom</ArtistPostMainPhotoTitle>
-        </ArtistPostMainPhoto>
+        {photoUris && photoUris.length > 0 && (
+          <ArtistPostMainPhotos>
+            <PhotoProvider>
+              {photoUris.map((photoUri) => (
+                <PhotoView
+                  key={photoUri}
+                  src={formatCDNImageUrl(photoUri, {
+                    maxWidth: 1024,
+                  })}
+                >
+                  <img
+                    alt={description}
+                    src={formatCDNImageUrl(photoUri, {
+                      maxWidth: 2048,
+                      minWidth: 1024,
+                    })}
+                  />
+                </PhotoView>
+              ))}
+            </PhotoProvider>
+          </ArtistPostMainPhotos>
+        )}
         <ArtistPostContent>
+          <ArtistPostUserWrapper>
+            <UserIconPhoto
+              photoUrl={
+                author?.photoUri
+                  ? formatCDNImageUrl(author.photoUri, {
+                      maxWidth: 64,
+                    })
+                  : ""
+              }
+            />
+            <Link
+              href={`/dashboard/profile?${new URLSearchParams({
+                profileName: author.name ?? "",
+              }).toString()}`}
+            >
+              <UserName>{author.name}</UserName>
+            </Link>
+          </ArtistPostUserWrapper>
+          <ArtistPostDescription>{description}</ArtistPostDescription>
           <ArtistPostLikesAndCommentsWrapper>
             <LikesContainer>
               <motion.button
@@ -66,7 +153,8 @@ const ArtistPost = () => {
               </motion.button>
 
               <LikesNumber>
-                234 <FormattedMessage defaultMessage="polubień" id="1/6yup" />
+                {likedNumber}{" "}
+                <FormattedMessage defaultMessage="polubień" id="1/6yup" />
               </LikesNumber>
             </LikesContainer>
             <CommentsContainer>
@@ -80,21 +168,11 @@ const ArtistPost = () => {
                 <CommentSectionNotClickedIcon onClick={onOpen} />
               )}
               <CommentsNumber>
-                234 <FormattedMessage defaultMessage="komentarzy" id="M9FmsT" />
+                {commentsNumber}{" "}
+                <FormattedMessage defaultMessage="komentarzy" id="M9FmsT" />
               </CommentsNumber>
             </CommentsContainer>
           </ArtistPostLikesAndCommentsWrapper>
-          <ArtistPostUserWrapper>
-            <UserIconPhoto />
-            <UserName>Jacob Vin</UserName>
-          </ArtistPostUserWrapper>
-          <ArtistPostDescription>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Consequat ac felis donec et odio pellentesque diam volutpat commodo.
-            Venenatis cras sedfelis eget. Quis hendrerit dolor magna eget est
-            lorem ipsum.
-          </ArtistPostDescription>
         </ArtistPostContent>
       </ArtistPostWrapper>
       {!isTablet && (

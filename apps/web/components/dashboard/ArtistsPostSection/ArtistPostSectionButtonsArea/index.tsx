@@ -1,66 +1,41 @@
-import { ChevronDownIcon } from "@chakra-ui/icons"
-import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react"
 import { Paragraph } from "@tatuaz/ui"
-import { useState } from "react"
+import { FunctionComponent } from "react"
+import { FormattedMessage } from "react-intl"
+import { SearchPostsFlag } from "../../../../api/tatuazApi"
 import { theme } from "../../../../styles/theme"
 import {
   ArtistsPostSectionButtonAreaWrapper,
-  LeftContainer,
   TypeButton,
   TypeButtonsContainer,
 } from "./styles"
 
-const ArtistsPostSectionButtonArea = () => {
-  const [selectedType, setSelectedType] = useState("All")
-  const [currentPostSelectionOption, setCurrentPostSelectionOption] =
-    useState("Popular")
+const mapSearchPostsFlagToString = (flag: SearchPostsFlag) => {
+  switch (flag) {
+    case SearchPostsFlag.All:
+      return <FormattedMessage defaultMessage="Wszystkie" id="+Bww4z" />
+    case SearchPostsFlag.OnlyPhotos:
+      return <FormattedMessage defaultMessage="Zdjęcia" id="GgQAS6" />
+    case SearchPostsFlag.OnlyPosts:
+      return <FormattedMessage defaultMessage="Posty" id="jHbya6" />
+  }
+}
 
-  const buttonTypes = ["All", "Photos", "Posts"]
-  const postSelectionOptions = ["Popular", "Newest", "Oldest"]
+type ArtistsPostSectionButtonAreaProps = {
+  selectedType: SearchPostsFlag
+  setSelectedType: (type: SearchPostsFlag) => void
+}
+
+const ArtistsPostSectionButtonArea: FunctionComponent<
+  ArtistsPostSectionButtonAreaProps
+> = ({ selectedType, setSelectedType }) => {
+  const buttonTypes = [
+    SearchPostsFlag.All,
+    SearchPostsFlag.OnlyPhotos,
+    SearchPostsFlag.OnlyPosts,
+  ]
 
   return (
     <ArtistsPostSectionButtonAreaWrapper>
-      <LeftContainer>
-        <Menu>
-          <MenuButton
-            _expanded={{ backgroundColor: theme.colors.background1 }}
-            _hover={{ backgroundColor: theme.colors.background1 }}
-            as={Button}
-            backgroundColor={theme.colors.background1}
-            borderColor={theme.colors.secondary}
-            borderRadius={theme.radius.small}
-            borderWidth={1}
-            color={theme.colors.secondary}
-            fontSize={theme.sizes.small}
-            fontWeight={500}
-            paddingBottom={theme.space.xxsmall}
-            paddingTop={theme.space.xxsmall}
-            rightIcon={<ChevronDownIcon fontSize={theme.space.large} />}
-          >
-            {currentPostSelectionOption}
-          </MenuButton>
-          <MenuList
-            backgroundColor={theme.colors.background1}
-            borderColor={theme.colors.background2}
-          >
-            {postSelectionOptions
-              .filter((x) => x !== currentPostSelectionOption)
-              .map((option) => (
-                <MenuItem
-                  key={option}
-                  _hover={{ backgroundColor: theme.colors.background2 }}
-                  backgroundColor={theme.colors.background1}
-                  color={theme.colors.secondary}
-                  onClick={() => {
-                    setCurrentPostSelectionOption(option)
-                  }}
-                >
-                  {option}
-                </MenuItem>
-              ))}
-          </MenuList>
-        </Menu>
-      </LeftContainer>
       <TypeButtonsContainer>
         {buttonTypes.map((buttonType) => (
           <TypeButton
@@ -77,7 +52,7 @@ const ArtistsPostSectionButtonArea = () => {
                   : theme.colors.secondary
               }
             >
-              {buttonType}
+              {mapSearchPostsFlagToString(buttonType)}
             </Paragraph>
           </TypeButton>
         ))}
