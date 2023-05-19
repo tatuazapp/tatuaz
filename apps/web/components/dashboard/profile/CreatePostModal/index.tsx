@@ -38,7 +38,7 @@ type CreatePostModalProps = {
 type PostFormValues = {
   description: string
   photos: File[]
-  categories: {
+  categories?: {
     value: number
     label: string
   }[]
@@ -151,7 +151,8 @@ const CreatePostModal: FunctionComponent<CreatePostModalProps> = ({
           description: data.description,
           photoInfoDtos: resUpload.value.photos.map((photoId) => ({
             photoId: photoId,
-            categoryIds: data.categories.map((category) => category.value),
+            categoryIds:
+              data.categories?.map((category) => category.value) ?? [],
             photoFileName: `${Math.random().toString(36).substring(2, 15)}`,
           })),
         }
@@ -260,7 +261,6 @@ const CreatePostModal: FunctionComponent<CreatePostModalProps> = ({
                     </FormErrorMessage>
                   </FormControl>
                 )}
-                rules={{ required: "Please enter at least one food group." }}
               />
             )}
           </VStack>
