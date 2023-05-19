@@ -10,6 +10,7 @@ import ArtistPost from "../../ArtistsPostSection/ArtistPost"
 type UserPostsSectionProps = {
   currentUser: string
   isEnabled: boolean
+  isCurrentUser: boolean
 }
 
 const POST_PAGE_SIZE = 3
@@ -17,6 +18,7 @@ const POST_PAGE_SIZE = 3
 const UserPostsSection: FunctionComponent<UserPostsSectionProps> = ({
   currentUser,
   isEnabled,
+  isCurrentUser,
 }) => {
   const {
     data: userPosts,
@@ -60,7 +62,7 @@ const UserPostsSection: FunctionComponent<UserPostsSectionProps> = ({
       }
       next={fetchNextPage}
     >
-      <VStack gap={8} mt={12} width="100%">
+      <VStack gap={8} mt={isCurrentUser ? 12 : 0} width="100%">
         {posts?.map((post) => (
           <ArtistPost
             key={post.id}

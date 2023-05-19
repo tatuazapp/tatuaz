@@ -87,10 +87,12 @@ const BackgroundPhotoSection: FunctionComponent<
                 text={
                   user?.bio
                     ? user.bio
-                    : intl.formatMessage({
+                    : editable
+                    ? intl.formatMessage({
                         defaultMessage: "Kliknij, aby dodać opis",
                         id: "7Fsz7M",
                       })
+                    : ""
                 }
               />
             )}

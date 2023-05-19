@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react"
 import { useMutation } from "@tanstack/react-query"
 import { motion } from "framer-motion"
+import Link from "next/link"
 import { FunctionComponent, useState } from "react"
 import { FormattedMessage } from "react-intl"
 import { PhotoProvider, PhotoView } from "react-photo-view"
@@ -130,7 +131,13 @@ const ArtistPost: FunctionComponent<ArtistPostProps> = ({
                   : ""
               }
             />
-            <UserName>{author.name}</UserName>
+            <Link
+              href={`/dashboard/profile?${new URLSearchParams({
+                profileName: author.name ?? "",
+              }).toString()}`}
+            >
+              <UserName>{author.name}</UserName>
+            </Link>
           </ArtistPostUserWrapper>
           <ArtistPostDescription>{description}</ArtistPostDescription>
           <ArtistPostLikesAndCommentsWrapper>

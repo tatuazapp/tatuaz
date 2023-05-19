@@ -42,7 +42,9 @@ const UserProfile: NextPage = () => {
 
   const user = data?.value
 
-  const currentUser = me?.username ?? user?.username ?? ""
+  const currentUser = user?.username ?? me?.username ?? ""
+
+  const isCurrentUser = !profileName
 
   return (
     <DashboardLayout>
@@ -54,13 +56,13 @@ const UserProfile: NextPage = () => {
         >
           <DashboardUserProfileSection>
             <BackgroundPhotoSection
-              editable={!profileName}
+              editable={isCurrentUser}
               user={profileName ? user : me}
             />
-
-            <CreatePostSection />
+            {!profileName && <CreatePostSection />}{" "}
             <UserPostsSection
               currentUser={currentUser}
+              isCurrentUser={!profileName}
               isEnabled={!!profileName || !!me?.username}
             />
           </DashboardUserProfileSection>
