@@ -105,7 +105,8 @@ const ArtistPost: FunctionComponent<ArtistPostProps> = ({
                 <PhotoView
                   key={photoUri}
                   src={formatCDNImageUrl(photoUri, {
-                    maxWidth: 1024,
+                    maxWidth: 2048,
+                    minWidth: 1024,
                   })}
                 >
                   <img
