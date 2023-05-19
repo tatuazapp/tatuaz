@@ -6,4 +6,6 @@ export const queryKeys = {
   getRegisteredStats: "getRegisteredStats",
   getUser: "getUser",
   getTopArtists: "getTopArtists",
+  getUserPosts: "getUserPosts",
+  getPostFeed: "getPostFeed",
 } as const

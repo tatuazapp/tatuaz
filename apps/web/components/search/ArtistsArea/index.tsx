@@ -1,13 +1,13 @@
 import { SkeletonText } from "@chakra-ui/react"
 import { FunctionComponent } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
-import { BriefArtistDto } from "../../../api/tatuazApi"
+import { BriefUserDto } from "../../../api/tatuazApi"
 import formatCDNImageUrl from "../../../utils/format/formatCDNImageUrl"
 import ArtistCard from "./ArtistCard"
 import { ArtistCardAreaWrapper } from "./styles"
 
 type ArtistsAreaProps = {
-  items: BriefArtistDto[]
+  items: BriefUserDto[]
   isLoading?: boolean
   fetchNextPage: () => void
   hasNextPage?: boolean

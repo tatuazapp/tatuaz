@@ -1,4 +1,3 @@
-import { useAuth0 } from "@auth0/auth0-react"
 import {
   Modal,
   ModalOverlay,
@@ -13,21 +12,36 @@ import {
   Textarea,
   VStack,
   Box,
+  FormLabel,
+  FormErrorMessage,
 } from "@chakra-ui/react"
 import { X } from "@styled-icons/bootstrap/X"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { Props, Select } from "chakra-react-select"
 import Image from "next/image"
-import { FunctionComponent, useEffect, useMemo, useState } from "react"
-import { useForm } from "react-hook-form"
+import { FunctionComponent, useMemo, useState } from "react"
+import { Controller, useForm } from "react-hook-form"
 import { FormattedMessage, useIntl } from "react-intl"
 import { api } from "../../../../api/apiClient"
+import useMe from "../../../../api/hooks/useMe"
+import { queryKeys } from "../../../../api/queryKeys"
 import { FinalizePostDto } from "../../../../api/tatuazApi"
+import { queryClient } from "../../../../pages/_app"
 import Dropzone from "../../../common/Dropzone"
 import { UploadedPhotosWrapper } from "./styles"
 
 type CreatePostModalProps = {
   isOpen: boolean
   onClose: () => void
+}
+
+type PostFormValues = {
+  description: string
+  photos: File[]
+  categories: {
+    value: number
+    label: string
+  }[]
 }
 
 const CreatePostModal: FunctionComponent<CreatePostModalProps> = ({
@@ -37,32 +51,16 @@ const CreatePostModal: FunctionComponent<CreatePostModalProps> = ({
   const intl = useIntl()
   const toast = useToast()
   const {
+    control,
     register,
     handleSubmit,
-    setError,
-    formState: { isSubmitting },
-  } = useForm({
+    formState: { errors },
+  } = useForm<PostFormValues>({
     defaultValues: {},
   })
 
+  const me = useMe()
   const [uploadedImages, setUploadedImages] = useState<File[] | null>(null)
-  const [postId, setPostId] = useState<string>("")
-  const [accessToken, setAccessToken] = useState<string>("")
-
-  const { getAccessTokenSilently } = useAuth0()
-  console.log("accessToken", accessToken)
-
-  useEffect(() => {
-    const getAccessToken = async () => {
-      try {
-        const accessToken = await getAccessTokenSilently()
-        setAccessToken(accessToken)
-      } catch (e) {
-        console.log(e.message)
-      }
-    }
-    getAccessToken()
-  }, [getAccessTokenSilently])
 
   const uploadedImagesAsBase64: string[] = useMemo(() => {
     if (!uploadedImages) {
@@ -86,19 +84,13 @@ const CreatePostModal: FunctionComponent<CreatePostModalProps> = ({
     )
   }
 
-  console.log("uploadedImages", uploadedImages)
-
   const uploadPostPhotosMutation = useMutation({
     mutationFn: (data: { Photos?: File[] }) => api.post.uploadPostPhotos(data),
-    onSuccess(data, variables, context) {
-      setPostId(data.value.initialPostId)
-      console.log(data)
-    },
     onError: () => {
       toast({
         title: intl.formatMessage({
-          defaultMessage: "Wystąpił błąd podczas zmiany avataru",
-          id: "24ACHW",
+          defaultMessage: "Wystąpił błąd podczas wgrywania zdjęć",
+          id: "hPM1O9",
         }),
         status: "error",
         position: "top",
@@ -107,13 +99,16 @@ const CreatePostModal: FunctionComponent<CreatePostModalProps> = ({
   })
 
   const finalizePostMutation = useMutation({
-    // mutationFn: (data: File[]) => api.post.finalizePost({ Photos: data }),
     mutationFn: (data: FinalizePostDto) => api.post.finalizePost(data),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.getUserPosts, me?.username ?? ""],
+      }),
     onError: () => {
       toast({
         title: intl.formatMessage({
-          defaultMessage: "Wystąpił błąd podczas zmiany avataru",
-          id: "24ACHW",
+          defaultMessage: "Wystąpił błąd podczas tworzenia posta",
+          id: "eSTVQL",
         }),
         status: "error",
         position: "top",
@@ -121,83 +116,56 @@ const CreatePostModal: FunctionComponent<CreatePostModalProps> = ({
     },
   })
 
-  const getCategoriesMutation = useMutation({
-    mutationFn: () =>
+  const { data: photoCategories } = useQuery(
+    [queryKeys.photo.listCategories],
+    () =>
       api.photo.listCategories({
         pageNumber: 1,
-        pageSize: 100,
+        pageSize: 100, // pagination is not necessary here
       }),
-    onSuccess: (data) => {
-      console.log(data)
-    },
-  })
+    {
+      refetchOnWindowFocus: false,
+    }
+  )
+
+  const categoriesOptions = useMemo(
+    () =>
+      photoCategories?.value?.data.map((category) => ({
+        label: category.title,
+        value: category.id,
+      })) satisfies Props["options"],
+    [photoCategories]
+  )
 
   const onSubmit = useMemo(
     () =>
-      handleSubmit(async () => {
-        if (!uploadedImages) {
-          setError("backgroundPhoto", {
-            message: intl.formatMessage({
-              defaultMessage: "Avatar jest wymagany",
-              id: "uwVZTo",
-            }),
-          })
-          return
+      handleSubmit(async (data) => {
+        const resUpload = await uploadPostPhotosMutation.mutateAsync({
+          Photos: uploadedImages ?? [],
+        })
+
+        const initialPostId = resUpload.value.initialPostId
+
+        const finalizePost: FinalizePostDto = {
+          initialPostId,
+          description: data.description,
+          photoInfoDtos: resUpload.value.photos.map((photoId) => ({
+            photoId: photoId,
+            categoryIds: data.categories.map((category) => category.value),
+            photoFileName: `${Math.random().toString(36).substring(2, 15)}`,
+          })),
         }
 
-        console.log("uploadedImages", uploadedImages)
-
-        const formData = new FormData()
-        for (let i = 0; i < uploadedImages.length; i++) {
-          formData.append("Photos", uploadedImages[i])
-        }
-
-        const response = await fetch(
-          "https://api.tatuaz.app/Post/UploadPostPhotos",
-          {
-            method: "POST",
-            body: formData,
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization:
-                "Bearer " +
-                "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ing0dnBVTjRyX1hHOFMxbE0xQ2RrUiJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiIwMW5pa29kZW13QGdtYWlsLmNvbSIsImlzcyI6Imh0dHBzOi8vdGF0dWF6LWFwcC5ldS5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTI3NDM0OTUwNjU2OTQ5OTY3NDEiLCJhdWQiOlsiaHR0cHM6Ly90YXR1YXotYXBwLmV1LmF1dGgwLmNvbS9hcGkvdjIvIiwiaHR0cHM6Ly90YXR1YXotYXBwLmV1LmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE2ODQxNzc0NjcsImV4cCI6MTY4Njc2OTQ2NywiYXpwIjoiMU04bks3azdWQUs2N0d6dW1qS3NhMndndVpzZXlhZnkiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIn0.E3yp5j0oal43syNeHM2Nl-QPmhN3SK55yB0v07imN9WXa0caXXoN94Q1FBBbUhFissZMDzi1fSuIsNHowvmsy2K3inGQx7O0aUTFPsO7y_Pea4FaejRFaxtEUzeCZd9pPRMhIacoYLLMt6Lcm-VpbzbdhWrCmfoMQDzX9U58dFhw-Fxq2njlF-c3DjM3WlxlFeohWJ8aIPVMk7KzPgifYYFn2aPCkEh8k9FQ65LKv6fNGESOqmn4PHOA7msILk0GQcfMGr1JCb7XpRsgVhn-FN0pfRPfYz1xWpiIuoIDVwIHwdUkQrXhvSiMNsYR_NZjRSa3WynPn8LvkMXFB9qPIg",
-            },
-          }
-        )
-
-        // console.log("response", response)
-
-        // await uploadPostPhotosMutation.mutateAsync({
-        //   Photos: uploadedImages,
-        // })
-
-        // const finalizePost: FinalizePostDto = {
-        //   initialPostId: postId,
-        //   description: "test",
-        //   photoInfoDtos: [
-        //     {
-        //       photoFileName: "test",
-        //       photoId: "test",
-        //       categoryIds: [0],
-        //     },
-        //   ],
-        // }
-
-        // await finalizePostMutation.mutateAsync(finalizePost)
+        await finalizePostMutation.mutateAsync(finalizePost)
 
         onClose()
       }),
     [
       handleSubmit,
-      intl,
-      onClose,
-      setError,
       uploadedImages,
       uploadPostPhotosMutation,
-      postId,
-      accessToken,
-      // finalizePostMutation,
+      finalizePostMutation,
+      onClose,
     ]
   )
 
@@ -211,10 +179,19 @@ const CreatePostModal: FunctionComponent<CreatePostModalProps> = ({
         <ModalCloseButton />
         <ModalBody>
           <VStack align="stretch" spacing={4}>
-            <FormControl>
+            <FormControl isInvalid={!!errors.description}>
               <Textarea
-                placeholder="Co tam napiszesz?"
-                {...register("post")}
+                id="description"
+                placeholder={intl.formatMessage({
+                  defaultMessage: "Co tam napiszesz?",
+                  id: "3b3RDG",
+                })}
+                {...register("description", {
+                  required: intl.formatMessage({
+                    defaultMessage: "Treść posta jest wymagana",
+                    id: "FKsikb",
+                  }),
+                })}
                 maxLength={4096}
               />
             </FormControl>
@@ -229,7 +206,7 @@ const CreatePostModal: FunctionComponent<CreatePostModalProps> = ({
                     height={0}
                     sizes="100vw"
                     src={uploadedImageAsBase64}
-                    style={{ width: "100%", height: "auto" }} // optional
+                    style={{ width: "100%", height: "auto" }}
                     width={0}
                   />
                   <Button
@@ -249,6 +226,43 @@ const CreatePostModal: FunctionComponent<CreatePostModalProps> = ({
             {uploadedImagesAsBase64.length < 5 && (
               <Dropzone onFileAccepted={onFileAccepted} />
             )}
+            {uploadedImagesAsBase64.length > 0 && (
+              <Controller
+                control={control}
+                name="categories"
+                render={({
+                  field: { onChange, onBlur, value, name, ref },
+                  fieldState: { error },
+                }) => (
+                  <FormControl id="food" isInvalid={!!error} py={4}>
+                    <FormLabel>
+                      <FormattedMessage
+                        defaultMessage="Kategorie zdjęć"
+                        id="qV9U4T"
+                      />
+                    </FormLabel>
+                    <Select
+                      ref={ref}
+                      isMulti
+                      name={name}
+                      options={categoriesOptions ?? []}
+                      placeholder={intl.formatMessage({
+                        defaultMessage: "Wybierz kategorie zdjęć",
+                        id: "Gc10Un",
+                      })}
+                      value={value}
+                      onBlur={onBlur}
+                      onChange={onChange}
+                    />
+
+                    <FormErrorMessage>
+                      {error && error.message}
+                    </FormErrorMessage>
+                  </FormControl>
+                )}
+                rules={{ required: "Please enter at least one food group." }}
+              />
+            )}
           </VStack>
         </ModalBody>
 
@@ -258,7 +272,10 @@ const CreatePostModal: FunctionComponent<CreatePostModalProps> = ({
           </Button>
           <Button
             colorScheme="blue"
-            isLoading={isSubmitting}
+            isLoading={
+              uploadPostPhotosMutation.isLoading ||
+              finalizePostMutation.isLoading
+            }
             onClick={onSubmit}
           >
             <FormattedMessage defaultMessage="Zapisz" id="Jt6oMg" />

@@ -11,11 +11,14 @@ export const BackgroundAndAvatarContainer = styled.div`
 const DESKTOP_BACKGROUND_HEIGHT = 156
 const MOBILE_BACKGROUND_HEIGHT = 136
 
+// Yeah, this should be controlled by some wrapping component but whatever, no time for that now
+export const USER_CONTENT_WIDTH = 783
+
 export const BackgroundPhotoContainer = styled.div<{
   imageUrl?: string | null
   isEditable?: boolean
 }>`
-  width: ${rem(783)};
+  width: ${rem(USER_CONTENT_WIDTH)};
   height: ${rem(DESKTOP_BACKGROUND_HEIGHT)};
 
   background: rgba(100, 100, 100, 0.2);

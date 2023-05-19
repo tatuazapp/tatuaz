@@ -21,8 +21,14 @@ export const LeftContainer = styled.div`
 
 export const TypeButtonsContainer = styled.div`
   display: flex;
+  gap: ${({ theme }) => theme.sizes.large};
   justify-content: space-around;
   margin-top: ${({ theme }) => theme.sizes.xxsmall};
+
+  ${down("md")} {
+    gap: ${({ theme }) => theme.sizes.small};
+  }
+
   ${down("xs")} {
     width: 100%;
   }
@@ -31,7 +37,6 @@ export const TypeButtonsContainer = styled.div`
 export const TypeButton = styled.button<{
   isSelected: boolean
 }>`
-  margin-left: ${({ theme }) => theme.sizes.xlarge};
   padding-top: ${({ theme }) => theme.sizes.xxsmall};
   padding-right: ${({ theme }) => theme.sizes.large};
   padding-bottom: ${({ theme }) => theme.sizes.xxsmall};

@@ -1,7 +1,7 @@
 import { Api } from "./tatuazApi"
 
 export const api = new Api({
-  baseUrl: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   securityWorker: async (securityData: (() => Promise<string>) | null) => {
     if (!securityData) {
       return undefined

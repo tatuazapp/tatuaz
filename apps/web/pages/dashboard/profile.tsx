@@ -12,6 +12,7 @@ import {
 import DashboardLayout from "../../components/dashboard/DashboardLayout"
 import BackgroundPhotoSection from "../../components/dashboard/profile/BackgroundPhotoSection"
 import CreatePostSection from "../../components/dashboard/profile/CreatePostSection"
+import UserPostsSection from "../../components/dashboard/profile/UserPostsSection"
 import TopArtistsSection from "../../components/dashboard/TopArtistsSection"
 
 export type UserProfile = {
@@ -41,6 +42,8 @@ const UserProfile: NextPage = () => {
 
   const user = data?.value
 
+  const currentUser = me?.username ?? user?.username ?? ""
+
   return (
     <DashboardLayout>
       <DashboardContentWrapper>
@@ -56,9 +59,12 @@ const UserProfile: NextPage = () => {
             />
 
             <CreatePostSection />
+            <UserPostsSection
+              currentUser={currentUser}
+              isEnabled={!!profileName || !!me?.username}
+            />
           </DashboardUserProfileSection>
         </SkeletonText>
-
         <TopArtistsSection />
       </DashboardContentWrapper>
     </DashboardLayout>

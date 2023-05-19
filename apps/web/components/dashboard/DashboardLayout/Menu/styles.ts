@@ -29,7 +29,7 @@ export const MenuWrapper = styled.div`
   }
 
   ${up("xxxl")} {
-    position: absolute;
+    position: fixed;
     left: 0;
   }
 `

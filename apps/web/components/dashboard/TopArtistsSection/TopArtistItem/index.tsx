@@ -26,7 +26,10 @@ const TopArtistsItem: FunctionComponent<TopArtistsItemProps> = ({
     <TopArtistsSectionArtistListItem>
       <ArtistWrapper>
         <ArtistPhoto
-          photoUrl={formatCDNImageUrl(photoUri ?? "", { minWidth: 64 })}
+          photoUrl={formatCDNImageUrl(photoUri ?? "", {
+            minWidth: 64,
+            maxWidth: 256,
+          })}
         />
         <div>
           <Paragraph level={2}>{name}</Paragraph>
