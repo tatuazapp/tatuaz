@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Tatuaz.Dashboard.Queue.Contracts.Statistics;
 using Tatuaz.Dashboard.Queue.Producers.Identity;
 using Tatuaz.Dashboard.Queue.Producers.Photo;
 using Tatuaz.Dashboard.Queue.Producers.Post;
@@ -31,6 +30,7 @@ public static class DashboardQueueExtensions
         services.AddScoped<SearchUsersProducer>();
         services.AddScoped<LikePostProducer>();
         services.AddScoped<GetUserPostsProducer>();
+        services.AddScoped<GetPostFeedProducer>();
 
         return services;
     }

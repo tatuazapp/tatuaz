@@ -236,6 +236,13 @@
             <param name="getUserPostsDto"></param>
             <returns></returns>
         </member>
+        <member name="M:Tatuaz.Gateway.Controllers.PostController.GetPostFeed(Tatuaz.Shared.Domain.Dtos.Dtos.Post.GetPostFeedDto)">
+            <summary>
+            Get post feed
+            </summary>
+            <param name="getPostFeedDto"></param>
+            <returns></returns>
+        </member>
         <member name="T:Tatuaz.Gateway.Controllers.StatisticsController">
             <summary>
             Controller for dashboard

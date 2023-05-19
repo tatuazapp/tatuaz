@@ -3,5 +3,4 @@ using Tatuaz.Shared.Domain.Dtos.Dtos.Post;
 
 namespace Tatuaz.Dashboard.Queue.Contracts.Post;
 
-public record SearchPosts(string Query, int PageNumber, int PageSize, bool Posts, bool Photos)
-    : IDto;
+public record SearchPosts(string Query, int PageNumber, int PageSize, bool Posts, bool Photos);

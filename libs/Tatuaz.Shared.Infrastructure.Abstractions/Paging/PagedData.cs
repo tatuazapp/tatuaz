@@ -19,7 +19,7 @@ public class PagedData<T>
         TotalCount = totalCount;
     }
 
-    public IEnumerable<T> Data { get; }
+    public IEnumerable<T> Data { get; set; }
     public int PageNumber { get; }
     public int PageSize { get; }
     public int TotalPages { get; }
