@@ -22,6 +22,6 @@ public class PagedData<T>
     public IEnumerable<T> Data { get; set; }
     public int PageNumber { get; }
     public int PageSize { get; }
-    public int TotalPages { get; }
-    public int TotalCount { get; }
+    public int TotalPages { get; set; }
+    public int TotalCount { get; set; }
 }
