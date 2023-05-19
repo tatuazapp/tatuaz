@@ -59,7 +59,9 @@ const EditBioModal: FunctionComponent<EditBioModalProps> = ({
   const mutation = useMutation({
     mutationFn: (data: SetBioDto) => api.identity.setBio(data),
     onError: (res: ErrorApiResponse) => {
-      const handler = new ApiErrorHandler<SetBioDtoErrorCode>(res.error)
+      if (!res.response) return
+
+      const handler = new ApiErrorHandler<SetBioDtoErrorCode>(res.response.data)
 
       handler
         .handle("BioTooLong", () => {

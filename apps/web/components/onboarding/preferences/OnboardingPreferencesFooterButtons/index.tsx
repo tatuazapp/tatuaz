@@ -32,7 +32,9 @@ const OnboardingPreferencesFooterButtons: FunctionComponent<
   const mutation = useMutation({
     mutationFn: (data: SignUpDto) => api.identity.signUp(data),
     onError: (res: ErrorApiResponse) => {
-      const handler = new ApiErrorHandler<SignUpDtoErrorCode>(res.error)
+      if (!res.response) return
+
+      const handler = new ApiErrorHandler<SignUpDtoErrorCode>(res.response.data)
 
       handler
         .handle("UsernameAlreadyInUse", () => {

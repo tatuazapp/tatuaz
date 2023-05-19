@@ -5,12 +5,10 @@ import { api } from "../apiClient"
 import { queryKeys } from "../queryKeys"
 
 type PoorMansError = {
-  status: number
-  error: {
-    message: string
-    stack: string
+  message: string
+  response: {
+    status: number
   }
-  ok: boolean
 }
 
 const useMe = () => {
@@ -20,12 +18,12 @@ const useMe = () => {
 
   const { data } = useQuery([queryKeys.whoAmI], api.identity.me, {
     onError: async (error: PoorMansError) => {
-      if (error.status === 401) {
+      if (error.response.status === 401) {
         api.setSecurityData(null)
       }
 
       // User data has not been saved to our database yet
-      if (error.status === 403) {
+      if (error.response.status === 403) {
         router.push("/onboarding")
       }
     },

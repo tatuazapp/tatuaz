@@ -41,6 +41,7 @@
     "@styled-icons/octicons": "^10.47.0",
     "@swc/helpers": "0.5.1",
     "@tanstack/react-query": "4.14.6",
+    "axios": "1.4.0",
     "chakra-react-select": "4.6.0",
     "core-js": "3.6.5",
     "dayjs": "1.11.7",

@@ -1,8 +1,7 @@
+import { AxiosError } from "axios"
 import { ErrorResponse } from "../api/tatuazApi"
 
-export type ErrorApiResponse = {
-  error: ErrorResponse
-}
+export type ErrorApiResponse = AxiosError<ErrorResponse>
 
 export type SignUpDtoErrorCode =
   | "UsernameNull"
