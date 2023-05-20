@@ -6,9 +6,11 @@ import { down } from "styled-breakpoints"
 import styled from "styled-components"
 import { USER_CONTENT_WIDTH } from "../../profile/BackgroundAndAvatarContainer/styles"
 
+export const USER_POST_WIDTH_LG = USER_CONTENT_WIDTH - 32
+
 export const ArtistPostWrapper = styled.div`
   width: 100%;
-  max-width: ${USER_CONTENT_WIDTH - 32}px;
+  max-width: ${USER_POST_WIDTH_LG}px;
   background-color: ${({ theme }) => theme.colors.background2};
   border-radius: ${({ theme }) => theme.radius.medium};
 `

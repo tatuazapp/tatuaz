@@ -1,4 +1,4 @@
-import { Center, Spinner, VStack } from "@chakra-ui/react"
+import { Center, SkeletonText, Spinner, VStack } from "@chakra-ui/react"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
@@ -7,6 +7,7 @@ import { api } from "../../../api/apiClient"
 import { queryKeys } from "../../../api/queryKeys"
 import { SearchPostsFlag } from "../../../api/tatuazApi"
 import ArtistPost from "./ArtistPost"
+import { USER_POST_WIDTH_LG } from "./ArtistPost/styles"
 import ArtistsPostSectionButtonArea from "./ArtistPostSectionButtonsArea"
 import { ArtistPostSectionWrapper } from "./styles"
 
@@ -21,6 +22,7 @@ const ArtistsPostSection = () => {
     data: feedPosts,
     fetchNextPage,
     hasNextPage,
+    isLoading,
   } = useInfiniteQuery(
     [queryKeys.getPostFeed, selectedType],
     ({ pageParam = 1 }) =>
@@ -45,43 +47,50 @@ const ArtistsPostSection = () => {
         selectedType={selectedType}
         setSelectedType={setSelectedType}
       />
-      <InfiniteScroll
-        dataLength={posts?.length ?? 0}
-        endMessage={
-          <Center mb={10} mt={10}>
-            <FormattedMessage
-              defaultMessage="Ojej, nie ma już więcej postów 😥"
-              id="wUsjqT"
-            />
-          </Center>
-        }
-        hasMore={!!hasNextPage}
-        loader={
-          <Center mb={10} mt={10}>
-            <Spinner />
-          </Center>
-        }
-        next={fetchNextPage}
-      >
-        <VStack gap={8} mt={12} width="100%">
-          {posts?.map((post) => (
-            <ArtistPost
-              key={post.id}
-              author={{
-                name: post.authorName,
-                photoUri: post.authorPhotoUri ?? "",
-              }}
-              commentsNumber={post.commentsCount}
-              createdAt={post.createdAt as unknown as string}
-              description={post.description}
-              id={post.id}
-              isLiked={post.isLikedByCurrentUser}
-              likesNumber={post.likesCount}
-              photoUris={post.photoUris}
-            />
-          ))}
-        </VStack>
-      </InfiniteScroll>
+
+      <SkeletonText isLoaded={!isLoading} noOfLines={5} skeletonHeight={10}>
+        <InfiniteScroll
+          dataLength={posts?.length ?? 0}
+          endMessage={
+            <Center mb={10} mt={10}>
+              <FormattedMessage
+                defaultMessage="Ojej, nie ma już więcej postów 😥"
+                id="wUsjqT"
+              />
+            </Center>
+          }
+          hasMore={!!hasNextPage}
+          loader={
+            <Center mb={10} mt={10}>
+              <Spinner />
+            </Center>
+          }
+          next={fetchNextPage}
+        >
+          <VStack
+            gap={8}
+            mt={12}
+            width={{ base: "100%", lg: USER_POST_WIDTH_LG }}
+          >
+            {posts?.map((post) => (
+              <ArtistPost
+                key={post.id}
+                author={{
+                  name: post.authorName,
+                  photoUri: post.authorPhotoUri ?? "",
+                }}
+                commentsNumber={post.commentsCount}
+                createdAt={post.createdAt as unknown as string}
+                description={post.description}
+                id={post.id}
+                isLiked={post.isLikedByCurrentUser}
+                likesNumber={post.likesCount}
+                photoUris={post.photoUris}
+              />
+            ))}
+          </VStack>
+        </InfiniteScroll>
+      </SkeletonText>
     </ArtistPostSectionWrapper>
   )
 }
