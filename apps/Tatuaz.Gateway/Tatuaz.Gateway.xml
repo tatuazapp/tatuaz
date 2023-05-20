@@ -102,6 +102,20 @@
             Optional theme added via custom css
             </summary>
         </member>
+        <member name="T:Tatuaz.Gateway.Controllers.CommentController">
+            <summary>
+            Controller for comments under posts
+            </summary>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.CommentController.#ctor(MediatR.IMediator)">
+            <inheritdoc />
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.CommentController.SubmitComment(Tatuaz.Shared.Domain.Dtos.Dtos.Comment.SubmitCommentDto)">
+            <summary>
+            Submit comments
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Tatuaz.Gateway.Controllers.IdentityController">
             <summary>
             Controller for user related operations

@@ -18,6 +18,7 @@ public class Comment : AuditableEntity<HistComment, Guid>, IEntity
     public TatuazUser User { get; set; } = default!;
     public string Content { get; set; } = default!;
     public ICollection<Comment> ChildComments { get; set; } = default!;
+    public ICollection<CommentLike> Likes { get; set; } = default!;
 
     public override HistEntity<Guid> ToHistEntity(IClock clock, HistState state)
     {

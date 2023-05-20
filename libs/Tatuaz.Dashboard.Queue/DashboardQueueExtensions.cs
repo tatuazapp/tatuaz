@@ -1,8 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Tatuaz.Dashboard.Queue.Contracts.Statistics;
+using Tatuaz.Dashboard.Queue.Producers.Comment;
 using Tatuaz.Dashboard.Queue.Producers.Identity;
 using Tatuaz.Dashboard.Queue.Producers.Photo;
 using Tatuaz.Dashboard.Queue.Producers.Post;
+using Tatuaz.Dashboard.Queue.Producers.Statistics;
 
 namespace Tatuaz.Dashboard.Queue;
 
@@ -23,6 +25,7 @@ public static class DashboardQueueExtensions
         services.AddScoped<FinalizePostProducer>();
         services.AddScoped<GetRegisteredStatsProducer>();
         services.AddScoped<UploadPostPhotosProducer>();
+        services.AddScoped<SubmitCommentProducer>();
 
         return services;
     }

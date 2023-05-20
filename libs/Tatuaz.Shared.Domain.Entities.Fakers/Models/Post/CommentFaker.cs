@@ -25,5 +25,6 @@ public sealed class CommentFaker : Faker<Comment>, IEntityFaker
         RuleFor(x => x.UserId, f => f.Random.Guid().ToString());
         RuleFor(x => x.User, f => new TatuazUserFaker().Generate());
         RuleFor(x => x.Content, f => f.Lorem.Paragraph());
+        RuleFor(x => x.Likes, _ => new List<Entities.Models.Post.CommentLike>());
     }
 }
