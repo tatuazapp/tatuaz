@@ -1,6 +1,6 @@
 namespace Tatuaz.Shared.Pipeline.Factories.ErrorCodes.Comment;
 
-public class SubmitCommentErrorCodes
+public static class SubmitCommentErrorCodes
 {
     public const string ContentIsNull = "ContentIsNull";
     public const string ContentIsTooLong = "ContentIsTooLong";

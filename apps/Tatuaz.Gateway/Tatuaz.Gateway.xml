@@ -114,6 +114,14 @@
             <summary>
             Submit comments
             </summary>
+            <param name="submitCommentDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.CommentController.LikePost(Tatuaz.Shared.Domain.Dtos.Dtos.Comment.LikeCommentDto)">
+            <summary>
+            Like comment
+            </summary>
+            <param name="likeCommentDto"></param>
             <returns></returns>
         </member>
         <member name="T:Tatuaz.Gateway.Controllers.IdentityController">
