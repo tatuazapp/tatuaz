@@ -56,30 +56,26 @@ public class GetPostFeedConsumer : TatuazConsumerBase<GetPostFeed, PagedData<Bri
 
         var sql =
             @"
-SELECT p.""id""
-FROM ""post"".""posts"" p
-";
-        switch (withPhotos)
-        {
-            case true when !withoutPhotos:
-                sql +=
-                    @"
-INNER JOIN ""post"".""post_photos"" pp ON p.""id"" = pp.""post_id""
-";
-                break;
-            case false when withoutPhotos:
-                sql +=
-                    @"
-
-LEFT JOIN ""post"".""post_photos"" pp ON p.""id"" = pp.""post_id""
-WHERE pp.""post_id"" IS NULL
-";
-                break;
-        }
-
-        sql +=
-            @"
-ORDER BY CAST(p.""created_at"" AS DATE) DESC, random() DESC
+SELECT sub.""id""
+FROM (
+    SELECT DISTINCT p.""id"", p.""created_at""
+    FROM ""post"".""posts"" p
+    "
+            + (
+                withPhotos && !withoutPhotos
+                    ? @"
+    INNER JOIN ""post"".""post_photos"" pp ON p.""id"" = pp.""post_id"""
+                    : (
+                        !withPhotos && withoutPhotos
+                            ? @"
+    LEFT JOIN ""post"".""post_photos"" pp ON p.""id"" = pp.""post_id""
+    WHERE pp.""post_id"" IS NULL"
+                            : ""
+                    )
+            )
+            + @"
+) sub
+ORDER BY CAST(sub.""created_at"" AS DATE) DESC, random() DESC
 LIMIT (@pageSize)
 OFFSET (@pageSize * (@pageNumber - 1))
 ";
@@ -106,10 +102,26 @@ OFFSET (@pageSize * (@pageNumber - 1))
             .ToListAsync(context.CancellationToken)
             .ConfigureAwait(false);
 
-        var postsCount = await _dbContext
-            .Set<Shared.Domain.Entities.Models.Post.Post>()
-            .CountAsync(context.CancellationToken)
-            .ConfigureAwait(false);
+        long postsCount = 0;
+
+        if (withPhotos && !withoutPhotos)
+        {
+            postsCount = await _postRepository
+                .CountByPredicateAsync(x => x.Photos.Any())
+                .ConfigureAwait(false);
+        }
+        else if (!withPhotos && withoutPhotos)
+        {
+            postsCount = await _postRepository
+                .CountByPredicateAsync(x => !x.Photos.Any())
+                .ConfigureAwait(false);
+        }
+        else
+        {
+            postsCount = await _postRepository
+                .CountByPredicateAsync(x => true)
+                .ConfigureAwait(false);
+        }
 
         await _dbContext.Database.CommitTransactionAsync().ConfigureAwait(false);
 
@@ -119,7 +131,7 @@ OFFSET (@pageSize * (@pageNumber - 1))
         var results = await _postRepository
             .GetBySpecificationWithPagingAsync<BriefPostDto>(
                 spec,
-                new PagedParams(context.Message.PageNumber, context.Message.PageSize)
+                new PagedParams(1, context.Message.PageSize)
             )
             .ConfigureAwait(false);
 
@@ -142,7 +154,8 @@ OFFSET (@pageSize * (@pageNumber - 1))
             result.IsLikedByCurrentUser = likes.Any(x => x.PostId == result.Id);
         }
 
-        results.TotalCount = postsCount;
+        results.PageNumber = context.Message.PageNumber;
+        results.TotalCount = (int)postsCount;
         results.TotalPages = (int)Math.Ceiling((double)postsCount / context.Message.PageSize);
 
         return CommonResultFactory.Ok(results);
