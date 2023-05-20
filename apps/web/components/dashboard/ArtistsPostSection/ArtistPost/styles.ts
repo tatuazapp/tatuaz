@@ -4,6 +4,7 @@ import { Comment as CommentRegular } from "@styled-icons/boxicons-regular/Commen
 import { Comment as CommentSolid } from "@styled-icons/boxicons-solid/Comment"
 import { down } from "styled-breakpoints"
 import styled from "styled-components"
+import { rem } from "../../../../styles/utils"
 import { USER_CONTENT_WIDTH } from "../../profile/BackgroundAndAvatarContainer/styles"
 
 export const USER_POST_WIDTH_LG = USER_CONTENT_WIDTH - 32
@@ -158,4 +159,19 @@ export const ArtistPostDescription = styled.div`
   padding-top: ${({ theme }) => theme.space.xsmall};
   color: ${({ theme }) => theme.colors.secondary};
   text-align: justify;
+
+  .clamp-lines__button {
+    margin-top: ${({ theme }) => theme.space.xxsmall};
+    margin-left: auto;
+
+    font-size: ${rem(16)};
+    font-weight: 600;
+    color: ${({ theme }) => theme.colors.secondary};
+
+    transition: color 0.2s ease-in-out;
+
+    :hover {
+      color: ${({ theme }) => theme.colors.primary};
+    }
+  }
 `

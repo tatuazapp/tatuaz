@@ -12,7 +12,8 @@ import { useMutation } from "@tanstack/react-query"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { FunctionComponent, useState } from "react"
-import { FormattedMessage } from "react-intl"
+import ClampLines from "react-clamp-lines"
+import { FormattedMessage, useIntl } from "react-intl"
 import { PhotoProvider, PhotoView } from "react-photo-view"
 import { api } from "../../../../api/apiClient"
 import { queryKeys } from "../../../../api/queryKeys"
@@ -62,10 +63,12 @@ const ArtistPost: FunctionComponent<ArtistPostProps> = ({
   description,
   author,
   photoUris,
+  createdAt,
 }) => {
   const [isPostLiked, setIsPostLiked] = useState(isLiked)
   const [likedNumber, setLikedNumber] = useState(likesNumber)
   const [isCommentsSectionOpen, setIsCommentsSectionOpen] = useState(false)
+  const intl = useIntl()
 
   const likePostMutation = useMutation({
     mutationFn: () =>
@@ -140,7 +143,21 @@ const ArtistPost: FunctionComponent<ArtistPostProps> = ({
               <UserName>{author.name}</UserName>
             </Link>
           </ArtistPostUserWrapper>
-          <ArtistPostDescription>{description}</ArtistPostDescription>
+          <ArtistPostDescription>
+            <ClampLines
+              id={description + author.photoUri + createdAt}
+              lessText={intl.formatMessage({
+                defaultMessage: "Mniej",
+                id: "feQNnn",
+              })}
+              lines={4}
+              moreText={intl.formatMessage({
+                defaultMessage: "Pokaż więcej",
+                id: "UC6hZD",
+              })}
+              text={description}
+            />
+          </ArtistPostDescription>
           <ArtistPostLikesAndCommentsWrapper>
             <LikesContainer>
               <motion.button
