@@ -19,6 +19,9 @@ public static class LikeCommentErrorFactory
 
     public static TatuazError CommentAlreadyUnliked()
     {
-        return new TatuazError(LikeCommentErrorCodes.CommentAlreadyUnliked, "Comment already unliked");
+        return new TatuazError(
+            LikeCommentErrorCodes.CommentAlreadyUnliked,
+            "Comment already unliked"
+        );
     }
 }

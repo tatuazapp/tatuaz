@@ -32,6 +32,4 @@ public static class LikeCommentResultFactory
             HttpStatusCode.BadRequest
         );
     }
-
-
 }

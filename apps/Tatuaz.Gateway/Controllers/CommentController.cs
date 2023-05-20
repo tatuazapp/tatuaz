@@ -62,5 +62,4 @@ public class CommentController : TatuazControllerBase
             await Mediator.Send(new LikeCommentCommand(likeCommentDto)).ConfigureAwait(false)
         );
     }
-
 }

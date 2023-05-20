@@ -20,14 +20,27 @@ namespace Tatuaz.Dashboard.Queue.Consumers.Comment;
 public class LikeCommentConsumer : TatuazConsumerBase<LikeComment, EmptyDto>
 {
     private readonly IGenericRepository<
-        Shared.Domain.Entities.Models.Post.Comment, HistComment, Guid> _commentRepository;
+        Shared.Domain.Entities.Models.Post.Comment,
+        HistComment,
+        Guid
+    > _commentRepository;
 
     private readonly IGenericRepository<CommentLike, HistCommentLike, Guid> _commentLikeRepository;
     private readonly IUserContext _userContext;
     private readonly IUnitOfWork _unitOfWork;
 
-    public LikeCommentConsumer(ILogger<LikeCommentConsumer> logger, IUserContext userContext, IUnitOfWork unitOfWork,
-        IGenericRepository<CommentLike, HistCommentLike, Guid> commentLikeRepository, IGenericRepository<Shared.Domain.Entities.Models.Post.Comment, HistComment, Guid> commentRepository) : base(logger)
+    public LikeCommentConsumer(
+        ILogger<LikeCommentConsumer> logger,
+        IUserContext userContext,
+        IUnitOfWork unitOfWork,
+        IGenericRepository<CommentLike, HistCommentLike, Guid> commentLikeRepository,
+        IGenericRepository<
+            Shared.Domain.Entities.Models.Post.Comment,
+            HistComment,
+            Guid
+        > commentRepository
+    )
+        : base(logger)
     {
         _userContext = userContext;
         _unitOfWork = unitOfWork;
@@ -35,9 +48,13 @@ public class LikeCommentConsumer : TatuazConsumerBase<LikeComment, EmptyDto>
         _commentRepository = commentRepository;
     }
 
-    protected override async Task<TatuazResult<EmptyDto>> ConsumeMessage(ConsumeContext<LikeComment> context)
+    protected override async Task<TatuazResult<EmptyDto>> ConsumeMessage(
+        ConsumeContext<LikeComment> context
+    )
     {
-        var commentExists = await _commentRepository.ExistsByIdAsync(context.Message.CommentId).ConfigureAwait(false);
+        var commentExists = await _commentRepository
+            .ExistsByIdAsync(context.Message.CommentId)
+            .ConfigureAwait(false);
         if (!commentExists)
         {
             return LikeCommentResultFactory.CommentNotFound<EmptyDto>();
@@ -45,11 +62,13 @@ public class LikeCommentConsumer : TatuazConsumerBase<LikeComment, EmptyDto>
 
         if (context.Message.Like)
         {
-            var likeExists = await _commentLikeRepository.ExistsByPredicateAsync(
-                x =>
-                    x.CommentId == context.Message.CommentId
-                    && x.UserId == _userContext.RequiredCurrentUserEmail()
-            ).ConfigureAwait(false);
+            var likeExists = await _commentLikeRepository
+                .ExistsByPredicateAsync(
+                    x =>
+                        x.CommentId == context.Message.CommentId
+                        && x.UserId == _userContext.RequiredCurrentUserEmail()
+                )
+                .ConfigureAwait(false);
             if (likeExists)
             {
                 return LikeCommentResultFactory.CommentAlreadyLiked<EmptyDto>();
@@ -89,6 +108,5 @@ public class LikeCommentConsumer : TatuazConsumerBase<LikeComment, EmptyDto>
         }
 
         return CommonResultFactory.Ok(new EmptyDto());
-
     }
 }

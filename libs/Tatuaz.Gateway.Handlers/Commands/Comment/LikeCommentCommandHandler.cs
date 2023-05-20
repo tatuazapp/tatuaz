@@ -17,13 +17,19 @@ public class LikeCommentCommandHandler : IRequestHandler<LikeCommentCommand, Tat
     private readonly IValidator<LikeCommentDto> _validator;
     private readonly LikeCommentProducer _producer;
 
-    public LikeCommentCommandHandler(LikeCommentProducer producer, IValidator<LikeCommentDto> validator)
+    public LikeCommentCommandHandler(
+        LikeCommentProducer producer,
+        IValidator<LikeCommentDto> validator
+    )
     {
         _producer = producer;
         _validator = validator;
     }
 
-    public async Task<TatuazResult<EmptyDto>> Handle(LikeCommentCommand request, CancellationToken cancellationToken)
+    public async Task<TatuazResult<EmptyDto>> Handle(
+        LikeCommentCommand request,
+        CancellationToken cancellationToken
+    )
     {
         var validationResult = await _validator
             .ValidateAsync(request.LikeCommentDto, cancellationToken)
@@ -35,8 +41,13 @@ public class LikeCommentCommandHandler : IRequestHandler<LikeCommentCommand, Tat
         }
 
         return await _producer
-            .Send(new LikeComment(request.LikeCommentDto.CommentId!.Value,
-                    request.LikeCommentDto.Like!.Value),
-                cancellationToken).ConfigureAwait(false);
+            .Send(
+                new LikeComment(
+                    request.LikeCommentDto.CommentId!.Value,
+                    request.LikeCommentDto.Like!.Value
+                ),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
     }
 }

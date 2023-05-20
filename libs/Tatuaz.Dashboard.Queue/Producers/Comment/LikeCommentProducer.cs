@@ -10,7 +10,7 @@ public class LikeCommentProducer : TatuazProducerBase<LikeComment, EmptyDto>
 {
     public LikeCommentProducer(
         IRequestClient<LikeComment> requestClient,
-        ILogger<LikeCommentProducer> logger) : base(requestClient, logger)
-    {
-    }
+        ILogger<LikeCommentProducer> logger
+    )
+        : base(requestClient, logger) { }
 }
