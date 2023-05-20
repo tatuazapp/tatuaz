@@ -1,4 +1,3 @@
-import { Button } from "@chakra-ui/react"
 import { ArrowUpRight } from "@styled-icons/bootstrap"
 import { Heading, Paragraph } from "@tatuaz/ui"
 import { FunctionComponent } from "react"
@@ -11,6 +10,7 @@ import {
   UserDataWrapper,
   UserSectionWrapper,
 } from "./styles"
+import Button from "../../../common/buttons/Button"
 
 type ArtistCardProps = {
   artistName: string
@@ -36,7 +36,7 @@ const ArtistCard: FunctionComponent<ArtistCardProps> = ({
       </UserDataWrapper>
       <Button
         color={theme.colors.background1}
-        colorScheme="primary"
+        kind="primary"
         rightIcon={<ArrowUpRight size={24} />}
         size="md"
       >

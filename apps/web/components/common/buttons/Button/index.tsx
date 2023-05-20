@@ -29,6 +29,13 @@ const kinds = {
     color: "black",
     colorScheme: "primary",
     size: "lg",
+    _hover: {
+      boxShadow: "7px 5px 56px -14px primary.100",
+    },
+    _active: {
+      scale: "0.97",
+      boxShadow: "7px 5px 56px -14px primary.100",
+    }
   },
 } satisfies Record<string, ChakraButtonProps>
 

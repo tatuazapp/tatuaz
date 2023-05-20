@@ -1,4 +1,3 @@
-import { Button } from "@chakra-ui/react"
 import { ArrowUpRight } from "@styled-icons/bootstrap"
 import { Paragraph } from "@tatuaz/ui"
 import { FormattedMessage } from "react-intl"
@@ -13,6 +12,7 @@ import {
   UserPhoto,
   MobileSearchIcon,
 } from "./styles"
+import Button from "../../common/buttons/Button"
 
 const SearchArea = () => {
   const placeholder = (
@@ -34,7 +34,7 @@ const SearchArea = () => {
         <Button
           borderRadius={theme.space.small}
           color={theme.colors.background1}
-          colorScheme="primary"
+          kind="primary"
           height={{ base: "auto", md: theme.sizes.xxlarge }}
           marginLeft={{ base: "0", md: theme.space.xlarge }}
           rightIcon={<ArrowUpRight size={24} />}

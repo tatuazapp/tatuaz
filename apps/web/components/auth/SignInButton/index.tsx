@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react"
-import { Button } from "@chakra-ui/react"
 import { ArrowRight } from "@styled-icons/bootstrap/ArrowRight"
 import { FormattedMessage } from "react-intl"
+import Button from "../../common/buttons/Button"
 
 export const SignInButton = () => {
   const { loginWithRedirect } = useAuth0()
@@ -9,7 +9,7 @@ export const SignInButton = () => {
   return (
     <Button
       color="black"
-      colorScheme="primary"
+      kind="primary"
       rightIcon={<ArrowRight size={24} />}
       size="lg"
       onClick={() => loginWithRedirect()}
