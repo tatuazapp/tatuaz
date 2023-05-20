@@ -13,7 +13,7 @@ type UserPostsSectionProps = {
   isCurrentUser: boolean
 }
 
-const POST_PAGE_SIZE = 3
+const POST_PAGE_SIZE = 10
 
 const UserPostsSection: FunctionComponent<UserPostsSectionProps> = ({
   currentUser,
