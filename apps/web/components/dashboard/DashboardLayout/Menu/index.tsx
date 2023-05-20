@@ -29,11 +29,13 @@ const tabs = [
     href: "/dashboard/search",
     id: "search",
   },
-  {
-    name: <FormattedMessage defaultMessage="Panel" id="hIxZtX" />,
-    href: "/dashboard/dashboard",
-    id: "dashboard",
-  },
+  // TODO: This panel does not maked sense for now
+  // eslint-disable-next-line etc/no-commented-out-code
+  // {
+  //   name: <FormattedMessage defaultMessage="Panel" id="hIxZtX" />,
+  //   href: "/dashboard/dashboard",
+  //   id: "dashboard",
+  // },
   {
     name: <FormattedMessage defaultMessage="Profil" id="n7oiI/" />,
     href: "/dashboard/profile",

@@ -126,9 +126,6 @@ const BackgroundPhotoUploadModal: FunctionComponent<
           return
         }
 
-        const formData = new FormData()
-        formData.append("backgroundPhoto", uploadedImage)
-
         await mutation.mutateAsync({
           photo: uploadedImage,
         })

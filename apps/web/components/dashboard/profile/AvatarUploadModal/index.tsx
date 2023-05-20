@@ -127,9 +127,6 @@ const AvatarUploadModal: FunctionComponent<AvatarUploadModalProps> = ({
           return
         }
 
-        const formData = new FormData()
-        formData.append("backgroundPhoto", uploadedImage)
-
         await mutation.mutateAsync({
           photo: uploadedImage,
         })

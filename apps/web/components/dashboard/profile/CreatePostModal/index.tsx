@@ -54,6 +54,7 @@ const CreatePostModal: FunctionComponent<CreatePostModalProps> = ({
     control,
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<PostFormValues>({
     defaultValues: {},
@@ -159,13 +160,21 @@ const CreatePostModal: FunctionComponent<CreatePostModalProps> = ({
 
         await finalizePostMutation.mutateAsync(finalizePost)
 
+        reset({
+          description: "",
+          photos: [],
+          categories: [],
+        })
+        setUploadedImages(null)
+
         onClose()
       }),
     [
       handleSubmit,
-      uploadedImages,
       uploadPostPhotosMutation,
+      uploadedImages,
       finalizePostMutation,
+      reset,
       onClose,
     ]
   )
@@ -271,7 +280,7 @@ const CreatePostModal: FunctionComponent<CreatePostModalProps> = ({
             <FormattedMessage defaultMessage="Anuluj" id="JmR+Nv" />
           </Button>
           <Button
-            colorScheme="blue"
+            colorScheme="primary"
             isLoading={
               uploadPostPhotosMutation.isLoading ||
               finalizePostMutation.isLoading
