@@ -38,5 +38,9 @@ public class TatuazUserConfiguration : IEntityTypeConfiguration<TatuazUser>
             .OnDelete(DeleteBehavior.SetNull);
 
         builder.HasIndex(x => x.Username).IsUnique();
+
+        builder.Property(x => x.Bio).HasMaxLength(4096);
+
+        builder.Property(x => x.City).HasMaxLength(64);
     }
 }

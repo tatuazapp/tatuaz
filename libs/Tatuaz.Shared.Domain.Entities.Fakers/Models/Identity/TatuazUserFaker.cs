@@ -21,5 +21,8 @@ public sealed class TatuazUserFaker : Faker<TatuazUser>, IEntityFaker
         RuleFor(x => x.ForegroundPhotoId, f => f.Random.Guid());
         RuleFor(x => x.BackgroundPhoto, _ => new PhotoFaker().Generate());
         RuleFor(x => x.BackgroundPhotoId, f => f.Random.Guid());
+        RuleFor(x => x.Bio, f => f.Lorem.Sentence());
+        RuleFor(x => x.City, f => f.Address.City());
+        RuleFor(x => x.Popularity, f => f.Random.Int(0, 100));
     }
 }

@@ -1,11 +1,12 @@
 import { Button } from "@chakra-ui/react"
 import { ArrowUpRight } from "@styled-icons/bootstrap"
 import { Heading, Paragraph } from "@tatuaz/ui"
+import Link from "next/link"
 import { FunctionComponent } from "react"
 import { FormattedMessage } from "react-intl"
 import { theme } from "../../../../styles/theme"
 import {
-  ArtistCardBacktroundPhoto,
+  ArtistCardBackgroundPhoto,
   ArtistCardUserPhoto,
   ArtistCardWrapper,
   UserDataWrapper,
@@ -15,16 +16,19 @@ import {
 type ArtistCardProps = {
   artistName: string
   artistDescription: string
+  backgroundPhotoUrl?: string
+  foregroundPhotoUrl: string
 }
 
 const ArtistCard: FunctionComponent<ArtistCardProps> = ({
   artistName,
   artistDescription,
+  foregroundPhotoUrl,
 }) => (
   <ArtistCardWrapper>
-    <ArtistCardBacktroundPhoto>
-      <ArtistCardUserPhoto />
-    </ArtistCardBacktroundPhoto>
+    <ArtistCardBackgroundPhoto>
+      <ArtistCardUserPhoto imageUrl={foregroundPhotoUrl} />
+    </ArtistCardBackgroundPhoto>
     <UserSectionWrapper>
       <UserDataWrapper>
         <Heading color={theme.colors.primary} level={5}>
@@ -34,14 +38,21 @@ const ArtistCard: FunctionComponent<ArtistCardProps> = ({
           {artistDescription}
         </Paragraph>
       </UserDataWrapper>
-      <Button
-        color={theme.colors.background1}
-        colorScheme="primary"
-        rightIcon={<ArrowUpRight size={24} />}
-        size="md"
+
+      <Link
+        href={`/dashboard/profile?${new URLSearchParams({
+          profileName: artistName ?? "",
+        }).toString()}`}
       >
-        <FormattedMessage defaultMessage="Zrób tatuaż" id="z4IFca" />
-      </Button>
+        <Button
+          color={theme.colors.background1}
+          colorScheme="primary"
+          rightIcon={<ArrowUpRight size={24} />}
+          size="md"
+        >
+          <FormattedMessage defaultMessage="Zrób tatuaż" id="z4IFca" />
+        </Button>
+      </Link>
     </UserSectionWrapper>
   </ArtistCardWrapper>
 )

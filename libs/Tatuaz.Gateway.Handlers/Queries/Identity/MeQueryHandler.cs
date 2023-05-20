@@ -1,9 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using MediatR;
 using Tatuaz.Gateway.Requests.Queries.Identity;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
@@ -16,17 +15,14 @@ namespace Tatuaz.Gateway.Handlers.Queries.Identity;
 
 public class MeQueryHandler : IRequestHandler<MeQuery, TatuazResult<UserDto>>
 {
-    private readonly IMapper _mapper;
     private readonly IGenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
     private readonly IUserContext _userContext;
 
     public MeQueryHandler(
-        IMapper mapper,
         IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository,
         IUserContext userContext
     )
     {
-        _mapper = mapper;
         _userRepository = userRepository;
         _userContext = userContext;
     }

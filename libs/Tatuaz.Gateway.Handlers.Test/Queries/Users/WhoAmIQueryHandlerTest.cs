@@ -5,7 +5,7 @@ using AutoMapper;
 using Moq;
 using Tatuaz.Gateway.Handlers.Queries.Identity;
 using Tatuaz.Gateway.Requests.Queries.Identity;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Domain.Entities.Fakers.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
@@ -48,11 +48,7 @@ public class WhoAmIQueryHandlerTest
                 .ReturnsAsync(_mapper.Map<UserDto>(user));
 
             var query = new MeQuery();
-            var handler = new MeQueryHandler(
-                _mapper,
-                _userRepositoryMock.Object,
-                _userContextMock.Object
-            );
+            var handler = new MeQueryHandler(_userRepositoryMock.Object, _userContextMock.Object);
             var result = await handler.Handle(query, CancellationToken.None).ConfigureAwait(false);
 
             Assert.True(result.Successful);
@@ -71,11 +67,7 @@ public class WhoAmIQueryHandlerTest
                 .ReturnsAsync((TatuazUser?)null);
 
             var query = new MeQuery();
-            var handler = new MeQueryHandler(
-                _mapper,
-                _userRepositoryMock.Object,
-                _userContextMock.Object
-            );
+            var handler = new MeQueryHandler(_userRepositoryMock.Object, _userContextMock.Object);
             var result = await handler.Handle(query, CancellationToken.None).ConfigureAwait(false);
 
             Assert.False(result.Successful);
@@ -89,11 +81,7 @@ public class WhoAmIQueryHandlerTest
             _userContextMock.ReturnUserId(null);
 
             var query = new MeQuery();
-            var handler = new MeQueryHandler(
-                _mapper,
-                _userRepositoryMock.Object,
-                _userContextMock.Object
-            );
+            var handler = new MeQueryHandler(_userRepositoryMock.Object, _userContextMock.Object);
             var action = () => handler.Handle(query, CancellationToken.None);
 
             await Assert.ThrowsAsync<UserContextMissingException>(action).ConfigureAwait(false);

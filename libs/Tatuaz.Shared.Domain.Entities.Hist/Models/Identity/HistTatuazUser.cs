@@ -9,4 +9,7 @@ public class HistTatuazUser : HistEntity<string>
     public string Auth0Id { get; set; } = default!;
     public Guid? ForegroundPhotoId { get; set; }
     public Guid? BackgroundPhotoId { get; set; }
+    public string? Bio { get; set; }
+    public string? City { get; set; }
+    public int Popularity { get; set; }
 }

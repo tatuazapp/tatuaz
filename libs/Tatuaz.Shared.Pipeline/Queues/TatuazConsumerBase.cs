@@ -52,6 +52,12 @@ public abstract class TatuazConsumerBase<TMessage, TData> : IConsumer<TMessage>
                 .RespondAsync(new TatuazResult<TData>(errors, httpStatusCode))
                 .ConfigureAwait(false);
         }
+        finally
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+        }
     }
 
     protected virtual Task<(TatuazError[] errors, HttpStatusCode httpStatusCode)> HandleException(

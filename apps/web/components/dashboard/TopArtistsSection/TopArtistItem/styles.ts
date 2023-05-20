@@ -14,15 +14,16 @@ export const ArtistWrapper = styled.div`
   justify-content: start;
 `
 
-export const ArtistPhoto = styled.div`
+export const ArtistPhoto = styled.div<{
+  photoUrl: string
+}>`
   display: inline-block;
 
   width: ${({ theme }) => theme.space.xxlarge};
   height: ${({ theme }) => theme.space.xxlarge};
   margin-right: ${({ theme }) => theme.space.xsmall};
 
-  /* TODO: change to dynamic */
-  background-image: url("https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg");
+  background-image: url(${({ photoUrl }) => photoUrl});
   background-size: cover;
   border-radius: 50%;
 `

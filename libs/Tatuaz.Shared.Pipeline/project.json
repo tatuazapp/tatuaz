@@ -1,11 +1,12 @@
 {
+  "name": "shared-pipeline",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/Tatuaz.Shared.Pipeline",
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["dist/libs/Tatuaz.Shared.Pipeline"],
+      "outputs": ["{workspaceRoot}/dist/libs/Tatuaz.Shared.Pipeline"],
       "options": {
         "configuration": "Debug"
       },

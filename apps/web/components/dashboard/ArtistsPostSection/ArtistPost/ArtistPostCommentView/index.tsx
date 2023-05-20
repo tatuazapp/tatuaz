@@ -5,7 +5,7 @@ import { theme } from "../../../../../styles/theme"
 import {
   ArtistPostDescription,
   ArtistPostLikesAndCommentsWrapper,
-  ArtistPostMainPhoto,
+  ArtistPostMainPhotos,
   ArtistPostMainPhotoTitle,
   CommentSectionClickedIcon,
   CommentsNumber,
@@ -73,13 +73,13 @@ const ArtistPostCommentView: React.FunctionComponent<
         <ArtistPostCommentsViewHeaderCloseButton onClick={onClose} />
       </ArtistPostCommentsViewHeader>
       <ArtistPostScrollingArea>
-        <ArtistPostMainPhoto>
+        <ArtistPostMainPhotos>
           <ArtistPostMainPhotoTitle>
             <Heading color={theme.colors.primary} level={4}>
               Flare Boom
             </Heading>
           </ArtistPostMainPhotoTitle>
-        </ArtistPostMainPhoto>
+        </ArtistPostMainPhotos>
         <ArtistPostContent>
           <ArtistPostLikesAndCommentsWrapper>
             <LikesContainer>
@@ -111,7 +111,8 @@ const ArtistPostCommentView: React.FunctionComponent<
             </CommentsContainer>
           </ArtistPostLikesAndCommentsWrapper>
           <ArtistPostUserWrapper>
-            <UserIconPhoto />
+            {/* TODO: Chnage it to sth dynamic */}
+            <UserIconPhoto photoUrl="https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg" />
             <Paragraph strong color={theme.colors.primary} level={2}>
               Jacob Vin
             </Paragraph>

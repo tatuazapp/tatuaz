@@ -1,12 +1,12 @@
 {
+  "name": "dashboard-scheduler-test",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "name": "Tatuaz.Scheduler.Queue.Test",
   "projectType": "library",
   "sourceRoot": "libs/Tatuaz.Scheduler.Queue.Test",
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["dist/libs/Tatuaz.Scheduler.Queue.Test"],
+      "outputs": ["{workspaceRoot}/dist/libs/Tatuaz.Scheduler.Queue.Test"],
       "options": {
         "configuration": "Debug"
       },

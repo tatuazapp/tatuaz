@@ -19,8 +19,12 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.IO;
 using Microsoft.OpenApi.Models;
+using NodaTime;
+using NodaTime.Serialization.SystemTextJson;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -37,7 +41,7 @@ using Tatuaz.Gateway.Handlers;
 using Tatuaz.Gateway.Swagger;
 using Tatuaz.Scheduler.Queue;
 using Tatuaz.Shared.Domain.Dtos;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Helpers;
 using Tatuaz.Shared.Infrastructure;
 using Tatuaz.Shared.Infrastructure.DataAccess;
@@ -74,29 +78,32 @@ public static class GatewayExtensions
         host.UseSerilog(
             (context, services, loggerConfiguration) =>
             {
-                loggerConfiguration.WriteTo.Async(
-                    x =>
-                        x.Console(
+                if (services.GetRequiredService<IHostEnvironment>().IsDevelopment())
+                {
+                    loggerConfiguration.WriteTo.Async(
+                        x =>
+                            x.Console(
+                                outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
+                                levelSwitch: new LoggingLevelSwitch(
+                                    StringHelpers.GetLoggingLevelSwitch(serilogOpt.ConsoleLogLevel)
+                                ),
+                                formatProvider: new CultureInfo("en-US")
+                            )
+                    );
+
+                    loggerConfiguration.WriteTo.Async(x =>
+                    {
+                        x.File(
                             outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
+                            path: "logs/gateway.log",
+                            rollingInterval: RollingInterval.Day,
                             levelSwitch: new LoggingLevelSwitch(
                                 StringHelpers.GetLoggingLevelSwitch(serilogOpt.ConsoleLogLevel)
                             ),
                             formatProvider: new CultureInfo("en-US")
-                        )
-                );
-
-                loggerConfiguration.WriteTo.Async(x =>
-                {
-                    x.File(
-                        outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                        path: "logs/gateway.log",
-                        rollingInterval: RollingInterval.Day,
-                        levelSwitch: new LoggingLevelSwitch(
-                            StringHelpers.GetLoggingLevelSwitch(serilogOpt.ConsoleLogLevel)
-                        ),
-                        formatProvider: new CultureInfo("en-US")
-                    );
-                });
+                        );
+                    });
+                }
 
                 loggerConfiguration.WriteTo.AzureBlobStorage(
                     serilogOpt.BlobConnectionString,
@@ -108,17 +115,6 @@ public static class GatewayExtensions
                     writeInBatches: true,
                     period: TimeSpan.FromSeconds(30)
                 );
-
-                loggerConfiguration.WriteTo.Async(x =>
-                {
-                    x.File(
-                        outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                        path: "logs/gateway_error.log",
-                        rollingInterval: RollingInterval.Day,
-                        restrictedToMinimumLevel: LogEventLevel.Error,
-                        formatProvider: new CultureInfo("en-US")
-                    );
-                });
 
                 loggerConfiguration.Enrich.FromLogContext();
                 loggerConfiguration.Enrich.FromMassTransit();
@@ -176,6 +172,7 @@ public static class GatewayExtensions
                 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                 options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                options.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
             });
 
         services.AddSwaggerGen(opt =>
@@ -214,6 +211,7 @@ public static class GatewayExtensions
 
             opt.CustomOperationIds(x => x.RelativePath?.Split("/").Last());
             opt.SchemaFilter<FluentValidationSchemaFilter>();
+            opt.SchemaFilter<MarkRequiredSchemaFilter>();
             opt.SwaggerDoc(
                 "v1",
                 new OpenApiInfo
@@ -305,6 +303,11 @@ public static class GatewayExtensions
 
                     return Task.CompletedTask;
                 };
+                opt.MemoryStreamManager = new RecyclableMemoryStreamManager(
+                    1024,
+                    1024 * 1024,
+                    16 * 1024 * 1024
+                );
             })
             .ClearProviders()
             .Configure<AzureBlobStorageImageProviderOptions>(opt =>

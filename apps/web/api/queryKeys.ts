@@ -4,4 +4,8 @@ export const queryKeys = {
     listCategories: "listCategories",
   },
   getRegisteredStats: "getRegisteredStats",
+  getUser: "getUser",
+  getTopArtists: "getTopArtists",
+  getUserPosts: "getUserPosts",
+  getPostFeed: "getPostFeed",
 } as const

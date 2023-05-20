@@ -4,6 +4,7 @@ import {
   DrawerContent,
   useDisclosure,
 } from "@chakra-ui/react"
+import Link from "next/link"
 import { useRouter } from "next/router"
 import { FunctionComponent, useEffect } from "react"
 import useMe from "../../../api/hooks/useMe"
@@ -48,9 +49,11 @@ const DashboardLayout: FunctionComponent<DashboardLayoutProps> = ({
     <>
       <MobileLayoutContainer>
         <MobileLayoutHeader>
-          <WordmarkWrapper>
-            Tatuaz<GreenWrapper>App</GreenWrapper>
-          </WordmarkWrapper>
+          <Link href="/">
+            <WordmarkWrapper>
+              Tatuaz<GreenWrapper>App</GreenWrapper>
+            </WordmarkWrapper>
+          </Link>
           <MobileMenuIcon onClick={onOpen} />
         </MobileLayoutHeader>
         <Drawer isOpen={isOpen} placement="right" size="full" onClose={onClose}>
@@ -65,7 +68,7 @@ const DashboardLayout: FunctionComponent<DashboardLayoutProps> = ({
     </>
   ) : (
     <DesktopLayoutContainer>
-      {showDrawer && <Menu />}
+      <Menu />
       {!showDrawer && (
         <>
           <NarrowMenu onOpen={onOpen} />

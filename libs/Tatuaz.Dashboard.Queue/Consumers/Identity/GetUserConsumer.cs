@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 using Tatuaz.Dashboard.Queue.Contracts.Identity;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
@@ -19,14 +19,17 @@ namespace Tatuaz.Dashboard.Queue.Consumers.Identity;
 public class GetUserConsumer : TatuazConsumerBase<GetUser, UserDto>
 {
     private readonly IGenericRepository<TatuazUser, HistTatuazUser, string> _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
     public GetUserConsumer(
         ILogger<GetUserConsumer> logger,
-        IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository
+        IGenericRepository<TatuazUser, HistTatuazUser, string> userRepository,
+        IUnitOfWork unitOfWork
     )
         : base(logger)
     {
         _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
     }
 
     protected override async Task<TatuazResult<UserDto>> ConsumeMessage(
@@ -34,7 +37,21 @@ public class GetUserConsumer : TatuazConsumerBase<GetUser, UserDto>
     )
     {
         var spec = new FullSpecification<TatuazUser>();
-        spec.AddFilter(x => x.Username.ToLower() == context.Message.Username.ToLower());
+        spec.AddFilter(x => x.Username == context.Message.Username);
+
+        var user = (
+            await _userRepository
+                .GetBySpecificationAsync(spec, context.CancellationToken)
+                .ConfigureAwait(false)
+        ).SingleOrDefault();
+
+        if (user == null)
+        {
+            return GetUserResultFactory.UserNotFound<UserDto>(context.Message.Username);
+        }
+
+        user.Popularity++;
+        await _unitOfWork.SaveChangesAsync(context.CancellationToken).ConfigureAwait(false);
 
         var userDto = (
             await _userRepository

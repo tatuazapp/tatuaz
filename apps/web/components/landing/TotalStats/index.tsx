@@ -21,12 +21,7 @@ const TotalStats = () => {
     }
   )
 
-  // TODO: don't cast to this type, this is a temporary solution and needs to be fixed on backend
-  const stats = data?.value as unknown as {
-    artists: number
-    clients: number
-    users: number
-  }
+  const stats = data?.value
 
   return (
     <TotalStatsWrapper>

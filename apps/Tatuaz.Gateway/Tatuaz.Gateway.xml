@@ -130,7 +130,7 @@
             </summary>
             <returns>UserDto</returns>
         </member>
-        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.SignUp(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User.SignUpDto)">
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.SignUp(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.SignUpDto)">
             <summary>
                 Register user
             </summary>
@@ -150,26 +150,54 @@
             <param name="setBackgroundPhotoDto"></param>
             <returns></returns>
         </member>
-        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.DeleteForegroundPhoto(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User.DeleteForegroundPhotoDto)">
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.DeleteForegroundPhoto(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.DeleteForegroundPhotoDto)">
             <summary>
             Delete foreground photo
             </summary>
             <param name="deleteForegroundPhotoDto"></param>
             <returns></returns>
         </member>
-        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.DeleteBackgroundPhoto(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User.DeleteBackgroundPhotoDto)">
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.DeleteBackgroundPhoto(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.DeleteBackgroundPhotoDto)">
             <summary>
             Delete background photo
             </summary>
             <param name="deleteBackgroundPhotoDto"></param>
             <returns></returns>
         </member>
-        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.GetUser(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User.GetUserDto)">
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.GetUser(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.GetUserDto)">
             <summary>
             Get user with username
             </summary>
             <param name="getUserDto"></param>
             <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.SetBio(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.SetBioDto)">
+            <summary>
+            Set bio for current user
+            </summary>
+            <param name="bio"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.SetAccountType(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.SetAccountTypeDto)">
+            <summary>
+            Set account type for current user
+            </summary>
+            <param name="setAccountTypeDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.GetTopArtists(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.GetTopArtistsDto)">
+            <summary>
+            Set account type for current user
+            </summary>
+            <param name="setAccountTypeDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.IdentityController.SearchUsers(Tatuaz.Shared.Domain.Dtos.Dtos.Identity.SearchUsersDto)">
+             <summary>
+             Search users
+             </summary>
+            <param name="searchUsersDto"></param>
+             <returns></returns>
         </member>
         <member name="T:Tatuaz.Gateway.Controllers.PhotoController">
             <summary>
@@ -199,6 +227,34 @@
             Finalize post
             </summary>
             <param name="finalizePostDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.PostController.SearchPosts(Tatuaz.Shared.Domain.Dtos.Dtos.Post.SearchPostsDto)">
+            <summary>
+            Search posts
+            </summary>
+            <param name="searchPostsDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.PostController.LikePost(Tatuaz.Shared.Domain.Dtos.Dtos.Post.LikePostDto)">
+            <summary>
+            Like post
+            </summary>
+            <param name="likePostDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.PostController.GetUserPosts(Tatuaz.Shared.Domain.Dtos.Dtos.Post.GetUserPostsDto)">
+            <summary>
+            Get user posts
+            </summary>
+            <param name="getUserPostsDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.PostController.GetPostFeed(Tatuaz.Shared.Domain.Dtos.Dtos.Post.GetPostFeedDto)">
+            <summary>
+            Get post feed
+            </summary>
+            <param name="getPostFeedDto"></param>
             <returns></returns>
         </member>
         <member name="T:Tatuaz.Gateway.Controllers.StatisticsController">

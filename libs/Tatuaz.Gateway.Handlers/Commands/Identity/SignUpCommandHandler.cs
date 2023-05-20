@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -7,7 +8,7 @@ using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Tatuaz.Gateway.Requests.Commands.Identity;
-using Tatuaz.Shared.Domain.Dtos.Dtos.Identity.User;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Photo;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
@@ -81,6 +82,8 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, TatuazResult<
         user.Auth0Id = _userContext.CurrentUserAuth0Id ?? throw new UserContextMissingException();
         user.ForegroundPhotoId = null;
         user.BackgroundPhotoId = null;
+        user.UserRoles = new List<TatuazUserRole>();
+        user.Popularity = 0;
         await _unitOfWork
             .RunInTransactionAsync(
                 _ =>

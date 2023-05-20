@@ -23,7 +23,7 @@ variable "az_rg_name" {
 
 variable "az_location" {
   type    = string
-  default = "France Central"
+  default = "East US"
 }
 
 variable "k8s_postgres" {

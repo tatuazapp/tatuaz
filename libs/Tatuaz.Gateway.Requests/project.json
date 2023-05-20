@@ -1,11 +1,12 @@
 {
+  "name": "gateway-requests",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/Tatuaz.Gateway.Requests",
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["dist/libs/Tatuaz.Gateway.Requests"],
+      "outputs": ["{workspaceRoot}/dist/libs/Tatuaz.Gateway.Requests"],
       "options": {
         "configuration": "Debug"
       },

@@ -90,6 +90,13 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                         .HasName("pk_tatuaz_roles");
 
                     b.ToTable("tatuaz_roles", "identity");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("92a311a0-4677-4f5c-9e19-88d5a3190041"),
+                            Name = "Artist"
+                        });
                 });
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", b =>
@@ -109,9 +116,23 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("background_photo_id");
 
+                    b.Property<string>("Bio")
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("bio");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("city");
+
                     b.Property<Guid?>("ForegroundPhotoId")
                         .HasColumnType("uuid")
                         .HasColumnName("foreground_photo_id");
+
+                    b.Property<int>("Popularity")
+                        .HasColumnType("integer")
+                        .HasColumnName("popularity");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -587,7 +608,7 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                         .HasForeignKey("PhotoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_photo_categories_photo_photo_id");
+                        .HasConstraintName("fk_photo_categories_photos_photo_id");
 
                     b.Navigation("Category");
 
@@ -627,7 +648,7 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_comments_post_post_id");
+                        .HasConstraintName("fk_comments_posts_post_id");
 
                     b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", "User")
                         .WithMany()

@@ -10,11 +10,6 @@ public class UploadPostPhotosDtoValidator : AbstractValidator<UploadPostPhotosDt
     public UploadPostPhotosDtoValidator()
     {
         RuleFor(x => x.Photos)
-            .NotNull()
-            .WithErrorCode(UploadPostPhotosErrorCodes.PhotosNull)
-            .WithMessage("Photos cannot be null");
-
-        RuleFor(x => x.Photos)
             .Must(x => x.Length <= 5)
             // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             .When(x => x.Photos != null)

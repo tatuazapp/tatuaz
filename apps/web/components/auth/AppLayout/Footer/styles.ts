@@ -26,6 +26,8 @@ export const FooterWrapper = styled.div`
   ${down("sm")} {
     flex-direction: column;
     justify-content: center;
+
+    margin-top: ${({ theme }) => theme.space.xxxlarge};
     padding-top: ${({ theme }) => theme.space.xxxlarge};
     padding-bottom: ${({ theme }) => theme.space.xxxlarge};
   }

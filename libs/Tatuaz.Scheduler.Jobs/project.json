@@ -1,11 +1,12 @@
 {
+  "name": "scheduler-jobs",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/Tatuaz.Scheduler.Jobs",
   "targets": {
     "build": {
       "executor": "@nx-dotnet/core:build",
-      "outputs": ["dist/libs/Tatuaz.Scheduler.Jobs"],
+      "outputs": ["{workspaceRoot}/dist/libs/Tatuaz.Scheduler.Jobs"],
       "options": {
         "configuration": "Debug"
       },

@@ -130,6 +130,15 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("background_photo_id");
 
+                    b.Property<string>("Bio")
+                        .HasMaxLength(4096)
+                        .HasColumnType("character varying(4096)")
+                        .HasColumnName("bio");
+
+                    b.Property<string>("City")
+                        .HasColumnType("text")
+                        .HasColumnName("city");
+
                     b.Property<Guid?>("ForegroundPhotoId")
                         .HasColumnType("uuid")
                         .HasColumnName("foreground_photo_id");
@@ -146,6 +155,10 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasMaxLength(320)
                         .HasColumnType("character varying(320)")
                         .HasColumnName("id");
+
+                    b.Property<int>("Popularity")
+                        .HasColumnType("integer")
+                        .HasColumnName("popularity");
 
                     b.Property<string>("Username")
                         .IsRequired()

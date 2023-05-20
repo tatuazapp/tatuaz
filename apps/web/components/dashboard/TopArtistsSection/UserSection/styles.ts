@@ -4,7 +4,6 @@ export const UserSectionAreaWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: end;
-  height: 100px;
 `
 
 export const UserName = styled.p`

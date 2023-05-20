@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Tatuaz.Gateway.HttpResponses;
 using Tatuaz.Gateway.Requests.Queries.Statistics;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Statistics;
 
 namespace Tatuaz.Gateway.Controllers;
 
@@ -28,7 +29,7 @@ public class StatisticsController : TatuazControllerBase
     [HttpPost("[action]")]
     [Consumes("application/json")]
     [Produces("application/json")]
-    [ProducesResponseType(typeof(OkResponse<int>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(OkResponse<RegisteredStatsDto>), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> GetRegisteredStats()
     {

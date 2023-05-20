@@ -2,24 +2,42 @@ import { BalloonHeart } from "@styled-icons/bootstrap/BalloonHeart"
 import { BalloonHeartFill } from "@styled-icons/bootstrap/BalloonHeartFill"
 import { Comment as CommentRegular } from "@styled-icons/boxicons-regular/Comment"
 import { Comment as CommentSolid } from "@styled-icons/boxicons-solid/Comment"
+import { down } from "styled-breakpoints"
 import styled from "styled-components"
+import { USER_CONTENT_WIDTH } from "../../profile/BackgroundAndAvatarContainer/styles"
 
 export const ArtistPostWrapper = styled.div`
-  max-width: 735px;
-  margin-bottom: ${({ theme }) => theme.space.xlarge};
+  width: 100%;
+  max-width: ${USER_CONTENT_WIDTH - 32}px;
   background-color: ${({ theme }) => theme.colors.background2};
   border-radius: ${({ theme }) => theme.radius.medium};
 `
 
-export const ArtistPostMainPhoto = styled.div`
+export const ArtistPostMainPhotos = styled.div`
   position: relative;
 
-  height: 300px;
+  overflow: hidden;
+  display: grid;
+  grid-gap: 0;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 
-  background-image: url("https://t3.ftcdn.net/jpg/01/01/05/24/360_F_101052491_D8WlkJsZclF5kO8LsA7AstXI9Ir4iuFl.jpg");
-  background-size: cover;
+  min-height: 300px;
+  max-height: 400px;
+
   border-top-left-radius: ${({ theme }) => theme.radius.medium};
   border-top-right-radius: ${({ theme }) => theme.radius.medium};
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  ${down("md")} {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    min-height: 150px;
+    max-height: 250px;
+  }
 `
 
 export const ArtistPostMainPhotoTitle = styled.p`
@@ -35,13 +53,14 @@ export const ArtistPostMainPhotoTitle = styled.p`
 export const ArtistPostContent = styled.div`
   padding-top: ${({ theme }) => theme.space.xsmall};
   padding-right: ${({ theme }) => theme.space.xsmall};
-  padding-bottom: ${({ theme }) => theme.space.xlarge};
+  padding-bottom: ${({ theme }) => theme.space.small};
   padding-left: ${({ theme }) => theme.space.xsmall};
 `
 
 export const ArtistPostLikesAndCommentsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: ${({ theme }) => theme.space.small};
 `
 
 export const LikesContainer = styled.div`
@@ -112,7 +131,9 @@ export const ArtistPostUserWrapper = styled.div`
   padding-top: ${({ theme }) => theme.space.xsmall};
 `
 
-export const UserIconPhoto = styled.div`
+export const UserIconPhoto = styled.div<{
+  photoUrl: string
+}>`
   display: inline-block;
 
   width: ${({ theme }) => theme.space.large};
@@ -120,8 +141,7 @@ export const UserIconPhoto = styled.div`
   margin-right: ${({ theme }) => theme.space.xsmall};
   margin-left: ${({ theme }) => theme.space.xxxsmall};
 
-  /* TODO: change to dynamic */
-  background-image: url("https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg");
+  background-image: url(${({ photoUrl }) => photoUrl});
   background-size: cover;
   border-radius: 50%;
 `

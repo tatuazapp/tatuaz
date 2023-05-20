@@ -9,12 +9,38 @@
  * ---------------------------------------------------------------
  */
 
+export interface BriefPostDto {
+  /** @format uuid */
+  id: string
+  description: string
+  photoUris: string[]
+  authorName: string
+  /** @format uri */
+  authorPhotoUri: string | null
+  /** @format int32 */
+  likesCount: number
+  isLikedByCurrentUser: boolean
+  /** @format int32 */
+  commentsCount: number
+  createdAt: Instant
+}
+
+export interface BriefUserDto {
+  username: string
+  /** @format uri */
+  foregroundPhotoUri: string | null
+  /** @format uri */
+  backgroundPhotoUri: string | null
+  bio: string | null
+  city: string | null
+}
+
 export interface CategoryDto {
   /** @format int32 */
-  id?: number
-  title?: string
-  type?: CategoryTypeDto
-  imageUri?: string
+  id: number
+  title: string
+  type: CategoryTypeDto
+  imageUri: string
 }
 
 export enum CategoryTypeDto {
@@ -33,9 +59,57 @@ export type EmptyResponse = object
 /** Wrapper used for returning failed responses. */
 export interface ErrorResponse {
   /** List of errors. */
-  errors?: TatuazError[]
+  errors: TatuazError[]
   /** Indicates if request was successful. Should be always false for this type of response. */
-  success?: boolean
+  success: boolean
+}
+
+export interface FinalizePostDto {
+  /**
+   * ErrorCodes
+   * @format uuid
+   */
+  initialPostId: string
+  /**
+   * ErrorCodes: DescriptionIsNull, DescriptionIsTooLong
+   * @maxLength 4096
+   */
+  description: string
+  /** ErrorCodes: PhotoInfoDtosIsNull, PhotoInfoDtosTooMany, PhotoInfoDtosHasDuplicateCategoryIds, PhotoInfoDtosHasInvalidCategoryIds */
+  photoInfoDtos: PhotoInfoDto[]
+}
+
+export interface GetPostFeedDto {
+  /**
+   * ErrorCodes: PageNumberIsNull, PageNumberIsLessThan1
+   * @format int32
+   * @min 1
+   */
+  pageNumber: number
+  /**
+   * ErrorCodes: PageSizeIsLessThan1, PageSizeIsGreaterThan1000
+   * @format int32
+   * @min 1
+   * @max 1000
+   */
+  pageSize: number | null
+  searchPostsFlag: SearchPostsFlag
+}
+
+export interface GetTopArtistsDto {
+  /**
+   * ErrorCodes: PageNumberIsNull, PageNumberIsLessThan1
+   * @format int32
+   * @min 1
+   */
+  pageNumber: number
+  /**
+   * ErrorCodes: PageSizeIsNull, PageSizeIsLessThan1, PageSizeIsGreaterThan1000
+   * @format int32
+   * @min 1
+   * @max 1000
+   */
+  pageSize: number
 }
 
 export interface GetUserDto {
@@ -44,6 +118,36 @@ export interface GetUserDto {
    * @maxLength 32
    */
   username: string
+}
+
+export interface GetUserPostsDto {
+  /** ErrorCodes: UsernameIsNull */
+  username: string
+  /**
+   * ErrorCodes: PageNumberIsNull, PageNumberIsLessThan1
+   * @format int32
+   * @min 1
+   */
+  pageNumber: number
+  /**
+   * ErrorCodes: PageSizeIsNull, PageSizeIsLessThan1, PageSizeIsGreaterThan1000
+   * @format int32
+   * @min 1
+   * @max 1000
+   */
+  pageSize: number
+}
+
+export type Instant = object
+
+export interface LikePostDto {
+  /**
+   * ErrorCodes: PostIdIsNull
+   * @format uuid
+   */
+  postId: string
+  /** ErrorCodes: LikeIsNull */
+  like: boolean
 }
 
 export interface ListCategoriesDto {
@@ -63,40 +167,171 @@ export interface ListCategoriesDto {
 }
 
 /** Wrapper used for returning success responses. */
-export interface OkResponsePagedDataCategoryDto {
-  value?: PagedDataCategoryDto
+export interface OkResponseEmptyResponse {
+  /** Response for marking codes that do not return any data. */
+  value: EmptyResponse
   /** Indicates if request was successful. Should be always true for this type of response. */
-  success?: boolean
+  success: boolean
+}
+
+/** Wrapper used for returning success responses. */
+export interface OkResponsePagedDataBriefPostDto {
+  value: PagedDataBriefPostDto
+  /** Indicates if request was successful. Should be always true for this type of response. */
+  success: boolean
+}
+
+/** Wrapper used for returning success responses. */
+export interface OkResponsePagedDataBriefUserDto {
+  value: PagedDataBriefUserDto
+  /** Indicates if request was successful. Should be always true for this type of response. */
+  success: boolean
+}
+
+/** Wrapper used for returning success responses. */
+export interface OkResponsePagedDataCategoryDto {
+  value: PagedDataCategoryDto
+  /** Indicates if request was successful. Should be always true for this type of response. */
+  success: boolean
+}
+
+/** Wrapper used for returning success responses. */
+export interface OkResponseRegisteredStatsDto {
+  value: RegisteredStatsDto
+  /** Indicates if request was successful. Should be always true for this type of response. */
+  success: boolean
+}
+
+/** Wrapper used for returning success responses. */
+export interface OkResponseUploadedPhotosDto {
+  value: UploadedPhotosDto
+  /** Indicates if request was successful. Should be always true for this type of response. */
+  success: boolean
 }
 
 /** Wrapper used for returning success responses. */
 export interface OkResponseUserDto {
-  value?: UserDto
+  value: UserDto
   /** Indicates if request was successful. Should be always true for this type of response. */
-  success?: boolean
+  success: boolean
 }
 
-/** Wrapper used for returning success responses. */
-export interface OkResponseInt {
-  /**
-   * Payload of response.
-   * @format int32
-   */
-  value?: number
-  /** Indicates if request was successful. Should be always true for this type of response. */
-  success?: boolean
+export interface PagedDataBriefPostDto {
+  data: BriefPostDto[]
+  /** @format int32 */
+  pageNumber: number
+  /** @format int32 */
+  pageSize: number
+  /** @format int32 */
+  totalPages: number
+  /** @format int32 */
+  totalCount: number
+}
+
+export interface PagedDataBriefUserDto {
+  data: BriefUserDto[]
+  /** @format int32 */
+  pageNumber: number
+  /** @format int32 */
+  pageSize: number
+  /** @format int32 */
+  totalPages: number
+  /** @format int32 */
+  totalCount: number
 }
 
 export interface PagedDataCategoryDto {
-  data?: CategoryDto[]
+  data: CategoryDto[]
   /** @format int32 */
-  pageNumber?: number
+  pageNumber: number
   /** @format int32 */
-  pageSize?: number
+  pageSize: number
   /** @format int32 */
-  totalPages?: number
+  totalPages: number
   /** @format int32 */
-  totalCount?: number
+  totalCount: number
+}
+
+export interface PhotoInfoDto {
+  /** @format uuid */
+  photoId: string
+  categoryIds: number[]
+  photoFileName: string
+}
+
+export interface RegisteredStatsDto {
+  /** @format int32 */
+  artists: number
+  /** @format int32 */
+  clients: number
+  /** @format int32 */
+  users: number
+}
+
+export interface SearchPostsDto {
+  /**
+   * ErrorCodes: QueryNull, QueryTooLong
+   * @maxLength 128
+   */
+  query: string
+  /**
+   * ErrorCodes: PageNumberIsNull, PageNumberIsLessThan1
+   * @format int32
+   * @min 1
+   */
+  pageNumber: number
+  /**
+   * ErrorCodes: PageSizeIsLessThan1, PageSizeIsGreaterThan1000
+   * @format int32
+   * @min 1
+   * @max 1000
+   */
+  pageSize: number | null
+  searchPostsFlag: SearchPostsFlag
+}
+
+export enum SearchPostsFlag {
+  All = "All",
+  OnlyPosts = "OnlyPosts",
+  OnlyPhotos = "OnlyPhotos",
+}
+
+export interface SearchUsersDto {
+  /** ErrorCodes: QueryNull */
+  query: string
+  /**
+   * ErrorCodes: PageNumberLessThan1
+   * @format int32
+   * @min 1
+   */
+  pageNumber: number | null
+  /**
+   * ErrorCodes: PageSizeLessThan1, PageSizeGreaterThan1000
+   * @format int32
+   * @min 1
+   * @max 1000
+   */
+  pageSize: number | null
+  /** ErrorCodes: OnlyArtistsNull */
+  onlyArtists: boolean
+}
+
+export interface SetAccountTypeDto {
+  /** ErrorCodes: ArtistNull */
+  artist: boolean
+}
+
+export interface SetBioDto {
+  /**
+   * ErrorCodes: BioTooLong
+   * @maxLength 4096
+   */
+  bio: string | null
+  /**
+   * ErrorCodes: CityTooLong
+   * @maxLength 64
+   */
+  city: string | null
 }
 
 export interface SignUpDto {
@@ -112,24 +347,40 @@ export interface SignUpDto {
 }
 
 export interface TatuazError {
-  code?: string
-  message?: string
+  code: string
+  message: string
+}
+
+export interface UploadedPhotosDto {
+  /** @format uuid */
+  initialPostId: string
+  photos: string[]
 }
 
 export interface UserDto {
-  username?: string
-  email?: string
-  auth0Id?: string
+  username: string
+  email: string
+  auth0Id: string
   /** @format uri */
-  foregroundPhotoUri?: string | null
+  foregroundPhotoUri: string | null
   /** @format uri */
-  backgroundPhotoUri?: string | null
+  backgroundPhotoUri: string | null
+  bio: string | null
+  city: string | null
+  artist: boolean
 }
 
-export type QueryParamsType = Record<string | number, any>
-export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">
+import axios, {
+  AxiosInstance,
+  AxiosRequestConfig,
+  HeadersDefaults,
+  ResponseType,
+} from "axios"
 
-export interface FullRequestParams extends Omit<RequestInit, "body"> {
+export type QueryParamsType = Record<string | number, any>
+
+export interface FullRequestParams
+  extends Omit<AxiosRequestConfig, "data" | "params" | "url" | "responseType"> {
   /** set parameter to `true` for call `securityWorker` for this request */
   secure?: boolean
   /** request path */
@@ -139,13 +390,9 @@ export interface FullRequestParams extends Omit<RequestInit, "body"> {
   /** query params */
   query?: QueryParamsType
   /** format of response (i.e. response.json() -> format: "json") */
-  format?: ResponseFormat
+  format?: ResponseType
   /** request body */
   body?: unknown
-  /** base url */
-  baseUrl?: string
-  /** request cancellation token */
-  cancelToken?: CancelToken
 }
 
 export type RequestParams = Omit<
@@ -153,175 +400,133 @@ export type RequestParams = Omit<
   "body" | "method" | "query" | "path"
 >
 
-export interface ApiConfig<SecurityDataType = unknown> {
-  baseUrl?: string
-  baseApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">
+export interface ApiConfig<SecurityDataType = unknown>
+  extends Omit<AxiosRequestConfig, "data" | "cancelToken"> {
   securityWorker?: (
     securityData: SecurityDataType | null
-  ) => Promise<RequestParams | void> | RequestParams | void
-  customFetch?: typeof fetch
+  ) => Promise<AxiosRequestConfig | void> | AxiosRequestConfig | void
+  secure?: boolean
+  format?: ResponseType
 }
-
-export interface HttpResponse<D extends unknown, E extends unknown = unknown>
-  extends Response {
-  data: D
-  error: E
-}
-
-type CancelToken = Symbol | string | number
 
 export enum ContentType {
   Json = "application/json",
   FormData = "multipart/form-data",
   UrlEncoded = "application/x-www-form-urlencoded",
+  Text = "text/plain",
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-  public baseUrl: string = ""
+  public instance: AxiosInstance
   private securityData: SecurityDataType | null = null
   private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"]
-  private abortControllers = new Map<CancelToken, AbortController>()
-  private customFetch = (...fetchParams: Parameters<typeof fetch>) =>
-    fetch(...fetchParams)
+  private secure?: boolean
+  private format?: ResponseType
 
-  private baseApiParams: RequestParams = {
-    credentials: "same-origin",
-    headers: {},
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-  }
-
-  constructor(apiConfig: ApiConfig<SecurityDataType> = {}) {
-    Object.assign(this, apiConfig)
+  constructor({
+    securityWorker,
+    secure,
+    format,
+    ...axiosConfig
+  }: ApiConfig<SecurityDataType> = {}) {
+    this.instance = axios.create({
+      ...axiosConfig,
+      baseURL: axiosConfig.baseURL || "",
+    })
+    this.secure = secure
+    this.format = format
+    this.securityWorker = securityWorker
   }
 
   public setSecurityData = (data: SecurityDataType | null) => {
     this.securityData = data
   }
 
-  protected encodeQueryParam(key: string, value: any) {
-    const encodedKey = encodeURIComponent(key)
-    return `${encodedKey}=${encodeURIComponent(
-      typeof value === "number" ? value : `${value}`
-    )}`
-  }
-
-  protected addQueryParam(query: QueryParamsType, key: string) {
-    return this.encodeQueryParam(key, query[key])
-  }
-
-  protected addArrayQueryParam(query: QueryParamsType, key: string) {
-    const value = query[key]
-    return value.map((v: any) => this.encodeQueryParam(key, v)).join("&")
-  }
-
-  protected toQueryString(rawQuery?: QueryParamsType): string {
-    const query = rawQuery || {}
-    const keys = Object.keys(query).filter(
-      (key) => "undefined" !== typeof query[key]
-    )
-    return keys
-      .map((key) =>
-        Array.isArray(query[key])
-          ? this.addArrayQueryParam(query, key)
-          : this.addQueryParam(query, key)
-      )
-      .join("&")
-  }
-
-  protected addQueryParams(rawQuery?: QueryParamsType): string {
-    const queryString = this.toQueryString(rawQuery)
-    return queryString ? `?${queryString}` : ""
-  }
-
-  private contentFormatters: Record<ContentType, (input: any) => any> = {
-    [ContentType.Json]: (input: any) =>
-      input !== null && (typeof input === "object" || typeof input === "string")
-        ? JSON.stringify(input)
-        : input,
-    [ContentType.FormData]: (input: any) =>
-      Object.keys(input || {}).reduce((formData, key) => {
-        const property = input[key]
-        formData.append(
-          key,
-          property instanceof Blob
-            ? property
-            : typeof property === "object" && property !== null
-            ? JSON.stringify(property)
-            : `${property}`
-        )
-        return formData
-      }, new FormData()),
-    [ContentType.UrlEncoded]: (input: any) => this.toQueryString(input),
-  }
-
   protected mergeRequestParams(
-    params1: RequestParams,
-    params2?: RequestParams
-  ): RequestParams {
+    params1: AxiosRequestConfig,
+    params2?: AxiosRequestConfig
+  ): AxiosRequestConfig {
+    const method = params1.method || (params2 && params2.method)
+
     return {
-      ...this.baseApiParams,
+      ...this.instance.defaults,
       ...params1,
       ...(params2 || {}),
       headers: {
-        ...(this.baseApiParams.headers || {}),
+        ...((method &&
+          this.instance.defaults.headers[
+            method.toLowerCase() as keyof HeadersDefaults
+          ]) ||
+          {}),
         ...(params1.headers || {}),
         ...((params2 && params2.headers) || {}),
       },
     }
   }
 
-  protected createAbortSignal = (
-    cancelToken: CancelToken
-  ): AbortSignal | undefined => {
-    if (this.abortControllers.has(cancelToken)) {
-      const abortController = this.abortControllers.get(cancelToken)
-      if (abortController) {
-        return abortController.signal
+  protected stringifyFormItem(formItem: unknown) {
+    if (typeof formItem === "object" && formItem !== null) {
+      return JSON.stringify(formItem)
+    } else {
+      return `${formItem}`
+    }
+  }
+
+  protected createFormData(input: Record<string, unknown>): FormData {
+    return Object.keys(input || {}).reduce((formData, key) => {
+      const property = input[key]
+      const propertyContent: any[] =
+        property instanceof Array ? property : [property]
+
+      for (const formItem of propertyContent) {
+        const isFileType = formItem instanceof Blob || formItem instanceof File
+        formData.append(
+          key,
+          isFileType ? formItem : this.stringifyFormItem(formItem)
+        )
       }
-      return void 0
-    }
 
-    const abortController = new AbortController()
-    this.abortControllers.set(cancelToken, abortController)
-    return abortController.signal
+      return formData
+    }, new FormData())
   }
 
-  public abortRequest = (cancelToken: CancelToken) => {
-    const abortController = this.abortControllers.get(cancelToken)
-
-    if (abortController) {
-      abortController.abort()
-      this.abortControllers.delete(cancelToken)
-    }
-  }
-
-  public request = async <T = any, E = any>({
-    body,
+  public request = async <T = any, _E = any>({
     secure,
     path,
     type,
     query,
     format,
-    baseUrl,
-    cancelToken,
+    body,
     ...params
   }: FullRequestParams): Promise<T> => {
     const secureParams =
-      ((typeof secure === "boolean" ? secure : this.baseApiParams.secure) &&
+      ((typeof secure === "boolean" ? secure : this.secure) &&
         this.securityWorker &&
         (await this.securityWorker(this.securityData))) ||
       {}
     const requestParams = this.mergeRequestParams(params, secureParams)
-    const queryString = query && this.toQueryString(query)
-    const payloadFormatter = this.contentFormatters[type || ContentType.Json]
-    const responseFormat = format || requestParams.format
+    const responseFormat = format || this.format || undefined
 
-    return this.customFetch(
-      `${baseUrl || this.baseUrl || ""}${path}${
-        queryString ? `?${queryString}` : ""
-      }`,
-      {
+    if (
+      type === ContentType.FormData &&
+      body &&
+      body !== null &&
+      typeof body === "object"
+    ) {
+      body = this.createFormData(body as Record<string, unknown>)
+    }
+
+    if (
+      type === ContentType.Text &&
+      body &&
+      body !== null &&
+      typeof body !== "string"
+    ) {
+      body = JSON.stringify(body)
+    }
+
+    return this.instance
+      .request({
         ...requestParams,
         headers: {
           ...(requestParams.headers || {}),
@@ -329,42 +534,12 @@ export class HttpClient<SecurityDataType = unknown> {
             ? { "Content-Type": type }
             : {}),
         },
-        signal: cancelToken
-          ? this.createAbortSignal(cancelToken)
-          : requestParams.signal,
-        body:
-          typeof body === "undefined" || body === null
-            ? null
-            : payloadFormatter(body),
-      }
-    ).then(async (response) => {
-      const r = response as HttpResponse<T, E>
-      r.data = null as unknown as T
-      r.error = null as unknown as E
-
-      const data = !responseFormat
-        ? r
-        : await response[responseFormat]()
-            .then((data) => {
-              if (r.ok) {
-                r.data = data
-              } else {
-                r.error = data
-              }
-              return r
-            })
-            .catch((e) => {
-              r.error = e
-              return r
-            })
-
-      if (cancelToken) {
-        this.abortControllers.delete(cancelToken)
-      }
-
-      if (!response.ok) throw data
-      return data.data
-    })
+        params: query,
+        responseType: responseFormat,
+        data: body,
+        url: path,
+      })
+      .then((response) => response.data)
   }
 }
 
@@ -436,6 +611,7 @@ export class Api<
      * @response `201` `EmptyResponse` Created
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
      * @response `500` `ErrorResponse` Server Error
      */
     setForegroundPhoto: (
@@ -466,6 +642,7 @@ export class Api<
      * @response `201` `EmptyResponse` Created
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
      * @response `500` `ErrorResponse` Server Error
      */
     setBackgroundPhoto: (
@@ -496,6 +673,7 @@ export class Api<
      * @response `201` `EmptyResponse` Created
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
      * @response `500` `ErrorResponse` Server Error
      */
     deleteForegroundPhoto: (
@@ -523,6 +701,7 @@ export class Api<
      * @response `201` `EmptyResponse` Created
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
      * @response `500` `ErrorResponse` Server Error
      */
     deleteBackgroundPhoto: (
@@ -547,14 +726,121 @@ export class Api<
      * @summary Get user with username
      * @request POST:/Identity/GetUser
      * @secure
-     * @response `201` `EmptyResponse` Created
+     * @response `201` `OkResponseUserDto` Created
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
      * @response `500` `ErrorResponse` Server Error
      */
     getUser: (data: GetUserDto, params: RequestParams = {}) =>
-      this.request<EmptyResponse, ErrorResponse | EmptyResponse>({
+      this.request<OkResponseUserDto, ErrorResponse | EmptyResponse>({
         path: `/Identity/GetUser`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Identity
+     * @name SetBio
+     * @summary Set bio for current user
+     * @request POST:/Identity/SetBio
+     * @secure
+     * @response `200` `EmptyResponse` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    setBio: (data: SetBioDto, params: RequestParams = {}) =>
+      this.request<EmptyResponse, ErrorResponse | EmptyResponse>({
+        path: `/Identity/SetBio`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Identity
+     * @name SetAccountType
+     * @summary Set account type for current user
+     * @request POST:/Identity/SetAccountType
+     * @secure
+     * @response `200` `EmptyResponse` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    setAccountType: (data: SetAccountTypeDto, params: RequestParams = {}) =>
+      this.request<EmptyResponse, ErrorResponse | EmptyResponse>({
+        path: `/Identity/SetAccountType`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Identity
+     * @name GetTopArtists
+     * @summary Set account type for current user
+     * @request POST:/Identity/GetTopArtists
+     * @secure
+     * @response `200` `OkResponsePagedDataBriefUserDto` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    getTopArtists: (data: GetTopArtistsDto, params: RequestParams = {}) =>
+      this.request<
+        OkResponsePagedDataBriefUserDto,
+        ErrorResponse | EmptyResponse
+      >({
+        path: `/Identity/GetTopArtists`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Identity
+     * @name SearchUsers
+     * @summary Search users
+     * @request POST:/Identity/SearchUsers
+     * @secure
+     * @response `200` `OkResponsePagedDataBriefUserDto` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    searchUsers: (data: SearchUsersDto, params: RequestParams = {}) =>
+      this.request<
+        OkResponsePagedDataBriefUserDto,
+        ErrorResponse | EmptyResponse
+      >({
+        path: `/Identity/SearchUsers`,
         method: "POST",
         body: data,
         secure: true,
@@ -574,6 +860,7 @@ export class Api<
      * @response `200` `OkResponsePagedDataCategoryDto` Success
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
      * @response `500` `ErrorResponse` Server Error
      */
     listCategories: (data: ListCategoriesDto, params: RequestParams = {}) =>
@@ -582,6 +869,171 @@ export class Api<
         ErrorResponse | EmptyResponse
       >({
         path: `/Photo/ListCategories`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+  }
+  post = {
+    /**
+     * No description
+     *
+     * @tags Post
+     * @name UploadPostPhotos
+     * @summary Upload post photos
+     * @request POST:/Post/UploadPostPhotos
+     * @secure
+     * @response `200` `OkResponseUploadedPhotosDto` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    uploadPostPhotos: (
+      data: {
+        Photos?: File[]
+      },
+      params: RequestParams = {}
+    ) =>
+      this.request<OkResponseUploadedPhotosDto, ErrorResponse | EmptyResponse>({
+        path: `/Post/UploadPostPhotos`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Post
+     * @name FinalizePost
+     * @summary Finalize post
+     * @request POST:/Post/FinalizePost
+     * @secure
+     * @response `200` `OkResponseEmptyResponse` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    finalizePost: (data: FinalizePostDto, params: RequestParams = {}) =>
+      this.request<OkResponseEmptyResponse, ErrorResponse | EmptyResponse>({
+        path: `/Post/FinalizePost`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Post
+     * @name SearchPosts
+     * @summary Search posts
+     * @request POST:/Post/SearchPosts
+     * @secure
+     * @response `200` `OkResponsePagedDataBriefPostDto` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    searchPosts: (data: SearchPostsDto, params: RequestParams = {}) =>
+      this.request<
+        OkResponsePagedDataBriefPostDto,
+        ErrorResponse | EmptyResponse
+      >({
+        path: `/Post/SearchPosts`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Post
+     * @name LikePost
+     * @summary Like post
+     * @request POST:/Post/LikePost
+     * @secure
+     * @response `200` `OkResponseEmptyResponse` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    likePost: (data: LikePostDto, params: RequestParams = {}) =>
+      this.request<OkResponseEmptyResponse, ErrorResponse | EmptyResponse>({
+        path: `/Post/LikePost`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Post
+     * @name GetUserPosts
+     * @summary Get user posts
+     * @request POST:/Post/GetUserPosts
+     * @secure
+     * @response `200` `OkResponsePagedDataBriefPostDto` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    getUserPosts: (data: GetUserPostsDto, params: RequestParams = {}) =>
+      this.request<
+        OkResponsePagedDataBriefPostDto,
+        ErrorResponse | EmptyResponse
+      >({
+        path: `/Post/GetUserPosts`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Post
+     * @name GetPostFeed
+     * @summary Get post feed
+     * @request POST:/Post/GetPostFeed
+     * @secure
+     * @response `200` `OkResponsePagedDataBriefPostDto` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    getPostFeed: (data: GetPostFeedDto, params: RequestParams = {}) =>
+      this.request<
+        OkResponsePagedDataBriefPostDto,
+        ErrorResponse | EmptyResponse
+      >({
+        path: `/Post/GetPostFeed`,
         method: "POST",
         body: data,
         secure: true,
@@ -600,11 +1052,11 @@ export class Api<
 A client is a user who has booked at least 1 appointment
  * @request POST:/Statistics/GetRegisteredStats
  * @secure
- * @response `200` `OkResponseInt` Success
+ * @response `200` `OkResponseRegisteredStatsDto` Success
  * @response `500` `ErrorResponse` Server Error
  */
     getRegisteredStats: (params: RequestParams = {}) =>
-      this.request<OkResponseInt, ErrorResponse>({
+      this.request<OkResponseRegisteredStatsDto, ErrorResponse>({
         path: `/Statistics/GetRegisteredStats`,
         method: "POST",
         secure: true,

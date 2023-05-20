@@ -1,32 +1,44 @@
+import { SkeletonText } from "@chakra-ui/react"
+import { FunctionComponent } from "react"
+import InfiniteScroll from "react-infinite-scroll-component"
+import { BriefUserDto } from "../../../api/tatuazApi"
+import formatCDNImageUrl from "../../../utils/format/formatCDNImageUrl"
 import ArtistCard from "./ArtistCard"
 import { ArtistCardAreaWrapper } from "./styles"
 
-const ArtistsArea = () => (
+type ArtistsAreaProps = {
+  items: BriefUserDto[]
+  isLoading?: boolean
+  fetchNextPage: () => void
+  hasNextPage?: boolean
+}
+
+const ArtistsArea: FunctionComponent<ArtistsAreaProps> = ({
+  items,
+  isLoading,
+  fetchNextPage,
+  hasNextPage,
+}) => (
   <ArtistCardAreaWrapper>
-    <ArtistCard
-      artistDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Consequat
-          ac felis donec et odio pellentesque diam volutpat commodo."
-      artistName="Kelvin Sam"
-    />
-    <ArtistCard
-      artistDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-       eiusmod tempor incididunt ut labore et dolore magna aliqua. Consequat
-       ac felis donec et odio pellentesque diam volutpat commodo."
-      artistName="Andrew C"
-    />
-    <ArtistCard
-      artistDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-     eiusmod tempor incididunt ut labore et dolore magna aliqua. Consequat
-     ac felis donec et odio pellentesque diam volutpat commodo."
-      artistName="Samuel Buro"
-    />
-    <ArtistCard
-      artistDescription="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-        eiusmod tempor incididunt ut labore et dolore magna aliqua. Consequat
-        ac felis donec et odio pellentesque diam volutpat commodo."
-      artistName="Ejczu Ebezoka"
-    />
+    <InfiniteScroll
+      dataLength={items.length}
+      hasMore={hasNextPage || false}
+      loader={
+        <SkeletonText isLoaded={!isLoading} noOfLines={5} skeletonHeight={10} />
+      }
+      next={fetchNextPage}
+    >
+      {items.map((item) => (
+        <ArtistCard
+          key={item.username}
+          artistDescription={item.bio ?? item.city ?? ""}
+          artistName={item.username}
+          foregroundPhotoUrl={formatCDNImageUrl(item.foregroundPhotoUri ?? "", {
+            maxWidth: 256,
+          })}
+        />
+      ))}
+    </InfiniteScroll>
   </ArtistCardAreaWrapper>
 )
 export default ArtistsArea
