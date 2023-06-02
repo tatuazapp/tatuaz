@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,11 @@ using Tatuaz.Shared.Infrastructure.DataAccess;
 namespace Tatuaz.Shared.Infrastructure.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230602124319_AddBookingDate")]
+    partial class AddBookingDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +27,7 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Booking.BookingRequest", b =>
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Booking.Date", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,11 +50,11 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("comment");
 
-                    b.Property<Instant>("End")
+                    b.Property<DateTime>("End")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("end");
 
-                    b.Property<Instant>("Start")
+                    b.Property<DateTime>("Start")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("start");
 
@@ -60,15 +63,15 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                         .HasColumnName("status");
 
                     b.HasKey("Id")
-                        .HasName("pk_booking_requests");
+                        .HasName("pk_dates");
 
                     b.HasIndex("ArtistEmail")
-                        .HasDatabaseName("ix_booking_requests_artist_email");
+                        .HasDatabaseName("ix_dates_artist_email");
 
                     b.HasIndex("ClientEmail")
-                        .HasDatabaseName("ix_booking_requests_client_email");
+                        .HasDatabaseName("ix_dates_client_email");
 
-                    b.ToTable("booking_requests", "booking");
+                    b.ToTable("dates", "booking");
                 });
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.General.EmailInfo", b =>
@@ -601,21 +604,21 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                     b.ToTable("post_photos", "post");
                 });
 
-            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Booking.BookingRequest", b =>
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Booking.Date", b =>
                 {
                     b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", "Artist")
                         .WithMany()
                         .HasForeignKey("ArtistEmail")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_booking_requests_tatuaz_users_artist_id");
+                        .HasConstraintName("fk_dates_tatuaz_users_artist_id");
 
                     b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", "Client")
                         .WithMany()
                         .HasForeignKey("ClientEmail")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_booking_requests_tatuaz_users_client_id");
+                        .HasConstraintName("fk_dates_tatuaz_users_client_id");
 
                     b.Navigation("Artist");
 

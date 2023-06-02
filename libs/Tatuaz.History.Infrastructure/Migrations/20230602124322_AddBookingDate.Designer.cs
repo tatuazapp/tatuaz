@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NodaTime;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,11 @@ using Tatuaz.History.DataAccess;
 namespace Tatuaz.History.DataAccess.Migrations
 {
     [DbContext(typeof(HistDbContext))]
-    partial class HistDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230602124322_AddBookingDate")]
+    partial class AddBookingDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +27,7 @@ namespace Tatuaz.History.DataAccess.Migrations
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Booking.HistBookingRequest", b =>
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Booking.HistDate", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,7 +50,7 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("text")
                         .HasColumnName("customer_email");
 
-                    b.Property<Instant>("End")
+                    b.Property<DateTime>("End")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("end");
 
@@ -63,7 +66,7 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("hist_state");
 
-                    b.Property<Instant>("Start")
+                    b.Property<DateTime>("Start")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("start");
 
@@ -72,9 +75,9 @@ namespace Tatuaz.History.DataAccess.Migrations
                         .HasColumnName("status");
 
                     b.HasKey("Id")
-                        .HasName("pk_hist_booking_requests");
+                        .HasName("pk_hist_dates");
 
-                    b.ToTable("hist_booking_requests", "H_booking");
+                    b.ToTable("hist_dates", "H_booking");
                 });
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.General.HistEmailInfo", b =>
