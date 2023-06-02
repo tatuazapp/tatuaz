@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NodaTime;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Common;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
+using Tatuaz.Shared.Domain.Entities.Models.Booking;
 using Tatuaz.Shared.Domain.Entities.Models.Common;
 using Tatuaz.Shared.Domain.Entities.Models.Photo;
 
@@ -17,6 +18,7 @@ public class TatuazUser : Entity<HistTatuazUser, string>
     public string Auth0Id { get; set; } = default!;
     public virtual ICollection<TatuazUserRole> UserRoles { get; set; } = default!;
     public virtual ICollection<UserCategory> UserPhotoCategories { get; set; } = default!;
+    public virtual ICollection<BookingRequest> BookingRequests { get; set; } = default!;
     public Guid? ForegroundPhotoId { get; set; }
     public virtual Photo.Photo? ForegroundPhoto { get; set; }
     public Guid? BackgroundPhotoId { get; set; }

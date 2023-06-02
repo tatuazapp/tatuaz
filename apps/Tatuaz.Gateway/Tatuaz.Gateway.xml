@@ -102,6 +102,34 @@
             Optional theme added via custom css
             </summary>
         </member>
+        <member name="M:Tatuaz.Gateway.Controllers.BookingController.SendBookingRequest(Tatuaz.Shared.Domain.Dtos.Dtos.Booking.SendBookingRequestDto)">
+            <summary>
+            Send booking request. Limit 1024 znaki na komentarz jak coś B-)
+            </summary>
+            <param name="sendBookingRequestDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.BookingController.ListMyBookingRequests(Tatuaz.Shared.Domain.Dtos.Dtos.Booking.ListMyBookingRequestsDto)">
+            <summary>
+            List my booking requests
+            </summary>
+            <param name="listMyBookingRequestsDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.BookingController.ListIncomingBookingRequests(Tatuaz.Shared.Domain.Dtos.Dtos.Booking.ListIncomingBookingRequestsDto)">
+            <summary>
+            List incoming booking requests
+            </summary>
+            <param name="listIncomingBookingRequestsDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.BookingController.RespondToBookingRequest(Tatuaz.Shared.Domain.Dtos.Dtos.Booking.RespondToBookingRequestDto)">
+            <summary>
+            Respond to booking request
+            </summary>
+            <param name="respondToBookingRequestDto"></param>
+            <returns></returns>
+        </member>
         <member name="T:Tatuaz.Gateway.Controllers.CommentController">
             <summary>
             Controller for comments under posts
@@ -117,7 +145,7 @@
             <param name="submitCommentDto"></param>
             <returns></returns>
         </member>
-        <member name="M:Tatuaz.Gateway.Controllers.CommentController.LikePost(Tatuaz.Shared.Domain.Dtos.Dtos.Comment.LikeCommentDto)">
+        <member name="M:Tatuaz.Gateway.Controllers.CommentController.LikeComment(Tatuaz.Shared.Domain.Dtos.Dtos.Comment.LikeCommentDto)">
             <summary>
             Like comment
             </summary>
