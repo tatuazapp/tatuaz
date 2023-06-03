@@ -1,3 +1,5 @@
+import { SettingsIcon } from "@chakra-ui/icons"
+import { Tooltip } from "@chakra-ui/react"
 import { Heading4 } from "@tatuaz/ui"
 import { FunctionComponent, useState } from "react"
 import ClampLines from "react-clamp-lines"
@@ -14,6 +16,8 @@ import {
 } from "../BackgroundAndAvatarContainer/styles"
 import BackgroundPhotoUploadModal from "../BackgroundPhotoUploadModal"
 import EditBioModal from "../EditBioModal"
+import UserSettingsModal from "../UserSettingsModal"
+import { ArtistIcon, SettingsButton } from "./styles"
 
 const MAX_BACKGROUND_PHOTO_SIZE = 1024
 const MAX_AVATAR_SIZE = 512
@@ -29,6 +33,7 @@ const BackgroundPhotoSection: FunctionComponent<
   const [isBackgroundModalOpen, setIsBackgroundModalOpen] = useState(false)
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false)
   const [isEditBioModalOpen, setIsEditBioModalOpen] = useState(false)
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
 
   const intl = useIntl()
 
@@ -44,6 +49,10 @@ const BackgroundPhotoSection: FunctionComponent<
     setIsEditBioModalOpen(true)
   }
 
+  const handleOpenModal = () => {
+    setIsSettingsModalOpen(true)
+  }
+
   return (
     <>
       <BackgroundAndAvatarContainer>
@@ -57,6 +66,17 @@ const BackgroundPhotoSection: FunctionComponent<
           isEditable={editable}
           onClick={editable ? handleBackgroundPhotoClick : undefined}
         />
+        {editable && (
+          <SettingsButton
+            aria-label={intl.formatMessage({
+              defaultMessage: "Ustawienia",
+              id: "rvneDJ",
+            })}
+            icon={<SettingsIcon />}
+            size="sm"
+            onClick={handleOpenModal}
+          />
+        )}
         <AvatarContainer
           isEditable={editable}
           src={formatCDNImageUrl(user?.foregroundPhotoUri ?? "", {
@@ -65,7 +85,23 @@ const BackgroundPhotoSection: FunctionComponent<
           onClick={editable && handleAvatarPhotoClick}
         />
         <UserInfoContainer>
-          <Heading4>{user?.username ?? "-"}</Heading4>
+          <Heading4>
+            {user?.username ?? "-"}
+            {user?.artist && (
+              <Tooltip
+                aria-label={intl.formatMessage({
+                  defaultMessage: "Ten użytkownik jest artystą",
+                  id: "odBvYT",
+                })}
+                label={intl.formatMessage({
+                  defaultMessage: "Ten użytkownik jest artystą",
+                  id: "odBvYT",
+                })}
+              >
+                <ArtistIcon />
+              </Tooltip>
+            )}
+          </Heading4>
           <BioContainer
             isEditable={editable}
             isEmpty={!user?.bio}
@@ -99,7 +135,11 @@ const BackgroundPhotoSection: FunctionComponent<
           </BioContainer>
         </UserInfoContainer>
       </BackgroundAndAvatarContainer>
-
+      <UserSettingsModal
+        isModalOpen={isSettingsModalOpen}
+        setIsModalOpen={setIsSettingsModalOpen}
+        user={user}
+      />
       <BackgroundPhotoUploadModal
         isOpen={isBackgroundModalOpen}
         onClose={() => setIsBackgroundModalOpen(false)}

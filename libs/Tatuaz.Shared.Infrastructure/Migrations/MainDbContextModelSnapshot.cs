@@ -24,6 +24,53 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Booking.BookingRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ArtistEmail")
+                        .IsRequired()
+                        .HasColumnType("character varying(320)")
+                        .HasColumnName("artist_email");
+
+                    b.Property<string>("ClientEmail")
+                        .IsRequired()
+                        .HasColumnType("character varying(320)")
+                        .HasColumnName("client_email");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("text")
+                        .HasColumnName("comment");
+
+                    b.Property<Instant>("End")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("end");
+
+                    b.Property<Instant>("Start")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("start");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("pk_booking_requests");
+
+                    b.HasIndex("ArtistEmail")
+                        .HasDatabaseName("ix_booking_requests_artist_email");
+
+                    b.HasIndex("ClientEmail")
+                        .HasDatabaseName("ix_booking_requests_client_email");
+
+                    b.ToTable("booking_requests", "booking");
+                });
+
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.General.EmailInfo", b =>
                 {
                     b.Property<Guid>("Id")
@@ -554,6 +601,27 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
                     b.ToTable("post_photos", "post");
                 });
 
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Booking.BookingRequest", b =>
+                {
+                    b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", "Artist")
+                        .WithMany()
+                        .HasForeignKey("ArtistEmail")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_booking_requests_tatuaz_users_artist_id");
+
+                    b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientEmail")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_booking_requests_tatuaz_users_client_id");
+
+                    b.Navigation("Artist");
+
+                    b.Navigation("Client");
+                });
+
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Identity.TatuazUser", b =>
                 {
                     b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Photo.Photo", "BackgroundPhoto")
@@ -667,7 +735,7 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Post.CommentLike", b =>
                 {
                     b.HasOne("Tatuaz.Shared.Domain.Entities.Models.Post.Comment", "Comment")
-                        .WithMany()
+                        .WithMany("Likes")
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
@@ -787,6 +855,8 @@ namespace Tatuaz.Shared.Infrastructure.Migrations
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Post.Comment", b =>
                 {
                     b.Navigation("ChildComments");
+
+                    b.Navigation("Likes");
                 });
 
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Models.Post.InitialPost", b =>

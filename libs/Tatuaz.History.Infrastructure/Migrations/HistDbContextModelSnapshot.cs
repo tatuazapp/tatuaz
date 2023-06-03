@@ -24,6 +24,59 @@ namespace Tatuaz.History.DataAccess.Migrations
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.Booking.HistBookingRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ArtistEmail")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("artist_email");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("text")
+                        .HasColumnName("comment");
+
+                    b.Property<string>("CustomerEmail")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("customer_email");
+
+                    b.Property<Instant>("End")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("end");
+
+                    b.Property<Instant>("HistDumpedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("hist_dumped_at");
+
+                    b.Property<Guid>("HistId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("hist_id");
+
+                    b.Property<int>("HistState")
+                        .HasColumnType("integer")
+                        .HasColumnName("hist_state");
+
+                    b.Property<Instant>("Start")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("start");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("pk_hist_booking_requests");
+
+                    b.ToTable("hist_booking_requests", "H_booking");
+                });
+
             modelBuilder.Entity("Tatuaz.Shared.Domain.Entities.Hist.Models.General.HistEmailInfo", b =>
                 {
                     b.Property<Guid>("HistId")

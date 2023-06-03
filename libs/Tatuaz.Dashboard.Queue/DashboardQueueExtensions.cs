@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Tatuaz.Dashboard.Queue.Producers.Booking;
 using Tatuaz.Dashboard.Queue.Producers.Comment;
 using Tatuaz.Dashboard.Queue.Producers.Identity;
 using Tatuaz.Dashboard.Queue.Producers.Photo;
@@ -35,6 +36,10 @@ public static class DashboardQueueExtensions
         services.AddScoped<GetUserPostsProducer>();
         services.AddScoped<GetPostFeedProducer>();
         services.AddScoped<GetPostDetailsProducer>();
+        services.AddScoped<SendBookingRequestProducer>();
+        services.AddScoped<ListMyBookingRequestsProducer>();
+        services.AddScoped<ListIncomingBookingRequestsProducer>();
+        services.AddScoped<RespondToBookingRequestProducer>();
 
         return services;
     }

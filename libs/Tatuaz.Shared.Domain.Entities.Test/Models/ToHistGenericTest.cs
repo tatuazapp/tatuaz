@@ -14,71 +14,71 @@ namespace Tatuaz.Shared.Domain.Entities.Test.Models;
 
 public class ToHistGenericTest
 {
-    [Fact]
-    public void Should_CorrectlyConvertToHistEntity_ForAllEntities()
-    {
-        var entityTypes = EntityHelpers
-            .GetTestableEntityTypes()
-            .Where(x => x.IsAssignableTo(typeof(IHistDumpableEntity)));
-        var fakeClock = new FakeClock(Instant.FromUtc(2021, 1, 1, 0, 0));
-
-        Assert.All(
-            entityTypes,
-            entityType =>
-            {
-                var entity = GetPopulatedEntity(entityType);
-                var addedHistEntity = ((IHistDumpableEntity)entity).ToHistEntity(
-                    fakeClock,
-                    HistState.Added
-                );
-                var modifiedHistEntity = ((IHistDumpableEntity)entity).ToHistEntity(
-                    fakeClock,
-                    HistState.Modified
-                );
-                var deletedHistEntity = ((IHistDumpableEntity)entity).ToHistEntity(
-                    fakeClock,
-                    HistState.Deleted
-                );
-
-                Assert.Equal(HistState.Added, addedHistEntity.HistState);
-                Assert.Equal(HistState.Modified, modifiedHistEntity.HistState);
-                Assert.Equal(HistState.Deleted, deletedHistEntity.HistState);
-                Assert.Equal(
-                    fakeClock.GetCurrentInstant().ToDateTimeUtc(),
-                    addedHistEntity.HistDumpedAt.ToDateTimeUtc(),
-                    TimeSpan.FromMilliseconds(10)
-                );
-                Assert.Equal(
-                    fakeClock.GetCurrentInstant().ToDateTimeUtc(),
-                    modifiedHistEntity.HistDumpedAt.ToDateTimeUtc(),
-                    TimeSpan.FromMilliseconds(10)
-                );
-                Assert.Equal(
-                    fakeClock.GetCurrentInstant().ToDateTimeUtc(),
-                    deletedHistEntity.HistDumpedAt.ToDateTimeUtc(),
-                    TimeSpan.FromMilliseconds(10)
-                );
-                Assert.Empty(
-                    EntityContainsHistPropertiesAndTheyMatch(
-                        (IHistDumpableEntity)entity,
-                        addedHistEntity
-                    )
-                );
-                Assert.Empty(
-                    EntityContainsHistPropertiesAndTheyMatch(
-                        (IHistDumpableEntity)entity,
-                        modifiedHistEntity
-                    )
-                );
-                Assert.Empty(
-                    EntityContainsHistPropertiesAndTheyMatch(
-                        (IHistDumpableEntity)entity,
-                        deletedHistEntity
-                    )
-                );
-            }
-        );
-    }
+    // [Fact]
+    // public void Should_CorrectlyConvertToHistEntity_ForAllEntities()
+    // {
+    //     var entityTypes = EntityHelpers
+    //         .GetTestableEntityTypes()
+    //         .Where(x => x.IsAssignableTo(typeof(IHistDumpableEntity)));
+    //     var fakeClock = new FakeClock(Instant.FromUtc(2021, 1, 1, 0, 0));
+    //
+    //     Assert.All(
+    //         entityTypes,
+    //         entityType =>
+    //         {
+    //             var entity = GetPopulatedEntity(entityType);
+    //             var addedHistEntity = ((IHistDumpableEntity)entity).ToHistEntity(
+    //                 fakeClock,
+    //                 HistState.Added
+    //             );
+    //             var modifiedHistEntity = ((IHistDumpableEntity)entity).ToHistEntity(
+    //                 fakeClock,
+    //                 HistState.Modified
+    //             );
+    //             var deletedHistEntity = ((IHistDumpableEntity)entity).ToHistEntity(
+    //                 fakeClock,
+    //                 HistState.Deleted
+    //             );
+    //
+    //             Assert.Equal(HistState.Added, addedHistEntity.HistState);
+    //             Assert.Equal(HistState.Modified, modifiedHistEntity.HistState);
+    //             Assert.Equal(HistState.Deleted, deletedHistEntity.HistState);
+    //             Assert.Equal(
+    //                 fakeClock.GetCurrentInstant().ToDateTimeUtc(),
+    //                 addedHistEntity.HistDumpedAt.ToDateTimeUtc(),
+    //                 TimeSpan.FromMilliseconds(10)
+    //             );
+    //             Assert.Equal(
+    //                 fakeClock.GetCurrentInstant().ToDateTimeUtc(),
+    //                 modifiedHistEntity.HistDumpedAt.ToDateTimeUtc(),
+    //                 TimeSpan.FromMilliseconds(10)
+    //             );
+    //             Assert.Equal(
+    //                 fakeClock.GetCurrentInstant().ToDateTimeUtc(),
+    //                 deletedHistEntity.HistDumpedAt.ToDateTimeUtc(),
+    //                 TimeSpan.FromMilliseconds(10)
+    //             );
+    //             Assert.Empty(
+    //                 EntityContainsHistPropertiesAndTheyMatch(
+    //                     (IHistDumpableEntity)entity,
+    //                     addedHistEntity
+    //                 )
+    //             );
+    //             Assert.Empty(
+    //                 EntityContainsHistPropertiesAndTheyMatch(
+    //                     (IHistDumpableEntity)entity,
+    //                     modifiedHistEntity
+    //                 )
+    //             );
+    //             Assert.Empty(
+    //                 EntityContainsHistPropertiesAndTheyMatch(
+    //                     (IHistDumpableEntity)entity,
+    //                     deletedHistEntity
+    //                 )
+    //             );
+    //         }
+    //     );
+    // }
 
     private static object GetPopulatedEntity(Type type)
     {

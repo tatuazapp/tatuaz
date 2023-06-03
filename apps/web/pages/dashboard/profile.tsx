@@ -21,6 +21,7 @@ export type UserProfile = {
   backgroundPhotoUri?: string | null
   bio?: string | null
   city?: string | null
+  artist?: boolean
 }
 
 const UserProfile: NextPage = () => {

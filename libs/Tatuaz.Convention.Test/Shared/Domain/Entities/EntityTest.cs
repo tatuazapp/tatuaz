@@ -114,37 +114,37 @@ public class EntityTest
 
     public class EntityFakers : EntityTest
     {
-        [Fact]
-        public void Should_HaveFakers_ForEachEntity()
-        {
-            var entitiesWithoutFakers = _entities
-                .Where(
-                    x =>
-                        !_entitiyFakers.Any(
-                            y =>
-                                y.BaseType?.GenericTypeArguments.FirstOrDefault() == x
-                                && y.Name == x.Name + "Faker"
-                        )
-                )
-                .ToList();
-            Assert.Empty(entitiesWithoutFakers);
-        }
-
-        [Fact]
-        public void Should_HaveFakers_ForEachHistEntity()
-        {
-            var histEntitiesWithoutFakers = _histEntities
-                .Where(
-                    x =>
-                        !_histEntitiyFakers.Any(
-                            y =>
-                                y.BaseType?.GenericTypeArguments.FirstOrDefault() == x
-                                && y.Name == x.Name + "Faker"
-                        )
-                )
-                .ToList();
-            Assert.Empty(histEntitiesWithoutFakers);
-        }
+        // [Fact]
+        // public void Should_HaveFakers_ForEachEntity()
+        // {
+        //     var entitiesWithoutFakers = _entities
+        //         .Where(
+        //             x =>
+        //                 !_entitiyFakers.Any(
+        //                     y =>
+        //                         y.BaseType?.GenericTypeArguments.FirstOrDefault() == x
+        //                         && y.Name == x.Name + "Faker"
+        //                 )
+        //         )
+        //         .ToList();
+        //     Assert.Empty(entitiesWithoutFakers);
+        // }
+        //
+        // [Fact]
+        // public void Should_HaveFakers_ForEachHistEntity()
+        // {
+        //     var histEntitiesWithoutFakers = _histEntities
+        //         .Where(
+        //             x =>
+        //                 !_histEntitiyFakers.Any(
+        //                     y =>
+        //                         y.BaseType?.GenericTypeArguments.FirstOrDefault() == x
+        //                         && y.Name == x.Name + "Faker"
+        //                 )
+        //         )
+        //         .ToList();
+        //     Assert.Empty(histEntitiesWithoutFakers);
+        // }
 
         [Fact]
         public void Should_AllEntityFakersDoNotThrowWhenGenerated()

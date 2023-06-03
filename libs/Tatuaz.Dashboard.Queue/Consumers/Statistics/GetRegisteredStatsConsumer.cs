@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.Extensions.Logging;
@@ -6,7 +7,6 @@ using Tatuaz.Shared.Domain.Dtos.Dtos.Statistics;
 using Tatuaz.Shared.Domain.Entities.Hist.Models.Identity;
 using Tatuaz.Shared.Domain.Entities.Models.Identity;
 using Tatuaz.Shared.Infrastructure.Abstractions.DataAccess;
-using Tatuaz.Shared.Infrastructure.Specification;
 using Tatuaz.Shared.Pipeline.Factories.Results;
 using Tatuaz.Shared.Pipeline.Messages;
 using Tatuaz.Shared.Pipeline.Queues;
@@ -33,9 +33,18 @@ public class GetRegisteredStatsConsumer : TatuazConsumerBase<GetRegisteredStats,
         var users = (int)
             await _userRepository.CountByPredicateAsync(x => true).ConfigureAwait(false);
 
-        //TODO: get artists and clients counts once they are implemented
-        var result = new RegisteredStatsDto(users / 3, users / 2, users);
+        var artists = (int)
+            await _userRepository
+                .CountByPredicateAsync(x => x.UserRoles.Any(y => y.Role.Id == TatuazRole.ArtistId))
+                .ConfigureAwait(false);
 
-        return CommonResultFactory.Ok<RegisteredStatsDto>(result);
+        var clients = (int)
+            await _userRepository
+                .CountByPredicateAsync(x => x.BookingRequests.Any())
+                .ConfigureAwait(false);
+
+        var result = new RegisteredStatsDto(artists, clients, users);
+
+        return CommonResultFactory.Ok(result);
     }
 }
