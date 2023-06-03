@@ -9,6 +9,24 @@
  * ---------------------------------------------------------------
  */
 
+export interface BookingRequestDto {
+  /** @format int32 */
+  id: number
+  artistName: string
+  /** @format date-time */
+  start: string
+  /** @format date-time */
+  end: string
+  comment: string | null
+  status: BookingRequestStatus
+}
+
+export enum BookingRequestStatus {
+  Pending = "Pending",
+  Accepted = "Accepted",
+  Rejected = "Rejected",
+}
+
 export interface BriefPostDto {
   /** @format uuid */
   id: string
@@ -140,6 +158,16 @@ export interface GetUserPostsDto {
 
 export type Instant = object
 
+export interface LikeCommentDto {
+  /**
+   * ErrorCodes: CommentIdIsNull
+   * @format uuid
+   */
+  commentId: string
+  /** ErrorCodes: LikeIsNull */
+  like: boolean
+}
+
 export interface LikePostDto {
   /**
    * ErrorCodes: PostIdIsNull
@@ -151,6 +179,40 @@ export interface LikePostDto {
 }
 
 export interface ListCategoriesDto {
+  /**
+   * ErrorCodes: PageNumberIsNull, PageNumberIsLessThan1
+   * @format int32
+   * @min 1
+   */
+  pageNumber: number
+  /**
+   * ErrorCodes: PageSizeIsNull, PageSizeIsLessThan1, PageSizeIsGreaterThan1000
+   * @format int32
+   * @min 1
+   * @max 1000
+   */
+  pageSize: number
+}
+
+export interface ListIncomingBookingRequestsDto {
+  status: BookingRequestStatus
+  /**
+   * ErrorCodes: PageNumberIsNull, PageNumberIsLessThan1
+   * @format int32
+   * @min 1
+   */
+  pageNumber: number
+  /**
+   * ErrorCodes: PageSizeIsNull, PageSizeIsLessThan1, PageSizeIsGreaterThan1000
+   * @format int32
+   * @min 1
+   * @max 1000
+   */
+  pageSize: number
+}
+
+export interface ListMyBookingRequestsDto {
+  status: BookingRequestStatus
   /**
    * ErrorCodes: PageNumberIsNull, PageNumberIsLessThan1
    * @format int32
@@ -203,6 +265,13 @@ export interface OkResponseRegisteredStatsDto {
 }
 
 /** Wrapper used for returning success responses. */
+export interface OkResponseSubmittedCommentDto {
+  value: SubmittedCommentDto
+  /** Indicates if request was successful. Should be always true for this type of response. */
+  success: boolean
+}
+
+/** Wrapper used for returning success responses. */
 export interface OkResponseUploadedPhotosDto {
   value: UploadedPhotosDto
   /** Indicates if request was successful. Should be always true for this type of response. */
@@ -214,6 +283,18 @@ export interface OkResponseUserDto {
   value: UserDto
   /** Indicates if request was successful. Should be always true for this type of response. */
   success: boolean
+}
+
+export interface PagedDataBookingRequestDto {
+  data: BookingRequestDto[]
+  /** @format int32 */
+  pageNumber: number
+  /** @format int32 */
+  pageSize: number
+  /** @format int32 */
+  totalPages: number
+  /** @format int32 */
+  totalCount: number
 }
 
 export interface PagedDataBriefPostDto {
@@ -268,6 +349,16 @@ export interface RegisteredStatsDto {
   users: number
 }
 
+export interface RespondToBookingRequestDto {
+  /**
+   * ErrorCodes: BookingRequestIdIsNull
+   * @format int32
+   */
+  bookingRequestId: number
+  /** ErrorCodes: AcceptIsNull */
+  accept: boolean
+}
+
 export interface SearchPostsDto {
   /**
    * ErrorCodes: QueryNull, QueryTooLong
@@ -316,6 +407,26 @@ export interface SearchUsersDto {
   onlyArtists: boolean
 }
 
+export interface SendBookingRequestDto {
+  /** ErrorCodes: ArtistEmailIsNull */
+  artistName: string
+  /**
+   * ErrorCodes: StartIsNull, StartIsGreaterThanEnd
+   * @format date-time
+   */
+  start: string
+  /**
+   * ErrorCodes: EndIsNull
+   * @format date-time
+   */
+  end: string
+  /**
+   * ErrorCodes: CommentIsTooLong
+   * @maxLength 1024
+   */
+  comment: string | null
+}
+
 export interface SetAccountTypeDto {
   /** ErrorCodes: ArtistNull */
   artist: boolean
@@ -344,6 +455,30 @@ export interface SignUpDto {
   username: string
   /** ErrorCodes: CategoryIdsNull, CategoryIdsTooFew, CategoryIdsInvalid, CategoryIdsDuplicate */
   categoryIds: number[]
+}
+
+export interface SubmitCommentDto {
+  /**
+   * ErrorCodes: PostIsNull, PostNotFound, ParentCommentNotFound
+   * @format uuid
+   */
+  postId: string
+  /**
+   * ErrorCodes: ParentCommentNotFound
+   * @format uuid
+   */
+  parentCommentId: string | null
+  /**
+   * ErrorCodes: ContentIsNull, ContentIsTooLong
+   * @maxLength 4096
+   */
+  content: string
+}
+
+export interface SubmittedCommentDto {
+  /** @format uuid */
+  commentId: string
+  content: string
 }
 
 export interface TatuazError {
@@ -552,6 +687,173 @@ export class HttpClient<SecurityDataType = unknown> {
 export class Api<
   SecurityDataType extends unknown
 > extends HttpClient<SecurityDataType> {
+  booking = {
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name SendBookingRequest
+     * @summary Send booking request. Limit 1024 znaki na komentarz jak coś B-)
+     * @request POST:/Booking/SendBookingRequest
+     * @secure
+     * @response `200` `EmptyResponse` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    sendBookingRequest: (
+      data: SendBookingRequestDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<EmptyResponse, ErrorResponse | EmptyResponse>({
+        path: `/Booking/SendBookingRequest`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name ListMyBookingRequests
+     * @summary List my booking requests
+     * @request POST:/Booking/ListMyBookingRequests
+     * @secure
+     * @response `200` `PagedDataBookingRequestDto` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    listMyBookingRequests: (
+      data: ListMyBookingRequestsDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<PagedDataBookingRequestDto, ErrorResponse | EmptyResponse>({
+        path: `/Booking/ListMyBookingRequests`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name ListIncomingBookingRequests
+     * @summary List incoming booking requests
+     * @request POST:/Booking/ListIncomingBookingRequests
+     * @secure
+     * @response `200` `PagedDataBookingRequestDto` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    listIncomingBookingRequests: (
+      data: ListIncomingBookingRequestsDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<PagedDataBookingRequestDto, ErrorResponse | EmptyResponse>({
+        path: `/Booking/ListIncomingBookingRequests`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Booking
+     * @name RespondToBookingRequest
+     * @summary Respond to booking request
+     * @request POST:/Booking/RespondToBookingRequest
+     * @secure
+     * @response `200` `PagedDataBookingRequestDto` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    respondToBookingRequest: (
+      data: RespondToBookingRequestDto,
+      params: RequestParams = {}
+    ) =>
+      this.request<PagedDataBookingRequestDto, ErrorResponse | EmptyResponse>({
+        path: `/Booking/RespondToBookingRequest`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+  }
+  comment = {
+    /**
+     * No description
+     *
+     * @tags Comment
+     * @name SubmitComment
+     * @summary Submit comments
+     * @request POST:/Comment/SubmitComment
+     * @secure
+     * @response `200` `OkResponseSubmittedCommentDto` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    submitComment: (data: SubmitCommentDto, params: RequestParams = {}) =>
+      this.request<
+        OkResponseSubmittedCommentDto,
+        ErrorResponse | EmptyResponse
+      >({
+        path: `/Comment/SubmitComment`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Comment
+     * @name LikeComment
+     * @summary Like comment
+     * @request POST:/Comment/LikeComment
+     * @secure
+     * @response `200` `OkResponseEmptyResponse` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    likeComment: (data: LikeCommentDto, params: RequestParams = {}) =>
+      this.request<OkResponseEmptyResponse, ErrorResponse | EmptyResponse>({
+        path: `/Comment/LikeComment`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+  }
   identity = {
     /**
      * No description
