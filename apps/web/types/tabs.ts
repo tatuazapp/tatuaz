@@ -1,1 +1,1 @@
-export type Tabs = "home" | "search" | "dashboard" | "profile"
+export type Tabs = "home" | "search" | "bookings" | "profile"

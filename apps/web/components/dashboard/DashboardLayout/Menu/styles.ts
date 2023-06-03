@@ -1,3 +1,4 @@
+import { CalendarDate } from "@styled-icons/bootstrap"
 import { Data as Dashboard } from "@styled-icons/boxicons-regular/Data"
 import { Home } from "@styled-icons/boxicons-regular/Home"
 import { User as Profile } from "@styled-icons/boxicons-regular/User"
@@ -106,6 +107,13 @@ export const DashboardIcon = styled(Dashboard)`
 export const ProfileIcon = styled(Profile)`
   width: ${rem(28)};
   height: ${rem(28)};
+`
+
+export const CalendarIcon = styled(CalendarDate)`
+  width: ${rem(28)};
+  height: ${rem(28)};
+  margin-right: ${({ theme }) => theme.space.xxxxsmall};
+  padding: ${({ theme }) => theme.space.xxxxsmall};
 `
 
 export const MenuListItemText = styled.p`
