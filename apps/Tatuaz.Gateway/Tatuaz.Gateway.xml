@@ -117,7 +117,7 @@
             <param name="submitCommentDto"></param>
             <returns></returns>
         </member>
-        <member name="M:Tatuaz.Gateway.Controllers.CommentController.LikePost(Tatuaz.Shared.Domain.Dtos.Dtos.Comment.LikeCommentDto)">
+        <member name="M:Tatuaz.Gateway.Controllers.CommentController.LikeComment(Tatuaz.Shared.Domain.Dtos.Dtos.Comment.LikeCommentDto)">
             <summary>
             Like comment
             </summary>
@@ -263,6 +263,13 @@
             Get post feed
             </summary>
             <param name="getPostFeedDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tatuaz.Gateway.Controllers.PostController.GetPostDetails(Tatuaz.Shared.Domain.Dtos.Dtos.Post.GetPostDetails.GetPostDetailsDto)">
+            <summary>
+            Get post details (photo categories and comments)
+            </summary>
+            <param name="getPostDetailsDto"></param>
             <returns></returns>
         </member>
         <member name="T:Tatuaz.Gateway.Controllers.StatisticsController">

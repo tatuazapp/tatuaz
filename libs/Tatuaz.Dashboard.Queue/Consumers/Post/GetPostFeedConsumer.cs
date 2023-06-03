@@ -22,11 +22,13 @@ namespace Tatuaz.Dashboard.Queue.Consumers.Post;
 public class GetPostFeedConsumer : TatuazConsumerBase<GetPostFeed, PagedData<BriefPostDto>>
 {
     private readonly IUserContext _userContext;
+
     private readonly IGenericRepository<
         Shared.Domain.Entities.Models.Post.Post,
         HistPost,
         Guid
     > _postRepository;
+
     private readonly IGenericRepository<PostLike, HistPostLike, Guid> _postLikeRepository;
     private readonly DbContext _dbContext;
 
