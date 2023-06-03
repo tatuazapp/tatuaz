@@ -32,7 +32,7 @@ const BookingRequestModal = ({
   const intl = useIntl()
 
   const respond = useMutation({
-    mutationFn: () =>
+    mutationFn: (accept: boolean) =>
       api.booking.respondToBookingRequest({
         bookingRequestId,
         accept,
@@ -60,7 +60,7 @@ const BookingRequestModal = ({
   })
 
   const handleSubmit = () => {
-    respond.mutate()
+    respond.mutate(accept)
     onClose()
   }
 
@@ -83,7 +83,7 @@ const BookingRequestModal = ({
           </p>
           <RadioGroup
             colorScheme="primary"
-            defaultValue="accept"
+            defaultValue="reject"
             mt={15}
             onChange={(value) => setAccept(value === "accept")}
           >
