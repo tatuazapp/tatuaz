@@ -8,6 +8,7 @@ using Tatuaz.Gateway.HttpResponses;
 using Tatuaz.Gateway.Requests.Commands.Post;
 using Tatuaz.Gateway.Requests.Queries.Posts;
 using Tatuaz.Shared.Domain.Dtos.Dtos.Post;
+using Tatuaz.Shared.Domain.Dtos.Dtos.Post.GetPostDetails;
 using Tatuaz.Shared.Infrastructure.Abstractions.Paging;
 
 namespace Tatuaz.Gateway.Controllers;
@@ -144,6 +145,27 @@ public class PostController : TatuazControllerBase
     {
         return ResultToActionResult(
             await Mediator.Send(new GetPostFeedQuery(getPostFeedDto)).ConfigureAwait(false)
+        );
+    }
+
+    /// <summary>
+    /// Get post details (photo categories and comments)
+    /// </summary>
+    /// <param name="getPostDetailsDto"></param>
+    /// <returns></returns>
+    [HttpPost("[action]")]
+    [AuthorizeActiveUser]
+    [Produces("application/json")]
+    [Consumes("application/json")]
+    [ProducesResponseType(typeof(OkResponse<PostDetailsDto>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(EmptyResponse), (int)HttpStatusCode.Forbidden)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
+    public async Task<IActionResult> GetPostDetails(GetPostDetailsDto getPostDetailsDto)
+    {
+        return ResultToActionResult(
+            await Mediator.Send(new GetPostDetailsQuery(getPostDetailsDto)).ConfigureAwait(false)
         );
     }
 }

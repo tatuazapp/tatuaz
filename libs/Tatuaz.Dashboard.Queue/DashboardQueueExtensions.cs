@@ -35,6 +35,7 @@ public static class DashboardQueueExtensions
         services.AddScoped<LikeCommentProducer>();
         services.AddScoped<GetUserPostsProducer>();
         services.AddScoped<GetPostFeedProducer>();
+        services.AddScoped<GetPostDetailsProducer>();
         services.AddScoped<SendBookingRequestProducer>();
         services.AddScoped<ListMyBookingRequestsProducer>();
         services.AddScoped<ListIncomingBookingRequestsProducer>();

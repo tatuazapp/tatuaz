@@ -27,12 +27,6 @@ public class SubmitCommentConsumer : TatuazConsumerBase<SubmitComment, Submitted
         Guid
     > _commentRepository;
 
-    private readonly IGenericRepository<
-        Shared.Domain.Entities.Models.Post.Post,
-        HistPost,
-        Guid
-    > _postRepository;
-
     private readonly IUserContext _userContext;
     private readonly IUnitOfWork _unitOfWork;
 
@@ -44,15 +38,13 @@ public class SubmitCommentConsumer : TatuazConsumerBase<SubmitComment, Submitted
             Guid
         > commentRepository,
         IUserContext userContext,
-        IUnitOfWork unitOfWork,
-        IGenericRepository<Shared.Domain.Entities.Models.Post.Post, HistPost, Guid> postRepository
+        IUnitOfWork unitOfWork
     )
         : base(logger)
     {
         _commentRepository = commentRepository;
         _userContext = userContext;
         _unitOfWork = unitOfWork;
-        _postRepository = postRepository;
     }
 
     protected override async Task<TatuazResult<SubmittedCommentDto>> ConsumeMessage(
