@@ -13,9 +13,9 @@ import {
   MenuWrapper,
   WordmarkWrapper,
   SearchIcon,
-  DashboardIcon,
   ProfileIcon,
   SignOutButtonWrapper,
+  CalendarIcon,
 } from "./styles"
 
 const tabs = [
@@ -29,13 +29,11 @@ const tabs = [
     href: "/dashboard/search",
     id: "search",
   },
-  // TODO: This panel does not maked sense for now
-  // eslint-disable-next-line etc/no-commented-out-code
-  // {
-  //   name: <FormattedMessage defaultMessage="Panel" id="hIxZtX" />,
-  //   href: "/dashboard/dashboard",
-  //   id: "dashboard",
-  // },
+  {
+    name: <FormattedMessage defaultMessage="Rezerwacje" id="oR/Kg8" />,
+    href: "/dashboard/bookings",
+    id: "bookings",
+  },
   {
     name: <FormattedMessage defaultMessage="Profil" id="n7oiI/" />,
     href: "/dashboard/profile",
@@ -57,8 +55,8 @@ const render = (tab: Tabs) => {
         return <HomeIcon />
       case "search":
         return <SearchIcon />
-      case "dashboard":
-        return <DashboardIcon />
+      case "bookings":
+        return <CalendarIcon />
       case "profile":
         return <ProfileIcon />
     }

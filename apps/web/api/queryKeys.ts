@@ -8,4 +8,6 @@ export const queryKeys = {
   getTopArtists: "getTopArtists",
   getUserPosts: "getUserPosts",
   getPostFeed: "getPostFeed",
+  listMyBookingRequests: "listMyBookingRequests",
+  listIncomingBookingRequests: "listIncomingBookingRequests",
 } as const

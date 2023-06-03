@@ -1,4 +1,4 @@
-import { SettingsIcon } from "@chakra-ui/icons"
+import { CalendarIcon, SettingsIcon } from "@chakra-ui/icons"
 import { Tooltip } from "@chakra-ui/react"
 import { Heading4 } from "@tatuaz/ui"
 import { FunctionComponent, useState } from "react"
@@ -15,9 +15,10 @@ import {
   UserInfoContainer,
 } from "../BackgroundAndAvatarContainer/styles"
 import BackgroundPhotoUploadModal from "../BackgroundPhotoUploadModal"
+import BookingModal from "../BookingModal"
 import EditBioModal from "../EditBioModal"
 import UserSettingsModal from "../UserSettingsModal"
-import { ArtistIcon, SettingsButton } from "./styles"
+import { ArtistIcon, BookingButton, SettingsButton } from "./styles"
 
 const MAX_BACKGROUND_PHOTO_SIZE = 1024
 const MAX_AVATAR_SIZE = 512
@@ -34,6 +35,7 @@ const BackgroundPhotoSection: FunctionComponent<
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false)
   const [isEditBioModalOpen, setIsEditBioModalOpen] = useState(false)
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false)
 
   const intl = useIntl()
 
@@ -49,8 +51,12 @@ const BackgroundPhotoSection: FunctionComponent<
     setIsEditBioModalOpen(true)
   }
 
-  const handleOpenModal = () => {
+  const handleSettingsClick = () => {
     setIsSettingsModalOpen(true)
+  }
+
+  const handleBookingClick = () => {
+    setIsBookingModalOpen(true)
   }
 
   return (
@@ -74,8 +80,31 @@ const BackgroundPhotoSection: FunctionComponent<
             })}
             icon={<SettingsIcon />}
             size="sm"
-            onClick={handleOpenModal}
+            onClick={handleSettingsClick}
           />
+        )}
+
+        {user?.artist && !editable && (
+          <Tooltip
+            aria-label={intl.formatMessage({
+              defaultMessage: "Umów się na wizytę",
+              id: "cEAcVl",
+            })}
+            label={intl.formatMessage({
+              defaultMessage: "Umów się na wizytę",
+              id: "cEAcVl",
+            })}
+          >
+            <BookingButton
+              aria-label={intl.formatMessage({
+                defaultMessage: "Zarezerwuj",
+                id: "oZWy0m",
+              })}
+              icon={<CalendarIcon />}
+              size="md"
+              onClick={handleBookingClick}
+            />
+          </Tooltip>
         )}
         <AvatarContainer
           isEditable={editable}
@@ -135,6 +164,12 @@ const BackgroundPhotoSection: FunctionComponent<
           </BioContainer>
         </UserInfoContainer>
       </BackgroundAndAvatarContainer>
+
+      <BookingModal
+        isOpen={isBookingModalOpen}
+        username={user?.username ?? ""}
+        onClose={() => setIsBookingModalOpen(false)}
+      />
       <UserSettingsModal
         isModalOpen={isSettingsModalOpen}
         setIsModalOpen={setIsSettingsModalOpen}

@@ -16,3 +16,9 @@ export type SignUpDtoErrorCode =
   | "PhotoCategoryIdsDuplicate"
 
 export type SetBioDtoErrorCode = "BioTooLong" | "CityTooLong"
+
+export type SendBookingRequestDtoErrorCode =
+  | "StartIsNull"
+  | "StartIsGreaterThanEnd"
+  | "EndIsNull"
+  | "CommentIsTooLong"
