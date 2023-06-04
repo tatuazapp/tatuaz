@@ -8,7 +8,7 @@ public static class ListIncomingBookingRequestsError
     public static TatuazError NotArtist(string? message = null)
     {
         return message is null
-            ? new TatuazError(ListIncomingBookingRequestsErrorCodes.NotArtist, "Artist not found")
+            ? new TatuazError(ListIncomingBookingRequestsErrorCodes.NotArtist, "Not an artist")
             : new TatuazError(ListIncomingBookingRequestsErrorCodes.NotArtist, message);
     }
 }

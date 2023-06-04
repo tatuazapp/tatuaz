@@ -8,6 +8,7 @@ namespace Tatuaz.Shared.Domain.Dtos.Dtos.Booking;
 public record BookingRequestDto(
     int Id,
     string ArtistName,
+    string ClientName,
     DateTime Start,
     DateTime End,
     string? Comment,

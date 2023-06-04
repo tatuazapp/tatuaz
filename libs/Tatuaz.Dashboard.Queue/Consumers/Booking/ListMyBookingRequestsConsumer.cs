@@ -49,7 +49,7 @@ public class ListMyBookingRequestsConsumer
                 && x.Status == context.Message.Status
         );
         spec.AddOrder(x => x.Start, OrderDirection.Descending);
-        spec.UseInclude(x => x.Include(x => x.Artist));
+        spec.UseInclude(x => x.Include(y => y.Artist).Include(y => y.Client));
 
         var result = await _bookingRequestRepository
             .GetBySpecificationWithPagingAsync(
@@ -65,6 +65,7 @@ public class ListMyBookingRequestsConsumer
                         new BookingRequestDto(
                             x.Id,
                             x.Artist.Username,
+                            x.Client.Username,
                             x.Start.ToDateTimeUtc(),
                             x.End.ToDateTimeUtc(),
                             x.Comment,

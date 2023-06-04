@@ -25,6 +25,8 @@ public class BookingRequest : Entity<HistBookingRequest, int>
         histEntity.Start = Start;
         histEntity.End = End;
         histEntity.Comment = Comment;
+        histEntity.CustomerEmail = ClientEmail;
+        histEntity.ArtistEmail = ArtistEmail;
         return histEntity;
     }
 }

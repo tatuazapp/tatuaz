@@ -10,7 +10,7 @@ public static class RespondToBookingRequestErrorFactory
         return message is null
             ? new TatuazError(
                 RespondToBookingRequestDtoValidatorErrorCodes.NotArtist,
-                "Artist not found"
+                "Not an artist"
             )
             : new TatuazError(RespondToBookingRequestDtoValidatorErrorCodes.NotArtist, message);
     }
@@ -20,7 +20,7 @@ public static class RespondToBookingRequestErrorFactory
         return message is null
             ? new TatuazError(
                 RespondToBookingRequestDtoValidatorErrorCodes.BookingRequestNotFound,
-                "Artist not found"
+                "Booking request not found"
             )
             : new TatuazError(
                 RespondToBookingRequestDtoValidatorErrorCodes.BookingRequestNotFound,
@@ -33,7 +33,7 @@ public static class RespondToBookingRequestErrorFactory
         return message is null
             ? new TatuazError(
                 RespondToBookingRequestDtoValidatorErrorCodes.BookingRequestNotPending,
-                "Artist not found"
+                "Booking request not pending"
             )
             : new TatuazError(
                 RespondToBookingRequestDtoValidatorErrorCodes.BookingRequestNotPending,
