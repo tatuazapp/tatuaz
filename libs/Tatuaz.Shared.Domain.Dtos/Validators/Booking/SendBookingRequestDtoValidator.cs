@@ -26,6 +26,18 @@ public class SendBookingRequestDtoValidator : AbstractValidator<SendBookingReque
             .WithErrorCode(SendBookingRequestErrorCodes.StartIsGreaterThanEnd)
             .WithMessage("Start must be less than End");
 
+        RuleFor(x => x.Start)
+            .Must(start => start.Value.Kind == DateTimeKind.Utc)
+            .When(x => x.Start.HasValue)
+            .WithErrorCode(SendBookingRequestErrorCodes.StartIsNotUtc)
+            .WithMessage("Start must be UTC");
+
+        RuleFor(x => x.End)
+            .Must(end => end.Value.Kind == DateTimeKind.Utc)
+            .When(x => x.End.HasValue)
+            .WithErrorCode(SendBookingRequestErrorCodes.EndIsNotUtc)
+            .WithMessage("End must be UTC");
+
         RuleFor(x => x.End)
             .NotNull()
             .WithErrorCode(SendBookingRequestErrorCodes.EndIsNull)

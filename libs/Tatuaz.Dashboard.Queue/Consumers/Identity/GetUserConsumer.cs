@@ -38,6 +38,7 @@ public class GetUserConsumer : TatuazConsumerBase<GetUser, UserDto>
     {
         var spec = new FullSpecification<TatuazUser>();
         spec.AddFilter(x => x.Username == context.Message.Username);
+        spec.TrackingStrategy = TrackingStrategy.Tracking;
 
         var user = (
             await _userRepository

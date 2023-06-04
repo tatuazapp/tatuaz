@@ -8,4 +8,6 @@ public static class SendBookingRequestErrorCodes
     public const string EndIsNull = "EndIsNull";
     public const string CommentIsTooLong = "CommentIsTooLong";
     public const string ArtistNotFound = "ArtistNotFound";
+    public const string StartIsNotUtc = "StartIsNotUtc";
+    public const string EndIsNotUtc = "EndIsNotUtc";
 }
