@@ -16,7 +16,7 @@ const SEARCH_PAGE_SIZE = 10
 const buttonTypes: contentButton[] = ["Artists", "Posts"]
 
 const Search: NextPage = () => {
-  const [searchedPhrase, setSearchedPhrase] = useState<string>("Lukasz")
+  const [searchedPhrase, setSearchedPhrase] = useState<string>("")
   const [selectedType, setSelectedType] = useState<contentButton>(
     buttonTypes[0]
   )
