@@ -197,7 +197,7 @@ const ArtistPost: FunctionComponent<ArtistPostProps> = ({
         <Modal isCentered isOpen={isOpen} size="xxl" onClose={onClose}>
           <ModalOverlay />
           <ModalContent marginBottom="10px" marginTop="10px" width="735px">
-            <ArtistPostCommentView onClose={onClose} />
+            <ArtistPostCommentView postId={id} onClose={onClose} />
           </ModalContent>
         </Modal>
       )}
@@ -209,7 +209,7 @@ const ArtistPost: FunctionComponent<ArtistPostProps> = ({
             display="flex"
             justifyContent="center"
           >
-            <ArtistPostCommentView onClose={onClose} />
+            <ArtistPostCommentView postId={id} onClose={onClose} />
           </DrawerContent>
         </Drawer>
       )}

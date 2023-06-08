@@ -10,4 +10,5 @@ export const queryKeys = {
   getPostFeed: "getPostFeed",
   listMyBookingRequests: "listMyBookingRequests",
   listIncomingBookingRequests: "listIncomingBookingRequests",
+  getPostDetails: "getPostDetails",
 } as const

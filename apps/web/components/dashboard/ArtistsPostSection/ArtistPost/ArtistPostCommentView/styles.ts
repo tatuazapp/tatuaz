@@ -1,3 +1,4 @@
+import { Avatar } from "@chakra-ui/react"
 import { HeartFill } from "@styled-icons/bootstrap/HeartFill"
 import { CloseOutline } from "@styled-icons/evaicons-outline/CloseOutline"
 import { down } from "styled-breakpoints"
@@ -31,6 +32,7 @@ export const ArtistPostCommentsViewCommentsSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding-bottom: ${({ theme }) => theme.space.medium};
 `
 
 export const ArtistPostCommentsViewCommentWrapper = styled.div`
@@ -125,19 +127,10 @@ export const ArtistPostCommentsViewCreateCommentSection = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.background3};
 `
 
-export const ArtistPostCommentsViewCreateCommentAvatar = styled.div`
-  display: inline-block;
-
-  box-sizing: content-box;
-  width: ${({ theme }) => theme.space.xlarge};
-  height: ${({ theme }) => theme.space.xlarge};
+export const ArtistPostCommentsViewCreateCommentAvatar = styled(Avatar)<{
+  avatarUrl: string
+}>`
   margin: 0 ${({ theme }) => theme.space.xsmall};
-
-  /* TODO: change to dynamic */
-  background-image: url("https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg");
-  background-size: cover;
-  border: 2px solid ${({ theme }) => theme.colors.background2};
-  border-radius: 50%;
 `
 
 export const ArtistPostCommentsViewCreateCommentInput = styled.input`

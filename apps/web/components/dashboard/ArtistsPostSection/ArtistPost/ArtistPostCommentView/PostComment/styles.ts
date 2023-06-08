@@ -1,3 +1,4 @@
+import { Avatar } from "@chakra-ui/react"
 import { HeartFill } from "@styled-icons/bootstrap/HeartFill"
 import styled from "styled-components"
 
@@ -7,22 +8,16 @@ export const ArtistPostCommentsViewCommentWrapper = styled.div`
   margin-bottom: ${({ theme }) => theme.space.medium};
 `
 
-export const CommentOwnerAvatar = styled.div`
-  width: ${({ theme }) => theme.space.xxxlarge};
-  height: ${({ theme }) => theme.space.xlarge};
+export const CommentOwnerAvatar = styled(Avatar)`
   margin-top: ${({ theme }) => theme.space.xxxsmall};
   margin-right: ${({ theme }) => theme.space.xsmall};
   margin-left: ${({ theme }) => theme.space.xsmall};
-
-  /* TODO: change to dynamic */
-  background-image: url("https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg");
-  background-size: cover;
-  border-radius: 50%;
 `
 
 export const CommentContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  min-width: 600px;
 `
 
 export const CommentContent = styled.div`
