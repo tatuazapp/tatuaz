@@ -4,7 +4,7 @@ import styled from "styled-components"
 
 export const ArtistPostCommentsViewCommentWrapper = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   margin-bottom: ${({ theme }) => theme.space.medium};
 `
 
@@ -17,7 +17,7 @@ export const CommentOwnerAvatar = styled(Avatar)`
 export const CommentContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 600px;
+  min-width: 80%;
 `
 
 export const CommentContent = styled.div`
