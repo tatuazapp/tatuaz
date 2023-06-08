@@ -1,12 +1,20 @@
+/* eslint-disable @next/next/no-img-element */
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { Heading, Paragraph } from "@tatuaz/ui"
-import { useState } from "react"
-import { FormattedMessage } from "react-intl"
+import { motion } from "framer-motion"
+import { useEffect, useState } from "react"
+import { FormattedMessage, useIntl } from "react-intl"
+import { PhotoProvider, PhotoView } from "react-photo-view"
+import { api } from "../../../../../api/apiClient"
+import useMe from "../../../../../api/hooks/useMe"
+import { queryKeys } from "../../../../../api/queryKeys"
+import { queryClient } from "../../../../../pages/_app"
 import { theme } from "../../../../../styles/theme"
+import formatCDNImageUrl from "../../../../../utils/format/formatCDNImageUrl"
 import {
   ArtistPostDescription,
   ArtistPostLikesAndCommentsWrapper,
   ArtistPostMainPhotos,
-  ArtistPostMainPhotoTitle,
   CommentSectionClickedIcon,
   CommentsNumber,
   LikedPhotoIcon,
@@ -24,119 +32,211 @@ import {
   ArtistPostCommentsViewWrapper,
   CommentsContainer,
   ArtistPostCommentsViewCreateCommentSection,
-  ArtistPostCommentsViewCreateCommentAvatar,
   ArtistPostCommentsViewCreateCommentInput,
   ArtistPostCommentsViewCommentsSection,
   ArtistPostCommentsViewDivider,
   ArtistPostScrollingArea,
+  ArtistPostCommentsViewCreateCommentAvatar,
 } from "./styles"
 
 type ArtistPostCommentViewProps = {
   onClose: () => void
+  postId: string
 }
 
 const ArtistPostCommentView: React.FunctionComponent<
   ArtistPostCommentViewProps
-> = ({ onClose }) => {
+> = ({ onClose, postId }) => {
   const [isPostLiked, setIsPostLiked] = useState(false)
+  const [likedNumber, setLikedNumber] = useState(0)
+  const [commentContent, setCommentContent] = useState("")
 
-  const onNotLikedPhotoClickHandler = () => {
-    const notLikedButton = document.getElementById("notLikedButton")
-    if (!notLikedButton) {
-      return
-    }
+  const me = useMe()
 
-    notLikedButton.style.transform = "scale(0.7)"
-    setTimeout(() => {
-      setIsPostLiked(true)
-    }, 100)
+  const intl = useIntl()
+
+  const { data: postDetails } = useQuery(
+    [queryKeys.getPostDetails, postId],
+    () =>
+      api.post.getPostDetails({
+        postId,
+      }),
+    {}
+  )
+
+  const likePostMutation = useMutation({
+    mutationFn: () =>
+      api.post.likePost({
+        postId: postId,
+        like: !isPostLiked,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.getUserPosts, postDetails?.value.authorName],
+      })
+    },
+    onError: () => {
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.getUserPosts, postDetails?.value.authorName],
+      })
+    },
+  })
+
+  const addCommentMutation = useMutation({
+    mutationFn: (variables: { postId: string; content: string }) =>
+      api.comment.submitComment({
+        postId: variables.postId,
+        content: variables.content,
+        parentCommentId: null,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries([queryKeys.getPostDetails, postId])
+      setCommentContent("")
+    },
+    onError: (error) => {
+      console.error(error)
+    },
+  })
+
+  const onLikeIconClickHandler = () => {
+    likePostMutation.mutate()
+    setIsPostLiked((prev) => !prev)
+    setLikedNumber((prev) => (isPostLiked ? prev - 1 : prev + 1))
   }
 
-  const onLikedPhotoClickHandler = () => {
-    const likedButton = document.getElementById("likedButton")
-    if (!likedButton) {
-      return
-    }
-
-    likedButton.style.transform = "scale(0.8)"
-    setTimeout(() => {
-      setIsPostLiked(false)
-    }, 100)
+  const onCommentSubmitHandler = () => {
+    addCommentMutation.mutate({
+      postId: postId,
+      content: commentContent,
+    })
   }
+
+  useEffect(() => {
+    setIsPostLiked(!!postDetails?.value.isLikedByCurrentUser)
+    setLikedNumber(postDetails?.value.likesCount ?? 0)
+  }, [postDetails?.value.isLikedByCurrentUser, postDetails?.value.likesCount])
 
   return (
     <ArtistPostCommentsViewWrapper>
       <ArtistPostCommentsViewHeader>
         <Heading color={theme.colors.secondary} level={4}>
-          Jacob Vin Post
+          <FormattedMessage
+            defaultMessage="Post użytkownika {name}"
+            id="rCeiYs"
+            values={{ name: postDetails?.value.authorName }}
+          />
         </Heading>
         <ArtistPostCommentsViewHeaderCloseButton onClick={onClose} />
       </ArtistPostCommentsViewHeader>
       <ArtistPostScrollingArea>
         <ArtistPostMainPhotos>
-          <ArtistPostMainPhotoTitle>
-            <Heading color={theme.colors.primary} level={4}>
-              Flare Boom
-            </Heading>
-          </ArtistPostMainPhotoTitle>
+          <PhotoProvider>
+            {postDetails?.value.photos.map(({ uri }) => (
+              <PhotoView
+                key={uri}
+                src={formatCDNImageUrl(uri, {
+                  maxWidth: 2048,
+                  minWidth: 1024,
+                })}
+              >
+                <img
+                  alt={postDetails?.value.description}
+                  src={formatCDNImageUrl(uri, {
+                    maxWidth: 2048,
+                    minWidth: 1024,
+                  })}
+                />
+              </PhotoView>
+            ))}
+          </PhotoProvider>
         </ArtistPostMainPhotos>
         <ArtistPostContent>
           <ArtistPostLikesAndCommentsWrapper>
             <LikesContainer>
-              {isPostLiked ? (
-                <LikedPhotoIcon
-                  id="likedButton"
-                  onClick={onLikedPhotoClickHandler}
-                />
-              ) : (
-                <NotLikedPhotoIcon
-                  id="notLikedButton"
-                  onClick={onNotLikedPhotoClickHandler}
-                />
-              )}
+              <motion.button
+                whileTap={{ scale: 0.7, transition: { duration: 0.01 } }}
+              >
+                {isPostLiked ? (
+                  <LikedPhotoIcon onClick={onLikeIconClickHandler} />
+                ) : (
+                  <NotLikedPhotoIcon onClick={onLikeIconClickHandler} />
+                )}
+              </motion.button>
+
               <LikesNumber>
-                <Paragraph color={theme.colors.background4} level={2}>
-                  234 <FormattedMessage defaultMessage="polubień" id="1/6yup" />
-                </Paragraph>
+                {likedNumber}{" "}
+                <FormattedMessage defaultMessage="polubień" id="1/6yup" />
               </LikesNumber>
             </LikesContainer>
             <CommentsContainer>
               <CommentSectionClickedIcon />
               <CommentsNumber>
                 <Paragraph color={theme.colors.background4} level={2}>
-                  234{" "}
+                  {postDetails?.value.parentComments.length}{" "}
                   <FormattedMessage defaultMessage="komentarzy" id="M9FmsT" />
                 </Paragraph>
               </CommentsNumber>
             </CommentsContainer>
           </ArtistPostLikesAndCommentsWrapper>
           <ArtistPostUserWrapper>
-            {/* TODO: Chnage it to sth dynamic */}
-            <UserIconPhoto photoUrl="https://cdn.benchmark.pl/uploads/article/87749/MODERNICON/49e0c496efa2aedbbb84c1a8ebdbb4b125e1dc33.jpg" />
+            <UserIconPhoto
+              photoUrl={
+                postDetails?.value.authorPhotoUri
+                  ? formatCDNImageUrl(postDetails?.value.authorPhotoUri)
+                  : ""
+              }
+            />
+
             <Paragraph strong color={theme.colors.primary} level={2}>
               Jacob Vin
             </Paragraph>
           </ArtistPostUserWrapper>
           <ArtistPostDescription>
-            <Paragraph level={2}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Consequat ac felis donec et odio pellentesque diam volutpat
-              commodo. Venenatis cras sedfelis eget. Quis hendrerit dolor magna
-              eget est lorem ipsum.
-            </Paragraph>
+            <Paragraph level={2}>{postDetails?.value.description}</Paragraph>
           </ArtistPostDescription>
           <ArtistPostCommentsViewDivider />
           <ArtistPostCommentsViewCommentsSection>
-            <PostComment />
-            <PostComment />
-            <PostComment />
+            {postDetails?.value.parentComments.map((comment) => (
+              <PostComment
+                key={comment.id}
+                author={{
+                  photoUrl: comment.authorPhotoUri
+                    ? formatCDNImageUrl(comment.authorPhotoUri)
+                    : "",
+                }}
+                content={comment.content}
+                date={new Date(comment.createdAt as unknown as string)}
+                id={comment.id}
+                isLiked={comment.isLikedByCurrentUser}
+                likeCount={comment.likesCount}
+                postId={postId}
+              />
+            ))}
           </ArtistPostCommentsViewCommentsSection>
         </ArtistPostContent>
       </ArtistPostScrollingArea>
       <ArtistPostCommentsViewCreateCommentSection>
-        <ArtistPostCommentsViewCreateCommentAvatar />
-        <ArtistPostCommentsViewCreateCommentInput placeholder="Napisz komentarz..." />
+        <ArtistPostCommentsViewCreateCommentAvatar
+          size="sm"
+          src={
+            me?.foregroundPhotoUri
+              ? formatCDNImageUrl(me?.foregroundPhotoUri)
+              : ""
+          }
+        />
+        <ArtistPostCommentsViewCreateCommentInput
+          placeholder={intl.formatMessage({
+            defaultMessage: "Dodaj komentarz...",
+            id: "U8IOpL",
+          })}
+          value={commentContent}
+          onChange={(e) => setCommentContent(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && commentContent.length > 0) {
+              onCommentSubmitHandler()
+            }
+          }}
+        />
       </ArtistPostCommentsViewCreateCommentSection>
     </ArtistPostCommentsViewWrapper>
   )

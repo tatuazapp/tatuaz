@@ -13,6 +13,7 @@ export interface BookingRequestDto {
   /** @format int32 */
   id: number
   artistName: string
+  clientName: string
   /** @format date-time */
   start: string
   /** @format date-time */
@@ -95,6 +96,14 @@ export interface FinalizePostDto {
   description: string
   /** ErrorCodes: PhotoInfoDtosIsNull, PhotoInfoDtosTooMany, PhotoInfoDtosHasDuplicateCategoryIds, PhotoInfoDtosHasInvalidCategoryIds */
   photoInfoDtos: PhotoInfoDto[]
+}
+
+export interface GetPostDetailsDto {
+  /**
+   * ErrorCodes: PostIdIsNull
+   * @format uuid
+   */
+  postId: string
 }
 
 export interface GetPostFeedDto {
@@ -237,6 +246,13 @@ export interface OkResponseEmptyResponse {
 }
 
 /** Wrapper used for returning success responses. */
+export interface OkResponsePagedDataBookingRequestDto {
+  value: PagedDataBookingRequestDto
+  /** Indicates if request was successful. Should be always true for this type of response. */
+  success: boolean
+}
+
+/** Wrapper used for returning success responses. */
 export interface OkResponsePagedDataBriefPostDto {
   value: PagedDataBriefPostDto
   /** Indicates if request was successful. Should be always true for this type of response. */
@@ -253,6 +269,13 @@ export interface OkResponsePagedDataBriefUserDto {
 /** Wrapper used for returning success responses. */
 export interface OkResponsePagedDataCategoryDto {
   value: PagedDataCategoryDto
+  /** Indicates if request was successful. Should be always true for this type of response. */
+  success: boolean
+}
+
+/** Wrapper used for returning success responses. */
+export interface OkResponsePostDetailsDto {
+  value: PostDetailsDto
   /** Indicates if request was successful. Should be always true for this type of response. */
   success: boolean
 }
@@ -340,6 +363,42 @@ export interface PhotoInfoDto {
   photoFileName: string
 }
 
+export interface PostCommentDto {
+  /** @format uuid */
+  id: string
+  /** @format uuid */
+  parentCommentId: string | null
+  content: string
+  authorName: string
+  /** @format uri */
+  authorPhotoUri: string | null
+  /** @format int32 */
+  likesCount: number
+  isLikedByCurrentUser: boolean
+  createdAt: Instant
+}
+
+export interface PostDetailsDto {
+  /** @format uuid */
+  id: string
+  description: string
+  authorName: string
+  /** @format uri */
+  authorPhotoUri: string | null
+  /** @format int32 */
+  likesCount: number
+  isLikedByCurrentUser: boolean
+  createdAt: Instant
+  parentComments: PostCommentDto[]
+  photos: PostPhotoDto[]
+}
+
+export interface PostPhotoDto {
+  /** @format uri */
+  uri: string
+  categoryIds: number[]
+}
+
 export interface RegisteredStatsDto {
   /** @format int32 */
   artists: number
@@ -411,12 +470,12 @@ export interface SendBookingRequestDto {
   /** ErrorCodes: ArtistEmailIsNull */
   artistName: string
   /**
-   * ErrorCodes: StartIsNull, StartIsGreaterThanEnd
+   * ErrorCodes: StartIsNull, StartIsGreaterThanEnd, StartIsNotUtc
    * @format date-time
    */
   start: string
   /**
-   * ErrorCodes: EndIsNull
+   * ErrorCodes: EndIsNotUtc, EndIsNull
    * @format date-time
    */
   end: string
@@ -724,7 +783,7 @@ export class Api<
      * @summary List my booking requests
      * @request POST:/Booking/ListMyBookingRequests
      * @secure
-     * @response `200` `PagedDataBookingRequestDto` Success
+     * @response `200` `OkResponsePagedDataBookingRequestDto` Success
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
      * @response `403` `EmptyResponse` Forbidden
@@ -734,7 +793,10 @@ export class Api<
       data: ListMyBookingRequestsDto,
       params: RequestParams = {}
     ) =>
-      this.request<PagedDataBookingRequestDto, ErrorResponse | EmptyResponse>({
+      this.request<
+        OkResponsePagedDataBookingRequestDto,
+        ErrorResponse | EmptyResponse
+      >({
         path: `/Booking/ListMyBookingRequests`,
         method: "POST",
         body: data,
@@ -752,7 +814,7 @@ export class Api<
      * @summary List incoming booking requests
      * @request POST:/Booking/ListIncomingBookingRequests
      * @secure
-     * @response `200` `PagedDataBookingRequestDto` Success
+     * @response `200` `OkResponsePagedDataBookingRequestDto` Success
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
      * @response `403` `EmptyResponse` Forbidden
@@ -762,7 +824,10 @@ export class Api<
       data: ListIncomingBookingRequestsDto,
       params: RequestParams = {}
     ) =>
-      this.request<PagedDataBookingRequestDto, ErrorResponse | EmptyResponse>({
+      this.request<
+        OkResponsePagedDataBookingRequestDto,
+        ErrorResponse | EmptyResponse
+      >({
         path: `/Booking/ListIncomingBookingRequests`,
         method: "POST",
         body: data,
@@ -780,7 +845,7 @@ export class Api<
      * @summary Respond to booking request
      * @request POST:/Booking/RespondToBookingRequest
      * @secure
-     * @response `200` `PagedDataBookingRequestDto` Success
+     * @response `200` `EmptyResponse` Success
      * @response `400` `ErrorResponse` Bad Request
      * @response `401` `EmptyResponse` Unauthorized
      * @response `403` `EmptyResponse` Forbidden
@@ -790,7 +855,7 @@ export class Api<
       data: RespondToBookingRequestDto,
       params: RequestParams = {}
     ) =>
-      this.request<PagedDataBookingRequestDto, ErrorResponse | EmptyResponse>({
+      this.request<EmptyResponse, ErrorResponse | EmptyResponse>({
         path: `/Booking/RespondToBookingRequest`,
         method: "POST",
         body: data,
@@ -1336,6 +1401,31 @@ export class Api<
         ErrorResponse | EmptyResponse
       >({
         path: `/Post/GetPostFeed`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Post
+     * @name GetPostDetails
+     * @summary Get post details (photo categories and comments)
+     * @request POST:/Post/GetPostDetails
+     * @secure
+     * @response `200` `OkResponsePostDetailsDto` Success
+     * @response `400` `ErrorResponse` Bad Request
+     * @response `401` `EmptyResponse` Unauthorized
+     * @response `403` `EmptyResponse` Forbidden
+     * @response `500` `ErrorResponse` Server Error
+     */
+    getPostDetails: (data: GetPostDetailsDto, params: RequestParams = {}) =>
+      this.request<OkResponsePostDetailsDto, ErrorResponse | EmptyResponse>({
+        path: `/Post/GetPostDetails`,
         method: "POST",
         body: data,
         secure: true,

@@ -42,8 +42,8 @@ const IncomingBookings = () => {
       }),
     {
       getNextPageParam: (lastPage) => {
-        const nextPage = lastPage.pageNumber ?? 0
-        return nextPage < lastPage.totalPages ? nextPage + 1 : undefined
+        const nextPage = lastPage.value.pageNumber ?? 0
+        return nextPage < lastPage.value.totalPages ? nextPage + 1 : undefined
       },
     }
   )
