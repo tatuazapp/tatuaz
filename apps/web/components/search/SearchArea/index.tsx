@@ -1,5 +1,6 @@
 import { Button } from "@chakra-ui/react"
 import { ArrowUpRight } from "@styled-icons/bootstrap"
+import { FunctionComponent } from "react"
 import { FormattedMessage } from "react-intl"
 import { theme } from "../../../styles/theme"
 import useIsMobile from "../../../utils/hooks/useIsMobile"
@@ -12,7 +13,17 @@ import {
   MobileSearchIcon,
 } from "./styles"
 
-const SearchArea = () => {
+type SearchAreaProps = {
+  searchPhrase: string
+  setSearchPhrase: (searchPhrase: string) => void
+  setSearchButtonClicked: (searchButtonClicked: boolean) => void
+}
+
+const SearchArea: FunctionComponent<SearchAreaProps> = ({
+  searchPhrase,
+  setSearchPhrase,
+  setSearchButtonClicked,
+}) => {
   const placeholder = (
     <FormattedMessage
       defaultMessage="Znajdź artystę, treść, itp."
@@ -25,7 +36,14 @@ const SearchArea = () => {
 
   return (
     <SearchAreaWrapper>
-      <SearchInput placeholder={placeholder.props.defaultMessage} type="text" />
+      <SearchInput
+        placeholder={placeholder.props.defaultMessage}
+        type="text"
+        value={searchPhrase}
+        onChange={(e) => {
+          setSearchPhrase(e.target.value)
+        }}
+      />
       {isPhone ? (
         <MobileSearchIcon />
       ) : (
@@ -37,6 +55,9 @@ const SearchArea = () => {
           marginLeft={{ base: "0", md: theme.space.xlarge }}
           rightIcon={<ArrowUpRight size={24} />}
           size="lg"
+          onClick={() => {
+            setSearchButtonClicked(searchPhrase !== "")
+          }}
         >
           <FormattedMessage defaultMessage="Szukaj" id="xyzes5" />
         </Button>
