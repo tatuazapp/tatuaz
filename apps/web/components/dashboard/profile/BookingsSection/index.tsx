@@ -79,7 +79,7 @@ const BookingRequestsSection = ({
             overflow="hidden"
           >
             <VStack alignItems="flex-start" p={4} spacing={2}>
-              <Text fontWeight="bold">{booking.artistName}</Text>
+              <Text fontWeight="bold">{booking.clientName}</Text>
               <Text>{booking.comment}</Text>
               <Text>
                 {new Date(booking.start).toLocaleString()} -{" "}
