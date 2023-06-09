@@ -1,19 +1,26 @@
 import { ChevronDownIcon } from "@chakra-ui/icons"
 import { Menu, MenuButton, Button, MenuList, MenuItem } from "@chakra-ui/react"
 import { Paragraph } from "@tatuaz/ui"
-import { useState } from "react"
+import { FunctionComponent } from "react"
 import { theme } from "../../../styles/theme"
 import { contentButton } from "../../../types/contentButton"
 import useIsSmallPhone from "../../../utils/hooks/useIsSmallMobile"
 import { TypeButton, SearchButtonsWrapper } from "./styles"
 
-const buttonTypes: contentButton[] = ["All", "Photos", "Posts", "Artists"]
+type SearchButtonAreaProps = {
+  buttonTypes: contentButton[]
+  selectedType: contentButton
+  setSelectedType: (type: contentButton) => void
+  setSearchButtonClicked: (searchButtonClicked: boolean) => void
+}
 
-const SearchButtonArea = () => {
+const SearchButtonArea: FunctionComponent<SearchButtonAreaProps> = ({
+  buttonTypes,
+  selectedType,
+  setSelectedType,
+  setSearchButtonClicked,
+}) => {
   const isSmallMobile = useIsSmallPhone()
-  const [selectedType, setSelectedType] = useState<contentButton>(
-    buttonTypes[0]
-  )
 
   return (
     <SearchButtonsWrapper>
@@ -50,6 +57,7 @@ const SearchButtonArea = () => {
                   color={theme.colors.secondary}
                   onClick={() => {
                     setSelectedType(option)
+                    setSearchButtonClicked(false)
                   }}
                 >
                   {option}
