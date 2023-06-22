@@ -106,9 +106,9 @@ resource "kubernetes_manifest" "k8s_letsencrypt" {
     }
     "spec" = {
       "acme" = {
-        "email" = "lukasz.k.sobczak@gmail.com"
+        "email" = "PLACEHOLDER"
         "privateKeySecretRef" = {
-          "name" = "letsencrypt"
+          "name" = "PLACEHOLDER"
         }
         "server" = "https://acme-v02.api.letsencrypt.org/directory"
         "solvers" = [
